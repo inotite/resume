@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 371 1031" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>e-menu-bg-mobile</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="277.693312%" y1="218.400028%" x2="5.71302224%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#3EBB64" offset="0%"></stop>
+            <stop stop-color="#337AB7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="development" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="e-menu-bg-mobile" fill="url(#linearGradient-1)">
+            <rect id="e" x="0" y="0" width="371" height="1031"></rect>
+        </g>
+    </g>
+</svg>

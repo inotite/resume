@@ -1,0 +1,79 @@
+<!-- https://devresume.workruit.com/resetPassword/index.html5ceed9d5c4164058a7d4ecad50f86049/ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#ffffff">
+    <title>Workruit — Update Password</title>
+    <link rel='shortcut icon' type='image/x-icon' href='favicon.png' />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../css/custom.css" /> -->
+    <base href="/">
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            /* overflow: hidden; */
+            width: 100%;
+            min-height: 100vh;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .the-canvas {
+            width: 100%;
+            display: flex;
+            margin: 0 auto;
+            margin-top: 10px;
+            min-height: 100%;
+            /* position: absolute; */
+            z-index: 2;
+            top: 70px;
+        }
+
+        .position-fixed {
+            position: fixed;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="w-100 py-3 position-fixed bg-white">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-2 text-center">
+                    <a href="#">
+                        <img src="https://devresume.workruit.com/images/workruit-resume-logo-color.svg" class="img-responsive resume-logo-big" alt="workruit-instent-resume">
+                    </a>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <iframe src="" frameborder="0" id="pdfViewer" class="the-canvas mb-5"></iframe>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(window).ready(function () {
+            var shareParameter = window.location.search.substr(1).substring(1);
+            var googleDocsUrl = "https://docs.google.com/viewer?url=";
+            var windowLocation = window.location;
+            var baseUrl = "https://devapi.workruit.com/api/user/getShareFile?name=" + shareParameter
+            shareParameter ? true : window.location = '../../404.html'
+            console.log(shareParameter ? true : false);
+            $.get(baseUrl, function (data) {
+                data.status === "failed" ? swal(data.msg.description, "", "error") : document.getElementById('pdfViewer').src = googleDocsUrl + data.data + "&embedded=true";
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="63px" height="62px" viewBox="0 0 63 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0.676184296" y="0" width="27.9219036" height="23.091987" rx="11.5459935"></rect>
+    </defs>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.800000012">
+        <g id="employer-design-04" transform="translate(-936.000000, -2903.000000)">
+            <g id="key-features" transform="translate(133.000000, 2728.000000)">
+                <g id="in-app-messenger" transform="translate(800.000000, 175.000000)">
+                    <g id="icon" transform="translate(3.000000, 0.000000)">
+                        <g id="Group-12">
+                            <ellipse id="Oval-2" fill="#F2C14E" opacity="0.25" cx="31.5" cy="31" rx="31.5" ry="31"></ellipse>
+                            <g id="Group-18" transform="translate(17.000000, 19.000000)">
+                                <g id="Combined-Shape">
+                                    <use fill="#F2C14E" fill-rule="evenodd" xlink:href="#path-1"></use>
+                                    <rect stroke="#FCEFD3" stroke-width="2" x="-0.323815704" y="-1" width="29.9219036" height="25.091987" rx="12.5459935"></rect>
+                                </g>
+                                <path d="M12.5639648,21.1108398 C12.5639648,21.1108398 12.5639648,25.4501953 7,26.8735352 C9.18017578,23.9921875 7.60449219,21.1108398 7.60449219,21.1108398 L12.5639648,21.1108398 Z" id="Path-7" fill="#F2C14E"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

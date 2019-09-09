@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#ffffff">
+  <title>Workruit — Email Verification</title>
+  <script>
+    /* let sessionId = localStorage.getItem('sessionId');
+    if(!sessionId){
+      window.location.href="../signin";
+      } */
+  </script>
+  <link rel='shortcut icon' type='image/x-icon' href='../favicon.png' />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/custom.css" />
+  <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+</head>
+
+<body class="account-page">
+
+  <div class="content h-100 w-100">
+    <div class="container h-100">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-12 empty text-center">
+          <h1>Thank you for Verifying your email address</h1>
+          <h2><a href="#">Login</a> to continue</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var jsEncode = {
+      encode: function (s, k) {
+        var enc = "";
+        var str = "";
+        // make sure that input is string
+        str = s.toString();
+        for (var i = 0; i < s.length; i++) {
+          // create block
+          var a = s.charCodeAt(i);
+          // bitwise XOR
+          var b = a ^ k;
+          enc = enc + String.fromCharCode(b);
+        }
+        return enc;
+      }
+    };
+    /* Email Verification functionality */
+    $(function () {
+      var parameters = window.location.search.split('/');
+      var emailVerificationId = parameters[0].substring(1);
+      var companyName = 'workruit';
+      var userId = parameters[2];
+      console.log(emailVerificationId, companyName, userId)
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://devapi.workruit.com/employeer/emailVerificationForResumeUser/" + emailVerificationId + "/" + companyName + "/" + userId,
+        "method": "GET",
+        "headers": {
+          // "token": sessionId,
+          "content-type": "application/json"
+        },
+        "processData": false
+      }
+      console.log(settings);
+      $.ajax(jsEncode.encode(settings)).done(function (response) {
+        console.log(jsEncode.encode(response), 'response');
+        if (response) {
+          localStorage.clear();
+          window.location.href = "../index.html";
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 1440 585" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>hero-inner</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="76.8402778%" y1="78.5213197%" x2="3.4624566%" y2="-20.0054368%" id="linearGradient-1">
+            <stop stop-color="#3EBB64" offset="0%"></stop>
+            <stop stop-color="#337AB7" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-2" points="0 0 1440 0 1440 400.164062 0 584.664062"></polygon>
+        <linearGradient x1="62.2553168%" y1="63.597342%" x2="-14.2513021%" y2="-58.6590449%" id="linearGradient-4">
+            <stop stop-color="#3EBB64" offset="0%"></stop>
+            <stop stop-color="#337AB7" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-5" points="0 458.453125 1440 367 1440 404.09375 0 589.796875"></polygon>
+        <linearGradient x1="51.1653646%" y1="136.862274%" x2="-5.09494358%" y2="-143.692238%" id="linearGradient-6">
+            <stop stop-color="#3EBB64" offset="0%"></stop>
+            <stop stop-color="#337AB7" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-7" points="0 523.433176 1440 376.492188 1440 523.433176 0 584.445312"></polygon>
+    </defs>
+    <g id="development" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="hero-inner">
+            <g id="gradient">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                <g id="Mask" mask="url(#mask-3)">
+                    <use fill="url(#linearGradient-4)" xlink:href="#path-5"></use>
+                    <use fill-opacity="0.0899999961" fill="#FFFFFF" xlink:href="#path-5"></use>
+                </g>
+                <g id="Mask-Copy" mask="url(#mask-3)">
+                    <use fill="url(#linearGradient-6)" xlink:href="#path-7"></use>
+                    <use fill-opacity="0.189999998" fill="#FFFFFF" xlink:href="#path-7"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

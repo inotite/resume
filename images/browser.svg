@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="849px" height="584px" viewBox="0 0 849 584" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>browser@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-6.3%" y="-9.3%" width="112.7%" height="121.7%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="8" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="17" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.133333333   0 0 0 0 0.258823529   0 0 0 0 0.368627451  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-2" x="0" y="0" width="781" height="516"></rect>
+    </defs>
+    <g id="development" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="browser">
+            <g filter="url(#filter-1)" transform="translate(34.000000, 26.000000)">
+                <g id="browser-bg">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <use id="Mask" stroke="#F9F9F9" stroke-width="0.5" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-2"></use>
+                </g>
+                <g>
+                    <rect id="XMLID_9_" fill="#EDEDED" fill-rule="nonzero" x="0" y="0" width="781" height="27.6603512"></rect>
+                    <g id="XMLID_8_" transform="translate(10.233091, 11.621996)" stroke-linecap="round" stroke-width="1.395" stroke="#DADADA" stroke-linejoin="round">
+                        <polyline id="XMLID_3_" points="7.53527575 3.25415896 0.325598335 3.25415896 3.48855359 0.0929759704"></polyline>
+                        <polyline id="XMLID_4_" points="7.53527575 3.25415896 0.325598335 3.25415896 3.48855359 6.41534196"></polyline>
+                    </g>
+                    <g id="XMLID_10_" transform="translate(24.187305, 11.621996)" stroke-linecap="round" stroke-width="1.395" stroke="#DADADA" stroke-linejoin="round">
+                        <polyline id="XMLID_12_" points="0.186056191 3.25415896 7.39573361 3.25415896 4.23277836 0.0929759704"></polyline>
+                        <polyline id="XMLID_11_" points="0.186056191 3.25415896 7.39573361 3.25415896 4.23277836 6.41534196"></polyline>
+                    </g>
+                    <g id="XMLID_52_" transform="translate(37.676379, 10.692237)" fill-rule="nonzero" fill="#DADADA">
+                        <path d="M8.27950052,3.99796673 L5.3491155,2.97523105 C5.20957336,2.92874307 5.16305931,2.74279113 5.30260146,2.64981516 L7.6748179,0.604343808 C7.76784599,0.511367837 7.95390219,0.557855823 7.95390219,0.697319778 L8.51207076,3.7655268 C8.55858481,3.95147874 8.41904266,4.04445471 8.27950052,3.99796673 Z" id="XMLID_7_"></path>
+                        <path d="M6.65150884,5.39260628 C6.18636837,6.32236599 5.20957336,6.97319778 4.04672216,6.88022181 C2.69781478,6.78724584 1.58147763,5.62504621 1.58147763,4.27689464 C1.58147763,2.78927911 2.74432882,1.5805915 4.23277836,1.5805915 C5.16305931,1.5805915 5.95379813,2.04547135 6.41893861,2.74279113 L8.09344433,2.97523105 C7.5817898,1.30166359 6.00031217,0.0929759704 4.13975026,0.139463956 C2.00010406,0.185951941 0.232570239,1.95249538 0.186056191,4.0909427 C0.139542144,6.36885397 1.95359001,8.27486137 4.23277836,8.27486137 C5.86077003,8.27486137 7.25619147,7.29861368 7.90738814,5.95046211 C8.09344433,5.53207024 7.81436004,5.06719039 7.39573361,4.97421442 L7.39573361,4.97421442 C7.07013528,4.97421442 6.79105099,5.11367837 6.65150884,5.39260628 Z" id="XMLID_19_"></path>
+                    </g>
+                    <path d="M769.647419,21.2914972 L56.099615,21.2914972 C55.3618438,21.2914972 54.7470343,20.5941774 54.7470343,19.7573937 L54.7470343,9.34408503 C54.7470343,8.50730129 55.3618438,7.80998152 56.099615,7.80998152 L769.647419,7.80998152 C770.385191,7.80998152 771,8.50730129 771,9.34408503 L771,19.7573937 C771,20.5941774 770.426178,21.2914972 769.647419,21.2914972 Z" id="XMLID_20_" fill="#FFFFFF" fill-rule="nonzero"></path>
+                </g>
+                <g id="address" transform="translate(60.468262, 9.227357)">
+                    <rect id="XMLID_32_" x="0" y="3.13844732" width="113.029136" height="5.6715342"></rect>
+                    <text id="workruit.com" fill="#DADADA" font-family="AvenirNext-Regular, Avenir Next" font-size="6.51" font-weight="normal">
+                        <tspan x="0" y="7.32118549">workruit.com</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

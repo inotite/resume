@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#ffffff">
+  <title>Workruit - Instant Resume</title>
+  <link rel='shortcut icon' type='image/x-icon' href='../favicon.png' />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/custom.css" />
+  <style>
+    .alert-danger, .alert-success{
+      top:0px !important;
+      display: none; 
+    }
+    .invalid-feedback{
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="before-login" id="forgotPassword">
+  <div>
+    <div class="auth">
+    
+  <div id="newErrorMessageID" class="alert alert-danger">
+    <b class="message-text"></b>
+    <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png" width="10" /></a>
+  </div>
+  <div id="newSuccessMessageID" class="alert alert-success">
+    <b class="message-text"></b>
+    <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png" width="10" /></a>
+  </div>
+-
+      <div class="row sidebar py-5 px-5 ">
+        <div class="col-sm-12 text-center relative"><a class="back" href="../login/index.html"></a> <a class="logo" href="javascript:void(0)">
+            <img src="../images/workruit-resume-logo-color.svg" class="img-responsive resume-logo-big" alt="workruit-instent-resume">
+        </a> </div>
+        <div class="d-flex h-100 w-100 justify-content-center align-items-center" >
+          <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+            <h1 class="col-sm-12  title text-center">Forgot your password?</h1>
+            <h2 class="description text-center mt-2">We'll email you instructions on how to reset it.</h2>
+            <div class="form mt-5" style="min-height: 350 px">
+              
+              <!-- <form id="loginForm" name="loginForm" role="form" autocomplete="off"  novalidate> -->
+                <!-- Email -->
+                <div class="forgot-form">
+                <div class="form-group">
+                  <input type="email" class="form-control with-icon icon-mail transition" name="email" placeholder="Email address" autofocus autocomplete="off" required />
+                </div>
+                <div class="form-group mt-4">
+                  <button id="resetPassBtn" class="btn btn-primary btn-lg btn-block">Reset password</button>
+                </div>
+              </div>
+              <!--</form>-->
+              <br>
+              <small class="form-text text-muted text-center d-block mt-3 form-bottom w-100">Already have an account? <a
+                  href="../login/index.html">Sign in</a></small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container h-100 right-conent">
+        <div class="row h-100 justify-content-center align-items-center">
+          <div class="col-lg-12 text-center">
+            <!--<div class="w-100"> <img src="images/app/phone.png" alt=""> </div>-->
+            <div  class="app">
+              <h3>Find a candidate that fits for free!</h3>
+              <!--<div class="getapp px-4 py-3 w-50 mx-auto"> <span class="pr-3">Get the app</span> <a href="" class="transition"><img src="images/app/icons/android.svg" alt="android"></a> </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="row h-101 justify-content-center align-items-center">
+          <div class="col-lg-12 text-center">
+            <img src="../images/app/Final.png" alt="Final" style="width: auto; height:443px; margin-top: 30px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../js/jquery-3.2.1.min.js"></script>
+  <script src="../js/main-scripts.js"></script>
+  <script>
+    $(function () {
+      // $('.right-conent').css('min-height', $(document).height());
+      $('.before-login').paraCount();
+    });
+  </script>
+</body>
+
+</html>

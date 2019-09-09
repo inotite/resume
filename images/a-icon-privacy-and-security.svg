@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="63px" height="62px" viewBox="0 0 63 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="14" y="24" width="35" height="23" rx="1.8"></rect>
+    </defs>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.800000012">
+        <g id="applicant-design-04" transform="translate(-936.000000, -3170.000000)">
+            <g id="features" transform="translate(132.000000, 2644.000000)">
+                <g id="privacy" transform="translate(801.000000, 526.000000)">
+                    <g id="Group-8" transform="translate(3.000000, 0.000000)">
+                        <g id="icon">
+                            <ellipse id="Oval-2" fill="#540D6E" opacity="0.25" cx="31.5" cy="31" rx="31.5" ry="31"></ellipse>
+                            <rect id="Rectangle-9" stroke="#540D6E" stroke-width="2" x="24" y="12" width="15" height="19" rx="7.5"></rect>
+                            <g id="Rectangle-11">
+                                <use fill="#540D6E" fill-rule="evenodd" xlink:href="#path-1"></use>
+                                <rect stroke="#D4C2DB" stroke-width="2" x="13" y="23" width="37" height="25" rx="1.8"></rect>
+                            </g>
+                            <rect id="Rectangle-9-Copy" fill="#D4C2DB" x="30" y="35" width="3" height="6" rx="1.5"></rect>
+                            <circle id="Oval-4" fill="#D4C2DB" cx="31.5" cy="34.5" r="2.5"></circle>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

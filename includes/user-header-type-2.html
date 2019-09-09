@@ -1,0 +1,112 @@
+<header class="w-100 cst-header" id="header-with-login">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-5">
+                <ul class="nav status">
+                    <li class="nav-item active">
+                        <a class="nav-link transition" href="./home/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link transition" href="./create/index.html?edit">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link transition" href="./share/index.html">Share</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#">
+                    <img src="images/workruit-resume-logo-color.svg" class="img-responsive resume-logo-big"
+                        alt="workruit-instent-resume">
+                </a>
+            </div>
+            <div class="col-md-5">
+                <ul class="nav justify-content-end status">
+                    <li class="nav-item user dropdown">
+                        <a class="nav-link transition dropdown-toggle" data-toggle="dropdown" id="profileMenu"
+                            aria-haspopup="true" aria-expanded="false">
+                            <img src="images/app/pic1.png" style="border-radius: 50%;" alt="">
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="profile">
+                            <a class="dropdown-item transition" href="" id="userName"></a>
+                            <a href="javascript:void(0)" class="dropdown-item transition">
+                                <span id="UserEmail"></span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item transition" href="../account/index.html">Account</a>
+                            <a class="dropdown-item transition" href="#">Notifications</a>
+                            <a class="dropdown-item transition" href="javascript:void(0)" data-toggle="modal"
+                                data-target="#downloadApp">Download App</a>
+                            <a class="dropdown-item transition" href="javascript:void(0)" id="signOut">Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<style>
+    .user a img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .cst-header {
+        height: 68px;
+        max-height: 68px;
+        background: #ffffff;
+        box-shadow: 0 2px 10px 0 #f1f1f3;
+        padding: 15px 0;
+        position: fixed;
+        top: 0;
+        z-index: 1050;
+    }
+
+    .nav-item.active .nav-link {
+        color: #337ab7 !important;
+        font-weight: 700;
+    }
+
+    .nav-link {
+        display: block;
+        padding: .5rem 1rem;
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.5) !important;
+        position: relative;
+    }
+
+    .nav>li>a {
+        position: relative;
+        display: block;
+        padding: .5rem 1rem;
+    }
+
+    .resume-logo-big {
+        width: 153px;
+    }
+
+    .dropdown .nav-link {
+        position: relative;
+        display: block;
+        padding: 0px 40px 0px 0px;
+    }
+
+    .upgrade-btn {
+        margin-right: 20px;
+        color: #fff !important;
+        background-color: #34b95c;
+        border-color: #34b95c;
+        padding: .4rem 1rem !important;
+        line-height: 1.5;
+        font-weight: 400;
+    }
+
+    .dropdown>a {
+        background: url(../resume/images/app/icons/dropdown.svg) no-repeat center right;
+        background-size: 40px 40px;
+        padding: 0px 40px 0px 0px;
+    }
+    .dropdown-toggle::after{
+        display: none;
+    }
+</style>

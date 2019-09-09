@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-reboot.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-grid.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aos.css" />
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+</head>
+
+<body>
+
+
+    <div class="row pricing_template" data-aos="fade-up">
+    </div>
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/jquery.loadTemplate.js"></script>
+    <script class="data-pricing-template" type="text/html">
+        <div class="has-3 p1 col-md-4 pricing">
+            <div class="highlight plan">
+                <div class="detail plan-1">
+                    <h4><span class="amount" data-content="price"> ₹ 149 </span></h4>
+                    <h3>
+                        <span class="title" style="color: #6a6a6a; font-display: normal" data-content="timePeriod">7
+                            days</span>
+                        <span class="interval" style="color: #337ab7" data-content="planTitle">Starter </span>
+                    </h3>
+                </div>
+                <div class="features">
+                    <ul>
+                        <li class="item-row">
+                            <span class="item-mobile">
+                                <a href="#"><i class="fa fa-check" aria-hidden="true"></i> <span
+                                        data-content="description.template"></span></a>
+                            </span>
+                        </li>
+                        <li class="item-row">
+                            <span class="item-mobile">
+                                <a href="#"><i class="fa fa-check" aria-hidden="true"></i> <span
+                                        data-content="description.download"></span></a>
+                            </span>
+                        </li>
+                        <li class="item-row">
+                            <span class="item-mobile">
+                                <a href="#"><i class="fa fa-check" aria-hidden="true"></i> <span
+                                        data-content="description.branding"></span></a>
+                            </span>
+                        </li>
+                        <li class="item-row">
+                            <span class="item-mobile">
+                                <a href="#"><i class="fa fa-check" aria-hidden="true"></i> <span
+                                        data-content="description.styles"></span></a>
+                            </span>
+                        </li>
+                        <li class="item-row">
+                            <span class="item-mobile">
+                                <a href="#"><i class="fa fa-check" aria-hidden="true"></i> <span
+                                        data-content="description.sharing"></span></a>
+                            </span>
+                        </li>
+                        <li class="item-row">
+                            <span class="item-mobile">
+                                <a href="#"><i class="fa fa-check" aria-hidden="true"></i> <span
+                                        data-content="description.url"></span></a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group mt-4">
+                    <button type="submit" id="btn-fbsignup" class="btn btn-primary btn-lg btn-block select_plan"> <a
+                            data-href="redirectUrl"><span>BUILD RESUME</span></a></button>
+                </div>
+                <!--
+                        <div class="select" >
+                            <a href="#" class="pt-button" style="background-color: #3be664"><span>GET STARTED</span><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        </div>-->
+            </div>
+        </div>
+    </script>
+    <script>
+        var baseUrl = "https://devapi.workruit.com";
+
+        $(window).ready(function () {
+            console.log('hello');
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": baseUrl + "/resume/getResumePlans",
+                "method": "GET",
+                "headers": {
+                    "token": "911ca088ab824095b82d3c98b32332e7",
+                    "content-type": "application/json"
+                },
+                "processData": false,
+                // "data": JSON.stringify(signupData)
+            }
+            $.ajax(settings).done(function (response) {
+                response.map((item, index) => {
+                    var pId = btoa(JSON.stringify(item));
+                    item.redirectUrl = localStorage.getItem('userData') ?
+                        'checkout/index.html?' +
+                        pId :
+                        'login/index.html';
+                });
+                // console.log(response);
+                console.log(response);
+                $('.pricing_template').loadTemplate(
+                    //Specify the template container (or file name of external template)
+                    $('.data-pricing-template'),
+                    response, {
+                        append: true,
+                        elemPerPage: 20
+                    }
+                    // console.log(response.resumeplans[index]),
+                    //Specify the data to render
+                    // response.resumeplans[index]
+                );
+            });
+            $('.select_plan').on('click', function () {
+                console.log($(this).html);
+            })
+        })
+    </script>
+</body>
+
+</html>

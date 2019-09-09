@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#ffffff">
+  <title>Workruit — My Account</title>
+  <link rel='shortcut icon' type='image/x-icon' href='../favicon.png' />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/custom.css" />
+
+  <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+  <style>
+    #newSuccessMessageID.alert-success {
+      top: 69px;
+      z-index: 999;
+    }
+  </style>
+</head>
+
+<body class="account-page">
+  <div class="loading-container">
+    <img src="../images/oval.svg" style="width:55px">
+  </div>
+  <div id="newSuccessMessageID" class="alert alert-success">
+    <span>You are still required to verify your email address within 48 hours to use all the features.</span>
+    <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
+        width="10" /></a>
+  </div>
+  <div id="load-header"></div>
+
+  <div class="content w-100">
+    <div class="container">
+
+      <!-- Create Resume -->
+      <div class="row justify-content-center create-resume-container align-items-center" id="createResumeContainer">
+        <div class="col-md-6 create-resume-text">
+          <h1>My Resume</h1>
+          <h2>Get started by creating your resume</h2>
+          <a href="../create/index.html?edit"><button type="button"
+              class="btn btn-primary btn-lg px-5 mt-3">Create</button></a>
+        </div>
+        <div class="col-md-6 text-right">
+          <a href="../create/index.html?edit" class="create-resume-card">
+            <img src="../images/CreateResumeIcon.svg" />
+            <!-- <h3>Create Resume</h3>-->
+          </a>
+        </div>
+      </div>
+      <!-- /Create Resume -->
+
+      <!-- Update Resume -->
+      <div class="row justify-content-center create-resume-container align-items-center" id="updateResumeContainer">
+        <div class="col-md-6 create-resume-text">
+          <h1>My Resume</h1>
+          <h2> Resume last updated at <span id="lastUpdated"></span></h2>
+          <div class="premium-feature">
+            <a href="../create/index.html?edit"><button type="button"
+                class="btn btn-primary btn-lg px-5 mt-3">Edit</button></a>
+            <a href="../create/index.html?preview"><button type="button"
+                class="btn btn-primary btn-lg px-5 mt-3 preview_btn">Preview</button></a>
+          </div>
+          <!-- <div class="trail-feature d-none">
+            <a href="../pricing.html"><button type="button"
+                class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+            <a href="../create/index.html?preview"><button type="button"
+                class="btn btn-primary btn-lg px-5 mt-3 preview_btn">Preview</button></a>
+          </div> -->
+        </div>
+        <div class="col-md-6 text-right">
+          <a href="../create/index.html?edit" class="create-resume-card">
+            <img src="../images/EditResumeIcon.svg" />
+            <!-- <h3>Create Resume</h3>-->
+          </a>
+        </div>
+      </div>
+      <!-- /Update Resume -->
+      <!-- downloadApp popup -->
+      <div class="modal fade bd-example-modal-lg" id="downloadApp" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-5 text-center">
+                  <img src="../images/app/phone.png" alt="phone" height="320px" width="auto">
+                </div>
+                <div class="col-md-7 pt-5">
+                  <div class="modal-title">Find the right person on the go.</div>
+                  <div class="modal-description">
+                    Post jobs, chat with applicants. All features in
+                    <br /> your pocket.</div>
+                  <div class="getapp px-4 text-center mt-3">
+                    <span class="pr-3">Get the app</span>
+                    <a href="https://itunes.apple.com/in/app/workruit/id1189752813?mt=8" class="pr-2 transition">
+                      <img src="../images/app/icons/ios-white.svg" alt="ios">
+                    </a>
+                    <a class="transition" href="https://play.google.com/store/apps/details?id=com.workruit&amp;hl=en">
+                      <img src="../images/app/icons/android-white.svg" alt="android">
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /downloadApp popup -->
+    </div>
+  </div>
+  </div>
+  <script src="../js/account-scripts.js"></script>
+  <script>
+    $('.loading-container').delay(1000).fadeOut();
+  </script>
+  <script>
+    $(function () {
+      $('#load-header').load('../includes/user-header.html');
+      $('.account-page').paraCount();
+      $(window).ready(function () {
+        JSON.parse(localStorage.getItem('userData')).email_verified === 0 ? $('#newSuccessMessageID').css(
+          'display',
+          'none') : $('.preview_btn').css('display', 'block');
+        // console.log(localStorage.getItem('isPremiumUser'));
+        var freePlanInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
+        console.log(freePlanInfo);
+        // if (localStorage.getItem('isPremiumUser') === 'true') {
+        //   $('.premium-feature').removeClass('d-none');
+        // } else {
+        //   $('.trail-feature').removeClass('d-none');
+        // }
+      })
+      // console.log(localStorage.getItem('previewData')) newSuccessMessageID
+
+      localStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $('.preview_btn')
+        .css('display', 'inline-block')
+    });
+  </script>
+
+</body>
+
+</html>

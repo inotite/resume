@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 1440 766" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <polygon id="a" points="0 0 1440 0 1440 573.06 0 766"/>
+    <linearGradient id="c" x1="39.543%" x2="50.795%" y1="-9.989%" y2="105.532%">
+      <stop stop-color="#00C2D9" offset="0%"/>
+      <stop stop-color="#0FD3B4" offset="100%"/>
+    </linearGradient>
+    <linearGradient id="d" x1="4.034%" x2="26.908%" y1="49.561%" y2="50.258%">
+      <stop stop-color="#FFFFFF" stop-opacity=".631" offset="0%"/>
+      <stop stop-color="#FFFFFF" stop-opacity=".524" offset="100%"/>
+    </linearGradient>
+    <linearGradient id="e" x1="4.034%" x2="25.094%" y1="49.561%" y2="50.285%">
+      <stop stop-color="#FFFFFF" stop-opacity=".631" offset="0%"/>
+      <stop stop-color="#FFFFFF" stop-opacity=".297" offset="100%"/>
+    </linearGradient>
+    <linearGradient id="f" x1="4.034%" x2="117.118%" y1="49.561%" y2="50.255%">
+      <stop stop-color="#FFFFFF" stop-opacity=".631" offset="0%"/>
+      <stop stop-color="#FFFFFF" stop-opacity=".038" offset="100%"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="b" fill="white">
+      <use xlink:href="#a"/>
+    </mask>
+    <g transform="translate(-130)" mask="url(#b)">
+      <rect width="1454" height="801" x="130" fill="url(#c)"/>
+      <g opacity=".237" transform="translate(0 408)">
+        <rect width="162" height="1746.17" x="791.5" y="-568.982" fill="url(#d)" transform="rotate(79 872.5 304.103)"/>
+        <rect width="162" height="1746.17" x="828.5" y="-598.982" fill="url(#e)" transform="rotate(79 909.5 274.103)"/>
+        <rect width="162" height="1746.17" x="908.5" y="-625.982" fill="url(#f)" transform="rotate(79 989.5 247.103)"/>
+      </g>
+    </g>
+  </g>
+</svg>
+
