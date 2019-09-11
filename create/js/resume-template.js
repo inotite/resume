@@ -1200,15 +1200,15 @@ $(window).ready(function () {
                     .fieldOfStudy || !item.endDate || !item.startDate;
             });
             console.log(educationValidArray);
-            if (!!educationValidArray.length) {
-                var errorMessage = "Please fill the all details in education";
-                $('#newErrorMessageID .message-text').html(errorMessage)
-                $('#newErrorMessageID').fadeIn().delay(2000)
-                    .fadeOut('slow', function () {
-                        $('#saveResume').removeAttr('pointer-events');
-                    });
-                return false;
-            } else {
+            // if (!!educationValidArray.length) {
+            //     var errorMessage = "Please fill the all details in education";
+            //     $('#newErrorMessageID .message-text').html(errorMessage)
+            //     $('#newErrorMessageID').fadeIn().delay(2000)
+            //         .fadeOut('slow', function () {
+            //             $('#saveResume').removeAttr('pointer-events');
+            //         });
+            //     return false;
+            // } else {
                 applicantData.education = applicantData.education.map(function (item, index) {
                     return {
                         degree: item.degree,
@@ -1221,7 +1221,7 @@ $(window).ready(function () {
                         description: item.description
                     };
                 });
-            }
+            // }
         }
         if (applicantData.experience.length) {
             experienceValidArray = applicantData.experience.filter(function (item, index) {
@@ -1229,15 +1229,15 @@ $(window).ready(function () {
                     item.startDate;
             });
             console.log(experienceValidArray);
-            if (!!experienceValidArray.length) {
-                var errorMessage = "Please fill the all details in experience";
-                $('#newErrorMessageID .message-text').html(errorMessage)
-                $('#newErrorMessageID').fadeIn().delay(2000)
-                    .fadeOut('slow', function () {
-                        $('#saveResume').removeAttr('pointer-events');
-                    });
-                return false;
-            } else {
+            // if (!!experienceValidArray.length) {
+            //     var errorMessage = "Please fill the all details in experience";
+            //     $('#newErrorMessageID .message-text').html(errorMessage)
+            //     $('#newErrorMessageID').fadeIn().delay(2000)
+            //         .fadeOut('slow', function () {
+            //             $('#saveResume').removeAttr('pointer-events');
+            //         });
+            //     return false;
+            // } else {
                 applicantData.experience = applicantData.experience.map(function (item, index) {
                     return {
                         company: item.company,
@@ -1249,7 +1249,7 @@ $(window).ready(function () {
                         startDate: item.startDate
                     };
                 });
-            }
+            // }
         }
         if (applicantData.academic.length) {
             academicValidArray = applicantData.academic.filter(function (item, index) {
@@ -1257,15 +1257,15 @@ $(window).ready(function () {
                     .location || !item.startDate || !item.projectTitle || !item.role;
             });
             console.log(academicValidArray);
-            if (!!academicValidArray.length) {
-                var errorMessage = "Please fill the all details in academic project";
-                $('#newErrorMessageID .message-text').html(errorMessage)
-                $('#newErrorMessageID').fadeIn().delay(2000)
-                    .fadeOut('slow', function () {
-                        $('#saveResume').removeAttr('pointer-events');
-                    });
-                return false;
-            } else {
+            // if (!!academicValidArray.length) {
+            //     var errorMessage = "Please fill the all details in academic project";
+            //     $('#newErrorMessageID .message-text').html(errorMessage)
+            //     $('#newErrorMessageID').fadeIn().delay(2000)
+            //         .fadeOut('slow', function () {
+            //             $('#saveResume').removeAttr('pointer-events');
+            //         });
+            //     return false;
+            // } else {
                 applicantData.academic = applicantData.academic.map(function (item, index) {
                     return {
                         description: item.description,
@@ -1278,29 +1278,29 @@ $(window).ready(function () {
                         startDate: item.startDate
                     };
                 });
-            }
+            // }
         }
         if (applicantData.skill.length) {
             academicValidArray = applicantData.skill.filter(function (item, index) {
                 return !item.skillName || !item.skill_percentage;
             });
             console.log(academicValidArray);
-            if (!!academicValidArray.length) {
-                var errorMessage = "Please fill the skills";
-                $('#newErrorMessageID .message-text').html(errorMessage)
-                $('#newErrorMessageID').fadeIn().delay(2000)
-                    .fadeOut('slow', function () {
-                        $('#saveResume').removeAttr('pointer-events');
-                    });
-                return false;
-            } else {
+            // if (!!academicValidArray.length) {
+            //     var errorMessage = "Please fill the skills";
+            //     $('#newErrorMessageID .message-text').html(errorMessage)
+            //     $('#newErrorMessageID').fadeIn().delay(2000)
+            //         .fadeOut('slow', function () {
+            //             $('#saveResume').removeAttr('pointer-events');
+            //         });
+            //     return false;
+            // } else {
                 applicantData.skill = applicantData.skill.map(function (item, index) {
                     return {
                         skillName: item.skillName,
                         skill_percentage: item.skill_percentage
                     };
                 });
-            }
+            // }
         }
         var settings = {
             "async": true,
@@ -1319,7 +1319,7 @@ $(window).ready(function () {
             dataType: "json",
             contentType: "application/json"
         }
-        console.log("settings", settings.data);
+        console.log("settings",settings.data);
         // downloadResume
         $.ajax(settings).done(function (response) {
             if (response.status == 'success') {
@@ -1378,7 +1378,7 @@ $(window).ready(function () {
         $('.loading-container').show();
         if (planInfo) {
             var ele = $('#resume-body')[0];
-            // console.log(ele)
+            console.log(ele)
             /* ele.css({'height': ''});
             ele.css({'max-height': ''});*/
             ele.style.boxShadow = "none";
@@ -1399,8 +1399,6 @@ $(window).ready(function () {
                 form2.append("type", "resume");
                 form2.append("userId", userId);
                 form2.append('file', pdfOut);
-                console.log("form2", form2);
-
                 axios({
                         method: 'post',
                         url: apiUrl + "/uploadFile",
@@ -1428,16 +1426,13 @@ $(window).ready(function () {
                 var waterMarkImage = new Image();
                 waterMarkImage.src = dataWaterMark;
                 docWaterMark = addWaterMark(docWaterMark);
-                docWaterMark.addImage(waterMarkImage, 'PNG', -0.3, 0.5, 0, 0, '', 'FAST');
-                docWaterMark.save(userId + '_resume.pdf');
-                console.log("docWaterMark", docWaterMark);
+                docWaterMark.addImage(waterMarkImage, 'JPG', -0.3, 0.5, 0, 0, '', 'FAST');
                 var pdfOutWaterMark = docWaterMark.output('blob');
-                console.log("pdfOutWaterMark", pdfOutWaterMark);
+                console.log(pdfOutWaterMark);
                 var formWatermark = new FormData();
                 formWatermark.append("type", "watermark");
                 formWatermark.append("userId", userId);
                 formWatermark.append('file', pdfOutWaterMark);
-                console.log("formWatermark", formWatermark);
                 axios({
                         method: 'post',
                         url: apiUrl + "/uploadFile",
@@ -1458,9 +1453,9 @@ $(window).ready(function () {
                         console.log(response);
                     })
                 if (planInfo && planInfo[0].planId == 1) {
-                    // docWaterMark.save(userId + '_resume.pdf');
+                    docWaterMark.save(userId + '_resume.pdf');
                 } else {
-                    // doc.save(resumeObj.firstname + '_resume.pdf');
+                    doc.save(resumeObj.firstname + '_resume.pdf');
                 }
                 ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
                 $('.loading-container').delay(2000).fadeOut();
@@ -1515,8 +1510,7 @@ $(window).ready(function () {
             }
         });
     }
-    var imgData = './watermarkworkruit.png';
-    console.log(imgData);
+    var imgData = './watermarkworkruit.png'
     var base64Img;
     toDataURL(imgData, function (dataUrl) {
         base64Img = dataUrl;
@@ -1524,11 +1518,11 @@ $(window).ready(function () {
 
     function addWaterMark(doc) {
         var totalPages = doc.internal.getNumberOfPages();
+        console.log(base64Img, "base64Img");
         for (i = 1; i <= totalPages; i++) {
             doc.setPage(i);
             doc.addImage(base64Img, 'PNG', 3.3, 6);
         }
-        console.log(base64Img, "base64Img");
         return doc;
     }
 
@@ -1545,48 +1539,4 @@ $(window).ready(function () {
         xhr.responseType = 'blob';
         xhr.send();
     }
-    var modal_sepaso = false;
-    var c;
-    var d;
-
-    function sizeExceed() {
-        var resumeInnerHeight = $("page[size='a4']").innerHeight();
-        if (resumeInnerHeight > 1122.52 && !modal_sepaso) {
-            console.log("over height", resumeInnerHeight)
-            $("#modal_sepaso").css({
-                display: 'block',
-                opacity: 1,
-            });
-            $('.size-exceed-error').addClass('active').css('height', resumeInnerHeight - 1122.52);
-            $('#size-exceed-modal').modal('show');
-
-        } else {
-            $('#size-exceed-modal').modal('hide');
-            // $('.size-exceed-error').removeClass('active').css('height', 'auto');
-        }
-        if (resumeInnerHeight <= 1122.52) {
-            $('#size-exceed-modal').modal('hide');
-            $('.size-exceed-error').removeClass('active').css('height', 'auto');
-            clearInterval();
-        }
-    }
-    c = setInterval(sizeExceed, 1000);
-    setInterval(function () {
-        var resumeInnerHeight = $("page[size='a4']").innerHeight();
-        if (resumeInnerHeight > 1122.52 && !modal_sepaso) {
-            $('.size-exceed-error').addClass('active').css('height', resumeInnerHeight - 1122.52);
-        } else {
-            $('.size-exceed-error').removeClass('active').css('height', 'auto');
-        }
-
-    }, 1000)
-    $('#size-exceed-modal .closer').click(function (e) {
-        // do something...
-        $('#size-exceed-modal').modal({
-            backdrop: false,
-        });
-        $('#size-exceed-modal').modal('hide');
-        console.log(e);
-        clearInterval(c);
-    });
 });

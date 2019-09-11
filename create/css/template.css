@@ -64,11 +64,9 @@ body {
 .pl-1p8x {
     padding-left: 1.9px;
 }
-
-.pl-7x {
+.pl-7x{
     padding-left: 7px;
 }
-
 .cursor-pointer {
     cursor: pointer;
 }
@@ -234,7 +232,6 @@ page[size='a4'] {
     margin: auto;
     padding: 1.3cm;
     box-sizing: border-box;
-    position: relative;
 }
 
 [contenteditable=true]:empty:before {
@@ -827,18 +824,4 @@ input {
 .theme-green .add_icon,
 .theme-green .remove_icon {
     background-color: var(--color-green);
-}
-.size-exceed-error{
-    opacity: 0;
-}
-.size-exceed-error.active {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(255, 0, 0, .3);
-    display: block;
-    pointer-events: none;
-    opacity: 1;
-    animation: blinker 2s linear infinite;
 }

@@ -86,7 +86,7 @@
             "content-type": "application/json"
         },
     };
-    if (!localStorage.getItem('userPlanStatus')) {
+    if (localStorage.getItem('userPlanStatus')) {
         $.ajax(userPlanStatus).done(function (response) {
             console.log(response);
             if (typeof (response.data) == "object") {
