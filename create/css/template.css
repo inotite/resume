@@ -745,9 +745,10 @@ input {
 .nice-select {
     padding: 0;
     padding-left: 3px;
+    float: none;
     border: unset;
-    line-height: unset;
-    height: auto;
+    /* line-height: unset; */
+    /* height: auto; */
 }
 
 .nice-select .list {
