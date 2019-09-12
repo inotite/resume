@@ -6,6 +6,9 @@ const sessionId = localStorage.getItem('sessionId');
 const userStatus = localStorage.getItem('isPremiumUser');
 const planInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
 let resumeObj = JSON.parse(localStorage.getItem('userData'));
+const exp_total_count = 10;
+const edu_total_count = 10;
+const proj_total_count = 10;
 console.log(resumeObj);
 // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
 var twitterIcon = import('../img/twitter.svg');
@@ -291,7 +294,7 @@ $(window).ready(function () {
     });
     //experience add new start
     $("body").on("click", ".add_exp", function (e) {
-        if ($('.professional-experience').length < 3) {
+        if ($('.professional-experience').length < exp_total_count) {
             // console.log('i am add_exp')
             var $div = $('div[id^="proExp"]:last');
             var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
@@ -316,8 +319,24 @@ $(window).ready(function () {
                 startView: "months",
                 minViewMode: "months"
             });
+
+            $("#proExp_" + num + " .exp-role").keypress(function(e) {
+                return handleKeypress($(this), 40, e);
+            });
+
+            $("#proExp_" + num + " .exp-company").keypress(function (e) {
+                return handleKeypress($(this), 40, e);
+            });
+            
+            $("#proExp_" + num + " .exp-location").keypress(function (e) {
+                return handleKeypress($(this), 40, e);
+            });
+            
+            $("#proExp_" + num + " .exp-desc").keypress(function(e) {
+                return handleKeypress($(this), 300, e);
+            });
         }
-        if ($('.professional-experience').length == 3) {
+        if ($('.professional-experience').length == exp_total_count) {
             $('.professional-experience .add_exp').addClass('d-none');
         }
         if ($('.professional-experience').length > 1) {
@@ -328,18 +347,18 @@ $(window).ready(function () {
     $("body").on("click", ".remove_exp", function () {
         var $div = $(this);
         $div.parent().parent().remove();
-        if ($('.professional-experience').length < 2) {
+        if ($('.professional-experience').length < exp_total_count - 1) {
             // console.log('i am remove_exp');
             $('.professional-experience .remove_exp').addClass('d-none').removeClass('d-block');
         }
-        if ($('.professional-experience').length < 3) {
+        if ($('.professional-experience').length < exp_total_count) {
             $('.professional-experience .add_exp').addClass('d-block').removeClass('d-none');
         }
     });
     //experience add new end
     //education add new start
     $("body").on("click", ".add_edu", function (e) {
-        if ($('.education-details').length < 3) {
+        if ($('.education-details').length < edu_total_count) {
             // console.log('i am add_edu')
             var $div = $('div[id^="education_"]:last');
             var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
@@ -388,8 +407,29 @@ $(window).ready(function () {
             }).focus(function () {
                 $(this).autocomplete("search");
             });
+
+            
+            $("#education_" + num + " .edu-field").keypress(function(e) {
+                return handleKeypress($(this), 40, e);
+            });
+
+            $("#education_" + num + " .edu-degree").keypress(function(e) {
+                return handleKeypress($(this), 50, e);
+            });
+
+            $("#education_" + num + " .edu-school").keypress(function(e) {
+                return handleKeypress($(this), 40, e);
+            });
+
+            $("#education_" + num + " .edu-location").keypress(function(e) {
+                return handleKeypress($(this), 40, e);
+            });
+
+            $("#education_" + num + " .edu-desc").keypress(function(e) {
+                return handleKeypress($(this), 300, e);
+            });
         }
-        if ($('.education-details').length == 3) {
+        if ($('.education-details').length == edu_total_count) {
             $('.education-details .add_edu').addClass('d-none');
         }
         if ($('.education-details').length > 1) {
@@ -400,18 +440,18 @@ $(window).ready(function () {
     $("body").on("click", ".remove_edu", function () {
         var $div = $(this);
         $div.parent().parent().remove();
-        if ($('.education-details').length < 2) {
+        if ($('.education-details').length < edu_total_count - 1) {
             // console.log('i am remove_edu');
             $('.education-details .remove_edu').addClass('d-none').removeClass('d-block');
         }
-        if ($('.education-details').length < 3) {
+        if ($('.education-details').length < edu_total_count) {
             $('.education-details .add_edu').addClass('d-block').removeClass('d-none');
         }
     });
     //education add new end
     //academic add new start
     $("body").on("click", ".add_acad", function () {
-        if ($('.academic-project').length < 3) {
+        if ($('.academic-project').length < proj_total_count) {
             // console.log('i am add_exp')
             var $div = $('div[id^="academic_projects_"]:last');
             var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
@@ -444,8 +484,29 @@ $(window).ready(function () {
                 startView: "months",
                 minViewMode: "months"
             });
+
+            
+            $("#academic_projects_" + num + " .project-title").keypress(function(e) {
+                return handleKeypress($(this), 30, e);
+            });
+
+            $("#academic_projects_" + num + " .project-role").keypress(function(e) {
+                return handleKeypress($(this), 30, e);
+            });
+
+            $("#academic_projects_" + num + " .university").keypress(function(e) {
+                return handleKeypress($(this), 40, e);
+            });
+
+            $("#academic_projects_" + num + " .uni-location").keypress(function(e) {
+                return handleKeypress($(this), 40, e);
+            });
+
+            $("#academic_projects_" + num + " .project-desc").keypress(function(e) {
+                return handleKeypress($(this), 300, e);
+            });
         }
-        if ($('.academic-project').length == 3) {
+        if ($('.academic-project').length == proj_total_count) {
             $('.academic-project .add_acad').addClass('d-none');
         }
         if ($('.academic-project').length > 1) {
@@ -455,10 +516,10 @@ $(window).ready(function () {
     $("body").on("click", ".remove_acad", function () {
         var $div = $(this);
         $div.parent().parent().remove();
-        if ($('.academic-project').length < 2) {
+        if ($('.academic-project').length < proj_total_count - 1) {
             $('.academic-project .remove_acad').addClass('d-none').removeClass('d-block');
         }
-        if ($('.academic-project').length < 3) {
+        if ($('.academic-project').length < proj_total_count) {
             $('.academic-project .add_acad').addClass('d-block').removeClass('d-none');
         }
     });
@@ -482,6 +543,14 @@ $(window).ready(function () {
         $('#skills_item_' + num + ' .skills-bar').attr('class', '').attr('class',
             'skills-bar color-blue at-75');
         $('#skills_item_' + num + ' .skill').attr('data-content', '').text('');
+        $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+            console.log($(this).val());
+            return $(this).val().length < 48;
+        });
     }
     $("body").on("click", ".add_skills", function () {
         if ($('.skills-item').length < 16) {
@@ -498,6 +567,14 @@ $(window).ready(function () {
             $('#skills_item_' + num + ' .skill').attr('data-content', '').val('');
             $('#skills_item_' + num + ' [data-content="skillText"]').val('');
             // console.log('i am add_exp')
+            $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+                console.log($(this).val());
+                return $(this).val().length < 48;
+            });
         }
         if ($('.skills-item').length == 16) {
             $('.skills-item .add_skills').addClass('d-none');
@@ -879,13 +956,18 @@ $(window).ready(function () {
     }
 
     $("#user-picture").change(function () {
+        console.log("Here");
         readURL(this);
     });
 
     bindUserData();
 
     function bindUserData() {
+        if ( !resumeObj.pic )
+            resumeObj.pic = 'data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAAFYUlEQVR4nO2d7W3bMBCGr0EHUCeoM0HUCWpP0HSC2BM0naDOBHEmsDtB3QniThB1groTRD/6vwWNlwYtyhJF3lFUqgcwEsgfol7d8eN4pF49P/+hRJjgNUVx3rcU6wf+7ohoj1fv9CloTkTXEE79n1mf6EZJRAWE3uL/6MQWVFnfDYQMFbCNEsJ+hRVHIYagSrg5EX2CS/eBqg4eiGgDocWQFFQJeQshpa3RlRLCrqSElRJ0mZiQVbSwS+udQLgFVXXkukfX7oqqChacdeyFdcQPZYn3RPQ4IDEJZX1E2Vm8icNCVZfn28CErENZ68fQ7laoharW++kFiEm4hidckzchgt6jvnxprHFtXvgKukaX6KVy62ssPoKuQ91iIMx9RO0qaCwxVQNxR0Qz1XBWXjO8FyMY0lnULq38fQQ3Vy3s5w79winKlVvv8LJCuVpxtdB5BDFVod917GTv8J2V9Q4vt66e6WKhOboTkiwQuAjBq87ryLu2fmqbhWbotEtyxyAm4TfurKO8fGsbUbUJ+kW4075jDlAshWOfE2hyliaXn2KcK8mlQGutLvqXdZSX2bkb12Sh0vXRRqjrs2eqQpo4q805QZcRxuffrSPD+G2CNrVVVZ3LZ3CZxsqXgVfCv//XOsJLiSrrJPJfZ6G3EcSsrX8Gdo6srm9eFTTD1MWIG9Y0T1XQecLzQCmSVUdQVUFH6+zOiWamoNOIkfcYXhDL08z0oRNBb6yPysGRetNEFiECZXLUzhT02vqYLJLn6+1atKDSFlOHpEfEbguOHqEFjX1HCfWOxHmvI7u7ed6joG25mFKsmT0jaxpnC3PQ0HT5PuCOt7bGKwU5uvyk5878lEEIfWOm1jvxUGWYXCSS9XGN2KuPp+T4bh/tQJWDoH3eVRM9d+WavTfBZ596rLKqTF9bh/pnjleBiNFvY2JMCfcWRpCKiCcoQa+so2mQpypaA1cXY3SJlawuwDwSwCgoM6OgzIyCMjMKyswoKC/layw2TWG0tEMH/ieyP4qG1W46/jhBPzpP5Bp+9jlSKpA9svOYQy/PfGeK14e+BgUqcyRGUpimwOrgbYSU7gkCJjcRxZ0pQWNkq22wtrIxWVWQHNMi0usDLnVu07PQEHQTcYGBCzq/U0JYVQ290a08t+XskUO5SEhMMhbLzgTKddBQC/rDetufrcfig9joxQ5bxvMeNNSCcv3wBgtQz3V3UqJEWbmScw8amvmhofWouusz6+gweAzsxx7qT6qMlEKsVN/toRLqVUftTEG/Wh9zR3xzFGHKQNc/amcKugto+aRz2mPgew17swGuBkcerI+78RKmUXyv4USz6qIF3wULBRqkobp95pkXYC1cqFpo6WmlecguCAngu6L5oWpE3MtqOBbBxsZ30a1lnVRjoRRgpYqh7fYQsoLZsk46Y6GaXwF5T0Ow1BAx97BOizoL1SysI+6kbqmha+vPatMk6C5wp4S1QEJtKJlRLl9WTYGfJpcnFCB0o6sCd7Sv4LImh5Ah0fs9olRW3alpslBiGqPrNMVlT9aa4dwcaY+tY36XaeSiqc7owBeOrdA6oreSa9yFwREnL+trm6E9AgoSG6PqVcI3jNnZztsMdd2dUaL13hrTyb7BmYkxfcydGr7p4qE+211Kdon2RrJDNdGhNOpgnehwZSQ8SNBJTArYP/R/2P+us5gUkNu0iLCbV5+sfBvikGSxz0ytf2osXBugOkKz7zbo6KY09+6L7rQHxSA40hmLSBv6SbJy2dfOhXHb9US3XdfsENa6S3w6pEQZL7kzXMZHVzAzPlyFmfHxP8yMD6hiJuVHqKlxepPI6T1CjYj+Af7+dGpiAOSrAAAAAElFTkSuQmCC';
         $('#user_pic').attr('src', resumeObj.pic);
+        if ( !resumeObj.collegeLogo )
+            resumeObj.collegeLogo = 'img/24px.svg';
         $('.clg_picture img').attr('src', resumeObj.collegeLogo)
         $('[data-content="firstname"]').text(resumeObj.firstname);
         $('[data-content="lastname"]').text(resumeObj.lastname);
@@ -1200,15 +1282,16 @@ $(window).ready(function () {
                     .fieldOfStudy || !item.endDate || !item.startDate;
             });
             console.log(educationValidArray);
-            // if (!!educationValidArray.length) {
-            //     var errorMessage = "Please fill the all details in education";
-            //     $('#newErrorMessageID .message-text').html(errorMessage)
-            //     $('#newErrorMessageID').fadeIn().delay(2000)
-            //         .fadeOut('slow', function () {
-            //             $('#saveResume').removeAttr('pointer-events');
-            //         });
-            //     return false;
-            // } else {
+            if (!!educationValidArray.length) {
+                // var errorMessage = "Please fill the all details in education";
+                // $('#newErrorMessageID .message-text').html(errorMessage)
+                // $('#newErrorMessageID').fadeIn().delay(2000)
+                //     .fadeOut('slow', function () {
+                //         $('#saveResume').removeAttr('pointer-events');
+                //     });
+                // return false;
+                applicantData.education = [];
+            } else {
                 applicantData.education = applicantData.education.map(function (item, index) {
                     return {
                         degree: item.degree,
@@ -1221,7 +1304,7 @@ $(window).ready(function () {
                         description: item.description
                     };
                 });
-            // }
+            }
         }
         if (applicantData.experience.length) {
             experienceValidArray = applicantData.experience.filter(function (item, index) {
@@ -1229,15 +1312,16 @@ $(window).ready(function () {
                     item.startDate;
             });
             console.log(experienceValidArray);
-            // if (!!experienceValidArray.length) {
-            //     var errorMessage = "Please fill the all details in experience";
-            //     $('#newErrorMessageID .message-text').html(errorMessage)
-            //     $('#newErrorMessageID').fadeIn().delay(2000)
-            //         .fadeOut('slow', function () {
-            //             $('#saveResume').removeAttr('pointer-events');
-            //         });
-            //     return false;
-            // } else {
+            if (!!experienceValidArray.length) {
+                // var errorMessage = "Please fill the all details in experience";
+                // $('#newErrorMessageID .message-text').html(errorMessage)
+                // $('#newErrorMessageID').fadeIn().delay(2000)
+                //     .fadeOut('slow', function () {
+                //         $('#saveResume').removeAttr('pointer-events');
+                //     });
+                // return false;
+                applicantData.experience = [];
+            } else {
                 applicantData.experience = applicantData.experience.map(function (item, index) {
                     return {
                         company: item.company,
@@ -1249,7 +1333,7 @@ $(window).ready(function () {
                         startDate: item.startDate
                     };
                 });
-            // }
+            }
         }
         if (applicantData.academic.length) {
             academicValidArray = applicantData.academic.filter(function (item, index) {
@@ -1257,15 +1341,16 @@ $(window).ready(function () {
                     .location || !item.startDate || !item.projectTitle || !item.role;
             });
             console.log(academicValidArray);
-            // if (!!academicValidArray.length) {
-            //     var errorMessage = "Please fill the all details in academic project";
-            //     $('#newErrorMessageID .message-text').html(errorMessage)
-            //     $('#newErrorMessageID').fadeIn().delay(2000)
-            //         .fadeOut('slow', function () {
-            //             $('#saveResume').removeAttr('pointer-events');
-            //         });
-            //     return false;
-            // } else {
+            if (!!academicValidArray.length) {
+                // var errorMessage = "Please fill the all details in academic project";
+                // $('#newErrorMessageID .message-text').html(errorMessage)
+                // $('#newErrorMessageID').fadeIn().delay(2000)
+                //     .fadeOut('slow', function () {
+                //         $('#saveResume').removeAttr('pointer-events');
+                //     });
+                // return false;
+                applicantData.academic = [];
+            } else {
                 applicantData.academic = applicantData.academic.map(function (item, index) {
                     return {
                         description: item.description,
@@ -1278,29 +1363,30 @@ $(window).ready(function () {
                         startDate: item.startDate
                     };
                 });
-            // }
+            }
         }
         if (applicantData.skill.length) {
             academicValidArray = applicantData.skill.filter(function (item, index) {
                 return !item.skillName || !item.skill_percentage;
             });
             console.log(academicValidArray);
-            // if (!!academicValidArray.length) {
-            //     var errorMessage = "Please fill the skills";
-            //     $('#newErrorMessageID .message-text').html(errorMessage)
-            //     $('#newErrorMessageID').fadeIn().delay(2000)
-            //         .fadeOut('slow', function () {
-            //             $('#saveResume').removeAttr('pointer-events');
-            //         });
-            //     return false;
-            // } else {
+            if (!!academicValidArray.length) {
+                // var errorMessage = "Please fill the skills";
+                // $('#newErrorMessageID .message-text').html(errorMessage)
+                // $('#newErrorMessageID').fadeIn().delay(2000)
+                //     .fadeOut('slow', function () {
+                //         $('#saveResume').removeAttr('pointer-events');
+                //     });
+                // return false;
+                applicantData.skill = [];
+            } else {
                 applicantData.skill = applicantData.skill.map(function (item, index) {
                     return {
                         skillName: item.skillName,
                         skill_percentage: item.skill_percentage
                     };
                 });
-            // }
+            }
         }
         var settings = {
             "async": true,
