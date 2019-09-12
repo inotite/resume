@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="63px" height="62px" viewBox="0 0 63 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.800000012">
+        <g id="applicant-design-04" transform="translate(-134.000000, -3170.000000)" fill="#F2C14E">
+            <g id="features" transform="translate(132.000000, 2644.000000)">
+                <g id="instant-access" transform="translate(1.000000, 526.000000)">
+                    <g id="icon" transform="translate(1.000000, 0.000000)">
+                        <ellipse id="Oval-2" opacity="0.25" cx="31.5" cy="31" rx="31.5" ry="31"></ellipse>
+                        <path d="M24.9843827,14.8982923 C25.0958047,13.8498944 26.045908,13 27.0915373,13 L36.3845377,13 C37.436865,13 38.0192873,13.8008235 37.679204,14.8070639 L33.9631947,25.8020163 L42.1003541,25.8020163 C43.1494996,25.8020163 43.5064452,26.4892828 42.8933458,27.3430128 L26.2927843,50.4590035 C25.6815961,51.3100724 25.4713782,51.2080797 25.8286893,50.2160943 L31.8246307,33.5698556 L24.8931047,33.5698556 C23.8475718,33.5698556 23.0897745,32.7251441 23.2017474,31.6715632 L24.9843827,14.8982923 Z" id="Path-2"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

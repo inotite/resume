@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 1440 2593" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>e-hero-gradient-merged copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="78.9192708%" y1="88.2462669%" x2="3.4624566%" y2="-20.0054368%" id="linearGradient-1">
+            <stop stop-color="#3EBB64" offset="0%"></stop>
+            <stop stop-color="#337AB7" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="64.4839657%" y1="9.96870018%" x2="65.5121863%" y2="85.6001583%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.04" offset="1.4847736%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.4" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="63.9813031%" y1="-31.6726505%" x2="63.9813006%" y2="122.700682%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0.04" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.4" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="development" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="e-hero-gradient-merged-copy">
+            <polygon id="gr-bg" fill="#F9F9F9" points="0 643 1440 643 1440 2586 0 2480.1135"></polygon>
+            <polygon id="gr-str" fill="#F6F5F5" transform="translate(720.000000, 2507.500000) scale(-1, 1) translate(-720.000000, -2507.500000) " points="0 2469.47115 1440 2429 1440 2480.84124 0 2586"></polygon>
+            <polygon id="grad-bg" fill="url(#linearGradient-1)" points="0 0 1440 0 1440 648.598579 0 833"></polygon>
+            <polygon id="grad-str-1" fill="url(#linearGradient-2)" points="0.0148705964 717.331283 1440.00417 611.574263 1440 649.796875 3.46389584e-14 832.835938"></polygon>
+            <polygon id="grad-str-2" fill="url(#linearGradient-3)" transform="translate(720.000000, 731.500000) rotate(-5.800000) translate(-720.000000, -731.500000) " points="-0.632343792 700.747733 1447 700 1444.69837 722.501497 -6.99999974 763"></polygon>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 1440 834" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>hero-employer-blue-green-gradient</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="78.9192708%" y1="88.2462669%" x2="3.4624566%" y2="-20.0054368%" id="linearGradient-1">
+            <stop stop-color="#3EBB64" offset="0%"></stop>
+            <stop stop-color="#337AB7" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-2" points="0 0 1440 0 1440 648.945312 0 833.445312"></polygon>
+        <linearGradient x1="62.2553168%" y1="63.597342%" x2="-14.2513021%" y2="-58.6590449%" id="linearGradient-4">
+            <stop stop-color="#3EBB64" offset="0%"></stop>
+            <stop stop-color="#337AB7" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-5" x="4.26794558" y="54.2295795" width="1560" height="148.172237"></rect>
+        <linearGradient x1="51.1653646%" y1="136.862274%" x2="-5.09494358%" y2="-143.692238%" id="linearGradient-6">
+            <stop stop-color="#3EBB64" offset="0%"></stop>
+            <stop stop-color="#337AB7" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-7" x="4.30700808" y="90.6827045" width="1560" height="148.172237"></rect>
+    </defs>
+    <g id="development" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="hero-employer-blue-green-gradient">
+            <mask id="mask-3" fill="white">
+                <use xlink:href="#path-2"></use>
+            </mask>
+            <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+            <g id="rectangles" mask="url(#mask-3)">
+                <g transform="translate(-61.000000, 609.000000)">
+                    <g id="Rectangle" transform="translate(784.267946, 128.315698) rotate(-4.000000) translate(-784.267946, -128.315698) ">
+                        <use fill="url(#linearGradient-4)" xlink:href="#path-5"></use>
+                        <use fill-opacity="0.0899999961" fill="#FFFFFF" xlink:href="#path-5"></use>
+                    </g>
+                    <g id="Rectangle-Copy" transform="translate(784.307008, 164.768823) rotate(-5.800000) translate(-784.307008, -164.768823) ">
+                        <use fill="url(#linearGradient-6)" xlink:href="#path-7"></use>
+                        <use fill-opacity="0.189999998" fill="#FFFFFF" xlink:href="#path-7"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

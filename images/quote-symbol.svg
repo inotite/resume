@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100%" height="100%" viewBox="0 0 327 272" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>quote-symbol</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="100%" x2="50%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#4CAD8C" offset="0%"></stop>
+            <stop stop-color="#72C4AA" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="development" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="quote-symbol" fill-rule="nonzero" fill="url(#linearGradient-1)">
+            <path d="M188.200345,169.790533 C188.200345,120.771938 200.051703,82.3961142 223.754773,54.6619094 C247.457843,26.9277046 280.754514,8.70725034 323.645784,0 L323.645784,50.308306 C291.074218,60.3055193 269.145176,78.3647306 257.858,104.486482 C251.408185,118.353584 248.828297,131.73675 250.11826,144.63638 L326.064453,144.63638 L326.064453,271.858346 L188.200345,271.858346 L188.200345,169.790533 Z M0,169.790533 C0,121.41692 11.528871,83.2023386 34.58696,55.1456431 C57.645049,27.0889476 91.264206,8.70725034 135.445439,0 L135.445439,50.308306 C102.551382,60.6280101 80.461097,78.3647355 69.173921,103.519014 C63.369087,116.741135 60.950443,130.446787 61.917915,144.63638 L137.864108,144.63638 L137.864108,271.858346 L0,271.858346 L0,169.790533 Z" id="“"></path>
+        </g>
+    </g>
+</svg>

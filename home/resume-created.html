@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#ffffff">
+  <title>Workruit — My Account</title>
+  <link rel='shortcut icon' type='image/x-icon' href='../favicon.png' />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/custom.css" />
+
+  <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>-->
+</head>
+
+<body>
+  <header class="w-100">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-md-5">
+          <ul class="nav">
+            <li class="nav-item active">
+              <a class="nav-link transition" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link transition" href="#">Resume</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link transition" href="#">Share</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-2 text-center">
+          <a href="#/applicants" class="logo">
+            <img src="../images/app/logo.svg" alt="logo">
+          </a>
+        </div>
+        <div class="col-md-5">
+
+
+          <ul class="nav justify-content-end">
+            <li>
+              <button type="button" class="btn btn-primary upgrade-btn" id="change_password_button">Upgrade</button>
+            </li>
+            <li class="nav-item user dropdown">
+              <a class="nav-link transition dropdown-toggle" data-toggle="dropdown" id="profileMenu" aria-haspopup="true" aria-expanded="false">
+                <img src="../images/app/pic1.png" style="border-radius: 50%;" alt="">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="profile">
+                <a class="dropdown-item transition" href="">Ranjith Kumar</a>
+                <a href="#/applicants" class="dropdown-item transition">
+                  <span>abc@gmail.com</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item transition selected" href="#">Account</a>
+                <a class="dropdown-item transition" href="#">Notifications</a>
+                <a class="dropdown-item transition" href="javascript:void(0)" data-toggle="modal" data-target="#downloadApp">Download App</a>
+                <a class="dropdown-item transition" href="#">Sign Out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="content w-100">
+    <div class="container">
+      <div class="row justify-content-center create-resume-container-2">
+        <div class="col-md-6 create-resume-text">
+            <h1>My Resume</h1>
+            <h2>Last Updated on</h2>
+            <h2>Feb 23 , 2019 - 6:30 pm</h2>
+            <a href="resume/index.html"><button type="button" class="btn btn-primary btn-lg px-5 mt-3">Edit</button></a>
+            <a href="#postjob"><button type="button" class="btn btn-primary btn-lg px-5 mt-3">Preview</button></a>
+        </div>
+        <div class="col-md-6">
+            <a href="resume/index.html" class="create-resume-card-2">
+              <img src="../images/resume-icon.png" />
+            </a>
+          </div>
+      </div>
+
+        
+
+       
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    $(function () {
+      $("#changePassBtn").on('click', function () {
+        $("#changePasswordForm").toggle();
+      });
+      $('#profileMenu').on('click', function () {
+        $('.dropdown, .dropdown-menu').toggleClass('open');
+      })
+      $('.tab-item').on('click', function(){
+        let idVal = $(this).attr('data-item');
+       
+        $('.tab-item').removeClass('active')
+        $('.tab-body-container').removeClass('tab-body-show');
+        $(this).addClass('active');
+        $('#'+idVal+'TabBody').addClass('tab-body-show');
+      });
+    });
+  </script>
+
+</body>
+
+</html>

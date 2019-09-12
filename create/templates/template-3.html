@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Workruit - Instant Resume</title>
+    <meta name="description"
+        content="Free resume builder online. No sign-up required. Create your CV in real time and download a print-ready PDF.">
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <script>
+        // var sessionId = localStorage.getItem('sessionId');
+        // if (!sessionId) {
+        //     window.location.href = "../index.html";
+        // }         
+    </script>
+    <link rel="stylesheet" href="css/nice-select.min.css" />
+    <!--<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+    <link href="plugins/datedropper/datedropper.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/template-1.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="css/template.css" /> -->
+</head>
+
+<body>
+    <!-- Error Messages -->
+    <div id="newErrorMessageID" class="alert alert-danger">
+        <b class="message-text"></b>
+        <a href='javascript:void(0)' class="close" aria-label="close" title="close">
+            <img src="../images/app/icons/close.png" width="10" />
+        </a>
+    </div>
+    <div id="newSuccessMessageID" class="alert alert-success">
+        <b class="message-text"></b>
+        <a href="javascript:void(0)" class="close" aria-label="close" title="close">
+            <img src="../images/app/icons/close.png" width="10" />
+        </a>
+    </div>
+    <!-- /Error Messages -->
+
+
+    <div class="resume-body">
+        <!-- <div class="logo2"></div> -->
+        <!-- <div class="centradovertical">
+            <img src="img/oval1.svg" style="width:55px;opacity:.5;">
+        </div>-->
+    </div>
+    <!-- <div class="loading">
+        <div class="loading_gradient"></div>
+    </div> -->
+    <div class="" id="preview-overlay"></div>
+
+    <div id="edit" style="display:block; opacity:1;">
+        <div id="hover_submenu" class="hover_submenu" style="pointer-events:none"></div>
+        <div id="menu_edicion">
+            <div class="menu_cont method_views">
+                <div class="menu_item menu_link go_back_home" style="border-left:0;" id="resumeBack" data-type="back">
+                    <a href="#">
+                        <img src="img/back-arrow-icon.png" height="24" />
+                    </a>
+                </div>
+                <div class="menu_item" id="colorPicker">
+                    <div class="color_picker picker1" id="color_selected"></div>
+                    <div class="submenu">
+                        <div id="picker1" class="color_picker color-picker picker_activo" style="background:#3ebb64">
+                        </div>
+                        <div id="picker2" class="color_picker color-picker" style="background:#337ab7;"></div>
+                        <div id="picker3" class="color_picker color-picker" style="background:#2f2f2f"></div>
+                    </div>
+                </div>
+                <div class="menu_item">
+                    <select id="selectFontFamily">
+                        <option style="font-family:'Source Sans Pro'" value="font-1">Source Sans</option>
+                        <option style="font-family: Merriweather" value="font-2">Merriweather</option>
+                        <option style="font-family: 'Roboto'" value="font-4">Roboto</option>
+                        <option style="font-family: 'Lato'" selected="selected" value="font-5">Lato</option>
+                        <option style="font-family: Saira Semi Condensed" value="font-3">Saira Semi Condensed</option>
+                    </select>
+                </div>
+                <div class="menu_item menu_link" id="menu_secciones">
+                    <img src="img/settings-icon.png" />
+                    <div class="submenu submenu_sections">
+                        <div class="submenu-contianer">
+                            <span class="titulo_submenu_secciones">Resume Settings</span>
+                            <!-- <input class="tgl tgl-flat" type="checkbox" checked="checked" id="exp_check"
+                                data-option="experience" />
+                            <label class="tgl-btn" for="exp_check">
+                                <span class="label_grandes">PROFESSIONAL EXPERIENCE </span>
+                            </label> -->
+                            <!-- <input class="tgl tgl-flat" type="checkbox" checked="checked" id="education_check"
+                                data-option="education" />
+                            <label class="tgl-btn" for="education_check">
+                                <span class="label_grandes">Education</span>
+                            </label> -->
+                            <input class="tgl tgl-flat" type="checkbox" checked="checked" id="acadamic_check"
+                                data-option="acadamic" />
+                            <label class="tgl-btn" for="acadamic_check">
+                                <span class="label_grandes">Academic Project</span>
+                            </label>
+                            <!-- <input class="tgl tgl-flat" type="checkbox" checked="checked" id="skills_check"
+                                data-option="skills" />
+                            <label class="tgl-btn" for="skills_check">
+                                <span class="label_grandes">Skills</span>
+                            </label> -->
+                            <input class="tgl tgl-flat" type="checkbox" checked="checked" id="achivements_check"
+                                data-option="achivements" />
+                            <label class="tgl-btn" for="achivements_check">
+                                <span class="label_grandes">Achivements</span>
+                            </label>
+                            <input class="tgl tgl-flat" type="checkbox" checked="checked" id="certifications_check"
+                                data-option="certifications" />
+                            <label class="tgl-btn" for="certifications_check">
+                                <span class="label_grandes">Certifications</span>
+                            </label>
+                            <input class="tgl tgl-flat" type="checkbox" checked="checked" id="github_check"
+                                data-option="github" />
+                            <label class="tgl-btn" for="github_check">
+                                <span class="label_grandes">Github</span>
+                            </label>
+                            <input class="tgl tgl-flat" type="checkbox" checked="checked" id="twitter_check"
+                                data-option="twitter">
+                            <label class="tgl-btn" for="twitter_check">
+                                <span class="label_grandes">Twitter</span>
+                            </label>
+                            <input class="tgl tgl-flat" type="checkbox" checked="checked" id="website_check"
+                                data-option="website" />
+                            <label class="tgl-btn" for="website_check">
+                                <span class="label_grandes">Website</span>
+                            </label>
+                            <input class="tgl tgl-flat" type="checkbox" checked="checked" id="blog_check"
+                                data-option="blog" />
+                            <label class="tgl-btn" for="blog_check">
+                                <span class="label_grandes">Blog</span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <!--
+                <div class="menu_item hidemobile" style="border:none">
+                    <div onClick="javascript:cambiarhoja('A4');" class="hoja_icon hoja_active hoja_a4">
+                        <div class="hoja_tip"></div>
+                        <div class="hoja_tip2"></div>
+                    </div>
+                    <span class="menu_label label_absolute">A4</span>
+                </div>
+                <div class="menu_item hidemobile" style="border:none;padding-left:1.25rem;padding-right:1.2rem;">
+                    <div onClick="javascript:cambiarhoja('Carta');" class="hoja_icon hoja_carta">
+                        <div class="hoja_tip"></div>
+                        <div class="hoja_tip2"></div>
+                    </div>
+                    <span class="menu_label label_absolute">LETTER</span>
+                </div>
+                <div class="menu_item hidemobile" style="border:none;">
+                    <div onClick="javascript:cambiarhoja('Oficio');" class="hoja_icon hoja_oficio">
+                        <div class="hoja_tip"></div>
+                        <div class="hoja_tip2"></div>
+                    </div>
+                    <span class="menu_label label_absolute">LEGAL</span>
+                </div>
+            -->
+            </div>
+
+            <div class="menu_cont method_actions">
+                <div class="menu_item menu_link" style="border-left:0;" id="previewResume" data-type="preview">
+                    <a href="javascript:void(0);" target="_blank">
+                        <img src="img/view-icon.png">
+                    </a>
+                </div>
+                <div class="menu_item menu_link go_back" style="border-left:0;display: none;" id="editResume"
+                    data-type="preview">
+                    <a href="javascript:void(0);">
+                        <img src="img/back-arrow-icon.png">
+                    </a>
+                </div>
+                <div class="menu_item" id="saveResume" data-type="save">
+                    <img src="img/save-icon.png">
+                </div>
+                <div class="menu_item" id="downloadResume" data-type="save">
+                    <img src="img/download-icon.png">
+                </div>
+            </div>
+
+        </div>
+        <div id="editor"></div>
+        <div id="wrapper">
+            <div id="imprimir" class="template1">
+                <div id="contimprimir" class="theme-picker1">
+                    <ul>
+                        <li class="li25" id="foto">
+                            <label for="inputfoto2" class="select-pic-section res_picture" id="image-preview2">
+                                <div class="cont_fotodiv">
+                                    <div id="inserta_imagenlabel">
+                                        <img src="img/icon_image.svg">SELECT YOUR PICTURE</div>
+                                </div>
+                            </label>
+                            <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+                                <input type='file' id="inputfoto2" name="pic" style="display:none" accept="image/*" />
+                            </form>
+                            <img src="" id="image-preview" />
+                            <canvas id="canvas-element"></canvas>
+                        </li>
+                        <li class="li75" id="nombre_cont">
+                            <div class="about-info">
+                                <div class="" id="centrado_nombre">
+                                    <div class="user-name-section">
+                                        <!--<input type="text" placeholder="First name" class="field-type-1 color" />
+                                        <input type="text" placeholder="First name" class="field-type-1 color" />-->
+                                        <p class="nombre m-0 color fname font-26" contenteditable="true"
+                                            placeholder="First name" name="firstname" id="nombre" spellcheck=false
+                                            onkeypress="return ((event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32) && (this.innerText.length <= 28)">
+                                        </p>
+                                        <p class="nombre  m-0 color fname font-26" contenteditable="true"
+                                            placeholder="Last name" name="lastname" spellcheck=false
+                                            onkeypress="return ((event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32) && (this.innerText.length <= 28)">
+                                        </p>
+                                    </div>
+                                    <p class="titulo1 m-t-2 p-l-0 mt-0 " id="titulo">
+                                        <input class="job-functions ui-autocomplete-input font-12 text-gray"
+                                            placeholder="Job Function" name="jobfunctions" data-item-id=""
+                                            value="Job Functions" />
+                                    </p>
+                                    <p class="texto m-l-1 word-break-all font-10 text-gray" id="aboutme"
+                                        contenteditable="true" placeholder="About me"
+                                        onkeypress="return (this.innerText.length <= 149)" name="aboutme">
+                                        </p>
+                                    <!--<input type="text" class="text-feild" placeholder="About me" />-->
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="li25" id="datospersonales">
+                            <p class="titulo1 personal_title mt-0 font-10" placeholder="Datos personales">Personal Info
+                            </p>
+                            <div id="nacimiento">
+                                <p class="titulo2 color font-10">Designation</p>
+                                <!-- <p class="titulo3 font-10 text-gray" contenteditable="true" id="designation"
+                                    onfocus="setLimitToInput('designation',10)" placeholder="Designation" name="title"></p>
+                                    Designation</p> -->
+                                <p class="titulo3 font-10 text-gray" contenteditable="true" id="designation"
+                                    onfocus="setLimitToInput('designation',42)" placeholder="Designation"
+                                    name="title"></p>
+                            </div>
+                            <div id="nacimiento">
+                                <p class="titulo2 color font-10 mt-0">Years of Experience</p>
+                                <p class="titulo3 font-10 text-gray " contenteditable="true" id="yoe"
+                                    onfocus="setLimitToInput('yoe',10)" placeholder="Enter your experience"
+                                    name="totalexperience"></p>
+                            </div>
+                            <div id="nacimiento">
+                                <p class="titulo2 color font-10 mt-0">Location</p>
+                                <p class="titulo3 font-10 text-gray" contenteditable="true" id="location2"
+                                    onfocus="setLimitToInput('location2',43)" placeholder="Enter your location"
+                                    name="location"></p>
+                                <!-- <input id="location2" class="titulo3" placeholder="Enter your location" type="text"
+                                        onfocus="setLimitToInput('location2',30)" /> -->
+
+                            </div>
+                            <div id="nacimiento">
+                                <p class="titulo2 color font-10 mt-0">Birthday</p>
+                                <div class="date-selection-contaner">
+                                    <!-- <p class="titulo3 date-selector" contenteditable="true"
+                                        placeholder="Enter your birthday" name="date_of_birth"></p> -->
+                                    <input type="text" class="date-selector2 titulo3 font-10 text-left text-gray"
+                                        id="dob" placeholder="Birthday" name="date_of_birth" readonly />
+                                </div>
+                                <!-- <p class="titulo3 date-selection-contaner">
+                                    <input type="text" class="date-selector" placeholder="Start Date"
+                                        name="date_of_birth" readonly /> -->
+                                </p>
+                            </div>
+                            <div id="domicilio">
+                                <p class="titulo2 color font-10 mt-0">Gender</p>
+                                <!-- <p class="titulo3" contenteditable="true" placeholder="Enter gender" name="gender"></p> -->
+                                <!-- <input type="text"
+                                    class="gender text-capitalize titulo3 autocomplete-data-field ui-autocomplete-input" placeholder="Select gender" /> -->
+                                <select class="gender font-10 text-gray" id="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="others">others</option>
+                                </select>
+                            </div>
+                            <div id="nacionalidad" class="language">
+                                <p class="titulo2 color font-10 nowrap">Languages</p>
+                                <div id="language_1" class="sortable lang-contaner language-section">
+                                    <div id="estrellas1" style="" class=" cuadro ui-state-default">
+                                        <p class="titulo3 nowrap font-10 text-gray" contenteditable="true"
+                                            placeholder="English" name="languages" id="langTitle_1"
+                                            style="margin: 0 auto;position:relative;right: -30px;top:0px;"
+                                            onkeypress="return ((event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32) && (this.innerText.length <= 8)">
+                                        </p>
+                                        <div class="centradovertical progress-type-2">
+                                            <div class="estrellas selected pos1">
+                                                <div class="color_estrellas" data-val="25" data-lang="1"></div>
+                                            </div>
+                                            <div class="estrellas pos2">
+                                                <div class="color_estrellas" data-val="50" data-lang="1"></div>
+                                            </div>
+                                            <div class="estrellas pos3">
+                                                <div class="color_estrellas" data-val="75" data-lang="1"></div>
+                                            </div>
+                                            <div class="estrellas pos4">
+                                                <div class="color_estrellas" data-val="100" data-lang="1"></div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div> -->
+                                        <div class="eliminar remove_lang" data-component="language" data-lang="1">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar add_lang" data-component="language" data-lang="1">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" value="25" id="language_1" name="language_value" />
+                                </div>
+                            </div>
+                            <p class="titulo2 nowrap color mt-0 font-10 text-gray">Contact</p>
+                            <div class="contacto_item " id="mail">
+                                <div>
+                                    <img class="color_estrellas" src="img/email.png" />
+                                </div>
+                                <p class="texto titulo3 font-10 text-gray word-break-all" spellcheck=false
+                                    placeholder="Email" name="email"></p>
+                            </div>
+                            <div class="contacto_item " id="tel">
+                                <div>
+                                    <img class="color_estrellas" src="img/tel.png" />
+                                </div>
+                                <p class="texto titulo3 font-10 word-break-all phone text-gray" id="phone"
+                                    onfocus="setLimitToInput('phone',14)" contenteditable="true" spellcheck=false
+                                    placeholder="Phone" name="telephone"></p>
+                            </div>
+                            <div class="contacto_item " id="linkedin">
+                                <div>
+                                    <img class="color_estrellas" src="img/linkedin.png" />
+                                </div>
+                                <p class="texto titulo3 font-10 text-gray" contenteditable="true" spellcheck=false
+                                    placeholder="Linkedin"  id="user_linkdin"
+                                    onfocus="setLimitToInput('user_linkdin',42)" name="user_linkdin"></p>
+                            </div>
+                            <div class="contacto_item " id="github_section">
+                                <div>
+                                    <img class="color_estrellas" src="img/github.png" />
+                                </div>
+                                <p class="texto titulo3 font-10 text-gray" contenteditable="true" spellcheck=false
+                                    placeholder="Github"  id="user_github"
+                                    onfocus="setLimitToInput('user_github',42)"
+                                    name="user_github"></p>
+                            </div>
+                            <div class="contacto_item " id="twitter_section">
+                                <div>
+                                    <img class="color_estrellas" src="img/twitter.png" />
+                                </div>
+                                <p class="texto titulo3 font-10 text-gray"
+                                onfocus="setLimitToInput('user_twitter',42)"
+                                 contenteditable="true" spellcheck=false id="user_twitter"
+                                    placeholder="Twitter" name="user_twitter"></p>
+                            </div>
+                            <div class="contacto_item " id="website_section">
+                                <div>
+                                    <img class="color_estrellas" src="img/website.png" />
+                                </div>
+                                <p class="texto titulo3 font-10 text-gray" contenteditable="true" spellcheck=false
+                                    placeholder="Website" id="user_website"
+                                    onfocus="setLimitToInput('user_website',42)"
+                                    name="user_website"></p>
+                            </div>
+                            <div class="contacto_item " id="blog_section">
+                                <div>
+                                    <img class="color_estrellas" src="img/blog.png" />
+                                </div>
+                                <p class="texto titulo3 font-10 text-gray" contenteditable="true" spellcheck=false
+                                    placeholder="Blog" id="user_blog"
+                                    onfocus="setLimitToInput('user_blog',42)" name="user_blog"></p>
+                            </div>
+                        </li>
+                        <li class="li75">
+                            <div id="experience_section" class="prof_exp">
+                                <p class="titulo1 mt-0 font-10 text-gray" id="titulo_laboral"
+                                    placeholder="Work experience">
+                                    Work experience</p>
+                                <div class="sortable experiencialaboral professional-experience" id="proExp_1">
+                                    <div class="cuadro ui-state-default pt-0" id="experiencia1">
+                                        <div style="position:relative;display: flex;justify-content: space-between;
+                                        align-items: center;">
+                                            <!-- <div class="timeline_bola color_estrellas"></div> -->
+                                            <div style=" display: flex;
+                                            align-items: center;">
+                                                <p class="titulo2 color font-10 text-gray" contenteditable="true"
+                                                onkeypress="return (this.innerText.length <= 39)"     
+                                                placeholder="Role" name="exp_jobTitle"></p>
+                                            </div>
+
+                                            <p class="date-selection-contaner"
+                                                style="display: flex;align-items: center;">
+                                                <input type="text" class="date-selector font-10 text-gray"
+                                                    id="dateSelector_1" placeholder="Start Date" name="exp_startDate"
+                                                    readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector font-10 text-gray"
+                                                    id="dateSelector_1" placeholder="End Date" name="exp_endDate"
+                                                    readonly />
+                                            </p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo2 color pt-0 company-field font-10" contenteditable="true"
+                                                placeholder="Company" 
+                                                onkeypress="return (this.innerText.length <= 50)"     
+                                                name="exp_company"></p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 pt-0 company-field font-10" contenteditable="true"
+                                                placeholder="Location"
+                                                onkeypress="return (this.innerText.length <= 87)"  
+                                                 name="exp_location"></p>
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize font-10 text-gray exp_description_1"
+                                                contenteditable="true" id="exp_description_1"
+                                                placeholder="Enter details about your work responsibilities here."
+                                                onkeypress="return (this.innerText.length <= 299)"
+                                                name="exp_description"></p>
+                                        </div>
+                                        <!--<div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div>-->
+                                        <div class="eliminar remove_exp">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar add_exp">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="education_section" class="user_edu">
+                                <p class="titulo1 mt-0 font-10 text-gray" id="titulo_laboral">Education</p>
+                                <div class="sortable experiencialaboral education-section edu_sec" id="education_1">
+                                    <div class="cuadro cuadro2 py-0 ui-state-default" id="experiencia1">
+                                        <div style="position:relative;">
+                                            <!-- <div class=" timeline_bola color_estrellas"></div> -->
+                                            <div
+                                                style="display: flex;align-items: center;justify-content: space-between;">
+                                                <!-- <div class="timeline_bola color_estrellas"></div> -->
+                                                <div style="display: flex;align-items: center;">
+                                                    <!-- <div class="timeline_bola color_estrellas"></div> -->
+                                                    <p class="titulo2 wrap color font-10 text-gray"
+                                                        contenteditable="true" 
+                                                        onkeypress="return (this.innerText.length <= 39)"
+                                                        placeholder="Field of study"
+                                                        name="fieldOfStudy"></p>
+                                                    <!-- <p class="titulo2 wrap p-0">-</p> -->
+                                                </div>
+                                                <div class="date-selection-contaner"
+                                                    style="display: flex;align-items: center;">
+                                                    <input type="text" class="date-selector font-10 text-gray"
+                                                        placeholder="Start Date" name="edu_startDate" readonly />
+                                                    <span class="seperator">-</span>
+                                                    <input type="text" class="date-selector font-10 text-gray"
+                                                        placeholder="End Date" name="edu_endDate" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="company-details">
+                                                <input type="text"
+                                                    class="degrees titulo2 pt-0 wrap color p-0 font-10  autocomplete-data-field ui-autocomplete-input"
+                                                    style="height: 30px" placeholder="Degree" name="degree_title"
+                                                    data-id="" data-shortTitle="" />
+                                            </div>
+                                            <div class="company-details font-10" style="display: flex;">
+                                                <p class="titulo3 font-10 text-gray" contenteditable="true"
+                                                onkeypress="return (this.innerText.length <= 50)"
+                                                    placeholder="School" name="edu_institution"></p>
+                                                <p class="titulo3 font-10 text-gray" contenteditable="true"
+                                                    placeholder="Location" name="edu_location"></p>
+                                            </div>
+                                            <p class="texto mt-0 font-10 text-gray edu_description_1 text-capitalize"
+                                                contenteditable="true" id="edu_description_1"
+                                                onkeypress="return (this.innerText.length <= 299)"
+                                                placeholder="Enter details about your education here."
+                                                name="edu_description"></p>
+                                            <!--<div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div>-->
+                                            <div class="eliminar remove_edu">
+                                                <div class="labelbotones">Remove</div>
+                                            </div>
+                                            <div class="clonar add_edu" data-component="education">
+                                                <div class="labelbotones">Add new</div>
+                                            </div>
+                                            <div class="timeline_linea"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="acadamic_section">
+                                <p class="titulo1 mt-0 font-10 text-gray" id="titulo_laboral"
+                                    placeholder="Academic Project">
+                                    Academic
+                                    Project</p>
+                                <div class="sortable experiencialaboral acadamic-project" id="acadamicPro_1">
+                                    <div class="cuadro cuadro2 pt-0 ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <!-- <div class="timeline_bola color_estrellas"></div> -->
+                                            <div style="display: flex;justify-content: space-between;">
+                                                <p class="titulo2 wrap pb-0 color font-10" id="projecttitle"
+                                                contenteditable="true"
+                                                onfocus="setLimitToInput('projecttitle',40)"
+                                                    placeholder="Project Title" name="acd_projectTitle"></p>
+                                                <div>
+                                                    <!-- <p class="titulo2 wrap color font-10 text-gray"
+                                                        contenteditable="true" placeholder="Role" name="acd_role">
+                                                    </p> -->
+                                                    <!-- <p class="titulo2 wrap">-</p> -->
+
+                                                </div>
+                                                <p class="date-selection-contaner"
+                                                    style="display: flex;align-items: center;">
+                                                    <input type="text" class="date-selector font-10 text-gray"
+                                                        placeholder="Start Date" name="acd_startDate" readonly />
+                                                    <span class="seperator">-</span>
+                                                    <input type="text" class="date-selector font-10 text-gray"
+                                                        placeholder="End Date" name="acd_endDate" readonly />
+                                                </p>
+                                            </div>
+                                            <div class="company-details" style="display: flex;">
+                                                <p class="titulo3 text-gray" contenteditable="true"
+                                                    placeholder="University" name="acd_institution"></p>
+                                                <p class="titulo3 text-capitalize text-gray" contenteditable="true"
+                                                    placeholder="Location" name="acd_location"></p>
+                                            </div>
+                                            <p class="texto mt-0 font-10 text-gray text-capitalize" contenteditable="true"
+                                                id="edu_description_1"
+                                                onkeypress="return (this.innerText.length <= 299)"
+                                                placeholder="Enter details about your project here."
+                                                name="acd_description"></p>
+                                            <!-- <div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div> -->
+                                            <div class="eliminar remove_acad" data-component="acadamic">
+                                                <div class="labelbotones">Remove</div>
+                                            </div>
+                                            <div class="clonar add_acad" data-component="acadamic">
+                                                <div class="labelbotones">Add new</div>
+                                            </div>
+                                            <div class="timeline_linea"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="skills_section">
+                                <p class="titulo1 mt-0 font-10 text-gray">Skills</p>
+                                <ul class="skills-section">
+                                    <li class="li50 skills-data-container-left" id="skills_small1">
+                                        <div id="skilsContainer_1" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input font-10 text-gray"
+                                                        placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25 percent_reset"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value"
+                                                                data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar remove_skills" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar add_skills" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="li50 skills-data-container-left" id="skills_small2">
+                                        <div id="skilsContainer_2" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input font-10 text-gray"
+                                                        placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25 percent_reset"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value"
+                                                                data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar remove_skills" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar add_skills" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="li50 skills-data-container-left" id="skills_small3">
+                                        <div id="skilsContainer_3" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input font-10 text-gray"
+                                                        placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25 percent_reset"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value"
+                                                                data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar remove_skills" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar add_skills" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="li50 skills-data-container-left" id="skills_small4">
+                                        <div id="skilsContainer_4" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input font-10 text-gray"
+                                                        placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25 percent_reset"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value"
+                                                                data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar remove_skills" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar add_skills" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="li50 skills-data-container-left" id="skills_small5">
+                                        <div id="skilsContainer_5" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input font-10 text-gray"
+                                                        placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25 percent_reset"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value"
+                                                                data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar remove_skills" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar add_skills" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="li50 skills-data-container-left" id="skills_small6">
+                                        <div id="skilsContainer_6" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input font-10 text-gray"
+                                                        placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25 percent_reset"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value"
+                                                                data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar remove_skills" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar add_skills" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div style="clear:both"></div>
+                            </div>
+                            <div id="achivements_section">
+                                <p class="titulo1 mt-0 font-10 font-10 text-gray" id="titulo_laboral">
+                                    Achivements</p>
+                                <div class="sortable" id="">
+                                    <div class="m-l-1 ui-state-default" id="experiencia1">
+                                        <p class="texto mt-0 font-10 text-gray" contenteditable="true" id="achivements"
+                                            onkeypress="return (this.innerText.length <= 299)" placeholder="Description"
+                                            name="achivements"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="certifications_section">
+                                <p class="titulo1 mt-0 font-10 text-gray" id="titulo_laboral">Certifications
+                                </p>
+                                <div class="sortable" id="">
+                                    <div class="m-l-1 ui-state-default" id="experiencia1">
+                                        <p class="texto mt-0 font-10 text-gray" contenteditable="true"
+                                            id="certifications" onkeypress="return (this.innerText.length <= 299)"
+                                            placeholder="Description" name="certifications"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="fin_hoja_anim">
+                    <div class="fin_hoja"></div>
+                </div>
+            </div>
+        </div>
+        <div id="preview_cont">
+            <div id="cerrar_overlay"></div>
+            <div class="logo"></div>
+            <div id="zoom_note">MOUSE WHEEL TO ZOOM</div>
+            <div id="close_preview">GO BACK</div>
+            <div id="downloadenpreview_btn">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-197 320.9 200 200"
+                    style="enable-background:new -197 320.9 200 200;" xml:space="preserve">
+                    <path class="st0"
+                        d="M-75.7,416.3H-49l-48,45.9l-48-45.9h26.6v-50.5h42.6v50.5H-75.7z M-70.4,466.8h-53.3v9.2h53.3 C-70.4,476-70.4,466.8-70.4,466.8z" />
+                    <path class="st0"
+                        d="M-562,752.5h23.8l-42.8,47.6l-42.8-47.6h23.8v-42.4h38.1L-562,752.5L-562,752.5z M-547.7,790.6v14.3h-66.6 v-14.3h-9.5v23.8h85.7v-23.8H-547.7z" />
+                </svg>
+                <div class="labelbotones">Download PDF</div>
+            </div>
+        </div>
+        <div id="modal_sepaso" class="modal">
+            <div class="centradovertical">
+                <div class="cerrar_modal cerrar_nosepuede" onClick="javascript:cerrarmodal();"></div>
+                <img src="img/icon_mal.svg" />
+                <h2>Size exceeded</h2>
+                <p>Did you know that a
+                    <strong>hiring managers take on avarage 6 seconds to read resumes</strong>?
+                    <br>
+                    <br>By keeping your resume short and focused on one page you are giving them fewer reasons to
+                    eliminate you
+                    from contention. </p>
+                <div class="btn cerrar_nosepuede" onClick="javascript:cerrarmodal();">ACCEPT</div>
+                <!-- <div class="checkbox-container">
+                    <input type="checkbox" id="modal_check1" />
+                    <label class="checkbox" for="modal_check1"></label>
+                    <label for="modal_check1">Don´t show again</label>
+                </div> -->
+            </div>
+        </div>
+        <div id="modal_tamanook" class="modal" style="">
+            <div class="centradovertical">
+                <div class="cerrar_modal" onClick="javascript:cerrarmodal();"></div>
+                <img src="img/icon_ok.svg" />
+                <h2>Size no longer exceeded</h2>
+                <p>Preview and download buttons are active again.</p>
+                <div class="btn" onClick="javascript:cerrarmodal();">ACCEPT</div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="modal_check2" />
+                    <label class="checkbox" for="modal_check2"></label>
+                    <label for="modal_check2">Don´t show again</label>
+                </div>
+            </div>
+        </div>
+        <div id="modal_nosepuede" class="modal" style="">
+            <div class="centradovertical">
+                <div class="cerrar_modal cerrar_nosepuede" onClick="javascript:cerrarmodal();"></div>
+                <img src="img/icon_mal.svg" />
+                <h2>Size exceeded</h2>
+                <p>Sorry, you can´t preview or download your resume because the content exceeds the page margins.</p>
+                <div class="btn cerrar_nosepuede" onClick="javascript:cerrarmodal();">ACCEPT</div>
+            </div>
+        </div>
+        <div id="modal_gracias" class="modal" style="">
+            <div class="centradovertical">
+                <div class="cerrar_modal" onClick="javascript:cerrarmodal();"></div>
+                <h2>Your download has started</h2>
+                <p>Similar services are offered for up to U$D 20. This website is
+                    <strong>
+                        <a href="https://www.facebook.com/FernandoPessagno" target="_blank"
+                            style="text-decoration:underline">maintained by only one person</a>
+                    </strong> and it aims is to provide a free alternative for all job seekers, but especially for those
+                    who need a
+                    helping hand the most.
+                    <br>
+                    <br>If you are unemployed or under any kind of financial stress, I´m not directing this message to
+                    you. But
+                    if that is not the case and you´re happy with your new resume, you can
+                    <strong>show gratitude by donating what you consider to be a fair price</strong>.
+                    <br>
+                    <br>Even if your donation is as small as a cup of coffee would cost you, with it you´re helping to
+                    <strong>make sure this website will remain 100% free of charge</strong> for all those who are facing
+                    a tough
+                    time. Thank you!</p>
+                <p class="precio_justo">Set a fair price (U$D):</p>
+                <div>
+                    <ul id="opciones_donar">
+                        <li class="li25" id="donacion_1" oncli ck="javascript:donar(2,1);">$2</li>
+                        <li class="li25 donar_activo" id="donacion_2" onclick="javascript:donar(5,2);">$5</li>
+                        <li class="li25" id="donacion_3" onclick="javascript:donar(10,3);">$10</li>
+                        <li class="li25" id="donacion_4" onclick="javascript:donar(20,4);">$20</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="modal_privacy" class="modal" style="">
+        <div class="centradovertical">
+            <div class="cerrar_modal" onClick="javascript:cerrarmodal();"></div>
+            <h2>Privacy Notice</h2>
+            <p> This website does not collect the information users provide to create their resumes.
+                <br>
+                <br>Google Analytics is implemented to examine the use of this website. It uses cookies and collects
+                user´s usage
+                data that Google may use later to contextualize and personalize the ads of its own advertising network.
+                <br>
+                <br>Not liability resulting from the use of this website will be considered by the author and users may
+                use it
+                at their own discretion.</p>
+            <div class="btn cerrar_nosepuede" onClick="javascript:cerrarmodal();">ACCEPT</div>
+        </div>
+    </div>
+
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.nice-select.js"></script>
+    <script type="text/javascript" src="js/resume-plugin.js"></script>
+    <script src="js/html2canvas.js"></script>
+    <script src="js/jspdf.debug.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+    <script src="plugins/datedropper/datedropper.js"></script>
+
+
+    <script>
+        if (/Android/i.test(navigator.userAgent)) {
+            $("body").addClass("ismobile");
+        }
+        if (/webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $("#btn_empezar").css("display", "none");
+            $("#btn_fake").css("display", "block");
+        }
+
+        $(function () {
+            console.log("test");
+            $('.resume-body').paraCount();
+        });
+    </script>
+    <script type="text/javascript">
+        var userData = JSON.parse(localStorage.getItem('userData'));
+        var sessionId = localStorage.getItem('sessionId');
+        var userId = userData.userId;
+    </script>
+
+    <!-- Datedropper functionality -->
+
+    <script>
+        $('.gender').niceSelect();
+
+        function explode() {
+            if ($('.fname').text().length > 16) {
+                $('.fname').css('font-size', '20pt')
+            } else {
+                $('.fname').css('font-size', '26pt')
+            }
+        }
+        // setInterval(explode, 200);
+        //$('.date-selector').dateDropper('show');
+        var userStatus = localStorage.getItem('isPremiumUser');
+        if (userStatus == 'false') {
+            $('#contimprimir').css({
+                'background-image': 'url("watermarkworkruit.svg")',
+                'background-position': 'center',
+                'background-repeat': 'no-repeat',
+                'background-size': 'contain'
+            });
+        }
+        $("body").on("click", ".date-selector", function () {
+            $(this).dateDropper({
+                animate: false,
+                // bounce, dropDown
+                init_animation: "fadein",
+                //format: "d/m/Y",
+                format: "M Y",
+                lang: "en",
+
+                // Set the initial value to current date or lock the control value to current date
+                // false(default), from, to.
+                lock: false,
+                maxYear: new Date().getFullYear(),
+                minYear: 1970,
+                yearsRange: 10,
+
+            });
+        });
+
+        $(".date-selector2").dateDropper({
+            animate: false,
+            // bounce, dropDown
+            init_animation: "fadein",
+            format: "d-m-Y",
+            // format: "M Y",
+            lang: "en",
+
+            // Set the initial value to current date or lock the control value to current date
+            // false(default), from, to.
+            lock: false,
+            maxYear: new Date().getFullYear(),
+            minYear: 1970,
+            yearsRange: 10,
+
+        });
+        var resumeParameter = window.location.search.substr(1);
+        console.log(resumeParameter);
+        if (resumeParameter === 'edit' && resumeParameter !== 'preview') {
+            // window.location.href = window.location.href + "?edit"
+            $("#preview-overlay").removeClass('preview-overlay');
+            $(".method_views").css('display', 'inline-block');
+            $("#editResume").css('display', 'none');
+            $('#previewResume').css('display', 'inline-block');
+        } else if (resumeParameter === 'preview' && resumeParameter !== 'edit') {
+            // window.location.href = window.location.href + "?preview"
+            $("#preview-overlay").addClass('preview-overlay');
+            $(".method_views").css('display', 'none');
+            $('#editResume').css('display', 'inline-block');
+            $("#previewResume").css('display', 'none');
+        } else if (resumeParameter === "") {
+            window.location = '../home/index.html'
+        }
+        $("#previewResume").on('click', function () {
+            window.location.href = window.location.pathname + "?preview"
+            $("#preview-overlay").addClass('preview-overlay');
+            $(".method_views").css('display', 'none');
+            $('#editResume').css('display', 'inline-block');
+            $(this).css('display', 'none');
+        });
+        $("#editResume").on('click', function () {
+            window.location.href = window.location.pathname + "?edit"
+            $("#preview-overlay").removeClass('preview-overlay');
+            $(".method_views").css('display', 'inline-block');
+            $(this).css('display', 'none');
+            $('#previewResume').css('display', 'inline-block');
+        });
+        var referrer = document.referrer;
+        if (referrer !== window.location.href) {
+            $('.go_back_home').attr('href', referrer);
+        } else {
+
+        }
+        console.log(referrer);
+        $('.go_back').on('click', function () {
+            // console.log(document.referrer);
+            // window.history.back();
+            if (referrer === window.location.href) {
+                window.history.back(2);
+            } else {
+                // $('.go_back_home').attr('href', referrer);
+                window.location.href = referrer;
+            }
+        });
+        $('.go_back_home').on('click', function () {
+            window.location = '../home/index.html'
+        })
+        $("[contenteditable='true']").keypress(function (e) {
+            return e.which != 13;
+        });
+
+        function setLimitToInput(id, length) {
+            document.getElementById(id).addEventListener("input", function (e) {
+                var max = length;
+                $('#' + id).keypress(function (e) {
+                    if (e.which < 0x20) {
+                        return; // Do nothing
+                    }
+                    if ($('#' + id).text().length == max) {
+                        e.preventDefault();
+                    } else if ($('#' + id).text().length > max) {
+                        // Maximum exceeded
+                        $('#' + id).text() = $('#' + id).text().substring(0, max);
+                    }
+                });
+            }, false);
+        }
+
+        function setLimitToInputByClass(className, length) {
+            console.log(className);
+            var userSelection = document.getElementsByClassName(className);
+
+            for (let i = 0; i < userSelection.length; i++) {
+                userSelection[i].addEventListener("input", function (e) {
+                    var max = length;
+                    $('.' + className).keypress(function (e) {
+                        if (e.which < 0x20) {
+                            return; // Do nothing
+                        }
+                        if ($('.' + className).text().length == max) {
+                            e.preventDefault();
+                        } else if ($('.' + className).text().length > max) {
+                            // Maximum exceeded
+                            $('.' + className).text() = $('.' + className).text().substring(0, max);
+                        }
+                    });
+                }, false);
+            }
+
+        }
+        var modal_sepaso = false;
+        const checkHeightIntervalId = setInterval(function () {
+            var resumeInnerHeight = $("#contimprimir").innerHeight();
+            $(".fin_hoja").css('display', 'block');
+            if (resumeInnerHeight > 1123 && !modal_sepaso) {
+                // console.log("over height")
+                $("#modal_sepaso").css({
+                    display: 'block',
+                    opacity: 1,
+                });
+                $('.method_actions').css('display', 'none')
+            } else {
+                $("#modal_sepaso").css({
+                    display: 'none',
+                    opacity: 1,
+                });
+            }
+            if (resumeInnerHeight <= 1684) {
+                $(".fin_hoja").css('display', 'none');
+                $('.method_actions').css('display', 'inline-block')
+
+            }
+        }, 1000);
+
+        function cerrarmodal() {
+            modal_sepaso = true;
+            $("#modal_sepaso").css({
+                display: 'none',
+                opacity: 0,
+            });
+            // clearInterval(checkHeightIntervalId);
+        }
+        //experience add new
+        $("body").on("click", ".prof_exp .add_exp", function () {
+            if ($('.professional-experience').size() < 3) {
+                console.log('i am add_exp')
+                var $div = $('div[id^="proExp"]:last');
+                var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                var $klon = $div.clone().prop('id', 'proExp_' + num);
+                $div.after($klon);
+                $('#proExp_' + num + ' [name="exp_jobTitle"]').text('').attr('placeholder', 'Role');
+                $('#proExp_' + num + ' [name="exp_company"]').text('').attr('placeholder', 'Company');
+                $('#proExp_' + num + ' [name="exp_startDate"]').val('').attr('placeholder', 'Start Date');
+                $('#proExp_' + num + ' [name="exp_endDate"]').val('').attr('placeholder', 'End Date');
+                $('#proExp_' + num + ' [name="exp_location"]').text('').attr('placeholder', 'Location');
+                $('#proExp_' + num + ' [name="exp_description"]').text('').attr('placeholder',
+                    'Enter details about your work responsibilities here.');
+            }
+            if ($('.professional-experience').size() == 3) {
+                $('.professional-experience .add_exp').css('display', 'none');
+            }
+
+        })
+        $("body").on("click", ".prof_exp .remove_exp", function () {
+            var $div = $(this);
+            if ($('.professional-experience').size() <= 3) {
+                $('.professional-experience .add_exp').css('display', 'block');
+            }
+            $div.parent().parent().remove();
+        });
+        //education add new
+        $("body").on("click", ".user_edu .add_edu", function () {
+            if ($('.education-section').size() < 3) {
+                console.log('i am add_exp')
+                var $div = $('div[id^="education"]:last');
+                var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                var $klon = $div.clone().prop('id', 'education_' + num);
+                $div.after($klon);
+                $('#education_' + num + ' [name="fieldOfStudy"]').text('').attr('placeholder',
+                    'Field of study');
+                $('#education_' + num + ' [name="edu_startDate"]').val('').attr('placeholder', 'Start Date');
+                $('#education_' + num + ' [name="edu_endDate"]').val('').attr('placeholder', 'End Date');
+                $('#education_' + num + ' [name="degree_title"]').val('').attr('placeholder', 'Degree');
+                $('#education_' + num + ' [name="edu_institution"]').text('').attr('placeholder', 'School');
+                $('#education_' + num + ' [name="edu_location"]').text('').attr('placeholder', 'Location');
+                $('#education_' + num + ' [name="edu_description"]').text('').attr('placeholder',
+                    'Enter details about your education here');
+
+            }
+            if ($('.education-section').size() == 3) {
+                $('.education-section .add_edu').css('display', 'none');
+            }
+            // if ($('.education-section').size() == 1) {
+            //     $('.education-section .remove_edu').css('display', 'none');
+            // }
+        })
+        $("body").on("click", ".user_edu .remove_edu", function () {
+            var $div = $(this);
+            if ($('.education-section').size() <= 3) {
+                $('.education-section .add_edu').css('display', 'block');
+            }
+            $div.parent().parent().parent().remove();
+            // if ($('.education-section').size() == 1) {
+            //     $('.education-section .remove_edu').css('display', 'none');
+            // }
+        });
+        //languages add new
+        $("body").on("click", ".language .add_lang", function () {
+            if ($('.language-section').size() < 3) {
+                console.log('i am add_exp')
+                var $div = $('div[id^="language"]:last');
+                var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                var $klon = $div.clone().prop('id', 'language_' + num);
+                $div.after($klon);
+                $('#language_' + num + ' [name="language_value"]').attr('id', 'language_' + num);
+                $('#language_' + num + ' .progress-type-2 .color_estrellas').attr('data-lang', num);
+                $('#language_' + num + ' [name="languages"]').text('').attr('id', 'langTitle_' + num);
+            }
+            if ($('.language-section').size() == 3) {
+                $('.language-section .add_lang').css('display', 'none');
+            }
+            // if ($('.education-section').size() == 1) {
+            //     $('.education-section .remove_edu').css('display', 'none');
+            // }
+        })
+        $("body").on("click", ".language .remove_lang", function () {
+            var $div = $(this);
+            if ($('.language-section').size() <= 3) {
+                $('.language-section .add_lang').css('display', 'block');
+            }
+            $div.parent().parent().remove();
+            // if ($('.education-section').size() == 1) {
+            //     $('.education-section .remove_edu').css('display', 'none');
+            // }
+        });
+        //skills add new
+        if ($('.skills-section  .skills-data-container').size() <= 6) {
+            $('.skills-section .remove_skills').css('display', 'none');
+        }
+        $("body").on("click", ".skills-section .add_skills", function () {
+            if ($('.skills-section .skills-data-container').size() < 17) {
+                var $div = $('li[id^="skills_small"]:last');
+                var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                var $klon = $div.clone().prop('id', 'skills_small' + num)
+                $div.after($klon);
+                $('#skills_small' + num + ' .skills-data-container').attr('id', 'skilsContainer_' + num);
+                $('#skills_small' + num + ' .skills-data-container input[name="skill_name"]').val('')
+                $('#skills_small' + num + ' .percent_reset').css('opacity', '0').siblings().css('opacity','.75')
+                $('#skills_small' + num + ' .estrellacircular .centradovertical').css('opacity', '1')
+                $('#skills_small' + num + ' [name="skill_value"]').attr('data-val', '25').text('25%');
+                console.log('i am add_exp')
+            }
+            if ($('.skills-section .skills-data-container').size() == 16) {
+                $('.skills-section .add_skills').css('display', 'none');
+            }
+            if ($('.skills-section  .skills-data-container').size() > 6) {
+                $('.skills-section .remove_skills').css('display', 'block');
+            }
+        })
+        $("body").on("click", ".skills-section .remove_skills", function () {
+            var $div = $(this);
+            if ($('.skills-section').size() <= 16) {
+                $('.skills-section .add_skills').css('display', 'block');
+            }
+            $div.parent().parent().remove();
+            if ($('.skills-section  .skills-data-container').size() <= 6) {
+                $('.skills-section .remove_skills').css('display', 'none');
+            }
+        });
+        //ACADEMIC add new
+        $("body").on("click", ".acadamic-project .add_acad", function () {
+            if ($('.acadamic-project').size() < 3) {
+                console.log('i am add_exp')
+                var $div = $('div[id^="acadamicPro_"]:last');
+                var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                var $klon = $div.clone().prop('id', 'acadamicPro_' + num);
+                $div.after($klon);
+                $('#acadamicPro_' + num + ' [name="acd_projectTitle"]').text('').attr('placeholder', 'Project Title');
+                $('#acadamicPro_' + num + ' [name="acd_startDate"]').val('').attr('placeholder', 'Start Date');
+                $('#acadamicPro_' + num + ' [name="acd_endDate"]').val('').attr('placeholder', 'End Date');
+                $('#acadamicPro_' + num + ' [name="acd_institution"]').text('').attr('placeholder', 'University');
+                $('#acadamicPro_' + num + ' [name="acd_location"]').text('').attr('placeholder', 'location');
+                $('#acadamicPro_' + num + ' [name="acd_description"]').text('').attr('placeholder', 'Enter details about your project here.   ');
+
+            }
+            if ($('.acadamic-project').size() == 3) {
+                $('.acadamic-project .add_acad').css('display', 'none');
+            }
+        })
+        $("body").on("click", ".acadamic-project .remove_acad", function () {
+            var $div = $(this);
+            if ($('.acadamic-project').size() <= 3) {
+                $('.acadamic-project .add_acad').css('display', 'block');
+            }
+            console.log($div.parent().parent().parent());
+            $div.parent().parent().parent().remove();
+        });
+        // $('.prof_exp .add_exp').bind('click', function () {
+        //     var $div = $('div[id^="proExp"]:last');
+        //     var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+        //     var $klon = $div.clone().prop('id', 'proExp_' + num);
+        //     $div.after($klon);
+        // });
+    </script>
+    <!-- /Datedropper functionality -->
+
+    <!-- Autocompleted functionality -->
+    <script>
+        var map, places;
+        var autocomplete;
+        var countryRestrict = {
+            'country': 'us'
+        };
+
+        function initMap() {
+            autocomplete = new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */
+                (
+                    document.getElementById('location')), {
+                    types: ['(cities)'],
+                    componentRestrictions: countryRestrict
+                });
+            places = new google.maps.places.PlacesService(map);
+            // autocomplete.addListener('place_changed', onPlaceChanged);
+        }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBL9oKT6UsxvaOqx42okNae6cR3OAAIkYE&libraries=places&callback=initMap"
+        async defer></script>
+</body>
+
+</html>

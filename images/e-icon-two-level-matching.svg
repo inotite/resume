@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="62px" viewBox="0 0 64 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 11</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.800000012">
+        <g id="employer-design-04" transform="translate(-537.000000, -2903.000000)">
+            <g id="key-features" transform="translate(133.000000, 2728.000000)">
+                <g id="two-level-matching" transform="translate(402.500000, 175.000000)">
+                    <g id="Group-11" transform="translate(2.000000, 0.000000)">
+                        <ellipse id="Oval" fill="#CA054D" opacity="0.25" cx="31.5" cy="31" rx="31.5" ry="31"></ellipse>
+                        <g id="Group-16" transform="translate(21.000000, 17.000000)">
+                            <path d="M4,0.5 L4,27.5" id="Line" stroke="#CA054D" stroke-width="2" stroke-linecap="round"></path>
+                            <path d="M17,0.5 L17,27.5" id="Line-Copy" stroke="#CA054D" stroke-width="2" stroke-linecap="round"></path>
+                            <circle id="Oval-4" fill="#CA054D" cx="4" cy="18" r="4"></circle>
+                            <circle id="Oval-4-Copy" fill="#CA054D" cx="17" cy="10" r="4"></circle>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

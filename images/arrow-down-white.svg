@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="12px" viewBox="0 0 9 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow-down-white</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="development" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="arrow-down-white" stroke="#FFFFFF" stroke-width="0.6">
+            <g id="arrow" transform="translate(4.500000, 5.500000) rotate(-270.000000) translate(-4.500000, -5.500000) translate(-1.000000, 1.000000)">
+                <path d="M0.868421053,4.68808594 L10.7904268,4.68808594" id="Path-2"></path>
+                <polyline id="Path-3" points="6.77210115 0.413671875 10.9185618 4.71091294 6.89636346 8.87937307"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

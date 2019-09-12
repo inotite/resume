@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="62px" viewBox="0 0 64 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.800000012">
+        <g id="applicant-design-04" transform="translate(-537.000000, -3170.000000)" fill="#EE8434">
+            <g id="features" transform="translate(132.000000, 2644.000000)">
+                <g id="relevant-jobs" transform="translate(403.500000, 526.000000)">
+                    <g id="icon" transform="translate(2.000000, 0.000000)">
+                        <ellipse id="Oval" opacity="0.25" cx="31.5" cy="31" rx="31.5" ry="31"></ellipse>
+                        <path d="M31.5,40.621875 L23.1004134,44.7341316 C22.0584424,45.2442581 21.3455785,44.7298808 21.5092079,43.5780532 L22.8245813,34.3188144 L16.3179779,27.60109 C15.510832,26.7677545 15.7797468,25.9308293 16.9257643,25.7305158 L26.1382964,24.1202481 L30.5165809,15.8562095 C31.0597083,14.8310533 31.9387707,14.8281824 32.4834191,15.8562095 L36.8617036,24.1202481 L46.0742357,25.7305158 C47.2170528,25.9302699 47.4914284,26.7654208 46.6820221,27.60109 L40.1754187,34.3188144 L41.4907921,43.5780532 C41.6539645,44.7266642 40.9444756,45.2456867 39.8995866,44.7341316 L31.5,40.621875 Z" id="Star"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

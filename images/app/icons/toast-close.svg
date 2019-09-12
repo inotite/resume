@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>EBF47E92-9241-48FE-BF2F-0ECE6009E5ED</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M7.43364108,7.00937701 L4.65,4.22573593 L4.22573593,4.65 L7.00937701,7.43364108 L4.07573593,10.3672822 L4.5,10.7915462 L7.43364108,7.85790515 L10.5172822,10.9415462 L10.9415462,10.5172822 L7.85790515,7.43364108 L10.7915462,4.5 L10.3672822,4.07573593 L7.43364108,7.00937701 L7.43364108,7.00937701 Z M7.5,15 C3.35786438,15 0,11.6421356 0,7.5 C0,3.35786438 3.35786438,0 7.5,0 C11.6421356,0 15,3.35786438 15,7.5 C15,11.6421356 11.6421356,15 7.5,15 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="notifications-2" transform="translate(-1396.000000, -101.000000)">
+            <g id="Group-7" transform="translate(1139.000000, 89.000000)">
+                <g id="icons-/-close-2" transform="translate(257.000000, 12.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#E5E5E5" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <g id="color-/-white" mask="url(#mask-2)" fill-rule="evenodd" fill="#FFFFFF">
+                        <g transform="translate(-15.600000, -12.000000)" id="Rectangle-19-Copy-2">
+                            <rect x="0" y="0" width="45" height="45"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

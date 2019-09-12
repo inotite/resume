@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Workruit - Instant Resume</title>
+    <meta name="description"
+        content="Free resume builder online. No sign-up required. Create your CV in real time and download a print-ready PDF.">
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <meta data-content="msapplication-TileColor" content="#da532c">
+    <meta data-content="theme-color" content="#ffffff">
+
+    <script>
+        var sessionId = localStorage.getItem('sessionId');
+        if (!sessionId) {
+            window.location.href = "../index.html";
+        }
+
+        // Enter disable
+
+        $('.bb').keypress(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+            if (keycode == '13') {
+                return false;
+            }
+        });
+    </script>
+    <!--<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+    <!-- <link href="plugins/datedropper/datedropper.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker3.standalone.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/nice-select.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/template-4.css" />
+</head>
+
+<body>
+    <!-- Error Messages -->
+    <div id="newErrorMessageID" class="alert alert-danger">
+        <b class="message-text"></b>
+        <a href='javascript:void(0)' class="close" aria-label="close" title="close">
+            <img src="../images/app/icons/close.png" width="10" />
+        </a>
+    </div>
+    <div id="newSuccessMessageID" class="alert alert-success">
+        <b class="message-text"></b>
+        <a href="javascript:void(0)" class="close" aria-label="close" title="close">
+            <img src="../images/app/icons/close.png" width="10" />
+        </a>
+    </div>
+    <!-- /Error Messages -->
+    <div class="resume-preview d-none"></div>
+    <div class="container">
+        <header class="m-auto row justify-content-center">
+            <nav class="navbar navbar-expand-lg navbar-light my-4 editorNav" id="resume-header">
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item" id="previousPage">
+                            <a class="nav-link" href="../../home/index.html"><img src="img/back-arrow-icon.png"
+                                    height="24" /></a>
+                        </li>
+                        <li class="nav-item dropdown theme-picker">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="theme-picker-button  selected-color theme-black"></span>
+                            </a>
+                            <div class="dropdown-menu theme-color-picker" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#"> <span
+                                        class="theme-picker-button clr_btn theme-blue color" data-color='theme-blue'
+                                        data-oldcolor='theme-green'></span></a>
+                                <a class="dropdown-item" href="#"> <span
+                                        class="theme-picker-button clr_btn theme-green color" data-color='theme-green'
+                                        data-oldcolor='theme-green'></span></a>
+                                <a class="dropdown-item active" href="#"> <span
+                                        class="theme-picker-button clr_btn theme-black color" data-color='theme-black'
+                                        data-oldcolor='theme-green'></span></a>
+                            </div>
+                        </li>
+                        <li class="nav-item theme-picker">
+                            <a class="nav-link dropdown-toggle font selected-font" href="#" id="navbarDropdownMenuLink"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Merriweather </a>
+                            <div class="dropdown-menu font-items" aria-labelledby="navbarDropdownMenuLink">
+                            </div>
+                        </li>
+                        <li class="nav-item theme-picker-2 theme-picker">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="img/settings-icon.png" height="24" />
+                            </a>
+                            <div class="dropdown-menu actions theme-black" data-oldcolor="theme-black"
+                                aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Resume settings</a>
+                                <div class="dropdown-divider"></div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <nav class="navbar navbar-expand-lg navbar-light my-4 ml-4 previewNav" id="resume-header">
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item" id="previewResume">
+                            <a class="nav-link" href="#"><img src="img/view-icon.png" height="24" /></a>
+                        </li>
+                        <li class="nav-item d-none" id="previewBack">
+                            <a class="nav-link" href="#"><img src="img/back-arrow-icon.png" height="24" /></a>
+                        </li>
+                        <li class="nav-item" id="saveResume">
+                            <a class="nav-link" href="#"><img src="img/save-icon.png" height="24" /></a>
+                        </li>
+                        <li class="nav-item" id="downloadResume">
+                            <a class="nav-link" href="#"><img src="img/download-icon.png" height="24" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="container m-auto resume-container theme-black" data-oldcolor="theme-black">
+            <section class="mb-3">
+                <page size="a4" id="resume-body">
+                    <div class="row">
+                        <aside class="col-3 text-break">
+                            <div>
+                                <div>
+                                    <label for="user-picture" class="res_picture">
+                                        <img src="https://via.placeholder.com/140" alt="ProfilePic"
+                                            class="rounded-circle img-margin" id="user_pic">
+                                        <input type="file" data-content="picture"
+                                            accept="image/x-png,image/gif,image/jpeg, image/jpg" id="user-picture" class="d-none">
+
+                                </div>
+                            </div>
+                        </aside>
+                        <!--   <div class="professional_info">
+                                    <p class="text-uppercase section_title title_info mb-1 pb-0">Personal Info</p>
+                                    <div class="user_info">
+                                        <p class="title_info section_title theme-text color m-0 mt-3 pb-0">
+                                            Designation
+                                        </p>
+                                        <p class="info title_info designation_info mb-0" contenteditable="true"
+                                            placeholder="Designation" data-content="userJobTitle"
+                                            onkeypress="return (this.innerText.length <= 48)"></p>
+                                    </div>
+                                    <div class="user_info">
+                                        <p class="title_info section_title theme-text color m-0 mt-3 pb-0">Years
+                                            of
+                                            experience
+                                        </p>
+                                        <p class="info title_info years_of_experience mb-0" contenteditable="true"
+                                            onkeypress="return (this.innerText.length <= 10)"
+                                            placeholder="Years of experience" data-content="totalexperience"></p>
+                                    </div>
+                                    <div class="user_info">
+                                        <p class="title_info section_title theme-text color m-0 pb-0 mt-3">
+                                            Location
+                                        </p>
+                                        <p class="info title_info location mb-0" placeholder="Location"
+                                            contenteditable="true" onkeypress="return (this.innerText.length <= 48)"
+                                            data-content="location"></p>
+                                    </div>
+                                    <div class="user_info">
+                                        <p class="title_info section_title theme-text color m-0 pb-0 mt-3">
+                                            Birthday
+                                        </p>
+                                        <input class="info title_info location b-datepicker mb-0 border-0"
+                                            data-content="dob" type="text" placeholder="Birthday">
+                                    </div>
+                                    <div class="user_info d-inline-block">
+                                        <p class="title_info section_title theme-text color m-0 mt-3 pb-0">Gender
+                                        </p>
+                                        <!-- <p class="info title_info gender mb-0" contenteditable="true"
+                                            placeholder="Gender" data-content="gender"></p> -->
+                        <!-- <select class="gender font-10 title_info" id="gender" data-content="gender">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="others">others</option>
+                                        </select>
+                                    </div> -->
+                        <!-- <div class="user_info">
+                                        <p class="title_info section_title theme-text color mt-3 m-0">Languages
+                                        </p>
+                                        <ul class="list-unstyled">
+                                            <li class="d-flex align-items-center py-2 border-dashed lang_details"
+                                                id="lang_1">
+                                                <div class="rating-container">
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item rating-circle m-0"
+                                                            data-langpercentage=''></li>
+                                                        <li class="list-inline-item rating-circle m-0"
+                                                            data-langpercentage=''></li>
+                                                        <li class="list-inline-item rating-circle m-0"
+                                                            data-langpercentage=''></li>
+                                                        <li class="list-inline-item rating-circle m-0"
+                                                            data-langpercentage=''></li>
+                                                    </ul>
+                                                </div>
+                                                <p contenteditable="true" class="mb-0 ml-2 lang-text"
+                                                    data-content="languageName"
+                                                    onkeypress="return (this.innerText.length <= 10)"
+                                                    placeholder="Language"></p>
+                                                <ul class="append-section-actions list-inline">
+                                                    <li class="list-inline-item cursor-pointer mr-1 remove_lang">
+                                                        <i class="fas fa-minus font-12pt color"></i>
+                                                    </li>
+                                                    <li class="list-inline-item cursor-pointer m-0 add_lang">
+                                                        <i class="fas fa-plus font-12pt color"></i>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="social_info">
+                                    <p class="text-uppercase section_title title_info mb-1 mt-3">Social</p>
+                                    <ul class="list-unstyled m-0">
+                                        <li class="d-flex justify-content-start align-items-center mb-3"><i
+                                                class="fas fa-envelope color font-14pt"></i>
+                                            <p class="m-0 ml-2" data-content="email"></p>
+                                        </li>
+                                        <li class="d-flex justify-content-start align-items-center mb-3"><i
+                                                class="fas fa-phone-square-alt color font-14pt"></i>
+                                            <p contenteditable="true" placeholder="Phone" class="m-0 ml-1"
+                                                onkeypress="return (this.innerText.length <= 14)" data-content="phone">
+                                            </p>
+                                        </li>
+                                        <li class="d-flex justify-content-start align-items-center mb-3 linkedin"><i
+                                                class="fab fa-linkedin color font-14pt"></i>
+                                            <p contenteditable="true" placeholder="LinkedIn" class="m-0 ml-1"
+                                                onkeypress="return (this.innerText.length <= 40)"
+                                                data-content="linkedin"></p>
+                                        </li>
+                                        <li class="d-flex justify-content-start align-items-center mb-3 github"><i
+                                                class="fab fa-github color font-14pt"></i>
+                                            <p contenteditable="true" placeholder="Github" class="m-0 ml-1"
+                                                onkeypress="return (this.innerText.length <= 40)" data-content="github">
+                                            </p>
+                                        </li>
+                                        <li class="d-flex justify-content-start align-items-center mb-3 twitter"><i
+                                                class="fab fa-twitter-square color font-14pt"></i>
+                                            <p contenteditable="true" placeholder="Twitter" class="m-0 ml-1"
+                                                onkeypress="return (this.innerText.length <= 40)"
+                                                data-content="twitter"></p>
+                                        </li>
+                                        <li class="d-flex justify-content-start align-items-center mb-3 website"><i
+                                                class="fas fa-globe-europe color font-14pt"></i>
+                                            <p contenteditable="true" placeholder="Website" class="m-0 ml-1"
+                                                onkeypress="return (this.innerText.length <= 40)"
+                                                data-content="website"></p>
+                                        </li>
+                                        <li class="d-flex justify-content-start align-items-center mb-3 blog"><i
+                                                class="fab fa-blogger color font-14pt"></i>
+                                            <p contenteditable="true" placeholder="Blog" class="m-0 ml-1"
+                                                onkeypress="return (this.innerText.length <= 40)" data-content="blog">
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> -->
+                        <!-- </aside> -->
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-12 pl-0">
+                                    <div class="personal_info">
+                                        <h1 class="user_title font-26pt">
+                                            <span class="user_firstname color" contenteditable="true"
+                                                placeholder="Firstname" data-content="firstname"
+                                                onkeypress="return (this.innerText.length <= 18)"></span>
+                                            <span class="user_lastname color" contenteditable="true"
+                                                placeholder="Lastname" data-content="lastname"
+                                                onkeypress="return (this.innerText.length <= 18)"></span>
+                                        </h1>
+                                        <!-- <h2 class="support_title text-uppercase font-12pt" contenteditable="true"
+                                            placeholder="Job Function" id="allDegrees" data-content="jobfunctions"
+                                            onkeypress="return (this.innerText.length <= 27)"></h2> -->
+                                        <input type="text" id="allJobFunctions"
+                                            class="p-0 pl-1 support_title border-0 w-100 text-uppercase font-12pt mb-3"
+                                            placeholder="Job Function" onkeypress="return (this.innerText.length <= 80)"
+                                            data-content="jobfunctions" data-item-id="">
+
+                                        <div class="social">
+                                            <div class="row">
+                                                <div class="col-6">
+
+                                                    <ul class="list-unstyled ">
+                                                        <li
+                                                            class="d-flex justify-content-start align-items-center mb-1">
+                                                            <i class="fas fa-envelope color font-13pt"></i>
+                                                            <p contenteditable="true" placeholder="Email" 
+                                                                class="m-0 ml-3 font-10pt bb"
+                                                                onkeypress="return (this.innerText.length <= 30)"
+                                                                data-content="email"></p>
+                                                        </li>
+                                                        <li class="d-flex justify-content-start align-items-center ">
+                                                            <i class="fas fa-phone-square-alt color font-14pt"></i>
+                                                            <p contenteditable="true"  placeholder="Phone" 
+                                                                class="m-0 ml-3 font-10pt bb" 
+                                                                onkeypress="return (this.innerText.length <= 14)"
+                                                                data-content="phone"></p>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-6">
+
+                                                    <ul class="list-unstyled ">
+                                                        <li
+                                                            class="d-flex justify-content-start align-items-center mb-1">
+                                                            <i class="fas fa-map-marker-alt color font-14pt"></i>
+                                                            <!-- <img src="img/maps-and-flags.svg" class="color" alt=""> -->
+                                                            <p contenteditable="true" placeholder="Location" 
+                                                                class="m-0 ml-3 font-10pt bb"
+                                                                onkeypress="return (this.innerText.length <= 25)"
+                                                                data-content="Location"></p>
+                                                        </li>
+                                                        <li
+                                                            class="d-flex justify-content-start align-items-center mb-1">
+                                                            <i class="fa fa-briefcase color font-13pt"></i>
+                                                            <!-- <img  src="img/briefcase.svg"  class = "color" alt="" > -->
+                                                            <p contenteditable="true" placeholder="Year Of Experience"
+                                                                class="m-0 ml-3 font-10pt bb" 
+                                                                onkeypress="return (this.innerText.length <= 10)"
+                                                                data-content="years_of_experience"></p>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- <div class="col-12"> -->
+                                                <ul class="list-unstyled linkedin_full">
+                                                    <li class="d-flex justify-content-start align-items-center mb-1">
+                                                        <i class="fab fa-linkedin color font-14pt"></i>
+                                                        <p contenteditable="true" placeholder="LinkedIn"
+                                                            class="m-0 ml-3 font-10pt bb"
+                                                            onkeypress="return (this.innerText.length <= 75)"
+                                                            data-content="LinkedIn"></p>
+                                                    </li>
+                                                </ul>
+
+                                                <!-- </div> -->
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-12">
+                            <h4 class="section_title text-uppercase font-10pt ">About me</h4>
+                            <p class="about_me font-10pt" id="aboutme" placeholder="About Me"
+                                onkeypress="return (this.innerText.length <= 149)" data-content="coverLetter"
+                                contenteditable="true"></p>
+                            <div class="row flex-column  mb-1" id="skills-section">
+                                <h4 class="section_title text-uppercase font-10pt ">Skills</h4>
+                                <div class="skills-section">
+                                    <ul class="list-unstyled w-100 skills-list mb-0">
+                                        <li class=" border-dashed m-0 mb-3 skills-item" id="skills_item_1">
+                                            <div class="skill-box">
+                                                <div class="skills-bar color-blue at-75" data-border="75"><span
+                                                        data-skill="75%" class="skill-value">75%</span></div>
+                                                <input type="text"
+                                                    class="p-0 aligned_input ml-2 skill-input-value skills w-14rem border-0 font-10pt mb-2"
+                                                    placeholder="Skill Name" data-content="skillText">
+                                            </div>
+                                            <ul class="append-section-actions list-inline bottom-50">
+                                                <li class="list-inline-item remove_skills cursor-pointer mr-1">
+                                                    <i class="fas fa-minus font-12pt color"></i>
+                                                </li>
+                                                <li class="list-inline-item add_skills cursor-pointer m-0">
+                                                    <i class="fas fa-plus font-12pt color"></i>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row  flex-column mb-1">
+                                <h4 class="section_title text-uppercase font-10pt ">Work experience</h4>
+                                <div class="border-dashed professional-experience" id="proExp_1">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <p class="font-10pt mb-2 color">
+                                            <span class="exp-role bb" data-content="exp_jobTitle" contenteditable="true"
+                                                placeholder="Role"
+                                                onkeypress="return (this.innerText.length <= 39)"></span>,
+                                            <span class="exp-company bb" data-content="exp_company" contenteditable="true"
+                                                placeholder="Company"
+                                                onkeypress="return (this.innerText.length <= 40)"></span></p>
+                                        <div>
+                                            <p class="font-10pt mb-2 theme-text-dark saperator">
+                                                <input
+                                                    class="info title_info font-10pt location month-picker  w-small mb-0 border-0"
+                                                    data-content="exp_startDate" type="text" placeholder="Start Date">
+                                                <input
+                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0"
+                                                    data-content="exp_endDate" type="text" placeholder="End Date">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="font-10pt mb-2 theme-text-dark">
+                                            <span class="exp-role bb" contenteditable="true" data-content="exp_location"
+                                                placeholder="Location"
+                                                onkeypress="return (this.innerText.length <= 40)"></span></p>
+                                    </div>
+                                    <div>
+                                        <p class="font-10pt mb-2 " contenteditable="true" data-content="exp_description"
+                                            placeholder="Enter Details About Your Work Responsibilities Here."
+                                            onkeypress="return (this.innerText.length <= 299)"></p>
+                                    </div>
+                                    <ul class="append-section-actions list-inline bottom-50">
+                                        <li class="list-inline-item remove_exp cursor-pointer mr-2 d-none">
+                                            <i class="fas fa-minus font-12pt color"></i>
+                                        </li>
+                                        <li class="list-inline-item add_exp cursor-pointer m-0">
+                                            <i class="fas fa-plus font-12pt color"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row flex-column mb-1">
+                                <h4 class="section_title text-uppercase font-10pt ">Education</h4>
+                                <div class="border-dashed education-details" id="education_1">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <div>
+                                            <p class="font-10pt mb-2 color">
+                                                <span class="exp-role bb" contenteditable="true"
+                                                    data-content="fieldOfStudy" placeholder="Field Of Study"
+                                                    onkeypress="return (this.innerText.length <= 40)"></span>,
+                                                <span
+                                                    class="p-0 bb aligned_input support_title border-0 w-100 font-10pt degrees mb-2 w-100"
+                                                    data-content="degree_title" contenteditable="true"
+                                                    placeholder="Degree"
+                                                    onkeypress="return (this.innerText.length <= 50)"></span>
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="font-10pt mb-2 theme-text-dark saperator">
+                                                <input
+                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0"
+                                                    type="text" data-content="edu_startDate" placeholder="Start Date">
+                                                <input
+                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0"
+                                                    type="text" data-content="edu_endDate" placeholder="End Date">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- <div>
+                                        <input type="text"
+                                            class="p-0 aligned_input support_title border-0 w-100 font-10pt degrees mb-2 w-100"
+                                            onkeypress="return (this.innerText.length <= 50)" placeholder="Degree"
+                                            data-content="degree_title">
+                                    </div> -->
+                                    <div>
+                                        <p class="font-10pt mb-2 theme-text color"><span class="exp-role bb"
+                                                data-content="edu_institution" contenteditable="true"
+                                                placeholder="School"
+                                                onkeypress="return (this.innerText.length <= 40)"></span>,
+                                            <span class="exp-role bb" data-content="edu_location bb" contenteditable="true"
+                                                placeholder="Location"
+                                                onkeypress="return (this.innerText.length <= 50)"></span></p>
+                                    </div>
+                                    <div>
+                                        <p class="font-10pt mb-2 " contenteditable="true" data-content="edu_description"
+                                            placeholder="Enter Details About Your Education Here"
+                                            onkeypress="return (this.innerText.length <= 299)"></p>
+                                    </div>
+                                    <ul class="append-section-actions list-inline bottom-50">
+                                        <li class="list-inline-item remove_edu cursor-pointer d-none mr-2">
+                                            <i class="fas fa-minus font-12pt color"></i>
+                                        </li>
+                                        <li class="list-inline-item add_edu cursor-pointer m-0">
+                                            <i class="fas fa-plus font-12pt color"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row flex-column  mb-1" id="academic-section">
+                                <h4 class="section_title text-uppercase font-10pt ">Academic Projects
+                                </h4>
+                                <div class="border-dashed academic-project" id="academic_projects_1">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <p class="font-10pt mb-2 theme-text color"><span class="exp-role bb"
+                                                contenteditable="true" data-content="acd_projectTitle"
+                                                placeholder="Project Title"
+                                                onkeypress="return (this.innerText.length <= 30)"></span>,
+                                            <span class="exp-company bb" data-content="acd_role" contenteditable="true"
+                                                placeholder="Role"
+                                                onkeypress="return (this.innerText.length <= 30)"></span></p>
+                                        <div>
+                                            <p class="font-10pt mb-2 theme-text-dark saperator">
+                                                <input
+                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0"
+                                                    type="text" data-content="acd_startDate" placeholder="Start Date">
+                                                <input
+                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0"
+                                                    type="text" data-content="acd_endDate" placeholder="End Date">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="font-10pt mb-2 theme-text-dark">
+                                            <span class="exp-role bb" contenteditable="true" data-content="acd_location"
+                                                placeholder="Location"
+                                                onkeypress="return (this.innerText.length <= 50)"></span></p>
+                                    </div>
+                                    <div>
+                                        <p class="font-10pt mb-2 " contenteditable="true" data-content="acd_description"
+                                            placeholder="Enter Details About Your Project Here"
+                                            onkeypress="return (this.innerText.length <= 299)"></p>
+                                    </div>
+                                    <ul class="append-section-actions list-inline bottom-50">
+                                        <li class="list-inline-item  remove_acad cursor-pointer mr-2 d-none">
+                                            <i class="fas fa-minus font-12pt color"></i>
+                                        </li>
+                                        <li class="list-inline-item add_acad cursor-pointer m-0">
+                                            <i class="fas fa-plus font-12pt color"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="row flex-column  mb-1" id="achievements-section">
+                                <h4 class="section_title text-uppercase font-10pt ">Achievements</h4>
+                                <p class="font-10pt mb-2 " contenteditable="true" placeholder="Description"
+                                    data-content="achivements" onkeypress="return (this.innerText.length <= 299)"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 footer_ml">
+                            <h4 class="section_title text-uppercase font-10pt ">Language</h4>
+                            <p contenteditable="true" class="mb-2 font-10pt lang-text bb" data-content="languageName"
+                                onkeypress="return (this.innerText.length <= 10)" placeholder="Language"></p>
+                            <p contenteditable="true" class="mb-2 font-10pt lang-text bb" data-content="languageName"
+                                onkeypress="return (this.innerText.length <= 10)" placeholder="Language"></p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <h4 class="section_title text-uppercase font-10pt ">Additional Details</h4>
+                            <div class="user_info">
+                                <input contenteditable="true"
+                                    class="info title_info location b-datepicker font-10pt mb-2 border-0 bb"
+                                    data-content="dob" type="text" placeholder="Birthday"></div>
+                            <p class="info title_info gender font-10pt mb-0" contenteditable="true" placeholder="Gender"
+                                data-content="gender"></p>
+                            <select class="gender font-10pt title_info" id="gender" data-content="gender">
+                                <option value="Gender">Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="others">others</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </page>
+            </section>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/jquery.loadTemplate.js"></script>
+    <script type="text/javascript" src="js/resume-plugin.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker.min.js"> </script>
+    <script type="text/javascript" src="js/moment.min.js"> </script>
+    <script src="js/jquery.nice-select.js"></script>
+    <script src="js/html2canvas.js"></script>
+    <script src="js/jspdf.debug.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+    <!-- <script>
+        const appDate = new Date();
+        const apiAdminUrl = "https://devapi.workruit.com/admin";
+        const apiUrl = "https://devapi.workruit.com/api";
+        const userId = JSON.parse(localStorage.getItem('userData')).userId;
+        const sessionId = localStorage.getItem('sessionId');
+        const userStatus = localStorage.getItem('isPremiumUser');
+        const planInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
+        let resumeObj = JSON.parse(localStorage.getItem('userData'));
+        console.log(resumeObj);
+        // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
+        const fonts = [{
+                fontFamily: 'Lato',
+                fontInfo: 'lato'
+            },
+            {
+                fontFamily: 'Source Sans Pro',
+                fontInfo: 'Source_Sans_Pro'
+            },
+            {
+                fontFamily: 'Merriweather',
+                fontInfo: 'merriweather'
+            },
+            {
+                fontFamily: 'Roboto',
+                fontInfo: 'roboto'
+            },
+            {
+                fontFamily: 'Saira Semi Condensed',
+                fontInfo: 'Saira_Semi_Condensed'
+            }
+
+        ];
+        const settings = [{
+            status: false,
+            text: 'Academic Projects',
+            dataText: 's-academic'
+        }, {
+            status: false,
+            text: 'Achievements',
+            dataText: 's-achievements'
+        }, {
+            status: false,
+            text: 'Certifications',
+            dataText: 's-certifications'
+        }, {
+            status: false,
+            text: 'Github',
+            dataText: 's-github'
+        }, {
+            status: false,
+            text: 'Twitter',
+            dataText: 's-twitter'
+        }, {
+            status: false,
+            text: 'Website',
+            dataText: 's-website'
+        }, {
+            status: false,
+            text: 'Blog',
+            dataText: 's-blog'
+        }]
+        $(window).ready(function () {
+            $('.gender').niceSelect();
+            if (planInfo && planInfo[0].planId == 1) {
+                $('#resume-body').css({
+                    'background-image': 'url("watermarkworkruit.svg")',
+                    'background-position': 'center',
+                    'background-repeat': 'no-repeat',
+                    'background-size': 'contain',
+                });
+            }
+            $('.selected-font').text(fonts[0].fontFamily);
+            $('body').css('font-family', fonts[0].fontFamily);
+            // Declare some global variables for later use:
+            for (let index = 0; index < fonts.length; index++) {
+                const fontItem = fonts[index];
+                const fontLink = '<a class="dropdown-item cursor-pointer font-item" data-font=' + fontItem
+                    .fontInfo +
+                    ' style="font-family:' + fontItem.fontFamily + '">' +
+                    fontItem.fontFamily + '</a>';
+                $('.font-items').append(fontLink);
+            }
+            $('.font-items .font-item').on('click', function () {
+                var selectedFont = $(this).attr('data-font');
+                fonts.filter(item => {
+                    if (selectedFont == item.fontInfo) {
+                        $('.selected-font').text(item.fontFamily);
+                        $('body').css('font-family', item.fontFamily);
+                        return;
+                    };
+                });
+            });
+            $('.b-datepicker').datepicker({
+                format: "dd-mm-yyyy",
+                endDate: moment(appDate).subtract(14, 'years').format('DD-MM-YYYY')
+            });
+            $('.month-picker').datepicker({
+                format: "M yyyy",
+                endDate: moment(appDate).format('MMM YYYY'),
+                startView: "months",
+                minViewMode: "months"
+            });
+            for (let index = 0; index < settings.length; index++) {
+                const settingItem = settings[index];
+                const settingLink = `<a class="dropdown-item action-item mt-0 font-10pt" href="#" data-setting="${settingItem.dataText}">
+                                    <label for="${settingItem.dataText}"><input type="checkbox" id="${settingItem.dataText}" checked="${settingItem.status}" data-checked="${settingItem.status}" class="switch ml-3"><label class="switch-label ${settingItem.dataText}"></label> 
+                                    ${settingItem.text} </label>
+                                </a>`;
+                $('.actions').append(settingLink)
+            }
+            $('.action-item').on('click', function () {
+                var settingId = $(this).attr("data-setting");
+                var currentStatus = $('#' + settingId).attr('data-checked');
+                var newStatus = currentStatus == 'true' ? 'false' : 'true';
+                $('#' + settingId).attr('data-checked', newStatus).attr('checked', newStatus);
+                $('.' + settingId).addClass(newStatus).removeClass(currentStatus);
+                // console.log(settingId);
+                settingStatus(settingId, newStatus);
+            });
+
+            function settingStatus(settingId, setStatus) {
+                switch (settingId) {
+                    case 's-academic':
+                        if (setStatus == 'true') {
+                            $('#academic-section').addClass('d-none');
+                        } else {
+                            $('#academic-section').removeClass('d-none');
+                        }
+                        break;
+                    case 's-achievements':
+                        if (setStatus == 'true') {
+                            $('#achievements-section').addClass('d-none');
+                        } else {
+                            $('#achievements-section').removeClass('d-none');
+                        }
+                        break;
+                    case 's-certifications':
+                        if (setStatus == 'true') {
+                            $('#certifications-section').addClass('d-none');
+                        } else {
+                            $('#certifications-section').removeClass('d-none');
+                        }
+                        break;
+                    case 's-github':
+                        if (setStatus == 'true') {
+                            $('.github').addClass('d-none');
+                        } else {
+                            $('.github').removeClass('d-none');
+                        }
+                        break;
+                    case 's-twitter':
+                        if (setStatus == 'true') {
+                            $('.twitter').addClass('d-none');
+                        } else {
+                            $('.twitter').removeClass('d-none');
+                        }
+                        break;
+                    case 's-website':
+                        if (setStatus == 'true') {
+                            $('.website').addClass('d-none');
+                        } else {
+                            $('.website').removeClass('d-none');
+                        }
+                        break;
+                    case 's-blog':
+                        if (setStatus == 'true') {
+                            $('.blog').addClass('d-none');
+                        } else {
+                            $('.blog').removeClass('d-none');
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            $('.clr_btn').on('click', function () {
+                var newColor = $(this).attr('data-color');
+                var oldColor = $('.resume-container').attr('data-oldcolor');
+                $(this).parent().addClass('active').siblings().removeClass('active');
+                // console.log($(this).siblings());
+                $('.selected-color').addClass(newColor).removeClass(oldColor);
+                $('.actions').addClass(newColor).removeClass(oldColor);
+                $('.resume-container').addClass(newColor).removeClass(oldColor);
+                $('.resume-container').attr('data-oldcolor', newColor);
+            });
+            $('.actions').click(function (e) {
+                e.stopPropagation();
+            });
+            // bind userData to Resume
+
+            $('#previewResume').on('click', function () {
+                $('.resume-preview').removeClass('d-none');
+                $('#previewResume').addClass('d-none');
+                $('#previewBack').removeClass('d-none');
+                $('.editorNav').addClass('d-none');
+                $('.previewNav').css('z-index', '2');
+            });
+            $('#previewBack').on('click', function () {
+                $('.resume-preview').addClass('d-none');
+                $('#previewResume').removeClass('d-none');
+                $('#previewBack').addClass('d-none');
+                $('.editorNav').removeClass('d-none');
+            });
+
+            function ratingCircle() {
+                var container = $("#rating-container");
+                var index = -1;
+                // 1.  Capture the hover event over the div (circle)
+
+                $(".rating-circle").hover(
+                    // When the mouse hover over any circle. All the circles to the left change color to yellow
+                    function () {
+                        $(this).removeClass("rating-chosen").addClass("rating-hover");
+                        $(this).prevAll().removeClass("rating-chosen").addClass("rating-hover");
+                        $(this).nextAll().removeClass("rating-chosen");
+                    },
+                    //When the mouse move away, the color yellow disappears:	
+                    function () {
+                        $(this).removeClass("rating-hover");
+                        $(this).prevAll().removeClass("rating-hover");
+
+                        if (index >= 0) {
+                            //Return the previously chosen choice (if any) back in green
+                            // Recall the choice using its index
+                            // "get" returns a DOM element, NOT a jQuery object
+                            var chosenCircle = container.children().get(index);
+                            //Convert to jQuery object
+                            var $rating = $(chosenCircle);
+
+                            //Make them green again
+                            $rating.addClass("rating-chosen");
+                            $rating.prevAll().addClass("rating-chosen");
+                        }
+                    }
+                );
+
+
+                // 2. Capture the click event when the user click on a circle.
+                // All the circles to the left change color to green 
+                // The color stays green as the mouse move away
+
+                $(".rating-circle").click(
+                    function () {
+                        $(this).addClass("rating-chosen");
+                        $(this).prevAll().addClass("rating-chosen");
+                        // Remember the position of the click so it can be retrieved later
+                        index = $(this).index();
+                    }
+                );
+            }
+            ratingCircle();
+
+
+            $("body").on("click", ".skills-bar", function (e) {
+                var skillDataValue = $(this).attr('data-border');
+                switch (skillDataValue) {
+                    case '25':
+                        $(this).addClass('at-50').removeClass('at-25');
+                        $(this).attr('data-border', '50');
+                        $(this).children().attr('data-skill', '50%').text('50%');
+                        break;
+                    case '50':
+                        $(this).addClass('at-75').removeClass('at-50');
+                        $(this).attr('data-border', '75');
+                        $(this).children().attr('data-skill', '75%').text('75%');
+                        break;
+                    case '75':
+                        $(this).addClass('at-100').removeClass('at-75');
+                        $(this).attr('data-border', '100');
+                        $(this).children().attr('data-skill', '100%').text('100%');
+                        break;
+                    case '100':
+                        $(this).addClass('at-25').removeClass('at-100');
+                        $(this).attr('data-border', '25');
+                        $(this).children().attr('data-skill', '25%').text('25%');
+                        break;
+                    default:
+                        break;
+                }
+            });
+            //experience add new start
+            $("body").on("click", ".add_exp", function (e) {
+                if ($('.professional-experience').length < 3) {
+                    // console.log('i am add_exp')
+                    var $div = $('div[id^="proExp"]:last');
+                    var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                    var $klon = $div.clone().prop('id', 'proExp_' + num);
+                    $div.after($klon);
+                    $('#proExp_' + num + ' [data-content="exp_jobTitle"]').text('').attr('placeholder',
+                        'Role');
+                    $('#proExp_' + num + ' [data-content="exp_company"]').text('').attr('placeholder',
+                        'Company');
+                    $('#proExp_' + num + ' [data-content="exp_startDate"]').val('').attr('placeholder',
+                        'Start Date');
+                    $('#proExp_' + num + ' [data-content="exp_endDate"]').val('').attr('placeholder',
+                        'End Date');
+                    $('#proExp_' + num + ' [data-content="exp_location"]').text('').attr('placeholder',
+                        'Location');
+                    $('#proExp_' + num + ' [data-content="exp_description"]').text('').attr(
+                        'placeholder',
+                        'Enter details about your work responsibilities here.');
+                    $('.month-picker').datepicker({
+                        format: "M yyyy",
+                        endDate: moment(appDate).format('MMM YYYY'),
+                        startView: "months",
+                        minViewMode: "months"
+                    });
+                }
+                if ($('.professional-experience').length == 3) {
+                    $('.professional-experience .add_exp').addClass('d-none');
+                }
+                if ($('.professional-experience').length > 1) {
+                    $('.professional-experience .remove_exp').removeClass('d-none');
+                }
+
+            })
+            $("body").on("click", ".remove_exp", function () {
+                var $div = $(this);
+                $div.parent().parent().remove();
+                if ($('.professional-experience').length < 2) {
+                    // console.log('i am remove_exp');
+                    $('.professional-experience .remove_exp').addClass('d-none').removeClass('d-block');
+                }
+                if ($('.professional-experience').length < 3) {
+                    $('.professional-experience .add_exp').addClass('d-block').removeClass('d-none');
+                }
+            });
+            //experience add new end
+            //education add new start
+            $("body").on("click", ".add_edu", function (e) {
+                if ($('.education-details').length < 3) {
+                    // console.log('i am add_edu')
+                    var $div = $('div[id^="education_"]:last');
+                    var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                    var $klon = $div.clone().prop('id', 'education_' + num);
+                    $div.after($klon);
+                    $('#education_' + num + ' [data-content="fieldOfStudy"]').text('').attr(
+                        'placeholder',
+                        'Field of study');
+                    $('#education_' + num + ' [data-content="edu_startDate"]').val('').attr(
+                        'placeholder',
+                        'Start Date');
+                    $('#education_' + num + ' [data-content="edu_endDate"]').val('').attr('placeholder',
+                        'End Date');
+                    $('#education_' + num + ' [data-content="degree_title"]').val('').attr(
+                        'placeholder',
+                        'Degree');
+                    $('#education_' + num + ' [data-content="edu_institution"]').text('').attr(
+                        'placeholder',
+                        'School');
+                    $('#education_' + num + ' [data-content="edu_location"]').text('').attr(
+                        'placeholder',
+                        'Location');
+                    $('#education_' + num + ' [data-content="edu_description"]').text('').attr(
+                        'placeholder',
+                        'Enter details about your education here');
+                    $('.month-picker').datepicker({
+                        format: "M-yyyy",
+                        endDate: moment(appDate).format('MMM-YYYY'),
+                        startView: "months",
+                        minViewMode: "months"
+                    });
+                    $(".degrees").autocomplete({
+                        source: jobFunctionsAll,
+                        minLength: 0,
+                        source: function (request, response) {
+                            var results = $.ui.autocomplete.filter(degreesAll, request
+                                .term);
+                            response(results.slice(0, 10));
+                        },
+                        select: function (event, ui) {
+                            $(this).attr({
+                                'data-id': ui.item.id,
+                                'data-shortTitle': ui.item.shortTitle
+                            });
+                        }
+                    }).focus(function () {
+                        $(this).autocomplete("search");
+                    });
+                }
+                if ($('.education-details').length == 3) {
+                    $('.education-details .add_edu').addClass('d-none');
+                }
+                if ($('.education-details').length > 1) {
+                    $('.education-details .remove_edu').removeClass('d-none');
+                }
+
+            })
+            $("body").on("click", ".remove_edu", function () {
+                var $div = $(this);
+                $div.parent().parent().remove();
+                if ($('.education-details').length < 2) {
+                    // console.log('i am remove_edu');
+                    $('.education-details .remove_edu').addClass('d-none').removeClass('d-block');
+                }
+                if ($('.education-details').length < 3) {
+                    $('.education-details .add_edu').addClass('d-block').removeClass('d-none');
+                }
+            });
+            //education add new end
+            //academic add new start
+            $("body").on("click", ".add_acad", function () {
+                if ($('.academic-project').length < 3) {
+                    // console.log('i am add_exp')
+                    var $div = $('div[id^="academic_projects_"]:last');
+                    var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                    var $klon = $div.clone().prop('id', 'academic_projects_' + num);
+                    $div.after($klon);
+                    $('#academic_projects_' + num + ' [data-content="acd_projectTitle"]').text('').attr(
+                        'placeholder',
+                        'Project Title');
+                    $('#academic_projects_' + num + ' [data-content="acd_startDate"]').val('').attr(
+                        'placeholder',
+                        'Start Date');
+                    $('#academic_projects_' + num + ' [data-content="acd_endDate"]').val('').attr(
+                        'placeholder',
+                        'End Date');
+                    $('#academic_projects_' + num + ' [data-content="acd_institution"]').text('').attr(
+                        'placeholder',
+                        'University');
+                    $('#academic_projects_' + num + ' [data-content="acd_location"]').text('').attr(
+                        'placeholder',
+                        'location');
+                    $('#academic_projects_' + num + ' [data-content="acd_description"]').text('').attr(
+                        'placeholder',
+                        'Enter details about your project here.   ');
+                    $('#academic_projects_' + num + ' [data-content="acd_role"]').text('').attr(
+                        'placeholder',
+                        'Role');
+                    $('.month-picker').datepicker({
+                        format: "M-yyyy",
+                        endDate: moment(appDate).format('MMM-YYYY'),
+                        startView: "months",
+                        minViewMode: "months"
+                    });
+                }
+                if ($('.academic-project').length == 3) {
+                    $('.academic-project .add_acad').addClass('d-none');
+                }
+                if ($('.academic-project').length > 1) {
+                    $('.academic-project .remove_acad').removeClass('d-none');
+                }
+            })
+            $("body").on("click", ".remove_acad", function () {
+                var $div = $(this);
+                $div.parent().parent().remove();
+                if ($('.academic-project').length < 2) {
+                    $('.academic-project .remove_acad').addClass('d-none').removeClass('d-block');
+                }
+                if ($('.academic-project').length < 3) {
+                    $('.academic-project .add_acad').addClass('d-block').removeClass('d-none');
+                }
+            });
+            //academic end new start
+            //skills add new start
+            if ($('.skills-item').length <= 5) {
+                $('.skills-item .remove_skills').addClass('d-none');
+            }
+            var minSkill = '75%';
+            var minSkillValue = "75";
+            var skillsLength = 5;
+            for (let index = 1; index < skillsLength; index++) {
+                var $div = $('li[id^="skills_item_"]:last');
+                var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                var $klon = $div.clone().prop('id', 'skills_item_' + num)
+                $div.after($klon);
+                var minSkill = '75%';
+                $('#skills_item_' + num + ' .skills-bar .skill-value').attr('data-skill', minSkill);
+                $('#skills_item_' + num + ' .skills-bar .skill-value').text(minSkill);
+                $('#skills_item_' + num + ' .skills-bar').attr('data-border', minSkillValue);
+                $('#skills_item_' + num + ' .skills-bar').attr('class', '').attr('class',
+                    'skills-bar color-blue at-75');
+                $('#skills_item_' + num + ' .skill').attr('data-content', '').text('');
+            }
+            $("body").on("click", ".add_skills", function () {
+                if ($('.skills-item').length < 16) {
+                    var $div = $('li[id^="skills_item_"]:last');
+                    var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                    var $klon = $div.clone().prop('id', 'skills_item_' + num)
+                    $div.after($klon);
+
+                    $('#skills_item_' + num + ' .skills-bar .skill-value').attr('data-skill', minSkill);
+                    $('#skills_item_' + num + ' .skills-bar .skill-value').text(minSkill);
+                    $('#skills_item_' + num + ' .skills-bar').attr('data-border', minSkillValue);
+                    $('#skills_item_' + num + ' .skills-bar').attr('class', '').attr('class',
+                        'skills-bar color-blue at-75');
+                    $('#skills_item_' + num + ' .skill').attr('data-content', '').val('');
+                    $('#skills_item_' + num + ' [data-content="skillText"]').val('');
+                    // console.log('i am add_exp')
+                }
+                if ($('.skills-item').length == 16) {
+                    $('.skills-item .add_skills').addClass('d-none');
+                }
+                if ($('.skills-item ').length > 5) {
+                    $('.skills-item .remove_skills').removeClass('d-none');
+                }
+                $('.skills').on('keydown', function () {
+                    var fieldVal = $(this).val();
+                    var skillsSettings = {
+                        "async": true,
+                        "crossDomain": true,
+                        "url": apiAdminUrl + "/skills?skillName=" + fieldVal,
+                        "method": "GET",
+                        "headers": {
+                            "token": "911ca088ab824095b82d3c98b32332e7",
+                        }
+                    }
+                    var skillsAll = new Array();
+                    $.ajax(skillsSettings).done(function (response) {
+                        // console.log(fieldVal, response)
+                        $(response.content).each(function (k, v) {
+                            skillsAll.push(response.content[k].skillName);
+                        });
+                        // var results = $.ui.autocomplete.filter(skillsAll, request.term);
+                        $(".skills").autocomplete({
+                            source: skillsAll,
+                            minLength: 0
+                        }).focus(function () {
+                            $(this).autocomplete("search", $(this).val());
+                        });
+                    });
+                });
+
+
+            })
+            $("body").on("click", ".remove_skills", function () {
+                var $div = $(this);
+                if ($('.skills-item').length <= 16) {
+                    $('.skills-item .add_skills').removeClass('d-none');
+                }
+                $div.parent().parent().remove();
+                if ($('.skills-item  .skills-data-container').length <= 5) {
+                    $('.skills-item .remove_skills').addClass('d-none');
+                }
+                if ($('.skills-item ').length > 5) {
+                    $('.skills-item .remove_skills').removeClass('d-none');
+                }
+            });
+            //skills add new end
+
+
+            // Language new added
+            $("body").on("click", ".add_lang", function (e) {
+                if ($('.lang_details').length < 3) {
+                    // console.log('i am add_lang')
+                    var $div = $('li[id^="lang_"]:last');
+                    var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                    var $klon = $div.clone().prop('id', 'lang_' + num);
+                    $div.after($klon);
+                    $('#lang_' + num + ' [data-content="languageName"]').text('').attr(
+                        'placeholder',
+                        'Language');
+
+                    ratingCircle();
+
+                }
+
+                if ($('.lang_details').length == 3) {
+                    $('.lang_details .add_lang').addClass('d-none');
+                }
+                if ($('.lang_details').length > 1) {
+                    $('.lang_details .remove_lang').removeClass('d-none');
+                }
+
+            })
+            $("body").on("click", ".remove_lang", function () {
+                var $div = $(this);
+                $div.parent().parent().remove();
+                if ($('.lang_details').length < 2) {
+                    // console.log('i am remove_lang');
+                    $('.lang_details .remove_lang').addClass('d-none').removeClass('d-block');
+                }
+                if ($('.lang_details').length < 3) {
+                    $('.lang_details .add_lang').addClass('d-block').removeClass('d-none');
+                }
+            });
+            // End Language ================
+
+            //Save resume....................
+            let postObj = {
+                "firstname": '',
+                "pic": '',
+                "user_website": '',
+                "userJobTitle": '',
+                "user_twitter": '',
+                "coverLetter": '',
+                "email": '',
+                "deviceType": 'NA',
+                "user_blog": '',
+                "joining_info": "10-09-2017",
+                "user_linkdin": '',
+                "telephone": '',
+                "current_salary": 0,
+                "user_github": '',
+                "lastname": '',
+                "user_behance": '',
+                "expDisplay": '',
+                "location": '',
+                "gender": '',
+                "date_of_birth": '',
+                "interests": '',
+                "certifications": '',
+                "refferences": '',
+                "jobfunctions": [],
+                "academic": [],
+                "experience": [],
+                "education": [],
+                "languages": [],
+                "skill": []
+            }
+
+            $('#saveResume').on('click', function () {
+                bindUserDataForSave();
+                saveUserProfile(postObj);
+            });
+
+            $('#downloadResume').on('click', function () {
+                savePdf()
+            });
+
+            function bindUserDataForSave() {
+                const jobfunctions = $('input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
+                    $('input[data-content="jobfunctions"]').attr('data-item-id'))] : []
+                postObj.pic = localStorage.getItem('imageStore');
+                postObj.firstname = $('[data-content="firstname"]').text();
+                postObj.lastname = $('[data-content="lastname"]').text();
+                postObj.jobfunctions = jobfunctions;
+                postObj.coverLetter = $('[data-content="coverLetter"]').text();
+                postObj.userJobTitle = $('[data-content="userJobTitle"]').text();
+                postObj.expDisplay = $('[data-content="totalexperience"]').text();
+                postObj.location = $('[data-content="location"]').text();
+                postObj.date_of_birth = $('[data-content="dob"]').val();
+                postObj.gender = $('.gender .current').text();
+
+                postObj.email = $('[data-content="email"]').text();
+                postObj.telephone = $('[data-content="phone"]').text();
+                postObj.user_linkdin = $('[data-content="linkedin"]').text();
+                postObj.user_github = !$('.github').hasClass('d-none') ? '' : $('[data-content="github"]')
+                    .text()
+                postObj.user_twitter = !$('.twitter').hasClass('d-none') ? '' : $('[data-content="twitter"]')
+                    .text();
+                postObj.user_website = !$('.website').hasClass('d-none') ? '' : $('[data-content="website"]')
+                    .text();
+                postObj.user_blog = !$('.blog').hasClass('d-none') ? '' : $('[data-content="blog"]').text();
+
+                postObj.interests = $('[data-content="achivements"]').text();
+                postObj.certifications = $('[data-content="certifications"]').text();
+                // console.log("resumeObj", resumeObj)
+                getExperinceDetails();
+                getEducationDetails();
+                getAcademicDetails();
+                getSkillsDetails();
+                getLanguageDetails();
+            }
+
+            function getExperinceDetails() {
+                postObj.experience = [];
+                $('.professional-experience').each(function (i, v) {
+                    var id = $(this).attr('id');
+                    var exp_endDate = $('#' + id).find('input[data-content="exp_endDate"]').val();
+                    var exp_startDate = $('#' + id).find('input[data-content="exp_startDate"]')
+                        .val();
+                    var exp_jobTitle = ($('#' + id).find('span[data-content="exp_jobTitle"]').attr(
+                                'placeholder') != $('#' + id).find('span[data-content="exp_jobTitle"]')
+                            .text()) ?
+                        $('#' + id).find('span[data-content="exp_jobTitle"]').text() : '';
+                    var exp_location = ($('#' + id).find('span[data-content="exp_location"]').attr(
+                                'placeholder') != $('#' + id).find('span[data-content="exp_location"]')
+                            .text()) ?
+                        $('#' + id).find('span[data-content="exp_location"]').text() : '';
+                    var exp_company = ($('#' + id).find('span[data-content="exp_company"]').attr(
+                            'placeholder') != $('#' + id).find('span[data-content="exp_company"]')
+                        .text()) ? $(
+                        '#' + id).find('span[data-content="exp_company"]').text() : '';
+                    var exp_description = ($('#' + id).find('p[data-content="exp_description"]')
+                        .attr('placeholder') != $('#' + id).find(
+                            'p[data-content="exp_description"]')
+                        .text()) ? $('#' + id).find('p[data-content="exp_description"]').text() : '';
+
+                    postObj.experience.push({
+                        "endDate": exp_endDate,
+                        "startDate": exp_startDate,
+                        "jobTitle": exp_jobTitle.trim(),
+                        "isPresent": 0,
+                        "location": exp_location,
+                        "company": exp_company,
+                        "description": exp_description.trim()
+                    });
+                });
+            }
+
+            function getAcademicDetails() {
+                postObj.academic = [];
+                if (!$('#academic-section').hasClass('d-none')) {
+                    $('.academic-project').each(function (i, v) {
+                        var id = $(this).attr('id');
+                        var acd_endDate = $('#' + id).find(
+                            'input[data-content="acd_endDate"]').val();
+                        var acd_startDate = $('#' + id).find(
+                                'input[data-content="acd_startDate"]')
+                            .val();
+                        var institution = ($('#' + id).find(
+                                    'span[data-content="acd_institution"]')
+                                .attr(
+                                    'placeholder') != $('#' + id).find(
+                                    'span[data-content="acd_institution"]')
+                                .text()) ?
+                            $('#' + id).find(
+                                'span[data-content="acd_institution"]')
+                            .text() : '';
+                        var location = ($('#' + id).find(
+                                    'span[data-content="acd_location"]').attr(
+                                    'placeholder') != $('#' + id).find(
+                                    'span[data-content="acd_location"]')
+                                .text()) ?
+                            $('#' + id).find(
+                                'span[data-content="acd_location"]').text() :
+                            '';
+                        var project = ($('#' + id).find(
+                                    'span[data-content="acd_projectTitle"]')
+                                .attr(
+                                    'placeholder') != $('#' + id).find(
+                                    'span[data-content="acd_projectTitle"]')
+                                .text()) ? $(
+                                '#' + id).find(
+                                'span[data-content="acd_projectTitle"]')
+                            .text() : '';
+                        var description = ($('#' + id).find(
+                                    'p[data-content="acd_description"]')
+                                .attr('placeholder') != $('#' + id).find(
+                                    'p[data-content="acd_description"]')
+                                .text()) ? $('#' + id).find(
+                                'p[data-content="acd_description"]')
+                            .text() : '';
+                        var role = ($('#' + id).find(
+                                    'span[data-content="acd_role"]')
+                                .attr('placeholder') != $('#' + id).find(
+                                    'span[data-content="acd_role"]')
+                                .text()) ? $('#' + id).find(
+                                'span[data-content="acd_role"]')
+                            .text() : ''
+                        postObj.academic.push({
+                            "endDate": acd_endDate,
+                            "startDate": acd_startDate,
+                            "institution": institution.trim(),
+                            "isPresent": 0,
+                            "role": role,
+                            "location": location,
+                            "projectTitle": project,
+                            "description": description.trim()
+                        });
+                    });
+                }
+            }
+
+            function getEducationDetails() {
+                postObj.education = [];
+                $('.education-details').each(function (i, v) {
+                    // console.log(v);
+                    var id = $(this).attr('id');
+                    var endDate = $('#' + id).find(
+                        'input[data-content="edu_endDate"]').val();
+                    var startDate = $('#' + id).find(
+                            'input[data-content="edu_startDate"]')
+                        .val();
+                    var fieldOfStudy = ($('#' + id).find('span[data-content="fieldOfStudy"]')
+                        .attr(
+                            'placeholder') != $('#' + id).find(
+                            'span[data-content="fieldOfStudy"]').text()) ? $(
+                        '#' + id).find('span[data-content="fieldOfStudy"]').text() : '';
+                    var institution = ($('#' + id).find(
+                            'span[data-content="edu_institution"]').attr(
+                            'placeholder') != $('#' + id).find(
+                            'span[data-content="edu_institution"]').text()) ?
+                        $('#' + id).find('span[data-content="edu_institution"]').text() :
+                        '';
+                    var location = ($('#' + id).find('span[data-content="edu_location"]')
+                            .attr(
+                                'placeholder') != $('#' + id).find(
+                                'span[data-content="edu_location"]').text()) ?
+                        $('#' + id).find('span[data-content="edu_location"]').text() : '';
+                    var degree = {
+                        title: $('#' + id).find('input[data-content="degree_title"]').text(),
+                        degreeId: $('#' + id).find('input[data-content="degree_title"]').attr(
+                            'data-id'),
+                        shortTitle: $('#' + id).find('input[data-content="degree_title"]').attr(
+                            'data-shorttitle'),
+                    };
+                    var description = ($('#' + id).find(
+                            'p[data-content="edu_description"]')
+                        .attr('placeholder') != $('#' + id).find(
+                            'p[data-content="edu_description"]')
+                        .text()) ? $('#' + id).find(
+                        'p[data-content="edu_description"]').text() : '';
+                    if (endDate != '' || startDate != '' || institution != '' ||
+                        location != '' || degree != '' || description != '' || fieldOfStudy != '') {
+                        postObj.education.push({
+                            "endDate": endDate,
+                            "startDate": startDate,
+                            "fieldOfStudy": fieldOfStudy,
+                            "institution": institution.trim(),
+                            "isPresent": 0,
+                            "location": location,
+                            "degree": degree,
+                            "description": description.trim()
+                        });
+                    }
+                });
+            }
+
+            function getLanguageDetails() {
+                postObj.languages = [];
+                $('.lang_details').each(function (i, v) {
+                    // console.log(v);
+                    var id = $(this).attr('id');
+                    $(".rating-chosen").length * 25;
+                    var lng_percentage = $('#' + id + ' li.rating-chosen').length;
+                    var lngName = $('#' + id + ' [data-content="languageName"]').text();
+                    // var title = $('#' + id).find(
+                    //         '[data-content="languageName"]')
+                    //     .val();
+                    // var percentage = ($('#' + id).find('[data-langpercentage]')
+                    //     .attr(
+                    //         'placeholder') != $('#' + id).find(
+                    //         'span[data-content="fieldOfStudy"]').text()) ? $(
+                    //     '#' + id).find('span[data-content="fieldOfStudy"]').text() : '';
+                    postObj.languages.push({
+                        "lng_percentage": lng_percentage * 25,
+                        "lngName": lngName
+                    });
+                });
+            }
+
+            function getSkillsDetails() {
+                postObj.skill = []
+                $('.skills-item').each(function (i, v) {
+                    var id = $(this).attr('id');
+                    var skill_name = $('#' + id + ' .skill-input-value').val();
+                    var skill_value = parseInt($('#' + id).find('.skill-value').attr('data-skill'));
+                    // console.log(i, skill_name, skill_value, "skill_value");
+                    postObj.skill.push({
+                        "skillName": skill_name,
+                        "skill_percentage": skill_value
+                    });
+                });
+            }
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#user_pic').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#user-picture").change(function () {
+                readURL(this);
+            });
+
+            bindUserData();
+
+            function bindUserData() {
+                $('#user_pic').attr('src', localStorage.getItem('imageStore'));
+                $('[data-content="firstname"]').text(resumeObj.firstname);
+                $('[data-content="lastname"]').text(resumeObj.lastname);
+                if (resumeObj.jobFunctions.length) {
+                    $('input[data-content="jobfunctions"]').val(resumeObj.jobFunctions[0].jobFunctionName);
+                    $('input[data-content="jobfunctions"]').attr('data-item-id', resumeObj.jobFunctions[0]
+                        .categoryId);
+                }
+                $('[data-content="coverLetter"]').text(resumeObj.coverLetter);
+                $('[data-content="userJobTitle"]').text(resumeObj.userJobTitle);
+                $('[data-content="totalexperience"]').text(resumeObj.expDisplay);
+                $('[data-content="location"]').text(resumeObj.location);
+                $('[data-content="dob"]').val(resumeObj.date_of_birth);
+                $('.gender .current').text(resumeObj.gender)
+                $('[data-content="email"]').text(resumeObj.email);
+                $('[data-content="phone"]').text(resumeObj.telephone);
+                $('[data-content="linkedin"]').text(resumeObj.user_linkdin);
+                $('[data-content="github"]').text(resumeObj.user_github);
+                $('[data-content="twitter"]').text(resumeObj.user_twitter);
+                $('[data-content="website"]').text(resumeObj.user_website);
+                $('[data-content="blog"]').text(resumeObj.user_blog);
+
+                $('[data-content="achivements"]').text(resumeObj.interests);
+                $('[data-content="certifications"]').text(resumeObj.certifications);
+                bindUserExpData();
+                bindUserEduData();
+                bindUserAcademicData();
+                bindUserSkillsData();
+                bindLanguagesData();
+            }
+
+            function bindUserExpData() {
+                if (resumeObj.userExperienceResSet.length > 1) {
+                    for (let index = 1; index < resumeObj.userExperienceResSet.length; index++) {
+                        var $div = $('div[id^="proExp_"]:last');
+                        var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                        var $klon = $div.clone().prop('id', 'proExp_' + num);
+                        $div.after($klon);
+                    }
+                }
+                $(resumeObj.userExperienceResSet).each(function (i, v) {
+                    var id = 'proExp_' + (i + 1);
+                    $('#' + id).find('input[data-content="exp_endDate"]').val(resumeObj
+                        .userExperienceResSet[i]
+                        .endDate);
+                    $('#' + id).find('input[data-content="exp_startDate"]').val(resumeObj
+                        .userExperienceResSet[i]
+                        .startDate);
+                    $('#' + id).find('span[data-content="exp_jobTitle"]').text(resumeObj
+                        .userExperienceResSet[i]
+                        .jobTitle);
+                    $('#' + id).find('span[data-content="exp_location"]').text(resumeObj
+                        .userExperienceResSet[i]
+                        .location);
+                    $('#' + id).find('span[data-content="exp_company"]').text(resumeObj
+                        .userExperienceResSet[i]
+                        .company);
+                    $('#' + id).find('p[data-content="exp_description"]').text(resumeObj
+                        .userExperienceResSet[i]
+                        .description);
+                });
+            }
+
+            function bindUserEduData() {
+                if (resumeObj.userEducationResSet.length > 1) {
+                    for (let index = 1; index < resumeObj.userEducationResSet.length; index++) {
+                        var $div = $('div[id^="education_"]:last');
+                        var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                        var $klon = $div.clone().prop('id', 'education_' + num);
+                        $div.after($klon);
+                    }
+                }
+                $(resumeObj.userEducationResSet).each(function (i, v) {
+                    var id = 'education_' + (i + 1);
+                    $('#' + id).find('span[data-content="fieldOfStudy"]').text(resumeObj
+                        .userEducationResSet[i].fieldOfStudy);
+                    $('#' + id).find('span[data-content="edu_institution"]').text(resumeObj
+                        .userEducationResSet[i].institution);
+                    $('#' + id).find('span[data-content="edu_location"]').text(resumeObj
+                        .userEducationResSet[i].location);
+                    $('#' + id).find('input[data-content="edu_startDate"]').val(resumeObj
+                        .userEducationResSet[i].startDate);
+                    $('#' + id).find('input[data-content="edu_endDate"]').val(resumeObj
+                        .userEducationResSet[i].endDate);
+                    $('#' + id).find('span[data-content="edu_description"]').text(resumeObj
+                        .userEducationResSet[i].description);
+                    $('#' + id).find('input[data-content="degree_title"]').attr({
+                        'data-id': resumeObj.userEducationResSet[i].degree.degreeId,
+                        'data-shortTitle': resumeObj.userEducationResSet[i].degree.shortTitle
+                    }).val(resumeObj.userEducationResSet[i].degree.title);
+                    // $('#' + id).find('span[data-content="degree_title"]').attr('data-id', resumeObj.userEducationResSet[i].degree.degreeId);
+                    // $('#' + id).find('span[data-content="degree_title"]').attr('data-shorttitle', resumeObj.userEducationResSet[i].degree.shortTitle);
+                });
+            }
+
+            function bindUserAcademicData() {
+                if (resumeObj.userAcademicResSet.length > 1) {
+                    for (let index = 0; index < resumeObj.userAcademicResSet.length; index++) {
+                        var $div = $('div[id^="academic_projects_"]:last');
+                        var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                        var $klon = $div.clone().prop('id', 'academic_projects_' + num);
+                        $div.after($klon);
+                    }
+                }
+                for (let i = 0; i < resumeObj.userAcademicResSet.length; i++) {
+                    const ap = resumeObj.userAcademicResSet[i];
+                    var id = 'academic_projects_' + (i + 1);
+                    console.log(id);
+                    $('#' + id).find('span[data-content="acd_role"]').text(ap.role);
+                    $('#' + id).find('span[data-content="acd_projectTitle"]').text(ap.projectTitle);
+                    $('#' + id).find('span[data-content="acd_institution"]').text(ap.institution);
+                    $('#' + id).find('span[data-content="acd_location"]').text(ap.location);
+                    $('#' + id).find('input[data-content="acd_startDate"]').val(ap.startDate);
+                    $('#' + id).find('input[data-content="acd_endDate"]').val(ap.endDate);
+                    $('#' + id).find('p[data-content="acd_description"]').text(ap.description);
+                };
+            }
+
+            function bindUserSkillsData() {
+                var minSkill = '75%';
+                if (resumeObj.userSkillsSet.length > 5) {
+                    for (let index = 5; index < resumeObj.userSkillsSet.length; index++) {
+                        var $div = $('li[id^="skills_item_"]:last');
+                        var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                        var $klon = $div.clone().prop('id', 'skills_item_' + num)
+                        $div.after($klon);
+                        // console.log(num);
+                        $('#skills_small' + num + ' .skills-data-container').attr('id', 'skilsContainer_' +
+                            num);
+                        $('.skills-item .remove_skills').removeClass('d-none');
+                    }
+                }
+                for (let i = 0; i < resumeObj.userSkillsSet.length; i++) {
+                    const v = resumeObj.userSkillsSet[i];
+                    var a = i + 1;
+                    // console.log(v, '#skills_item_' + a + ' .skills-bar .skill-value');
+                    $('#skills_item_' + a + ' .skills-bar .skill-value').attr('data-skill', v.percentage);
+                    $('#skills_item_' + a + ' .skills-bar .skill-value').text(v.percentage + '%');
+                    $('#skills_item_' + a + ' .skills-bar').attr('data-border', v.percentage);
+                    $('#skills_item_' + a + ' .skills-bar').attr('class', '').attr('class',
+                        'skills-bar color-blue at-' + v.percentage);
+                    $('#skills_item_' + a + ' .skill-input-value').val(v.title);
+                    $('#skills_item_' + a + ' .skill').attr('data-content', '').text(v.title);
+
+                }
+
+            }
+
+            function bindLanguagesData() {
+                if (resumeObj.userLngSet.length > 1) {
+                    for (let index = 1; index < resumeObj.userLngSet.length; index++) {
+                        var $div = $('li[id^="lang_"]:last');
+                        var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
+                        var $klon = $div.clone().prop('id', 'lang_' + num);
+                        $div.after($klon);
+                    }
+                }
+                for (let i = 0; i < resumeObj.userLngSet.length; i++) {
+                    // var id = $('#lang_' + i);
+                    const v = resumeObj.userLngSet[i];
+                    var a = i + 1;
+                    console.log(v);
+                    $('#lang_' + a + ' .rating-container').attr('data-langpercentage', v.percentage);
+                    $('#lang_' + a + ' [data-content="languageName"]').text(v.title);
+                    //data-langpercentage
+                    console.log(v.percentage);
+                    switch (v.percentage) {
+                        case 25:
+                            $('#lang_' + a + ' .rating-container .rating-circle:first-child').addClass(
+                                'rating-chosen')
+                            break;
+                        case 50:
+                            $('#lang_' + a + ' .rating-container li.rating-circle:first-child').addClass(
+                                'rating-chosen')
+                            $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(2)').addClass(
+                                'rating-chosen')
+
+                            break;
+                        case 75:
+                            $('#lang_' + a + ' .rating-container li.rating-circle:first-child').addClass(
+                                'rating-chosen')
+                            $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(2)').addClass(
+                                'rating-chosen')
+                            $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(3)').addClass(
+                                'rating-chosen')
+
+                            break;
+                        case 100:
+                            $('#lang_' + a + ' .rating-container li.rating-circle').addClass('rating-chosen')
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            // services
+            let degreesAll = [];
+            /* Job Functions Autocomplete */
+            var jobFunctionsSettings = {
+                "async": true,
+                "crossDomain": true,
+                "url": apiAdminUrl + "/allJobFunctions",
+                "method": "GET",
+                "headers": {
+                    "token": "911ca088ab824095b82d3c98b32332e7",
+                }
+            }
+            // console.log(apiAdminUrl + "/allJobFunctions");
+            var jobFunctionsAll = new Array();
+            $.ajax(jobFunctionsSettings).done(function (response) {
+
+                $.each(response.categoryArray, function (i1, object) {
+                    $.each(object.categoryValues, function (i3, region) {
+                        jobFunctionsAll.push({
+                            "value": region.value,
+                            "id": region.id
+                        });
+                    });
+                });
+
+                $("#allJobFunctions").autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        var results = $.ui.autocomplete.filter(jobFunctionsAll, request
+                            .term);
+                        response(results.slice(0, 10));
+                        if (results.length <= 0) {
+                            $('#allJobFunctions').attr('data-item-id', '');
+                        }
+                    },
+                    select: function (event, ui) {
+                        //console.log(ui.item)
+                        $('#allJobFunctions').attr('data-item-id', ui.item.id);
+                    }
+                }).focus(function () {
+                    $(this).autocomplete("search");
+                });
+
+            });
+            var self = this;
+            /* Degrees Autocomplete */
+            var degreesSettings = {
+                "async": true,
+                "crossDomain": true,
+                "url": apiAdminUrl + "/allDegrees",
+                "method": "GET",
+                "headers": {
+                    "token": "911ca088ab824095b82d3c98b32332e7",
+                }
+            }
+            $.ajax(degreesSettings).done(function (response) {
+                //console.log(response.degrees[0].title);
+
+                $(response.degrees).each(function (k, object) {
+                    degreesAll.push({
+                        'id': response.degrees[k].degreeId,
+                        'label': response.degrees[k].title,
+                        'value': response.degrees[k].title,
+                        'shortTitle': response.degrees[k].shortTitle
+                    });
+                });
+
+                $(".degrees").autocomplete({
+                    source: jobFunctionsAll,
+                    minLength: 0,
+                    source: function (request, response) {
+                        var results = $.ui.autocomplete.filter(degreesAll, request.term);
+                        response(results.slice(0, 10));
+                    },
+                    select: function (event, ui) {
+                        $(this).attr({
+                            'data-id': ui.item.id,
+                            'data-shortTitle': ui.item.shortTitle
+                        });
+                    }
+                }).focus(function () {
+                    $(this).autocomplete("search");
+                });
+
+            });
+            $('.skills').on('keydown', function () {
+                var fieldVal = $(this).val();
+                var skillsSettings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiAdminUrl + "/skills?skillName=" + fieldVal,
+                    "method": "GET",
+                    "headers": {
+                        "token": "911ca088ab824095b82d3c98b32332e7",
+                    }
+                }
+                var skillsAll = new Array();
+                $.ajax(skillsSettings).done(function (response) {
+                    // console.log(fieldVal, response)
+                    $(response.content).each(function (k, v) {
+                        skillsAll.push(response.content[k].skillName);
+                    });
+                    // var results = $.ui.autocomplete.filter(skillsAll, request.term);
+                    $(".skills").autocomplete({
+                        source: skillsAll,
+                        minLength: 0
+                    }).focus(function () {
+                        $(this).autocomplete("search", $(this).val());
+                    });
+                });
+            });
+
+            function saveUserProfile(applicantData) {
+                if (applicantData.education.length) {
+                    var educationValidArray = applicantData.education.filter(function (item, index) {
+                        return !item.institution || !item.location || !item.degree.title || !item
+                            .fieldOfStudy || !item.endDate || !item.startDate;
+                    });
+                    console.log(educationValidArray);
+                    if (!!educationValidArray.length) {
+                        var errorMessage = "Please fill the all details in education";
+                        $('#newErrorMessageID .message-text').html(errorMessage)
+                        $('#newErrorMessageID').fadeIn().delay(2000)
+                            .fadeOut('slow', function () {
+                                $('#saveResume').removeAttr('pointer-events');
+                            });
+                        return false;
+                    } else {
+                        applicantData.education = applicantData.education.map(function (item, index) {
+                            return {
+                                degree: item.degree,
+                                endDate: item.endDate,
+                                fieldOfStudy: item.fieldOfStudy,
+                                institution: item.institution,
+                                isPresent: item.isPresent,
+                                location: item.location,
+                                startDate: item.startDate,
+                                description: item.description
+                            };
+                        });
+                    }
+                }
+                if (applicantData.experience.length) {
+                    experienceValidArray = applicantData.experience.filter(function (item, index) {
+                        return !item.company || !item.endDate || !item.jobTitle || !item.location || !
+                            item.startDate;
+                    });
+                    console.log(experienceValidArray);
+                    if (!!experienceValidArray.length) {
+                        var errorMessage = "Please fill the all details in experience";
+                        $('#newErrorMessageID .message-text').html(errorMessage)
+                        $('#newErrorMessageID').fadeIn().delay(2000)
+                            .fadeOut('slow', function () {
+                                $('#saveResume').removeAttr('pointer-events');
+                            });
+                        return false;
+                    } else {
+                        applicantData.experience = applicantData.experience.map(function (item, index) {
+                            return {
+                                company: item.company,
+                                description: item.description,
+                                endDate: item.endDate,
+                                isPresent: item.isPresent,
+                                jobTitle: item.jobTitle,
+                                location: item.location,
+                                startDate: item.startDate
+                            };
+                        });
+                    }
+                }
+                if (applicantData.academic.length) {
+                    academicValidArray = applicantData.academic.filter(function (item, index) {
+                        return !item.description || !item.endDate || !item.institution || !item
+                            .location || !item.startDate || !item.projectTitle || !item.role;
+                    });
+                    console.log(academicValidArray);
+                    if (!!academicValidArray.length) {
+                        var errorMessage = "Please fill the all details in academic project";
+                        $('#newErrorMessageID .message-text').html(errorMessage)
+                        $('#newErrorMessageID').fadeIn().delay(2000)
+                            .fadeOut('slow', function () {
+                                $('#saveResume').removeAttr('pointer-events');
+                            });
+                        return false;
+                    } else {
+                        applicantData.academic = applicantData.academic.map(function (item, index) {
+                            return {
+                                description: item.description,
+                                endDate: item.endDate,
+                                institution: item.institution,
+                                isPresent: item.isPresent,
+                                location: item.location,
+                                projectTitle: item.projectTitle,
+                                role: item.role,
+                                startDate: item.startDate
+                            };
+                        });
+                    }
+                }
+                if (applicantData.skill.length) {
+                    academicValidArray = applicantData.skill.filter(function (item, index) {
+                        return !item.skillName || !item.skill_percentage;
+                    });
+                    console.log(academicValidArray);
+                    if (!!academicValidArray.length) {
+                        var errorMessage = "Please fill the skills";
+                        $('#newErrorMessageID .message-text').html(errorMessage)
+                        $('#newErrorMessageID').fadeIn().delay(2000)
+                            .fadeOut('slow', function () {
+                                $('#saveResume').removeAttr('pointer-events');
+                            });
+                        return false;
+                    } else {
+                        applicantData.skill = applicantData.skill.map(function (item, index) {
+                            return {
+                                skillName: item.skillName,
+                                skill_percentage: item.skill_percentage
+                            };
+                        });
+                    }
+                }
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl + "/user/" + userId + "/updateProfileResume",
+                    "type": "POST",
+                    "headers": {
+                        "token": sessionId,
+                        "content-type": "application/json"
+                    },
+                    "processData": false,
+                    "data": JSON.stringify(applicantData),
+                    error: function (e) {
+                        console.log(e);
+                    },
+                    dataType: "json",
+                    contentType: "application/json"
+                }
+                console.log(settings.data);
+                // downloadResume
+                $.ajax(settings).done(function (response) {
+                    if (response.status == 'success') {
+                        $('#newSuccessMessageID .message-text').html(response.msg);
+                        $('.loading-container').fadeOut();
+                        $('#newSuccessMessageID').fadeIn().delay(2000)
+                            .fadeOut('slow', function () {
+                                $('#saveResume').removeAttr('pointer-events');
+                            });
+                        localStorage.setItem('userData', JSON.stringify(response.data));
+
+                        // var logoImg = $('input[name="pic"]').get(0).files[0];
+                        // if (logoImg) {
+                        //     self.saveUserPic();
+                        // }
+                        // self.savePDF();
+                        // if (formType == 'back') {
+                        //     window.history.back();
+                        // }
+                        // self.getShareNameFile();
+
+                    } else {
+                        $('.loading-container').fadeOut();
+                        $('#newErrorMessageID .message-text').html(response.msg)
+                        $('#newErrorMessageID').fadeIn().delay(2000)
+                            .fadeOut('slow', function () {
+                                //$("#saveResume").bind("click");
+                                $('#saveResume').removeAttr('pointer-events');
+                            });
+                        if (formType == 'back') {
+                            window.history.back();
+                        }
+                    }
+
+                });
+            }
+
+            function savePdf() {
+                $('.loading-container').show();
+                if (planInfo) {
+                    var ele = $('#resume-body')[0];
+                    console.log(ele)
+                    /* ele.css({'height': ''});
+                    ele.css({'max-height': ''});*/
+                    ele.style.boxShadow = "none";
+                    html2canvas(ele, {
+                        allowTaint: false,
+                        logging: true,
+                        useCORS: true
+                    }).then(function (canvas) {
+                        var doc = new jsPDF('p', 'cm', 'a4');
+                        const data = canvas.toDataURL(canvas, {
+                            type: 'image/jpg',
+                        })
+                        var image = new Image();
+                        image.src = data;
+                        doc.addImage(image, 'jpg', -0.5, -0.5);
+                        doc = addWaterMark(doc);
+                        doc.save(userId + '_resume.pdf');
+                        ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
+                        $('.loading-container').delay(2000).fadeOut();
+                    });
+                } else {
+                    window.location.href = window.origin + '/pricing.html';
+                }
+            }
+
+            $('#user-picture').on('change', function () {
+                saveUserPic();
+                readURL(this);
+            });
+
+            function saveUserPic() {
+                var self = this;
+                var form = new FormData();
+                var logoImg = $('input[data-content="picture"]').get(0).files[0];
+
+                form.append("userId", userId);
+                form.append("type", "photo");
+                form.append("file", logoImg);
+
+                var imageSettings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl + "/uploadFile",
+                    "method": "POST",
+                    "headers": {
+                        "token": sessionId,
+                        "cache-control": "no-cache",
+                    },
+                    "processData": false,
+                    "contentType": false,
+                    "mimeType": "multipart/form-data",
+                    "data": form
+                }
+                $.ajax(imageSettings).done(function (responseData) {
+
+                    var response = JSON.parse(responseData);
+                    //console.log(response.data.httpPath);
+
+                    if (response.status == 'success') {
+                        // console.log(response.data.httpPath);
+                        localStorage.setItem('imageStore', response.data.httpPath);
+                        $('#profileMenu img').attr('src', response.data.httpPath);
+                        $('#profilePicEdit').attr('src', response.data.httpPath);
+                        $('#pimage-preview').attr('src', response.data.httpPath);
+                        $('#pimage-preview2').css('background', 'url(' + response.data.httpPath +
+                            ') center center');
+                        $('#image-preview2').css('opacity', 0);
+
+
+                    }
+                });
+            }
+            var imgData = './watermarkworkruit.png'
+            var base64Img;
+            toDataURL(imgData, function (dataUrl) {
+                base64Img = dataUrl;
+            })
+
+            function addWaterMark(doc) {
+                var totalPages = doc.internal.getNumberOfPages();
+                console.log(base64Img, "base64Img");
+                for (i = 1; i <= totalPages; i++) {
+                    doc.setPage(i);
+                    doc.addImage(base64Img, 'PNG', 3.3, 6);
+                }
+                return doc;
+            }
+
+            function toDataURL(url, callback) {
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        callback(reader.result);
+                    }
+                    reader.readAsDataURL(xhr.response);
+                };
+                xhr.open('GET', url);
+                xhr.responseType = 'blob';
+                xhr.send();
+            }
+        });
+    </script> -->
+    <script src="js/resume-template.js"></script>
+</body>
+
+</html>

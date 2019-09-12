@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="62px" viewBox="0 0 64 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.800000012">
+        <g id="employer-design-04" transform="translate(-537.000000, -3260.000000)">
+            <g id="key-features" transform="translate(133.000000, 2728.000000)">
+                <g id="two-level-matching" transform="translate(402.500000, 532.000000)">
+                    <g id="icon" transform="translate(2.000000, 0.000000)">
+                        <ellipse id="Oval" fill="#EE8434" opacity="0.25" cx="31.5" cy="31" rx="31.5" ry="31"></ellipse>
+                        <path d="M17,28.5079999 L29.1265708,40.6345707 L48.2705078,21.7412109" id="Path-6" stroke="#EE8434" stroke-width="5"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

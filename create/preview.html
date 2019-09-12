@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Workruit - Instant Resume</title>
+    <meta name="description" content="Free resume builder online. No sign-up required. Create your CV in real time and download a print-ready PDF.">
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <script>
+        var sessionId = localStorage.getItem('sessionId');
+        if (!sessionId) {
+            window.location.href = "../index.html";
+        }         
+    </script>
+    <!--<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="plugins/datedropper/datedropper.min.css" rel="stylesheet">
+</head>
+
+<body style="font-family: 'Source Sans Pro', sans-serif;">
+
+    <!-- <div class="loading-container">
+        <img src="img/oval.svg" style="width:55px">
+    </div> -->
+    <!-- Error Messages -->
+    <div id="newErrorMessageID" class="alert alert-danger">
+        <b class="message-text"></b>
+        <a href='javascript:void(0)' class="close" aria-label="close" title="close">
+            <img src="../images/app/icons/close.png" width="10" />
+        </a>
+    </div>
+    <div id="newSuccessMessageID" class="alert alert-success">
+        <b class="message-text"></b>
+        <a href="javascript:void(0)" class="close" aria-label="close" title="close">
+            <img src="../images/app/icons/close.png" width="10" />
+        </a>
+    </div>
+    <!-- /Error Messages -->
+    <div class="preview-overlay"></div>
+
+
+    <div class="resume-body">
+        <!-- <div class="logo2"></div> -->
+        <!-- <div class="centradovertical">
+            <img src="img/oval1.svg" style="width:55px;opacity:.5;">
+        </div>-->
+    </div>
+    <!-- <div class="loading">
+        <div class="loading_gradient"></div>
+    </div> -->
+    <div id="edit" style="display:block; opacity:1;">
+        <div id="hover_submenu" class="hover_submenu" style="pointer-events:none"></div>
+        <div id="menu_edicion">
+
+
+            <div class="menu_cont method_actions">
+                <div class="menu_item menu_link" style="border-left:0;" id="previewResume" data-type="preview">
+                    <a href="./preview.html" target="_blank">-->
+                        <img src="img/view-icon.png">
+                    </a>
+                </div>
+                <div class="menu_item" id="saveResume" data-type="save">
+                    <img src="img/save-icon.png">
+                </div>
+                <div class="menu_item" id="downloadResume" data-type="save">
+                    <img src="img/download-icon.png">
+                </div>
+            </div>
+
+        </div>
+        <div id="editor"></div>
+        <div id="wrapper">
+            <div id="imprimir" class="template1">
+                <div id="contimprimir" class="theme-picker1">
+                    <ul>
+                        <li class="li25" id="foto">
+                            <label for="inputfoto2" class="select-pic-section" id="image-preview2">
+                                <div class="cont_fotodiv">
+                                    <div id="inserta_imagenlabel">
+                                        <img src="img/icon_image.svg">SELECT YOUR PICTURE</div>
+                                </div>
+                            </label>
+                            <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+                                <input type='file' id="inputfoto2" name="pic" style="display:none" accept="image/*" />
+                            </form>
+                            <!--<img src="" id="image-preview" />-->
+                            <canvas id="canvas-element"></canvas>
+                        </li>
+                        <li class="li75" id="nombre_cont">
+                            <div class="about-info">
+                                <div class="centradovertical" id="centrado_nombre">
+                                    <div class="user-name-section">
+                                        <!--<input type="text" placeholder="First name" class="field-type-1 color" />
+                                        <input type="text" placeholder="First name" class="field-type-1 color" />-->
+                                        <p class="nombre color fname" contenteditable="true" placeholder="First name" name="firstname" id="nombre" spellcheck=false></p>
+                                        <p class="nombre color fname" contenteditable="true" placeholder="Last name" name="lastname" spellcheck=false></p>
+                                    </div>
+                                    <p class="titulo1 m-t-2 p-l-0" id="titulo">
+                                        <input class="job-functions" placeholder="Job Functions" name="jobfunctions" data-item-id="" value="Job Functions" />
+                                    </p>
+                                    <p class="texto m-l-1 word-break-all" id="aboutme" contenteditable="true" placeholder="About me" onfocus="setLimitToInput('aboutme',150)"
+                                        name="aboutme">About me</p>
+                                    <!--<input type="text" class="text-feild" placeholder="About me" />-->
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="li25" id="datospersonales">
+                            <p class="titulo1 personal_title" placeholder="Datos personales">Personal Info</p>
+                            <div id="nacimiento">
+                                <p class="titulo2 color">Your Title</p>
+                                <p class="titulo3" contenteditable="true" placeholder="Enter your title" name="title">Enter your title</p>
+                            </div>
+                            <div id="nacimiento">
+                                <p class="titulo2 color">Years of Experience</p>
+                                <p class="titulo3" contenteditable="true" placeholder="Enter your experience" name="totalexperience">Enter your experience</p>
+                            </div>
+                            <div id="nacimiento">
+                                <p class="titulo2 color">Location</p>
+                                <p class="titulo3" contenteditable="true" placeholder="Enter your location" name="location">Enter your location</p>
+                            </div>
+                            <div id="nacimiento">
+                                <p class="titulo2 color">Birthday</p>
+                                <p class="titulo3" contenteditable="true" placeholder="Enter your birthday" name="date_of_birth">Enter your birthday</p>
+                            </div>
+                            <div id="nacionalidad">
+                                <p class="titulo2 color nowrap">Languages</p>
+                                <div id="estrellas" class="sortable lang-contaner language-1">
+                                    <div id="estrellas1" style="position:relative" class=" cuadro ui-state-default">
+                                        <p class="titulo3 nowrap" contenteditable="true" placeholder="English" name="languages" id="langTitle_1">English</p>
+                                        <div class="centradovertical progress-type-2">
+                                            <div class="estrellas selected pos1">
+                                                <div class="color_estrellas" data-val="25" data-lang="1"></div>
+                                            </div>
+                                            <div class="estrellas pos2">
+                                                <div class="color_estrellas" data-val="50" data-lang="1"></div>
+                                            </div>
+                                            <div class="estrellas pos3">
+                                                <div class="color_estrellas" data-val="75" data-lang="1"></div>
+                                            </div>
+                                            <div class="estrellas pos4">
+                                                <div class="color_estrellas" data-val="100" data-lang="1"></div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div> -->
+                                        <div class="eliminar" data-component="language" data-lang="1">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="language" data-lang="1">
+                                            <div class="labelbotones add-lang-component">Add new</div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" value="25" id="language_1" name="language_value" />
+                                </div>
+                                <div id="estrellas" class="sortable hide-ele language-2 lang-contaner">
+                                    <div id="estrellas1" style="position:relative" class=" cuadro ui-state-default">
+                                        <p class="titulo3 nowrap" contenteditable="true" placeholder="Hindi" name="languages" id="langTitle_2">Hindi</p>
+                                        <div class="centradovertical progress-type-2">
+                                            <div class="estrellas selected pos1">
+                                                <div class="color_estrellas" data-val="25" data-lang="2"></div>
+                                            </div>
+                                            <div class="estrellas pos2">
+                                                <div class="color_estrellas" data-val="50" data-lang="2"></div>
+                                            </div>
+                                            <div class="estrellas pos3">
+                                                <div class="color_estrellas" data-val="75" data-lang="2"></div>
+                                            </div>
+                                            <div class="estrellas pos4">
+                                                <div class="color_estrellas color_base" data-val="100" data-lang="2"></div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div> -->
+                                        <div class="eliminar" data-component="language" data-lang="2">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="language" data-lang="2">
+                                            <div class="labelbotones add-lang-component">Add new</div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" value="25" id="language_2" name="language_value" />
+                                </div>
+                                <div id="estrellas" class="sortable hide-ele language-3 lang-contaner">
+                                    <div id="estrellas1" style="position:relative" class=" cuadro ui-state-default">
+                                        <p class="titulo3 nowrap" contenteditable="true" placeholder="Telugu" name="languages" id="langTitle_3">Telugu</p>
+                                        <div class="centradovertical progress-type-2">
+                                            <div class="estrellas selected pos1">
+                                                <div class="color_estrellas" data-val="25" data-lang="3"></div>
+                                            </div>
+                                            <div class="estrellas pos2">
+                                                <div class="color_estrellas" data-val="50" data-lang="3"></div>
+                                            </div>
+                                            <div class="estrellas pos3">
+                                                <div class="color_estrellas" data-val="75" data-lang="3"></div>
+                                            </div>
+                                            <div class="estrellas pos4">
+                                                <div class="color_estrellas" data-val="100" data-lang="3"></div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div> -->
+                                        <div class="eliminar" data-component="language" data-lang="3">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="language" data-lang="3">
+                                            <div class="labelbotones add-lang-component">Add new</div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" value="25" id="language_3" name="language_value" />
+                                </div>
+
+                            </div>
+                            <div id="domicilio">
+                                <p class="titulo2 color">Gender</p>
+                                <p class="titulo3" contenteditable="true" placeholder="Enter gender" name="gender">Enter gender</p>
+                            </div>
+                            <p class="titulo1 contact_title">Contact</p>
+                            <div class="contacto_item " id="mail">
+                                <div>
+                                    <img class="color_estrellas" src="img/email.png" />
+                                </div>
+                                <p class="texto titulo3" spellcheck=false placeholder="Email" name="email">Email</p>
+                            </div>
+                            <div class="contacto_item " id="tel">
+                                <div>
+                                    <img class="color_estrellas" src="img/tel.png" />
+                                </div>
+                                <p class="texto titulo3 word-break-all phone" id="phone" onfocus="setLimitToInput('phone',14)" contenteditable="true" spellcheck=false
+                                    placeholder="Phone" name="telephone">Phone</p>
+                            </div>
+                            <div class="contacto_item " id="linkedin">
+                                <div>
+                                    <img class="color_estrellas" src="img/linkedin.png" />
+                                </div>
+                                <p class="texto titulo3" contenteditable="true" spellcheck=false placeholder="Linkedin" name="user_linkdin">Linkedin</p>
+                            </div>
+                            <div class="contacto_item " id="github_section">
+                                <div>
+                                    <img class="color_estrellas" src="img/github.png" />
+                                </div>
+                                <p class="texto titulo3" contenteditable="true" spellcheck=false placeholder="Github" name="user_github">Github</p>
+                            </div>
+                            <div class="contacto_item " id="twitter_section">
+                                <div>
+                                    <img class="color_estrellas" src="img/twitter.png" />
+                                </div>
+                                <p class="texto titulo3" contenteditable="true" spellcheck=false placeholder="Twitter" name="user_twitter">Twitter</p>
+                            </div>
+                            <div class="contacto_item " id="website_section">
+                                <div>
+                                    <img class="color_estrellas" src="img/website.png" />
+                                </div>
+                                <p class="texto titulo3" contenteditable="true" spellcheck=false placeholder="Website" name="user_website">Website</p>
+                            </div>
+                            <div class="contacto_item " id="blog_section">
+                                <div>
+                                    <img class="color_estrellas" src="img/blog.png" />
+                                </div>
+                                <p class="texto titulo3" contenteditable="true" spellcheck=false placeholder="Blog" name="user_blog">Blog</p>
+                            </div>
+                        </li>
+                        <li class="li75">
+                            <div id="bloqueprincipal">
+                                <p class="titulo1" id="titulo_laboral" placeholder="Professional experience">Professional experience</p>
+                                <div class="sortable experiencialaboral professional-experience" id="proExp_1">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 color" contenteditable="true" placeholder="Role" name="exp_jobTitle">Role</p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="COMPANY" name="exp_company">COMPANY</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="Start Date" name="exp_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="End Date" name="exp_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="exp_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="exp_description_1" onfocus="setLimitToInput('exp_description_1',150)" placeholder="Enter details about your work responsibilities here."
+                                            name="exp_description">Enter details about your work responsibilities here.</p>
+                                        <!--<div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div>-->
+                                        <div class="eliminar profexp-eliminar" data-component="profexp">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="profexp" data-id="1">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+
+                                <div class="sortable experiencialaboral professional-experience" id="proExp_2">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 color" contenteditable="true" placeholder="Role" name="exp_jobTitle">Role</p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="COMPANY" name="exp_company">COMPANY</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="Start Date" name="exp_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="End Date" name="exp_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="exp_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="exp_description_2" onfocus="setLimitToInput('exp_description_2',150)" placeholder="Enter details about your work responsibilities here."
+                                            name="exp_description">Enter details about your work responsibilities here.</p>
+                                        <!--<div class="mover">
+                                        <div class="labelbotones">Reorder</div>
+                                    </div>-->
+                                        <div class="eliminar profexp-eliminar" data-component="profexp">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="profexp" data-id="2">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+
+                                <div class="sortable experiencialaboral professional-experience" id="proExp_3">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 color" contenteditable="true" placeholder="Role" name="exp_jobTitle">Role</p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="COMPANY" name="exp_company">COMPANY</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="Start Date" name="exp_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="End Date" name="exp_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="exp_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="exp_description_3" onfocus="setLimitToInput('exp_description_3',150)" placeholder="Enter details about your work responsibilities here."
+                                            name="exp_description">Enter details about your work responsibilities here.</p>
+                                        <!--<div class="mover">
+                                    <div class="labelbotones">Reorder</div>
+                                </div>-->
+                                        <div class="eliminar profexp-eliminar" data-component="profexp">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="profexp" data-id="3">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+
+                                <div class="sortable experiencialaboral professional-experience" id="proExp_4">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 color" contenteditable="true" placeholder="Role" name="exp_jobTitle">Role</p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="COMPANY" name="exp_company">COMPANY</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="Start Date" name="exp_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="End Date" name="exp_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="exp_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="exp_description_5" onfocus="setLimitToInput('exp_description_5',150)" placeholder="Enter details about your work responsibilities here."
+                                            name="exp_description">Enter details about your work responsibilities here.</p>
+                                        <!--<div class="mover">
+                                <div class="labelbotones">Reorder</div>
+                            </div>-->
+                                        <div class="eliminar profexp-eliminar" data-component="profexp">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="profexp" data-id="4">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                                <div class="sortable experiencialaboral professional-experience" id="proExp_5">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 color" contenteditable="true" placeholder="Role" name="exp_jobTitle">Role</p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="COMPANY" name="exp_company">COMPANY</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="Start Date" name="exp_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" id="dateSelector_1" placeholder="End Date" name="exp_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="exp_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="exp_description_5" onfocus="setLimitToInput('exp_description_5',150)" placeholder="Enter details about your work responsibilities here."
+                                            name="exp_description">Enter details about your work responsibilities here.</p>
+                                        <!--<div class="mover">
+                                    <div class="labelbotones">Reorder</div>
+                                </div>-->
+                                        <div class="eliminar profexp-eliminar" data-component="profexp">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="profexp" data-id="5">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+
+                                <p class="titulo1" id="titulo_laboral">Education</p>
+                                <div class="education-sections">
+                                <div class="sortable experiencialaboral education-section" id="education_1">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 wrap color" contenteditable="true" placeholder="Field of study" name="fieldOfStudy">Field of study</p>
+                                            <p class="titulo2 wrap p-0">-</p>
+                                            <p class="titulo2 wrap color p-0 autocomplete-data-field">
+                                                <input type="text" class="degrees" placeholder="Degree" name="degree_title" data-id="" data-shortTitle="" />
+                                            </p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="SCHOOL" name="edu_institution">SCHOOL</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" placeholder="Start Date" name="edu_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" placeholder="End Date" name="edu_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="edu_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="edu_description_1" onfocus="setLimitToInput('edu_description_1',150)" placeholder="Enter details about your education here."
+                                            name="edu_description">Enter details about your education here.</p>
+                                        <!--<div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div>-->
+                                        <div class="eliminar" data-component="education">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="education">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                                <div class="sortable experiencialaboral education-section" id="education_2">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 wrap color" contenteditable="true" placeholder="Field of study" name="fieldOfStudy">Field of study</p>
+                                            <p class="titulo2 wrap p-0">-</p>
+                                            <p class="titulo2 wrap color p-0 autocomplete-data-field">
+                                                <input type="text" class="degrees" placeholder="Degree" name="degree_title" data-id="" data-shortTitle="" />
+                                            </p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="SCHOOL" name="edu_institution">SCHOOL</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" placeholder="Start Date" name="edu_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" placeholder="End Date" name="edu_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="edu_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="edu_description_2" onfocus="setLimitToInput('edu_description_2',150)" placeholder="Enter details about your education here."
+                                            name="edu_description">Enter details about your education here.</p>
+                                        <!--<div class="mover">
+                                                <div class="labelbotones">Reorder</div>
+                                            </div>-->
+                                        <div class="eliminar" data-component="education">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="education">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                                <div class="sortable experiencialaboral education-section" id="education_3">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 wrap color" contenteditable="true" placeholder="Field of study" name="fieldOfStudy">Field of study</p>
+                                            <p class="titulo2 wrap p-0">-</p>
+                                            <p class="titulo2 wrap color p-0 autocomplete-data-field">
+                                                <input type="text" class="degrees" placeholder="Degree" name="degree_title" data-id="" data-shortTitle="" />
+                                            </p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="SCHOOL" name="edu_institution">SCHOOL</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" placeholder="Start Date" name="edu_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" placeholder="End Date" name="edu_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="edu_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="edu_description_3" onfocus="setLimitToInput('edu_description_3',150)" placeholder="Enter details about your education here."
+                                            name="edu_description">Enter details about your education here.</p>
+                                        <!--<div class="mover">
+                                                    <div class="labelbotones">Reorder</div>
+                                                </div>-->
+                                        <div class="eliminar" data-component="education">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="education">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                                <div class="sortable experiencialaboral education-section" id="education_4">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 wrap color" contenteditable="true" placeholder="Field of study" name="fieldOfStudy">Field of study</p>
+                                            <p class="titulo2 wrap p-0">-</p>
+                                            <p class="titulo2 wrap color p-0 autocomplete-data-field">
+                                                <input type="text" class="degrees" placeholder="Degree" name="degree_title" data-id="" data-shortTitle="" />
+                                            </p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="SCHOOL" name="edu_institution">SCHOOL</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" placeholder="Start Date" name="edu_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" placeholder="End Date" name="edu_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="edu_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="edu_description_4" onfocus="setLimitToInput('edu_description_4',150)" placeholder="Enter details about your education here."
+                                            name="edu_description">Enter details about your education here.</p>
+                                        <!--<div class="mover">
+                                                        <div class="labelbotones">Reorder</div>
+                                                    </div>-->
+                                        <div class="eliminar" data-component="education">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="education">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                                <div class="sortable experiencialaboral education-section" id="education_5">
+                                    <div class="cuadro ui-state-default" id="experiencia1">
+                                        <div style="position:relative">
+                                            <div class="timeline_bola color_estrellas"></div>
+                                            <p class="titulo2 wrap color" contenteditable="true" placeholder="Field of study" name="fieldOfStudy">Field of study</p>
+                                            <p class="titulo2 wrap p-0">-</p>
+                                            <p class="titulo2 wrap color p-0 autocomplete-data-field">
+                                                <input type="text" class="degrees" placeholder="Degree" name="degree_title" data-id="" data-shortTitle="" />
+                                            </p>
+                                        </div>
+                                        <div class="company-details">
+                                            <p class="titulo3 company-field" contenteditable="true" placeholder="SCHOOL" name="edu_institution">SCHOOL</p>
+                                            <p class="date-selection-contaner">
+                                                <input type="text" class="date-selector" placeholder="Start Date" name="edu_startDate" readonly />
+                                                <span class="seperator">-</span>
+                                                <input type="text" class="date-selector" placeholder="End Date" name="edu_endDate" readonly />
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="edu_location">Location</p>
+                                        </div>
+                                        <p class="texto" contenteditable="true" id="edu_description_5" onfocus="setLimitToInput('edu_description_5',150)" placeholder="Enter details about your education here."
+                                            name="edu_description">Enter details about your education here.</p>
+                                        <!--<div class="mover">
+                                                            <div class="labelbotones">Reorder</div>
+                                                        </div>-->
+                                        <div class="eliminar" data-component="education">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar" data-component="education">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div id="acadamic_section">
+                                    <p class="titulo1" id="titulo_laboral" placeholder="Academic Project">Academic Project</p>
+                                    <div class="sortable experiencialaboral acadamic-project" id="acadamicPro_1">
+                                        <div class="cuadro ui-state-default" id="experiencia1">
+                                            <div style="position:relative">
+                                                <div class="timeline_bola color_estrellas"></div>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Role" name="acd_role">Role</p>
+                                                <p class="titulo2 wrap">-</p>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Project Title" name="acd_projectTitle">Project Title</p>
+                                            </div>
+                                            <div class="company-details">
+                                                <p class="titulo3 company-field" contenteditable="true" placeholder="University" name="acd_institution">University</p>
+                                                <p class="date-selection-contaner">
+                                                    <input type="text" class="date-selector" placeholder="Start Date" name="acd_startDate" readonly />
+                                                    <span class="seperator">-</span>
+                                                    <input type="text" class="date-selector" placeholder="End Date" name="acd_endDate" readonly />
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="acd_location">Location</p>
+                                            </div>
+                                            <p class="texto" contenteditable="true" placeholder="Enter details about your project here." name="acd_description">Enter details about your project here.</p>
+                                            <!-- <div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div> -->
+                                            <div class="eliminar" data-component="acadamic">
+                                                <div class="labelbotones">Remove</div>
+                                            </div>
+                                            <div class="clonar" data-component="acadamic">
+                                                <div class="labelbotones">Add new</div>
+                                            </div>
+                                            <div class="timeline_linea"></div>
+                                        </div>
+                                    </div>
+                                    <div class="sortable experiencialaboral acadamic-project" id="acadamicPro_2">
+                                        <div class="cuadro ui-state-default" id="experiencia1">
+                                            <div style="position:relative">
+                                                <div class="timeline_bola color_estrellas"></div>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Role" name="acd_role">Role</p>
+                                                <p class="titulo2 wrap">-</p>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Project Title" name="acd_projectTitle">Project Title</p>
+                                            </div>
+                                            <div class="company-details">
+                                                <p class="titulo3 company-field" contenteditable="true" placeholder="University" name="acd_institution">University</p>
+                                                <p class="date-selection-contaner">
+                                                    <input type="text" class="date-selector" placeholder="Start Date" name="acd_startDate" readonly />
+                                                    <span class="seperator">-</span>
+                                                    <input type="text" class="date-selector" placeholder="End Date" name="acd_endDate" readonly />
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="acd_location">Location</p>
+                                            </div>
+                                            <p class="texto" contenteditable="true" placeholder="Enter details about your project here." name="acd_description">Enter details about your project here.</p>
+                                            <!-- <div class="mover">
+                                                <div class="labelbotones">Reorder</div>
+                                            </div> -->
+                                            <div class="eliminar" data-component="acadamic">
+                                                <div class="labelbotones">Remove</div>
+                                            </div>
+                                            <div class="clonar" data-component="acadamic">
+                                                <div class="labelbotones">Add new</div>
+                                            </div>
+                                            <div class="timeline_linea"></div>
+                                        </div>
+                                    </div>
+                                    <div class="sortable experiencialaboral acadamic-project" id="acadamicPro_3">
+                                        <div class="cuadro ui-state-default" id="experiencia1">
+                                            <div style="position:relative">
+                                                <div class="timeline_bola color_estrellas"></div>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Role" name="acd_role">Role</p>
+                                                <p class="titulo2 wrap">-</p>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Project Title" name="acd_projectTitle">Project Title</p>
+                                            </div>
+                                            <div class="company-details">
+                                                <p class="titulo3 company-field" contenteditable="true" placeholder="University" name="acd_institution">University</p>
+                                                <p class="date-selection-contaner">
+                                                    <input type="text" class="date-selector" placeholder="Start Date" name="acd_startDate" readonly />
+                                                    <span class="seperator">-</span>
+                                                    <input type="text" class="date-selector" placeholder="End Date" name="acd_endDate" readonly />
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="acd_location">Location</p>
+                                            </div>
+                                            <p class="texto" contenteditable="true" placeholder="Enter details about your project here." name="acd_description">Enter details about your project here.</p>
+                                            <!-- <div class="mover">
+                                                    <div class="labelbotones">Reorder</div>
+                                                </div> -->
+                                            <div class="eliminar" data-component="acadamic">
+                                                <div class="labelbotones">Remove</div>
+                                            </div>
+                                            <div class="clonar" data-component="acadamic">
+                                                <div class="labelbotones">Add new</div>
+                                            </div>
+                                            <div class="timeline_linea"></div>
+                                        </div>
+                                    </div>
+                                    <div class="sortable experiencialaboral acadamic-project" id="acadamicPro_4">
+                                        <div class="cuadro ui-state-default" id="experiencia1">
+                                            <div style="position:relative">
+                                                <div class="timeline_bola color_estrellas"></div>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Role" name="acd_role">Role</p>
+                                                <p class="titulo2 wrap">-</p>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Project Title" name="acd_projectTitle">Project Title</p>
+                                            </div>
+                                            <div class="company-details">
+                                                <p class="titulo3 company-field" contenteditable="true" placeholder="University" name="acd_institution">University</p>
+                                                <p class="date-selection-contaner">
+                                                    <input type="text" class="date-selector" placeholder="Start Date" name="acd_startDate" readonly />
+                                                    <span class="seperator">-</span>
+                                                    <input type="text" class="date-selector" placeholder="End Date" name="acd_endDate" readonly />
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="acd_location">Location</p>
+                                            </div>
+                                            <p class="texto" contenteditable="true" placeholder="Enter details about your project here." name="acd_description">Enter details about your project here.</p>
+                                            <!-- <div class="mover">
+                                                        <div class="labelbotones">Reorder</div>
+                                                    </div> -->
+                                            <div class="eliminar" data-component="acadamic">
+                                                <div class="labelbotones">Remove</div>
+                                            </div>
+                                            <div class="clonar" data-component="acadamic">
+                                                <div class="labelbotones">Add new</div>
+                                            </div>
+                                            <div class="timeline_linea"></div>
+                                        </div>
+                                    </div>
+                                    <div class="sortable experiencialaboral acadamic-project" id="acadamicPro_5">
+                                        <div class="cuadro ui-state-default" id="experiencia1">
+                                            <div style="position:relative">
+                                                <div class="timeline_bola color_estrellas"></div>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Role" name="acd_role">Role</p>
+                                                <p class="titulo2 wrap">-</p>
+                                                <p class="titulo2 wrap color" contenteditable="true" placeholder="Project Title" name="acd_projectTitle">Project Title</p>
+                                            </div>
+                                            <div class="company-details">
+                                                <p class="titulo3 company-field" contenteditable="true" placeholder="University" name="acd_institution">University</p>
+                                                <p class="date-selection-contaner">
+                                                    <input type="text" class="date-selector" placeholder="Start Date" name="acd_startDate" readonly />
+                                                    <span class="seperator">-</span>
+                                                    <input type="text" class="date-selector" placeholder="End Date" name="acd_endDate" readonly />
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p class="titulo3 text-capitalize" contenteditable="true" placeholder="Location" name="acd_location">Location</p>
+                                            </div>
+                                            <p class="texto" contenteditable="true" placeholder="Enter details about your project here." name="acd_description">Enter details about your project here.</p>
+                                            <!-- <div class="mover">
+                                                            <div class="labelbotones">Reorder</div>
+                                                        </div> -->
+                                            <div class="eliminar" data-component="acadamic">
+                                                <div class="labelbotones">Remove</div>
+                                            </div>
+                                            <div class="clonar" data-component="acadamic">
+                                                <div class="labelbotones">Add new</div>
+                                            </div>
+                                            <div class="timeline_linea"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div id="bloquesecundario">
+                                <ul>
+                                    <li class="li50" id="skills_small1">
+                                        <p class="titulo1" placeholder="Primary Skills">Skills</p>
+                                        <div id="skilsContainer_1" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div> -->
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="skilsContainer_2" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div> -->
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="skilsContainer_3" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div> -->
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="skilsContainer_4" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name">
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div> -->
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="skilsContainer_5" class="sortable skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div> -->
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="li50" id="skills_small2">
+                                        <p class="titulo1">&nbsp;</p>
+
+                                        <div id="skilsContainer_6" class="sortable secondary-skills skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name" />
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="skilsContainer_7" class="sortable secondary-skills skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name">
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="skilsContainer_8" class="sortable secondary-skills skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name">
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="skilsContainer_9" class="sortable secondary-skills skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name">
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="skilsContainer_10" class="sortable secondary-skills skills-data-container">
+                                            <div id="skilsSubCont" class=" cuadro ui-state-default">
+                                                <p class="titulo3 nowrap">
+                                                    <input class="skills ui-autocomplete-input" placeholder="Skill" name="skill_name">
+                                                </p>
+                                                <div class="centradovertical centradoestrellas">
+                                                    <div class="estrellacircular color_estrellas">
+                                                        <div class="centradovertical">
+                                                            <div class="innercircleprogress"></div>
+                                                        </div>
+                                                        <div class="porcentaje25"></div>
+                                                        <div class="porcentaje50"></div>
+                                                        <div class="porcentaje75"></div>
+                                                        <div class="porcentaje100"></div>
+                                                        <div class="centradovertical porcentajetexto">
+                                                            <span class="skill-val" name="skill_value" data-val="25">25%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="eliminar" data-component="skills">
+                                                    <div class="labelbotones">Remove</div>
+                                                </div>
+                                                <div class="clonar" data-component="skills">
+                                                    <div class="labelbotones">Add new</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+                                </ul>
+                                <div style="clear:both"></div>
+                            </div>
+                            <div id="achivements_section">
+                                <p class="titulo1" id="titulo_laboral" placeholder="Achivements">Achivements</p>
+                                <div class="sortable experiencialaboral" id="experiencialaboral">
+                                    <div class="m-l-1 ui-state-default" id="experiencia1">
+                                        <p class="texto" contenteditable="true" id="achivements" onfocus="setLimitToInput('achivements',150)" placeholder="Description"
+                                            name="achivements">Description</p>
+                                        <div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div>
+                                        <div class="eliminar">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="certifications_section">
+                                <p class="titulo1" id="titulo_laboral" placeholder="Certifications">Certifications</p>
+                                <div class="sortable experiencialaboral" id="experiencialaboral">
+                                    <div class="m-l-1 ui-state-default" id="experiencia1">
+                                        <p class="texto" contenteditable="true" placeholder="Description" id="certifications" onfocus="setLimitToInput('certifications',150)"
+                                            name="certifications">Description</p>
+                                        <div class="mover">
+                                            <div class="labelbotones">Reorder</div>
+                                        </div>
+                                        <div class="eliminar">
+                                            <div class="labelbotones">Remove</div>
+                                        </div>
+                                        <div class="clonar">
+                                            <div class="labelbotones">Add new</div>
+                                        </div>
+                                        <div class="timeline_linea"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="fin_hoja_anim">
+                    <div class="fin_hoja"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/preview-scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script>
+        if (/Android/i.test(navigator.userAgent)) {
+            $("body").addClass("ismobile");
+        }
+        if (/webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $("#btn_empezar").css("display", "none");
+            $("#btn_fake").css("display", "block");
+        }
+
+        $(function () {
+            console.log("test");
+            // $('.resume-body').paraCount();
+        });
+
+    </script>
+</body>
+
+</html>
