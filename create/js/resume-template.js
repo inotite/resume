@@ -97,6 +97,8 @@ $(window).ready(function () {
             if (selectedFont == item.fontInfo) {
                 $('.selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
                 $('body').css('font-family', item.fontFamily);
+                $('.ui-autocomplete').css('font-family', item.fontFamily);
+                console.log($('.ui-autocomplete'));
                 return;
             };
         });
@@ -408,6 +410,7 @@ $(window).ready(function () {
                 $(this).autocomplete("search");
             });
 
+            $(".ui-autocomplete").css("font-family", selectedFont);
             
             $("#education_" + num + " .edu-field").keypress(function(e) {
                 return handleKeypress($(this), 40, e);
@@ -1626,4 +1629,6 @@ $(window).ready(function () {
         xhr.responseType = 'blob';
         xhr.send();
     }
+
+    $('.ui-autocomplete').css('font-family', selectedFont);
 });
