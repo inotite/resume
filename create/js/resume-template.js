@@ -323,19 +323,35 @@ $(window).ready(function () {
             });
 
             $("#proExp_" + num + " .exp-role").keypress(function(e) {
-                return handleKeypress($(this), 40, e);
+                return handleKeypress($(this), LENGTH_EXP_ROLE, e);
+            });
+            
+            $("#proExp_" + num + " .exp-role").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_EXP_ROLE, e);
             });
 
             $("#proExp_" + num + " .exp-company").keypress(function (e) {
-                return handleKeypress($(this), 40, e);
+                return handleKeypress($(this), LENGTH_EXP_COMPANY, e);
+            });
+            
+            $("#proExp_" + num + " .exp-company").keyup(function (e) {
+                return preventCopyPasteLength($(this), LENGTH_EXP_COMPANY, e);
             });
             
             $("#proExp_" + num + " .exp-location").keypress(function (e) {
-                return handleKeypress($(this), 40, e);
+                return handleKeypress($(this), LENGTH_EXP_LOCATION, e);
+            });
+            
+            $("#proExp_" + num + " .exp-location").keyup(function (e) {
+                return preventCopyPasteLength($(this), LENGTH_EXP_LOCATION, e);
             });
             
             $("#proExp_" + num + " .exp-desc").keypress(function(e) {
-                return handleKeypress($(this), 300, e);
+                return limitLines($(this), LINE_EXP_DESC, e);
+            });
+            
+            $("#proExp_" + num + " .exp-desc").keyup(function(e) {
+                return preventCopyPaste($(this), LINE_EXP_DESC, e);
             });
         }
         if ($('.professional-experience').length == exp_total_count) {
@@ -413,23 +429,43 @@ $(window).ready(function () {
             $(".ui-autocomplete").css("font-family", selectedFont);
             
             $("#education_" + num + " .edu-field").keypress(function(e) {
-                return handleKeypress($(this), 40, e);
+                return handleKeypress($(this), LENGTH_EDU_FIELD_OF_STUDY, e);
+            });
+
+            $("#education_" + num + " .edu-field").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_EDU_FIELD_OF_STUDY, e);
             });
 
             $("#education_" + num + " .edu-degree").keypress(function(e) {
-                return handleKeypress($(this), 50, e);
+                return handleKeypress($(this), LENGTH_EDU_DEGREE, e);
+            });
+
+            $("#education_" + num + " .edu-degree").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_EDU_DEGREE, e);
             });
 
             $("#education_" + num + " .edu-school").keypress(function(e) {
-                return handleKeypress($(this), 40, e);
+                return handleKeypress($(this), LENGTH_EDU_SCHOOL, e);
+            });
+
+            $("#education_" + num + " .edu-school").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_EDU_SCHOOL, e);
             });
 
             $("#education_" + num + " .edu-location").keypress(function(e) {
-                return handleKeypress($(this), 40, e);
+                return handleKeypress($(this), LENGTH_EDU_LOCATION, e);
+            });
+
+            $("#education_" + num + " .edu-location").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_EDU_LOCATION, e);
             });
 
             $("#education_" + num + " .edu-desc").keypress(function(e) {
-                return handleKeypress($(this), 300, e);
+                return limitLines($(this), LINE_EDU_DESC, e);
+            });
+
+            $("#education_" + num + " .edu-desc").keyup(function(e) {
+                return preventCopyPaste($(this), LINE_EDU_DESC, e);
             });
         }
         if ($('.education-details').length == edu_total_count) {
@@ -490,23 +526,43 @@ $(window).ready(function () {
 
             
             $("#academic_projects_" + num + " .project-title").keypress(function(e) {
-                return handleKeypress($(this), 30, e);
+                return handleKeypress($(this), LENGTH_PROJ_TITLE, e);
+            });
+            
+            $("#academic_projects_" + num + " .project-title").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_PROJ_TITLE, e);
             });
 
             $("#academic_projects_" + num + " .project-role").keypress(function(e) {
-                return handleKeypress($(this), 30, e);
+                return handleKeypress($(this), LENGTH_PROJ_ROLE, e);
+            });
+
+            $("#academic_projects_" + num + " .project-role").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_PROJ_ROLE, e);
             });
 
             $("#academic_projects_" + num + " .university").keypress(function(e) {
-                return handleKeypress($(this), 40, e);
+                return handleKeypress($(this), LENGTH_PROJ_UNIVERSITY, e);
+            });
+
+            $("#academic_projects_" + num + " .university").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_PROJ_UNIVERSITY, e);
             });
 
             $("#academic_projects_" + num + " .uni-location").keypress(function(e) {
-                return handleKeypress($(this), 40, e);
+                return handleKeypress($(this), LENGTH_PROJ_LOCATION, e);
+            });
+
+            $("#academic_projects_" + num + " .uni-location").keyup(function(e) {
+                return preventCopyPasteLength($(this), LENGTH_PROJ_LOCATION, e);
             });
 
             $("#academic_projects_" + num + " .project-desc").keypress(function(e) {
-                return handleKeypress($(this), 300, e);
+                return limitLines($(this), LINE_PROJ_DESC, e);
+            });
+
+            $("#academic_projects_" + num + " .project-desc").keyup(function(e) {
+                return preventCopyPaste($(this), LINE_PROJ_DESC, e);
             });
         }
         if ($('.academic-project').length == proj_total_count) {
@@ -547,12 +603,10 @@ $(window).ready(function () {
             'skills-bar color-blue at-75');
         $('#skills_item_' + num + ' .skill').attr('data-content', '').text('');
         $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                return false;
-            }
-            console.log($(this).val());
-            return $(this).val().length < 48;
+            return limitLines($(this), LINE_SKILL_NAME, e);
+        });
+        $('#skills_item_' + num + ' .skill-name').keyup(function(e) {
+            return preventCopyPaste($(this), LINE_SKILL_NAME, e);
         });
     }
     $("body").on("click", ".add_skills", function () {
@@ -571,12 +625,10 @@ $(window).ready(function () {
             $('#skills_item_' + num + ' [data-content="skillText"]').val('');
             // console.log('i am add_exp')
             $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault();
-                    return false;
-                }
-                console.log($(this).val());
-                return $(this).val().length < 48;
+                return limitLines($(this), LINE_SKILL_NAME, e);
+            });
+            $('#skills_item_' + num + ' .skill-name').keyup(function(e) {
+                return preventCopyPaste($(this), LINE_SKILL_NAME, e);
             });
         }
         if ($('.skills-item').length == 16) {
