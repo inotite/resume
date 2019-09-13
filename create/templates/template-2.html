@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="css/nice-select.min.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/template.css" />
+    <link rel="stylesheet" type="text/css" href="css/template-2.css" />
 </head>
 
 <body>
@@ -151,7 +152,7 @@
                                         <p class="title_info section_title theme-text  px-1 color m-0 pb-0 mt-3">
                                             Location
                                         </p>
-                                        <p class="info-location info title_info location mb-0" placeholder="Location"
+                                        <p class="info-location info title_info px-1 location mb-0" placeholder="Location"
                                             contenteditable="true" data-content="location"></p>
                                     </div>
                                     <div class="user_info">
@@ -159,7 +160,7 @@
                                             Birthday
                                         </p>
                                         <input class="info title_info location  px-1 b-datepicker mb-0 border-0"
-                                            data-content="dob" type="text" placeholder="Birthday">
+                                            data-content="dob" type="text" placeholder="Birthday" readonly>
                                     </div>
                                     <div class="user_info">
                                         <p class="title_info section_title theme-text color m-0 mt-3 px-1 pb-0">Gender
@@ -167,7 +168,8 @@
                                         <!-- <p class="info title_info gender mb-0" contenteditable="true"
                                             placeholder="Gender" data-content="gender"></p> -->
                                         <select class="gender font-10 title_info px-1" id="gender"
-                                            data-content="gender">
+                                            data-content="gender" required>
+                                            <option value="" hidden>Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                             <option value="others">others</option>
@@ -269,13 +271,17 @@
                                         <input type="text" id="allJobFunctions"
                                             class="p-0 pl-1 support_title border-0 w-100 text-uppercase font-12pt mb-2"
                                             placeholder="Job Function" data-content="jobfunctions" data-item-id="">
-                                        <h4 class="about_me font-10pt pl-1" id="aboutme" placeholder="About me"
-                                            data-content="coverLetter" contenteditable="true"></h4>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="clg_picture"> <img src="https://via.placeholder.com/250x125" alt="..."
                                             class="img-fluid"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 pl-0 px-1">
+                                    <h4 class="about_me font-10pt pl-1" id="aboutme" placeholder="About me"
+                                    data-content="coverLetter" contenteditable="true"></h4>
                                 </div>
                             </div>
                             <div class="row mt-3 flex-column mb-1">
@@ -289,11 +295,11 @@
                                             <p class="font-10pt mb-2 theme-text-dark saperator">
                                                 <input
                                                     class="info title_info font-10pt location month-picker w-small mb-0 border-0 text-right"
-                                                    data-content="exp_startDate" type="text" placeholder="Start Date">
+                                                    data-content="exp_startDate" type="text" placeholder="Start Date" readonly>
                                                 <input
                                                     class="info title_info font-10pt location month-picker w-small mb-0 border-0 text-right"
                                                     data-content="exp_endDate" type="text" 
-                                                    placeholder="End Date"></p>
+                                                    placeholder="End Date" readonly></p>
                                         </div>
                                     </div>
                                     <div>
@@ -335,10 +341,10 @@
                                             <p class="font-10pt mb-0 theme-text-dark saperator">
                                                 <input
                                                     class="info title_info font-10pt location text-right month-picker w-small mb-0 border-0"
-                                                    type="text" data-content="edu_startDate" placeholder="Start Date">
+                                                    type="text" data-content="edu_startDate" placeholder="Start Date" readonly>
                                                 <input
                                                     class="info title_info font-10pt location text-right month-picker w-small mb-0 border-0"
-                                                    type="text" data-content="edu_endDate" placeholder="End Date">
+                                                    type="text" data-content="edu_endDate" placeholder="End Date" readonly>
                                             </p>
                                         </div>
                                     </div>
@@ -384,10 +390,10 @@
                                             <p class="font-10pt mb-2 theme-text-dark saperator">
                                                 <input
                                                     class="info title_info text-right font-10pt location month-picker w-small mb-0 border-0"
-                                                    type="text" data-content="acd_startDate" placeholder="Start Date">
+                                                    type="text" data-content="acd_startDate" placeholder="Start Date" readonly>
                                                 <input
                                                     class="info title_info font-10pt text-right location month-picker w-small mb-0 border-0"
-                                                    type="text" data-content="acd_endDate" placeholder="End Date">
+                                                    type="text" data-content="acd_endDate" placeholder="End Date" readonly>
                                             </p>
                                         </div>
                                     </div>
@@ -422,7 +428,7 @@
                                                 <div class="skills-bar color-blue at-75" data-border="75"><span
                                                         data-skill="75%" class="skill-value">75%</span></div>
                                                 <input type="text"
-                                                    class="skill-name aligned_input resume-input ml-2 skill-input-value skills w-14rem border-0 font-10pt mb-2"
+                                                    class="skill-name aligned_input resume-input ml-2 skill-input-value skills w-14rem border-0 font-10pt"
                                                     placeholder="Skill name" data-content="skillText">
                                             </div>
                                             <ul class="append-section-actions list-inline bottom-50">

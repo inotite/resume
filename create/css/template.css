@@ -626,7 +626,7 @@ input.switch {
 .append-section-actions {
     display: flex;
     position: absolute;
-    right: 5px;
+    right: -14px;
     top: -10px;
 }
 
