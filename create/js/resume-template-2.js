@@ -309,6 +309,10 @@ $(".info-designation").keyup(function(e) {
 // -----------------------------------------------------------------------------------------------------
 
 $(".social-phone").keypress(function(e) {
+    if (isNaN(Number(e.key)) || e.key === null) {
+        e.preventDefault();
+        return false;
+    }    
     return handleKeypress($(this), LENGTH_PHONE, e);
 });
 
