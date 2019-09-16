@@ -778,13 +778,14 @@ $(window).ready(function () {
         postObj.email = $('[data-content="email"]').text();
         postObj.telephone = $('[data-content="phone"]').text();
         postObj.user_linkdin = $('[data-content="linkedin"]').text();
-        postObj.user_github = !$('.github').hasClass('d-none') ? '' : $('[data-content="github"]')
-            .text()
-        postObj.user_twitter = !$('.twitter').hasClass('d-none') ? '' : $('[data-content="twitter"]')
-            .text();
-        postObj.user_website = !$('.website').hasClass('d-none') ? '' : $('[data-content="website"]')
-            .text();
-        postObj.user_blog = !$('.blog').hasClass('d-none') ? '' : $('[data-content="blog"]').text();
+        // postObj.user_github = !$('.social-github').hasClass('d-none') ? '' : $('[data-content="github"]').text();
+        // postObj.user_twitter = !$('.social-twitter').hasClass('d-none') ? '' : $('[data-content="twitter"]').text();
+        // postObj.user_website = !$('.social-website').hasClass('d-none') ? '' : $('[data-content="website"]').text();
+        // postObj.user_blog = !$('.social-blog').hasClass('d-none') ? '' : $('[data-content="blog"]').text();
+        postObj.user_github = $('[data-content="github"]').text();
+        postObj.user_twitter = $('[data-content="twitter"]').text();
+        postObj.user_website = $('[data-content="website"]').text();
+        postObj.user_blog = $('[data-content="blog"]').text();
 
         postObj.interests = $('[data-content="achivements"]').text();
         postObj.certifications = $('[data-content="certifications"]').text();
@@ -1108,7 +1109,7 @@ $(window).ready(function () {
                 .userEducationResSet[i].startDate);
             $('#' + id).find('input[data-content="edu_endDate"]').val(resumeObj
                 .userEducationResSet[i].endDate);
-            $('#' + id).find('span[data-content="edu_description"]').text(resumeObj
+            $('#' + id).find('p[data-content="edu_description"]').text(resumeObj
                 .userEducationResSet[i].description);
             $('#' + id).find('input[data-content="degree_title"]').attr({
                 'data-id': resumeObj.userEducationResSet[i].degree.degreeId,
