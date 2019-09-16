@@ -2987,6 +2987,7 @@ input:checked+.slider:before {
     height: 220px;
     border-radius: 110px;
     padding-bottom: 85%;
+    margin-top: -30px;
 }
 
 #inserta_imagenlabel {
@@ -3041,6 +3042,7 @@ input:checked+.slider:before {
 
 #saveProfilePic {
     cursor: pointer;
+    margin-top: -1rem !important;
 }
 
 #image-preview {
