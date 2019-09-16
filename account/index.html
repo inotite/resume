@@ -33,6 +33,14 @@
     .invalid-feedback {
       display: block;
     }
+
+    .img1 {
+      margin-top: -63px;
+    }
+
+    .margin_center {
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -92,13 +100,7 @@
                       <input type="text" class="form-control myprofile transition with-icon icon-user"
                         placeholder="Last Name" minlength="3" maxlength="50" name="lastname">
                     </div>
-                    <!-- Collage Name -->
-                    <div class="form-group">
-                      <label>Collage Name</label>
-                      <select name="" id="collageName" class="form-control myprofile">
-                        <option value="">Collage Name</option>
-                      </select>
-                    </div>
+
                     <!-- Email -->
                     <div class="form-group">
                       <label>Email</label>
@@ -161,6 +163,30 @@
             </div>
           </div>
 
+
+          <form id="myProfileForm" name="myProfileForm" role="form">
+            <div class="card w-100 mt-5">
+              <div class="card-body">
+                <div class="row subscription-section">
+                  <!-- Collage Name -->
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label>College Name</label>
+                      <select name="" id="collageName" class="form-control myprofile">
+                        <option value="">College Name</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <button type="button" class="btn btn-primary btn-lg btn-save" id="updateProfile"
+                        style="display: inline-block; ">Save
+                        changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
           <!-- Upgrade Section -->
           <div class="card w-100 mt-5">
             <div class="card-body">
@@ -170,8 +196,8 @@
                   <p>Upgrade your account to get access to all the premium features.</p>
                 </div>
                 <div class="col-md-3">
-                  <a href="../pricing.html" target="_blank" class="btn btn-primary upgrade-btn"
-                    id="change_password_button">Upgrade Now</a>
+                  <a href="../resumepricing.html" target="_blank" class="btn btn-primary upgrade-btn margin_center"
+                    id="change_password_button">Upgrade</a>
                 </div>
               </div>
             </div>
@@ -228,13 +254,13 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-5 text-center">
-              <img src="../images/app/phone.png" alt="phone" height="320px" width="auto">
+              <img src="../images/app/phone.png" class="img_download" alt="phone" height="320px" width="auto">
             </div>
             <div class="col-md-7 pt-5">
-              <div class="modal-title">Find the right person on the go.</div>
+              <div class="modal-title">Find the right job on the go.</div>
               <div class="modal-description">
-                Post jobs, chat with applicants. All features in
-                <br /> your pocket.</div>
+                Apply for jobs, chat with employers, get interview alerts.
+                <br /> All features in your pocket.</div>
               <div class="getapp px-4 text-center mt-3">
                 <span class="pr-3">Get the app</span>
                 <a href="https://itunes.apple.com/in/app/workruit/id1189752813?mt=8" class="pr-2 transition">
@@ -259,7 +285,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body  model-b" style="height: 24rem;">
           <div class="row">
             <div class="col-md-12 text-center">
               <div id="foto">
@@ -280,7 +306,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="getapp px-4 text-center mt-3 m-auto" id="saveProfilePic">
-                <span class="pr-3">Save</span>
+                <span>Save</span>
               </div>
             </div>
           </div>
@@ -300,12 +326,15 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-5 text-center">
-              <img src="../images/app/phone.png" alt="phone" height="320px" width="auto">
+              <img src="../images/Icon3.svg" class="img1" alt="phone" height="320px" width="auto">
             </div>
             <div class="col-md-7 pt-5">
-              <div class="modal-title">To get this feature please upgrade</div>
-              <a href="../pricing.html"><button type="button"
-                  class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+              <div class="modal-title">Upgrade Today</div>
+              <div class="modal-description">
+                Get access to your custom resume URL and share it instantly with hiring managers, companies, friends &
+                family.</div>
+              <a href="../resumepricing.html" style="margin-left: 5rem;">
+                <button type="button" class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
             </div>
           </div>
         </div>
