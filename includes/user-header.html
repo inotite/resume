@@ -1,3 +1,10 @@
+<style>
+    .img1 {
+        margin-top: -48px;
+
+    }
+</style>
+
 <header class="w-100">
     <div class="container">
         <div class="row justify-content-between">
@@ -23,7 +30,7 @@
             <div class="col-md-5">
                 <ul class="nav justify-content-end">
                     <li>
-                        <a href="../pricing.html" target="_blank" class="btn btn-primary upgrade-btn"
+                        <a href="../resumepricing.html" target="_blank" class="btn btn-primary upgrade-btn"
                             id="change_password_button">Upgrade</a>
                     </li>
                     <li class="nav-item user dropdown">
@@ -32,7 +39,7 @@
                             <img src="../images/app/pic1.png" style="border-radius: 50%;" alt="">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="profile">
-                            <a class="dropdown-item transition" href="" id="userName"></a>
+                            <a class="dropdown-item transition"  id="userName"></a>
                             <a href="javascript:void(0)" class="dropdown-item transition">
                                 <span id="UserEmail"></span>
                             </a>
@@ -60,14 +67,16 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-5 text-center">
-                        <img src="../images/app/phone.png" alt="phone" height="320px" width="auto">
+                        <img src="../images/Icon3.svg" class="img1" alt="phone" height="320px" width="auto">
                     </div>
                     <div class="col-md-7 pt-5">
-                        <div class="modal-title">To get this feature please upgrade</div>
-                        <a href="../pricing.html"><button type="button"
-                                class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+                            <div class="modal-title">Upgrade Today</div>
+                            <div class="modal-description">
+                                    Get access to your custom resume URL and share it instantly with hiring managers, companies, friends & family.</div>
+                            <a href="../resumepricing.html" style="margin-left: 5rem;"><button type="button"
+                                    class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
                     </div>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -132,8 +141,8 @@
     var picpath = pic.search('1631033876795164.jpg');
 
     if (picpath > -1 || pic == '') {
-        $('#profileMenu img').attr('src', '../images/app/pic1.png');
-        $('#profilePicEdit').attr('src', '../images/app/pic1.png');
+        $('#profileMenu img').attr('src', '../images/avatar.png');
+        $('#profilePicEdit').attr('src', '../images/avatar.png');
 
     } else {
         $('#profileMenu img').attr('src', pic);

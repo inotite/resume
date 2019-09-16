@@ -22,10 +22,27 @@
       top: 69px;
       z-index: 999;
     }
+
+    .alert-success {
+      border-color: unset;
+    }
+
+    .alert {
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid transparent;
+      border-radius: 0;
+    }
+
+    .close {
+      margin-top: .5rem;
+      /* color: white !important; */
+    }
   </style>
 </head>
 
 <body class="account-page">
+    <div id="load-header"></div>
   <div class="loading-container">
     <img src="../images/oval.svg" style="width:55px">
   </div>
@@ -34,7 +51,7 @@
     <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
         width="10" /></a>
   </div>
-  <div id="load-header"></div>
+  
 
   <div class="content w-100">
     <div class="container">
@@ -91,26 +108,26 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="row">
-                <div class="col-md-5 text-center">
-                  <img src="../images/app/phone.png" alt="phone" height="320px" width="auto">
-                </div>
-                <div class="col-md-7 pt-5">
-                  <div class="modal-title">Find the right person on the go.</div>
-                  <div class="modal-description">
-                    Post jobs, chat with applicants. All features in
-                    <br /> your pocket.</div>
-                  <div class="getapp px-4 text-center mt-3">
-                    <span class="pr-3">Get the app</span>
-                    <a href="https://itunes.apple.com/in/app/workruit/id1189752813?mt=8" class="pr-2 transition">
-                      <img src="../images/app/icons/ios-white.svg" alt="ios">
-                    </a>
-                    <a class="transition" href="https://play.google.com/store/apps/details?id=com.workruit&amp;hl=en">
-                      <img src="../images/app/icons/android-white.svg" alt="android">
-                    </a>
+                <div class="row">
+                    <div class="col-md-5 text-center">
+                      <img src="../images/app/phone.png"  class = "img_download" alt="phone" height="320px" width="auto">
+                    </div>
+                    <div class="col-md-7 pt-5">
+                      <div class="modal-title">Find the right job on the go.</div>
+                      <div class="modal-description">
+                        Apply for jobs, chat with employers, get interview alerts. 
+                        <br /> All features in your pocket.</div>
+                      <div class="getapp px-4 text-center mt-3">
+                        <span class="pr-3">Get the app</span>
+                        <a href="https://itunes.apple.com/in/app/workruit/id1189752813?mt=8" class="pr-2 transition">
+                          <img src="../images/app/icons/ios-white.svg" alt="ios">
+                        </a>
+                        <a class="transition" href="https://play.google.com/store/apps/details?id=com.workruit&amp;hl=en">
+                          <img src="../images/app/icons/android-white.svg" alt="android">
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
