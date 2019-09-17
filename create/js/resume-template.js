@@ -1027,7 +1027,7 @@ $(window).ready(function () {
         // console.log(resumeObj.pic);
         $('#user_pic').attr('src', resumeObj.pic);
         if ( !resumeObj.collegeLogo )
-            resumeObj.collegeLogo = 'img/24px.svg';
+            resumeObj.collegeLogo = 'img/twitter.svg';
         $('.clg_picture img').attr('src', resumeObj.collegeLogo)
         $('[data-content="firstname"]').text(resumeObj.firstname);
         $('[data-content="lastname"]').text(resumeObj.lastname);
@@ -1526,7 +1526,7 @@ $(window).ready(function () {
         $('.loading-container').show();
         if (planInfo) {
             var ele = $('#resume-body')[0];
-            // console.log(ele)
+            console.log(ele)
             /* ele.css({'height': ''});
             ele.css({'max-height': ''});*/
             ele.style.boxShadow = "none";
