@@ -5,7 +5,7 @@ var handleKeypress = function (obj, lengthLimit, e) {
         return false;
     }
 
-    return obj.text().length < lengthLimit-1;
+    return obj.text().length < lengthLimit;
 }
 
 var handleKeypressInput = function (obj, lengthLimit, e) {
@@ -14,7 +14,7 @@ var handleKeypressInput = function (obj, lengthLimit, e) {
         return false;
     }
 
-    return obj.val().length < lengthLimit-1;
+    return obj.val().length < lengthLimit;
 }
 
 var moveCaretToEnd = function(nodeRef) {
@@ -258,13 +258,13 @@ $(".project-desc").keyup(function(e) {
 
 // Skills
 
-$(".skills").keypress(function(e) {
-    return limitLines($(this), LINE_SKILL_NAME, e);
-});
+// $(".skills").keypress(function(e) {
+//     return limitLines($(this), LINE_SKILL_NAME, e);
+// });
 
-$(".skills").keyup(function(e) {
-    return preventCopyPaste($(this), LINE_SKILL_NAME, e);
-});
+// $(".skills").keyup(function(e) {
+//     return preventCopyPaste($(this), LINE_SKILL_NAME, e);
+// });
 
 // -----------------------------------------------------------------------------------------------------
 
@@ -309,15 +309,25 @@ $(".info-designation").keyup(function(e) {
 // -----------------------------------------------------------------------------------------------------
 
 $(".social-phone").keypress(function(e) {
-    if (isNaN(Number(e.key)) || e.key === null) {
+    if (e.key != '+' && e.key != ' ' && (isNaN(Number(e.key)) || e.key === null)) {
         e.preventDefault();
         return false;
     }    
-    return handleKeypress($(this), LENGTH_PHONE, e);
+    return true;
 });
 
 $(".social-phone").keyup(function(e) {
-    return preventCopyPasteLength($(this), LENGTH_PHONE, e);
+    var txt = $(this).text();
+    var c;
+    for (var i = txt.length - 1 ; i >= 0 ; --i ) {
+        c = txt[i];
+        if (c != '+' && c != ' ' && isNaN(Number(c))) {
+            e.preventDefault();
+            $(this).text("");
+            return false;
+        }
+    }
+    return true;
 });
 
 // -----------------------------------------------------------------------------------------------------
