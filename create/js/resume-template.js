@@ -365,7 +365,7 @@ $(window).ready(function () {
     $("body").on("click", ".remove_exp", function () {
         var $div = $(this);
         $div.parent().parent().remove();
-        if ($('.professional-experience').length < exp_total_count - 1) {
+        if ($('.professional-experience').length < 2) {
             // console.log('i am remove_exp');
             $('.professional-experience .remove_exp').addClass('d-none').removeClass('d-block');
         }
@@ -479,7 +479,7 @@ $(window).ready(function () {
     $("body").on("click", ".remove_edu", function () {
         var $div = $(this);
         $div.parent().parent().remove();
-        if ($('.education-details').length < edu_total_count - 1) {
+        if ($('.education-details').length < 2) {
             // console.log('i am remove_edu');
             $('.education-details .remove_edu').addClass('d-none').removeClass('d-block');
         }
@@ -575,7 +575,7 @@ $(window).ready(function () {
     $("body").on("click", ".remove_acad", function () {
         var $div = $(this);
         $div.parent().parent().remove();
-        if ($('.academic-project').length < proj_total_count - 1) {
+        if ($('.academic-project').length < 2) {
             $('.academic-project .remove_acad').addClass('d-none').removeClass('d-block');
         }
         if ($('.academic-project').length < proj_total_count) {
@@ -624,12 +624,12 @@ $(window).ready(function () {
             $('#skills_item_' + num + ' .skill').attr('data-content', '').val('');
             $('#skills_item_' + num + ' [data-content="skillText"]').val('');
             // console.log('i am add_exp')
-            $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
-                return limitLines($(this), LINE_SKILL_NAME, e);
-            });
-            $('#skills_item_' + num + ' .skill-name').keyup(function(e) {
-                return preventCopyPaste($(this), LINE_SKILL_NAME, e);
-            });
+            // $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
+            //     return limitLines($(this), LINE_SKILL_NAME, e);
+            // });
+            // $('#skills_item_' + num + ' .skill-name').keyup(function(e) {
+            //     return preventCopyPaste($(this), LINE_SKILL_NAME, e);
+            // });
         }
         if ($('.skills-item').length == 16) {
             $('.skills-item .add_skills').addClass('d-none');
@@ -651,16 +651,20 @@ $(window).ready(function () {
             var skillsAll = new Array();
             $.ajax(skillsSettings).done(function (response) {
                 // console.log(fieldVal, response)
+                console.log("Skill response");
+                console.log(response);
                 $(response.content).each(function (k, v) {
                     skillsAll.push(response.content[k].skillName);
                 });
                 // var results = $.ui.autocomplete.filter(skillsAll, request.term);
+                console.log("a");
                 $(".skills").autocomplete({
                     source: skillsAll,
                     minLength: 0
                 }).focus(function () {
                     $(this).autocomplete("search", $(this).val());
                 });
+                console.log("A");
             });
         });
 
@@ -1319,10 +1323,12 @@ $(window).ready(function () {
         var skillsAll = new Array();
         $.ajax(skillsSettings).done(function (response) {
             // console.log(fieldVal, response)
+            console.log("Skills", response);
             $(response.content).each(function (k, v) {
                 skillsAll.push(response.content[k].skillName);
             });
             // var results = $.ui.autocomplete.filter(skillsAll, request.term);
+            console.log("a");
             $(".skills").autocomplete({
                 source: skillsAll,
                 minLength: 0
@@ -1521,23 +1527,26 @@ $(window).ready(function () {
         $('.loading-container').show();
         if (planInfo) {
             var ele = $('#resume-body')[0];
-            console.log(ele)
+            // console.log(ele)
             /* ele.css({'height': ''});
             ele.css({'max-height': ''});*/
             ele.style.boxShadow = "none";
             html2canvas(ele, {
                 allowTaint: true,
                 logging: true,
-                useCORS: true
+                useCORS: true,
+                scale: 1
             }).then(function (canvas) {
                 var doc = new jsPDF('p', 'cm', 'a4', true);
                 const data = canvas.toDataURL(canvas, {
-                    type: 'image/jpg',
-                })
+                    type: 'image/png',
+                });
+                console.log("Raw", data);
                 var image = new Image();
                 image.src = data;
-                doc.addImage(image, 'JPG', -0.3, 0.5, 0, 0, '', 'FAST');
+                doc.addImage(image, 'PNG', -0.3, 0.5, 0, 0, '', 'SLOW');
                 var pdfOut = doc.output('blob');
+                console.log(pdfOut);
                 var form2 = new FormData();
                 form2.append("type", "resume");
                 form2.append("userId", userId);
@@ -1555,23 +1564,23 @@ $(window).ready(function () {
                     })
                     .then(function (response) {
                         //handle success
-                        console.log(response);
+                        // console.log(response);
                     })
                     .catch(function (response) {
                         //handle error
-                        console.log(response);
+                        // console.log(response);
                     })
-                //watermark resume
+                // watermark resume
                 var docWaterMark = new jsPDF('p', 'cm', 'a4', true);
                 const dataWaterMark = canvas.toDataURL(canvas, {
-                    type: 'image/jpg',
+                    type: 'image/png',
                 })
                 var waterMarkImage = new Image();
                 waterMarkImage.src = dataWaterMark;
                 docWaterMark = addWaterMark(docWaterMark);
-                docWaterMark.addImage(waterMarkImage, 'JPG', -0.3, 0.5, 0, 0, '', 'FAST');
+                docWaterMark.addImage(waterMarkImage, 'PNG', -0.3, 0.5, 0, 0, '', 'SLOW');
                 var pdfOutWaterMark = docWaterMark.output('blob');
-                console.log(pdfOutWaterMark);
+                // console.log(pdfOutWaterMark);
                 var formWatermark = new FormData();
                 formWatermark.append("type", "watermark");
                 formWatermark.append("userId", userId);
@@ -1589,11 +1598,11 @@ $(window).ready(function () {
                     })
                     .then(function (response) {
                         //handle success
-                        console.log(response);
+                        // console.log(response);
                     })
                     .catch(function (response) {
                         //handle error
-                        console.log(response);
+                        // console.log(response);
                     })
                 if (planInfo && planInfo[0].planId == 1) {
                     docWaterMark.save(userId + '_resume.pdf');
@@ -1684,4 +1693,17 @@ $(window).ready(function () {
     }
 
     $('.ui-autocomplete').css('font-family', selectedFont);
+    $('#zoomResume').slider({
+        animate: "fast",
+        step: 10,
+        change: function(event, ui) {
+            // console.log(ui.value);
+            var width = (ui.value * 0.8 + 100) / 100 * 21;
+            $("page").css('min-width', width + "cm");
+            $("page").css('max-width', width + "cm");
+            $("page").css('margin', "auto");
+        }
+    });
+
+
 });
