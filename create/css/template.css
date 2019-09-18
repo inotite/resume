@@ -836,3 +836,7 @@ input {
         max-width: 1800px;
     }
 }
+
+.skill-name {
+    margin-bottom: 0;
+}
