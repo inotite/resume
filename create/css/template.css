@@ -747,7 +747,7 @@ input {
     padding-left: 3px;
     float: none;
     border: unset;
-    /* line-height: unset; */
+    line-height: 1.5;
     /* height: auto; */
 }
 
@@ -839,4 +839,8 @@ input {
 
 .skill-name {
     margin-bottom: 0;
+}
+
+.nice-select .current {
+    color: grey;
 }

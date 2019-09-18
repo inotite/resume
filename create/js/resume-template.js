@@ -1,6 +1,6 @@
 const appDate = new Date();
-const apiAdminUrl = "https://devapi.workruit.com/admin";
-const apiUrl = "https://devapi.workruit.com/api";
+const apiAdminUrl = "https://stageapi.workruit.com/admin";
+const apiUrl = "https://stageapi.workruit.com/api";
 const userId = JSON.parse(localStorage.getItem('userData')).userId;
 const sessionId = localStorage.getItem('sessionId');
 const userStatus = localStorage.getItem('isPremiumUser');
@@ -68,13 +68,17 @@ var defaultSettings = [{
 var settings = resumeObj.themeOptions ? JSON.parse(resumeObj.themeOptions).settings : defaultSettings;
 $(window).ready(function () {
     $('.gender').niceSelect();
-    if (planInfo && planInfo[0].planId == 1) {
-        $('#resume-body').css({
-            'background-image': 'url("watermarkworkruit.svg")',
-            'background-position': 'center',
-            'background-repeat': 'no-repeat',
-            'background-size': 'contain'
-        });
+    if ((planInfo && planInfo[0].planId == 1) || planInfo == null) {
+        // $('#resume-body').css({
+        //     'background-image': 'url("watermarkworkruit.svg")',
+        //     'background-position': 'center',
+        //     'background-repeat': 'no-repeat',
+        //     'background-size': 'contain'
+        // });
+        $('#resume-body').css('background-image', 'url("watermarkworkruit.svg")');
+        $('#resume-body').css('background-position', 'center');
+        $('#resume-body').css('background-repeat', 'no-repeat');
+        $('#resume-body').css('background-size', 'contain');
     }
     var selectedFont = resumeObj.themeOptions ? JSON.parse(resumeObj.themeOptions).font : fonts[0].fontFamily;
     var selectedcolor = resumeObj.themeOptions ? JSON.parse(resumeObj.themeOptions).color : 'theme-black';
@@ -1041,7 +1045,8 @@ $(window).ready(function () {
         $('[data-content="totalexperience"]').text(resumeObj.expDisplay);
         $('[data-content="location"]').text(resumeObj.location);
         $('[data-content="dob"]').val(resumeObj.date_of_birth);
-        $('.gender .current').text(resumeObj.gender)
+        if ( resumeObj.gender )
+            $('.gender .current').text(resumeObj.gender)
         $('[data-content="email"]').text(resumeObj.email);
         $('[data-content="phone"]').text(resumeObj.telephone);
         $('[data-content="linkedin"]').text(resumeObj.user_linkdin);
@@ -1706,5 +1711,7 @@ $(window).ready(function () {
         }
     });
 
-
+    $('.gender').on('change', function(e) {
+        $('.gender .current').css('color', '#212529');
+    });
 });

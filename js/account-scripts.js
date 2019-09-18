@@ -8,7 +8,7 @@
 			options: {
 				itemClass: 'awesome',
 				baseUrl: "https://devresume.workruit.com",
-				apiUrl: "https://devapi.workruit.com/api",
+				apiUrl: "https://stageapi.workruit.com/api",
 				navPath: "",
 				callMe: function () {
 					console.log("ring, ring...");

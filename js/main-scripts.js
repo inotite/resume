@@ -8,9 +8,9 @@
 			options: {
 				itemClass: 'awesome',
 				baseUrl: "https://devresume.workruit.com",
-				baseUrl2: "https://devapi.workruit.com",
+				baseUrl2: "https://stageapi.workruit.com",
 				navPath: "",
-				apiUrl: "https://devapi.workruit.com/api",
+				apiUrl: "https://stageapi.workruit.com/api",
 				callMe: function () {
 					console.log("ring, ring...");
 				}
@@ -111,7 +111,7 @@
 						"url": self.options.apiUrl + "/loginResumeUser",
 						"method": "POST",
 						"headers": {
-							'Access-Control-Allow-Origin': 'https://devapi.workruit.com/api',
+							'Access-Control-Allow-Origin': 'https://stageapi.workruit.com/api',
 							"token": "911ca088ab824095b82d3c98b32332e7",
 							"content-type": "application/json"
 						},

@@ -45,7 +45,7 @@ echo "
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
 			<script type=\"text/javascript\">
 			var userData = JSON.parse(localStorage.getItem('userData));
-			var url = 'https://devapi.workruit.com/resume/user/user/' + userData.userId ;
+			var url = 'https://stageapi.workruit.com/resume/user/user/' + userData.userId ;
 			axios.post(url, {orderId:''})
 				.then(function (response) {
 					console.log(response);

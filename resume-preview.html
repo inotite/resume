@@ -140,7 +140,7 @@
 				$('.shareresume').removeClass('d-none');
 				var googleDocsUrl = "https://docs.google.com/viewer?url=";
 				var windowLocation = window.location;
-				var baseUrl = "https://devapi.workruit.com/api/user/getShareFile?name=" + shareParameter
+				var baseUrl = "https://stageapi.workruit.com/api/user/getShareFile?name=" + shareParameter
 				shareParameter ? true : window.location = '../../404.html'
 				console.log(shareParameter ? true : false);
 				$.get(baseUrl, function (data) {
