@@ -218,7 +218,7 @@
     <script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/holder.min.js"></script>
     <script>
         axios.defaults.headers.common['Token'] = localStorage.getItem('sessionId');
-        var baseUrl = 'https://devapi.workruit.com/resume/user/';
+        var baseUrl = 'https://stageapi.workruit.com/resume/user/';
         var userData = JSON.parse(localStorage.getItem("userData"));
         var priceCalculationObj = {
             "planId": 1,

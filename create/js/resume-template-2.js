@@ -37,9 +37,6 @@ var limitLines = function(obj, lineLimit, e) {
     obj.text(origin);
     moveCaretToEnd(obj);
 
-    console.log(obj.height());
-    console.log(lines);
-
     if (lines > lineLimit)
         return false;
     return true;
@@ -312,7 +309,16 @@ $(".social-phone").keypress(function(e) {
     if (e.key != '+' && e.key != ' ' && (isNaN(Number(e.key)) || e.key === null)) {
         e.preventDefault();
         return false;
-    }    
+    }
+    var obj = $(this);
+    var origin = obj.text();
+    obj.text(origin + "a");
+    var lines = Math.round(obj.height() / parseInt(obj.css('line-height')));
+    obj.text(origin);
+    moveCaretToEnd(obj);
+
+    if (lines > LINE_PHONE)
+        return false;
     return true;
 });
 
@@ -327,6 +333,21 @@ $(".social-phone").keyup(function(e) {
             return false;
         }
     }
+    var obj = $(this);
+    var lineHeight = parseInt(obj.css('line-height'));
+    var lines = Math.round(obj.height() / lineHeight);
+
+    if (lines > LINE_PHONE) {
+        var origin = obj.text();
+        for ( var i = origin.length - 1 ; i >= 0 ; --i ) {
+            obj.text(origin.substr(0, i));
+            var ln = Math.round(obj.height() / lineHeight);
+            if (LINE_PHONE == ln) break;
+        }
+        moveCaretToEnd(obj);
+        return false;
+    }
+
     return true;
 });
 
