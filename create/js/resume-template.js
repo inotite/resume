@@ -638,7 +638,7 @@ $(window).ready(function () {
             $('.skills-item .remove_skills').removeClass('d-none');
         }
         $('.skills').on('keydown', function () {
-            var fieldVal = $(this).val();
+            var fieldVal = $(this).text();
             var skillsSettings = {
                 "async": true,
                 "crossDomain": true,
@@ -653,18 +653,17 @@ $(window).ready(function () {
                 // console.log(fieldVal, response)
                 console.log("Skill response");
                 console.log(response);
-                $(response.content).each(function (k, v) {
-                    skillsAll.push(response.content[k].skillName);
-                });
+                if (response !== null)
+                    $(response.content).each(function (k, v) {
+                        skillsAll.push(response.content[k].skillName);
+                    });
                 // var results = $.ui.autocomplete.filter(skillsAll, request.term);
-                console.log("a");
                 $(".skills").autocomplete({
                     source: skillsAll,
                     minLength: 0
                 }).focus(function () {
                     $(this).autocomplete("search", $(this).val());
                 });
-                console.log("A");
             });
         });
 
@@ -1310,7 +1309,7 @@ $(window).ready(function () {
 
     });
     $('.skills').on('keydown', function () {
-        var fieldVal = $(this).val();
+        var fieldVal = $(this).text();
         var skillsSettings = {
             "async": true,
             "crossDomain": true,
@@ -1320,13 +1319,15 @@ $(window).ready(function () {
                 "token": "911ca088ab824095b82d3c98b32332e7",
             }
         }
+        console.log(fieldVal);
         var skillsAll = new Array();
         $.ajax(skillsSettings).done(function (response) {
             // console.log(fieldVal, response)
             console.log("Skills", response);
-            $(response.content).each(function (k, v) {
-                skillsAll.push(response.content[k].skillName);
-            });
+            if (response !== null)
+                $(response.content).each(function (k, v) {
+                    skillsAll.push(response.content[k].skillName);
+                });
             // var results = $.ui.autocomplete.filter(skillsAll, request.term);
             console.log("a");
             $(".skills").autocomplete({
@@ -1535,7 +1536,7 @@ $(window).ready(function () {
                 allowTaint: true,
                 logging: true,
                 useCORS: true,
-                scale: 1
+                scale: 3
             }).then(function (canvas) {
                 var doc = new jsPDF('p', 'cm', 'a4', true);
                 const data = canvas.toDataURL(canvas, {
