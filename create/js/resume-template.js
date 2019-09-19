@@ -1543,7 +1543,7 @@ $(window).ready(function () {
                 useCORS: true,
                 scale: 3
             }).then(function (canvas) {
-                var doc = new jsPDF('p', 'cm', 'a4', true);
+                var doc = new jsPDF('p', 'cm', [89.1, 63], true);
                 const data = canvas.toDataURL(canvas, {
                     type: 'image/png',
                 });
@@ -1577,7 +1577,7 @@ $(window).ready(function () {
                         // console.log(response);
                     })
                 // watermark resume
-                var docWaterMark = new jsPDF('p', 'cm', 'a4', true);
+                var docWaterMark = new jsPDF('p', 'cm', [89.1, 63], true);
                 const dataWaterMark = canvas.toDataURL(canvas, {
                     type: 'image/png',
                 })
