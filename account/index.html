@@ -50,13 +50,13 @@
   </div>
   <div id="newErrorMessageID" class="alert alert-danger">
     <span class="message-text"></span>
-    <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
-        width="10" /></a>
+    <!-- <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
+        width="10" /></a> -->
   </div>
   <div id="newSuccessMessageID" class="alert alert-success">
     <span class="message-text"></span>
-    <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
-        width="10" /></a>
+    <!-- <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
+        width="10" /></a> -->
   </div>
   <div id="load-header"></div>
   <div class="content w-100">
@@ -111,16 +111,9 @@
                       <button type="button" class="btn btn-primary btn-lg btn-save" id="updateProfile">Save
                         changes</button>
                     </div>
-                    <div class="form-group change-pass-section">
-                      <button type="button" class="btn btn-default btn-lg btn-change-password" id="changePassBtn">Change
-                        password</button>
-                    </div>
                   </form>
-
-
                   <!-- Change Password -->
-
-                  <div id="changePasswordForm">
+                  <div id="changePasswordForm" class="d-none">
                     <form id="resetPasswordForm" name="resetPasswordForm" role="form">
                       <div class="form-group">
                         <label>Password</label>
@@ -147,6 +140,10 @@
                       <button type="button" class="btn btn-default btn-close btn-lg" id="cancelBtn">Cancel</button>
                     </div>
                   </div>
+                  <div class="form-group change-pass-section">
+                    <button type="button" class="btn btn-default btn-lg btn-change-password" id="changePassBtn">Change
+                      password</button>
+                  </div>
                 </div>
                 <div class="col-md-3 text-center pt-3">
                   <div class="mb-3">
@@ -164,7 +161,7 @@
           </div>
 
 
-          <form id="myProfileForm" name="myProfileForm" role="form">
+          <form id="myProfileForm2" name="myProfileForm2" role="form">
             <div class="card w-100 mt-5">
               <div class="card-body">
                 <div class="row subscription-section">
@@ -177,8 +174,8 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <button type="button" class="btn btn-primary btn-lg btn-save" id="updateProfile"
-                        style="display: inline-block; ">Save
+                      <button type="button" class="btn btn-primary btn-lg btn-save" id="updateProfile2"
+                        style="display: none; ">Save
                         changes</button>
                     </div>
                   </div>

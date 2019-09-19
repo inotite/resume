@@ -39,7 +39,7 @@
                             <img src="../images/app/pic1.png" style="border-radius: 50%;" alt="">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="profile">
-                            <a class="dropdown-item transition"  id="userName"></a>
+                            <a class="dropdown-item transition" id="userName"></a>
                             <a href="javascript:void(0)" class="dropdown-item transition">
                                 <span id="UserEmail"></span>
                             </a>
@@ -70,13 +70,14 @@
                         <img src="../images/Icon3.svg" class="img1" alt="phone" height="320px" width="auto">
                     </div>
                     <div class="col-md-7 pt-5">
-                            <div class="modal-title">Upgrade Today</div>
-                            <div class="modal-description">
-                                    Get access to your custom resume URL and share it instantly with hiring managers, companies, friends & family.</div>
-                            <a href="../resumepricing.html" style="margin-left: 5rem;"><button type="button"
-                                    class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+                        <div class="modal-title">Upgrade Today</div>
+                        <div class="modal-description">
+                            Get access to your custom resume URL and share it instantly with hiring managers, companies,
+                            friends & family.</div>
+                        <a href="../resumepricing.html"><button type="button"
+                                class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -95,23 +96,28 @@
             "content-type": "application/json"
         },
     };
+    localStorage.removeItem('userPlanStatus');
+    console.log(!localStorage.getItem('userPlanStatus'))
     if (!localStorage.getItem('userPlanStatus')) {
         $.ajax(userPlanStatus).done(function (response) {
             console.log(response);
-            if (typeof (response.data) == "object") {
-                if (response.data[0].planId == 1) {
-                    localStorage.setItem('isPremiumUser', 'false');
+            if (response.data) {
+                localStorage.setItem('userPlanStatus', JSON.stringify(response.data))
+            };
+            if (response.msg.description == "user transaction not found") {
+                if (response.data) {
+                    if (response.data[0].planId == 1) {
+                        localStorage.setItem('isPremiumUser', 'false');
+                    }
                 }
-                localStorage.setItem('userPlanStatus', JSON.stringify(response.data));
+                $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade').attr(
+                    'href',
+                    'javascript:void(0)');
+            } else {
                 if (localStorage.getItem('userPlanStatus')) {
                     $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
                         '../share/index.html');
-                } else {
-                    $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade').attr(
-                        'href',
-                        'javascript:void(0)');
                 }
-            } else {
                 localStorage.setItem('isPremiumUser', 'false');
             }
             // response = typeof (response) !== "object" ? JSON.parse(response) : response;

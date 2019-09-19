@@ -52,7 +52,7 @@
 					$('input[name="firstname"]').val(userData.firstname);
 					$('input[name="lastname"]').val(userData.lastname);
 					$('input[name="email"]').val(userData.email);
-					
+
 					//$('input[name="shareName"]').val(userData.share_name);
 					$('input[name="shareName"]').val(localStorage.getItem('shareName'));
 					$('#copyText').val(self.options.baseUrl + '/@' + localStorage.getItem('shareName'));
@@ -181,15 +181,16 @@
 				}
 
 				$("#changePassBtn").on('click', function () {
-					$(this).fadeOut();
-					$("#changePasswordForm").fadeIn();
+					$("#changePasswordForm").removeClass('d-none');
+					$("#changePassBtn").addClass('d-none');
 				});
 				$("#cancelBtn").on('click', function () {
 					$('input[name="oldPassword"]').val('');
 					$('input[name="newPassword"]').val('');
 					$('input[name="reenterNewPassword"]').val('');
-					$("#changePasswordForm").fadeOut();
-					$("#changePassBtn").fadeIn();
+					// $("#changePasswordForm").fadeOut();
+					$("#changePasswordForm").addClass('d-none');
+					$("#changePassBtn").removeClass('d-none');
 				});
 				$('#profileMenu').on('click', function () {
 					//$('.dropdown-menu').toggleClass('open');
@@ -204,8 +205,13 @@
 				// 	$('#' + idVal + 'TabBody').addClass('tab-body-show');
 				// });
 
-				$('input.myprofile, select.myprofile').on('focus', function () {
+				$('input.myprofile').on('focus', function (e) {
 					$('#updateProfile').fadeIn();
+					// console.log(e);
+				});
+				$('select.myprofile').on('focus', function (e) {
+					$('#updateProfile2').fadeIn();
+					// console.log(e);
 				});
 
 				/* Update Password functionality */
@@ -258,8 +264,8 @@
 
 					var firstname = $.trim($('input[name="firstname"]').val());
 					var lastname = $.trim($('input[name="lastname"]').val());
-					var collegeName = JSON.parse(atob($('#collageName').val())).collegeName;
-					var collegeLogo = JSON.parse(atob($('#collageName').val())).collegeLogo;
+					var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
+					var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
 					// var clgName = 
 					var userData = JSON.parse(localStorage.getItem('userData'));
 					var email = userData.email;
@@ -330,7 +336,50 @@
 						});
 					}
 				});
+				$('#updateProfile2').on('click', function () {
+					var userData = JSON.parse(localStorage.getItem('userData'));
+					var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
+					var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
+					// var clgName = 
+					console.log(collegeName, collegeLogo);
+					var profileData = {
+						"firstname": userData.firstname,
+						"lastname": userData.lastname,
+						"email": userData.email,
+						"collegeName": collegeName,
+						"collegeLogo": collegeLogo
+					}
 
+					var settings = {
+						"async": true,
+						"crossDomain": true,
+						"url": self.options.apiUrl + "/user/" + userId + "/updateProfileResume",
+						"method": "POST",
+						"headers": {
+							"token": sessionId,
+							"content-type": "application/json"
+						},
+						"processData": false,
+						"data": JSON.stringify(profileData)
+					}
+
+					$.ajax(settings).done(function (response) {
+						console.log(response);
+						if (response.status == "success") {
+							localStorage.setItem('userData', JSON.stringify(response.data));
+							$('#newSuccessMessageID .message-text').html(response.msg);
+							$('#newSuccessMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
+								$('#updateProfile').attr('disabled', false);
+							});
+
+						} else {
+							$('#newErrorMessageID .message-text').html(response.msg)
+							$('#newErrorMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
+								$('#updateProfile').attr('disabled', false);
+							});
+						}
+					});
+				});
 				/*$('input').on('keypress', function (e) {
 					if (e.which == 32)
 						return false;

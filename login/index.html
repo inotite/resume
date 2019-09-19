@@ -68,7 +68,7 @@
                   <input type="password" class="form-control with-icon icon-password transition" name="password"
                     placeholder="Password" autofocus autocomplete="off" required />
                 </div>
-                <div class="form-group"> <a class="text-right d-block mt-3" href="../resetPassword/index.html">Forgot
+                <div class="form-group"> <a class="text-right d-block mt-3" href="../resetPassword/forgot.html">Forgot
                     password?</a> </div>
                 <div class="form-group mt-4">
                   <button id="signinResume" type="button" class="btn btn-primary btn-lg btn-block">Sign in</button>
@@ -103,7 +103,7 @@
   <script src="../js/main-scripts.js"></script>
   <script>
     $(function () {
-      $('.loading-container').delay(3000).fadeOut();
+      $('.loading-container').delay(500).fadeOut();
       var loginStatus = localStorage.getItem("userData") !== null ? true : false;
       if (loginStatus === true) {
         window.location.href = window.origin !== "http://127.0.0.1:5501" ? window.origin + '/home/index.html' :

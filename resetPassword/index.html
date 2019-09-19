@@ -1,92 +1,141 @@
+<!-- https://devresume.workruit.com/resetPassword/index.html5ceed9d5c4164058a7d4ecad50f86049/ -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#ffffff">
-  <title>Workruit - Instant Resume</title>
-  <link rel='shortcut icon' type='image/x-icon' href='../favicon.png' />
-  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
-  <link rel="stylesheet" type="text/css" href="../css/custom.css" />
-  <style>
-    .alert-danger, .alert-success{
-      top:0px !important;
-      display: none; 
-    }
-    .invalid-feedback{
-      display: block;
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#ffffff">
+    <title>Workruit — Update Password</title>
+
+    <script>
+        // let sessionId = localStorage.getItem('sessionId');
+        // if (!sessionId) {
+        //     window.location.href = "../index.html";
+        // }         
+    </script>
+    <link rel='shortcut icon' type='image/x-icon' href='../favicon.png' />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../css/custom.css" />
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .alert-danger,
+        .alert-success {
+            top: 0px !important;
+            display: none;
+        }
+
+        .mainbox.about_company {
+
+            font-size: 14px;
+            font-weight: 400;
+            color: #2f2f2f;
+
+        }
+
+        .mainbox.about_company {
+
+            max-width: 720px;
+            margin: 0 auto;
+            margin-top: 0px;
+            margin-bottom: 0px;
+
+        }
+
+        .cst_card-title {
+            color: #FFF;
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+
+        .cst_card-title h5 {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 18px;
+            color: inherit;
+            font-weight: 400;
+        }
+    </style>
 </head>
 
-<body class="before-login" id="forgotPassword">
-  <div>
-    <div class="auth">
-    
-  <div id="newErrorMessageID" class="alert alert-danger">
-    <b class="message-text"></b>
-    <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png" width="10" /></a>
-  </div>
-  <div id="newSuccessMessageID" class="alert alert-success">
-    <b class="message-text"></b>
-    <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png" width="10" /></a>
-  </div>
--
-      <div class="row sidebar py-5 px-5 ">
-        <div class="col-sm-12 text-center relative"><a class="back" href="../login/index.html"></a> <a class="logo" href="javascript:void(0)">
-            <img src="../images/workruit-resume-logo-color.svg" class="img-responsive resume-logo-big" alt="workruit-instent-resume">
-        </a> </div>
-        <div class="d-flex h-100 w-100 justify-content-center align-items-center" >
-          <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
-            <h1 class="col-sm-12  title text-center">Forgot your password?</h1>
-            <h2 class="description text-center mt-2">We'll email you instructions on how to reset it.</h2>
-            <div class="form mt-5" style="min-height: 350 px">
-              
-              <!-- <form id="loginForm" name="loginForm" role="form" autocomplete="off"  novalidate> -->
-                <!-- Email -->
-                <div class="forgot-form">
-                <div class="form-group">
-                  <input type="email" class="form-control with-icon icon-mail transition" name="email" placeholder="Email address" autofocus autocomplete="off" required />
+<body>
+    <header class="w-100">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-5">
                 </div>
-                <div class="form-group mt-4">
-                  <button id="resetPassBtn" class="btn btn-primary btn-lg btn-block">Reset password</button>
+                <div class="col-md-2 text-center">
+                    <a href="#">
+                        <img src="../images/workruit-resume-logo-color.svg" class="img-responsive resume-logo-big" alt="workruit-instent-resume">
+                    </a>
                 </div>
-              </div>
-              <!--</form>-->
-              <br>
-              <small class="form-text text-muted text-center d-block mt-3 form-bottom w-100">Already have an account? <a
-                  href="../login/index.html">Sign in</a></small>
+                <div class="col-md-5">
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="container h-100 right-conent">
-        <div class="row h-100 justify-content-center align-items-center">
-          <div class="col-lg-12 text-center">
-            <!--<div class="w-100"> <img src="images/app/phone.png" alt=""> </div>-->
-            <div  class="app">
-              <h3>Find a candidate that fits for free!</h3>
-              <!--<div class="getapp px-4 py-3 w-50 mx-auto"> <span class="pr-3">Get the app</span> <a href="" class="transition"><img src="images/app/icons/android.svg" alt="android"></a> </div>-->
+    </header>
+    <div class="container">
+        <div id="signupbox" style="margin-top: 110px; margin-bottom: 50px;" class="mainbox about_company">
+            <div class="card">
+                <div class="card-header cst_card-title">
+                    <h5 class="card-title cst_card-title my-2 text-white">Reset Password</h5>
+                </div>
+                <div class="card-body">
+                    <form id="signupform" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" class="form-control" name="newPassword" data-ng-model="resetPasswordNew.newPassword" placeholder="New Password"
+                                required="required" required-error-message="New Password is required.">
+                        </div>
+                        <div class="form-group" class="col-md-9 control-label">
+                            <label>Confirm New Password </label>
+                            <input type="password" class="form-control" name="reenterNewPassword" data-ng-model="resetPasswordNew.reenterNewPassword"
+                                placeholder="Confirm Password" required="required" required-error-message="Confirm Password is required.">
+                        </div>
+                        <h5 class="text-center formsubhead" style="margin-bottom: 20px; margin-top: 20px;">
+                            <button class="btn btn-primary create_job" data-ng-click="resetPasswordNewServCall()" style="padding: 8px 22px; letter-spacing: 0.4px;">RESET PASSWORD</button>
+
+                        </h5>
+                    </form>
+                </div>
             </div>
-          </div>
+
+
         </div>
-        <div class="row h-101 justify-content-center align-items-center">
-          <div class="col-lg-12 text-center">
-            <img src="../images/app/Final.png" alt="Final" style="width: auto; height:443px; margin-top: 30px;">
-          </div>
+        <div class="text-center inner_subscribe" style="margin-bottom: 20px; margin-top: 20px;">
+
+            <!-- START SUBSCRIBE FORM -->
+            <a href="https://play.google.com/store/apps/details?id=com.workruit&hl=en" class="app-download-link" target="_blank">
+                <img src="../images/app/google-play-badge.png" width="170px">
+            </a>
+            <a href="https://itunes.apple.com/in/app/workruit/id1189752813?mt=8" target="_blank">
+                <img src="../images/app/iphone-play-badge.png" width="170px">
+            </a>
+
+            <!-- END SUBSCRIBE FORM -->
+
+
         </div>
-      </div>
     </div>
-  </div>
-  <script src="../../js/jquery-3.2.1.min.js"></script>
-  <script src="../js/main-scripts.js"></script>
-  <script>
-    $(function () {
-      // $('.right-conent').css('min-height', $(document).height());
-      $('.before-login').paraCount();
-    });
-  </script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/account-scripts.js"></script>
+    <script>
+        $(window).ready(function () {
+            var pwdParameter = window.location.search.substr(1);
+            console.log(pwdParameter);
+            // var windowLocation = window.location;
+            // pwdParameter ? true : window.location = '../../404.html'
+            console.log(pwdParameter ? true : false);
+            // var url = 
+            $.get("ajax/test.html", function (data) {
+                $(".result").html(data);
+                alert("Load was performed.");
+            });
+        });
+    </script>
 </body>
 
 </html>

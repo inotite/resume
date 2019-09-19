@@ -2744,7 +2744,7 @@ md-virtual-repeat-container.md-autocomplete-suggestions-container {
 }
 
 #changePasswordForm {
-    display: none;
+    /* display: none; */
 }
 
 .dropdown-toggle::after {
@@ -3033,7 +3033,7 @@ input:checked+.slider:before {
 #foto #image-preview {
     position: absolute;
     left: 0;
-    top: 0;
+    top: -14%;
     z-index: 1000;
     border-radius: 220px;
     width: 220px;
