@@ -500,6 +500,10 @@ aside * {
     border: 16px solid var(--color-black);
 }
 
+.skills-bar.at-100 span {
+    transform: translate(-7px, 0px);
+}
+
 .skills-section li {
     width: 48%;
     display: inline-block;
@@ -748,6 +752,7 @@ input {
     float: none;
     border: unset;
     line-height: 1.5;
+    background: transparent;
     /* height: auto; */
 }
 

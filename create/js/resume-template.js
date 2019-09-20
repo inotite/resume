@@ -76,9 +76,9 @@ $(window).ready(function () {
         //     'background-size': 'contain'
         // });
         $('#resume-body').css('background-image', 'url("watermarkworkruit.svg")');
-        $('#resume-body').css('background-position', 'center');
-        $('#resume-body').css('background-repeat', 'no-repeat');
+        $('#resume-body').css('background-repeat', 'repeat-y');
         $('#resume-body').css('background-size', 'contain');
+        $('#resume-body').css('background-position', '0px 700px');
     }
     var selectedFont = resumeObj.themeOptions ? JSON.parse(resumeObj.themeOptions).font : fonts[0].fontFamily;
     var selectedcolor = resumeObj.themeOptions ? JSON.parse(resumeObj.themeOptions).color : 'theme-black';
@@ -214,12 +214,22 @@ $(window).ready(function () {
         $('#previewBack').removeClass('d-none');
         $('.editorNav').addClass('d-none');
         $('.previewNav').css('z-index', '2');
+
+        $('#resume-body').css('background-image', 'url("watermarkworkruit.svg")');
+        $('#resume-body').css('background-repeat', 'no-repeat');
+        $('#resume-body').css('background-size', 'contain');
+        $('#resume-body').css('background-position', 'center');
     });
     $('#previewBack').on('click', function () {
         $('.resume-preview').addClass('d-none');
         $('#previewResume').removeClass('d-none');
         $('#previewBack').addClass('d-none');
         $('.editorNav').removeClass('d-none');
+        
+        $('#resume-body').css('background-image', 'url("watermarkworkruit.svg")');
+        $('#resume-body').css('background-repeat', 'repeat-y');
+        $('#resume-body').css('background-size', 'contain');
+        $('#resume-body').css('background-position', '0px 700px');
     });
 
     function ratingCircle() {
@@ -624,15 +634,15 @@ $(window).ready(function () {
             $('#skills_item_' + num + ' .skills-bar').attr('data-border', minSkillValue);
             $('#skills_item_' + num + ' .skills-bar').attr('class', '').attr('class',
                 'skills-bar color-blue at-75');
-            $('#skills_item_' + num + ' .skill').attr('data-content', '').val('');
-            $('#skills_item_' + num + ' [data-content="skillText"]').val('');
+            $('#skills_item_' + num + ' .skill').attr('data-content', '').text('');
+            $('#skills_item_' + num + ' [data-content="skillText"]').text('');
             // console.log('i am add_exp')
-            // $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
-            //     return limitLines($(this), LINE_SKILL_NAME, e);
-            // });
-            // $('#skills_item_' + num + ' .skill-name').keyup(function(e) {
-            //     return preventCopyPaste($(this), LINE_SKILL_NAME, e);
-            // });
+            $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
+                return limitLines($(this), LINE_SKILL_NAME, e);
+            });
+            $('#skills_item_' + num + ' .skill-name').keyup(function(e) {
+                return preventCopyPaste($(this), LINE_SKILL_NAME, e);
+            });
         }
         if ($('.skills-item').length == 16) {
             $('.skills-item .add_skills').addClass('d-none');
@@ -652,18 +662,23 @@ $(window).ready(function () {
                 }
             }
             var skillsAll = new Array();
+            var dom = $(this);
             $.ajax(skillsSettings).done(function (response) {
                 // console.log(fieldVal, response)
-                console.log("Skill response");
-                console.log(response);
                 if (response !== null)
                     $(response.content).each(function (k, v) {
                         skillsAll.push(response.content[k].skillName);
                     });
                 // var results = $.ui.autocomplete.filter(skillsAll, request.term);
-                $(".skills").autocomplete({
-                    source: skillsAll,
-                    minLength: 0
+                var skillsArray = [];
+                $('.skills').each(function(index) {
+                    skillsArray.push($(this).text());
+                });
+                dom.autocomplete({
+                    source: skillsAll.filter(function(item, index) {
+                        return skillsArray.indexOf(item) == -1;
+                    }),
+                    minLength: 0,
                 }).focus(function () {
                     $(this).autocomplete("search", $(this).val());
                 });
@@ -698,6 +713,16 @@ $(window).ready(function () {
             $('#lang_' + num + ' [data-content="languageName"]').text('').attr(
                 'placeholder',
                 'Language');
+
+            $('#lang_' + num + ' .rating-container li').removeClass('rating-chosen');
+        
+            $(".info-language").keypress(function(e) {
+                return limitLines($(this), LINE_LANGUAGES, e);
+            });
+
+            $(".info-language").keyup(function(e) {
+                return preventCopyPaste($(this), LINE_LANGUAGES, e);
+            });
 
             ratingCircle();
 
@@ -837,6 +862,8 @@ $(window).ready(function () {
                 "company": exp_company,
                 "description": exp_description.trim()
             });
+
+            console.log("Experience Data", postObj.experience);
         });
     }
 
@@ -986,7 +1013,7 @@ $(window).ready(function () {
         postObj.skill = []
         $('.skills-item').each(function (i, v) {
             var id = $(this).attr('id');
-            var skill_name = $('#' + id + ' .skill-input-value').val();
+            var skill_name = $('#' + id + ' .skill-input-value').text();
             var skill_value = parseInt($('#' + id).find('.skill-value').attr('data-skill'));
             // console.log(i, skill_name, skill_value, "skill_value");
             postObj.skill.push({
@@ -1002,7 +1029,8 @@ $(window).ready(function () {
             font: $('.selected-font').attr('data-font'),
             settings: settings
         }
-        postObj.themeOptions = JSON.stringify(themeOptions);
+        postObj.themeOptions = themeOptions;
+        console.log("Theme Options", postObj.themeOptions);
     }
 
     function readURL(input) {
@@ -1030,11 +1058,11 @@ $(window).ready(function () {
         // console.log(resumeObj.pic);
         $('#user_pic').attr('src', resumeObj.pic);
         if ( !resumeObj.collegeLogo )
-            resumeObj.collegeLogo = 'img/twitter.svg';
+            resumeObj.collegeLogo = 'img/university_logo.svg';
         $('.clg_picture img').attr('src', resumeObj.collegeLogo)
         $('[data-content="firstname"]').text(resumeObj.firstname);
         $('[data-content="lastname"]').text(resumeObj.lastname);
-        if (resumeObj.jobFunctions.length) {
+        if (resumeObj.jobFunctions && resumeObj.jobFunctions.length) {
             $('input[data-content="jobfunctions"]').val(resumeObj.jobFunctions[0].jobFunctionName);
             $('input[data-content="jobfunctions"]').attr('data-item-id', resumeObj.jobFunctions[0]
                 .categoryId);
@@ -1046,6 +1074,7 @@ $(window).ready(function () {
         $('[data-content="dob"]').val(resumeObj.date_of_birth);
         if ( resumeObj.gender )
             $('.gender .current').text(resumeObj.gender)
+        // console.log("Email", resumeObj.email);
         $('[data-content="email"]').text(resumeObj.email);
         $('[data-content="phone"]').text(resumeObj.telephone);
         $('[data-content="linkedin"]').text(resumeObj.user_linkdin);
@@ -1064,7 +1093,7 @@ $(window).ready(function () {
     }
 
     function bindUserExpData() {
-        if (resumeObj.userExperienceResSet.length > 1) {
+        if (resumeObj.userExperienceResSet && resumeObj.userExperienceResSet.length > 1) {
             for (let index = 1; index < resumeObj.userExperienceResSet.length; index++) {
                 var $div = $('div[id^="proExp_"]:last');
                 var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
@@ -1096,7 +1125,7 @@ $(window).ready(function () {
     }
 
     function bindUserEduData() {
-        if (resumeObj.userEducationResSet.length > 1) {
+        if (resumeObj.userEducationResSet && resumeObj.userEducationResSet.length > 1) {
             for (let index = 1; index < resumeObj.userEducationResSet.length; index++) {
                 var $div = $('div[id^="education_"]:last');
                 var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
@@ -1128,7 +1157,7 @@ $(window).ready(function () {
     }
 
     function bindUserAcademicData() {
-        if (resumeObj.userAcademicResSet.length > 1) {
+        if (resumeObj.userAcademicResSet && resumeObj.userAcademicResSet.length > 1) {
             for (let index = 0; index < resumeObj.userAcademicResSet.length; index++) {
                 var $div = $('div[id^="academic_projects_"]:last');
                 var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
@@ -1136,7 +1165,7 @@ $(window).ready(function () {
                 $div.after($klon);
             }
         }
-        for (let i = 0; i < resumeObj.userAcademicResSet.length; i++) {
+        $(resumeObj.userAcademicResSet).each(function(i, v) {
             const ap = resumeObj.userAcademicResSet[i];
             var id = 'academic_projects_' + (i + 1);
             console.log(id);
@@ -1147,12 +1176,12 @@ $(window).ready(function () {
             $('#' + id).find('input[data-content="acd_startDate"]').val(ap.startDate);
             $('#' + id).find('input[data-content="acd_endDate"]').val(ap.endDate);
             $('#' + id).find('p[data-content="acd_description"]').text(ap.description);
-        };
+        });
     }
 
     function bindUserSkillsData() {
         var minSkill = '75%';
-        if (resumeObj.userSkillsSet.length > 5) {
+        if (resumeObj.userSkillsSet && resumeObj.userSkillsSet.length > 5) {
             for (let index = 5; index < resumeObj.userSkillsSet.length; index++) {
                 var $div = $('li[id^="skills_item_"]:last');
                 var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
@@ -1164,7 +1193,7 @@ $(window).ready(function () {
                 $('.skills-item .remove_skills').removeClass('d-none');
             }
         }
-        for (let i = 0; i < resumeObj.userSkillsSet.length; i++) {
+        $(resumeObj.userSkillsSet).each(function(i, ev) {
             const v = resumeObj.userSkillsSet[i];
             var a = i + 1;
             // console.log(v, '#skills_item_' + a + ' .skills-bar .skill-value');
@@ -1173,15 +1202,15 @@ $(window).ready(function () {
             $('#skills_item_' + a + ' .skills-bar').attr('data-border', v.percentage);
             $('#skills_item_' + a + ' .skills-bar').attr('class', '').attr('class',
                 'skills-bar color-blue at-' + v.percentage);
-            $('#skills_item_' + a + ' .skill-input-value').val(v.title);
+            $('#skills_item_' + a + ' .skill-input-value').text(v.title);
             $('#skills_item_' + a + ' .skill').attr('data-content', '').text(v.title);
 
-        }
+        });
 
     }
 
     function bindLanguagesData() {
-        if (resumeObj.userLngSet.length > 1) {
+        if (resumeObj.userLngSet && resumeObj.userLngSet.length > 1) {
             for (let index = 1; index < resumeObj.userLngSet.length; index++) {
                 var $div = $('li[id^="lang_"]:last');
                 var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
@@ -1189,7 +1218,7 @@ $(window).ready(function () {
                 $div.after($klon);
             }
         }
-        for (let i = 0; i < resumeObj.userLngSet.length; i++) {
+        $(resumeObj.userLngSet).each( function(i, ev) {
             // var id = $('#lang_' + i);
             const v = resumeObj.userLngSet[i];
             var a = i + 1;
@@ -1225,7 +1254,7 @@ $(window).ready(function () {
                 default:
                     break;
             }
-        }
+        });
     }
     // services
     let degreesAll = [];
@@ -1312,6 +1341,7 @@ $(window).ready(function () {
         });
 
     });
+
     $('.skills').on('keydown', function () {
         var fieldVal = $(this).text();
         var skillsSettings = {
@@ -1323,20 +1353,24 @@ $(window).ready(function () {
                 "token": "911ca088ab824095b82d3c98b32332e7",
             }
         }
-        console.log(fieldVal);
         var skillsAll = new Array();
+        var dom = $(this);
         $.ajax(skillsSettings).done(function (response) {
             // console.log(fieldVal, response)
-            console.log("Skills", response);
             if (response !== null)
                 $(response.content).each(function (k, v) {
                     skillsAll.push(response.content[k].skillName);
                 });
             // var results = $.ui.autocomplete.filter(skillsAll, request.term);
-            console.log("a");
-            $(".skills").autocomplete({
-                source: skillsAll,
-                minLength: 0
+            var skillsArray = [];
+            $('.skills').each(function(index) {
+                skillsArray.push($(this).text());
+            });
+            dom.autocomplete({
+                source: skillsAll.filter(function(item, index) {
+                    return skillsArray.indexOf(item) == -1;
+                }),
+                minLength: 0,
             }).focus(function () {
                 $(this).autocomplete("search", $(this).val());
             });
@@ -1376,10 +1410,10 @@ $(window).ready(function () {
         }
         if (applicantData.experience.length) {
             experienceValidArray = applicantData.experience.filter(function (item, index) {
-                return !item.company || !item.endDate || !item.jobTitle || !item.location || !
-                    item.startDate;
+                return false;
+                // return !item.company || !item.endDate || !item.jobTitle || !item.location || !
+                //     item.startDate;
             });
-            console.log(experienceValidArray);
             if (!!experienceValidArray.length) {
                 // var errorMessage = "Please fill the all details in experience";
                 // $('#newErrorMessageID .message-text').html(errorMessage)
@@ -1405,8 +1439,9 @@ $(window).ready(function () {
         }
         if (applicantData.academic.length) {
             academicValidArray = applicantData.academic.filter(function (item, index) {
-                return !item.description || !item.endDate || !item.institution || !item
-                    .location || !item.startDate || !item.projectTitle || !item.role;
+                return false;
+                // return !item.description || !item.endDate || !item.institution || !item
+                //     .location || !item.startDate || !item.projectTitle || !item.role;
             });
             console.log(academicValidArray);
             if (!!academicValidArray.length) {
@@ -1435,7 +1470,8 @@ $(window).ready(function () {
         }
         if (applicantData.skill.length) {
             academicValidArray = applicantData.skill.filter(function (item, index) {
-                return !item.skillName || !item.skill_percentage;
+                return false;
+                // return !item.skillName || !item.skill_percentage;
             });
             console.log(academicValidArray);
             if (!!academicValidArray.length) {
@@ -1456,6 +1492,7 @@ $(window).ready(function () {
                 });
             }
         }
+        console.log("Application Data", JSON.stringify(applicantData));
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -1484,12 +1521,14 @@ $(window).ready(function () {
                         $('#saveResume').removeAttr('pointer-events');
                     });
                 localStorage.setItem('userData', JSON.stringify(response.data));
+                console.log("Ajax response");
+                console.log(response.data);
 
                 var logoImg = $('input[data-content="picture"]').get(0).files[0];
                 if (logoImg) {
                     saveUserPic();
                 }
-                savePdf();
+                // savePdf();
                 getShareNameFile();
 
             } else {
