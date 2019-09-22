@@ -65,7 +65,7 @@ var defaultSettings = [{
     text: 'Blog',
     dataText: 's-blog'
 }]
-var settings = resumeObj.themeOptions ? JSON.parse(resumeObj.themeOptions).settings : defaultSettings;
+var settings = resumeObj.themeOptions ? resumeObj.themeOptions.settings : defaultSettings;
 $(window).ready(function () {
     $('.gender').niceSelect();
     if ((planInfo && planInfo[0].planId == 1) || planInfo == null) {
@@ -80,8 +80,8 @@ $(window).ready(function () {
         $('#resume-body').css('background-size', 'contain');
         $('#resume-body').css('background-position', '0px 700px');
     }
-    var selectedFont = resumeObj.themeOptions ? JSON.parse(resumeObj.themeOptions).font : fonts[0].fontFamily;
-    var selectedcolor = resumeObj.themeOptions ? JSON.parse(resumeObj.themeOptions).color : 'theme-black';
+    var selectedFont = resumeObj.themeOptions ? resumeObj.themeOptions.font : fonts[0].fontFamily;
+    var selectedcolor = resumeObj.themeOptions ? resumeObj.themeOptions.color : 'theme-black';
     $('.selected-font').text(selectedFont).attr('data-font', selectedFont);
     $('.selected-color').addClass(selectedcolor).attr('data-color', selectedcolor);
     $('.resume-container').attr('data-oldcolor', 'theme-black').removeClass('theme-black').addClass(selectedcolor);
@@ -1380,8 +1380,8 @@ $(window).ready(function () {
     function saveUserProfile(applicantData) {
         if (applicantData.education.length) {
             var educationValidArray = applicantData.education.filter(function (item, index) {
-                return !item.institution || !item.location || !item.degree.title || !item
-                    .fieldOfStudy || !item.endDate || !item.startDate;
+                return !item.institution && !item.location && !item.degree.title && !item
+                    .fieldOfStudy && !item.endDate && !item.startDate;
             });
             console.log(educationValidArray);
             if (!!educationValidArray.length) {
@@ -1410,9 +1410,9 @@ $(window).ready(function () {
         }
         if (applicantData.experience.length) {
             experienceValidArray = applicantData.experience.filter(function (item, index) {
-                return false;
-                // return !item.company || !item.endDate || !item.jobTitle || !item.location || !
-                //     item.startDate;
+                // return false;
+                return !item.jobTitle && !item.company && !item.endDate && !item.jobTitle && !item.location && !
+                    item.startDate;
             });
             if (!!experienceValidArray.length) {
                 // var errorMessage = "Please fill the all details in experience";
@@ -1439,9 +1439,9 @@ $(window).ready(function () {
         }
         if (applicantData.academic.length) {
             academicValidArray = applicantData.academic.filter(function (item, index) {
-                return false;
-                // return !item.description || !item.endDate || !item.institution || !item
-                //     .location || !item.startDate || !item.projectTitle || !item.role;
+                // return false;
+                return !item.description && !item.endDate && !item.institution && !item
+                    .location && !item.startDate && !item.projectTitle && !item.role;
             });
             console.log(academicValidArray);
             if (!!academicValidArray.length) {

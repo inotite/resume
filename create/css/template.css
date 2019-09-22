@@ -753,7 +753,7 @@ input {
     border: unset;
     line-height: 1.5;
     background: transparent;
-    /* height: auto; */
+    height: auto;
 }
 
 .nice-select .list {
