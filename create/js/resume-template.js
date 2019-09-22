@@ -75,10 +75,10 @@ $(window).ready(function () {
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $('#resume-body').css('background-image', 'url("watermarkworkruit.svg")');
-        $('#resume-body').css('background-repeat', 'repeat-y');
-        $('#resume-body').css('background-size', 'contain');
-        $('#resume-body').css('background-position', '0px 700px');
+        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-repeat', 'repeat-y');
+        $("page[size='a4']").css('background-size', 'contain');
+        $("page[size='a4']").css('background-position', '0px 700px');
     }
     var selectedFont = resumeObj.themeOptions ? resumeObj.themeOptions.font : fonts[0].fontFamily;
     var selectedcolor = resumeObj.themeOptions ? resumeObj.themeOptions.color : 'theme-black';
@@ -214,11 +214,13 @@ $(window).ready(function () {
         $('#previewBack').removeClass('d-none');
         $('.editorNav').addClass('d-none');
         $('.previewNav').css('z-index', '2');
+        
+        renderPages();
 
-        $('#resume-body').css('background-image', 'url("watermarkworkruit.svg")');
-        $('#resume-body').css('background-repeat', 'no-repeat');
-        $('#resume-body').css('background-size', 'contain');
-        $('#resume-body').css('background-position', 'center');
+        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-repeat', 'no-repeat');
+        $("page[size='a4']").css('background-size', 'contain');
+        $("page[size='a4']").css('background-position', 'center');
     });
     $('#previewBack').on('click', function () {
         $('.resume-preview').addClass('d-none');
@@ -226,10 +228,10 @@ $(window).ready(function () {
         $('#previewBack').addClass('d-none');
         $('.editorNav').removeClass('d-none');
         
-        $('#resume-body').css('background-image', 'url("watermarkworkruit.svg")');
-        $('#resume-body').css('background-repeat', 'repeat-y');
-        $('#resume-body').css('background-size', 'contain');
-        $('#resume-body').css('background-position', '0px 700px');
+        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-repeat', 'repeat-y');
+        $("page[size='a4']").css('background-size', 'contain');
+        $("page[size='a4']").css('background-position', '0px 700px');
     });
 
     function ratingCircle() {
@@ -374,7 +376,6 @@ $(window).ready(function () {
         if ($('.professional-experience').length > 1) {
             $('.professional-experience .remove_exp').removeClass('d-none');
         }
-
     })
     $("body").on("click", ".remove_exp", function () {
         var $div = $(this);
@@ -970,6 +971,12 @@ $(window).ready(function () {
                     'p[data-content="edu_description"]')
                 .text()) ? $('#' + id).find(
                 'p[data-content="edu_description"]').text() : '';
+            
+            console.log("******************", degree);
+            if (degree.title == '')
+                degree = {};
+            console.log("-------------------", degree);
+
             if (endDate != '' || startDate != '' || institution != '' ||
                 location != '' || degree != '' || description != '' || fieldOfStudy != '') {
                 postObj.education.push({
@@ -1752,4 +1759,214 @@ $(window).ready(function () {
     $('.gender').on('change', function(e) {
         $('.gender .current').css('color', '#212529');
     });
+
+    var getOuterHTML = function(obj) {
+        return $("<div />").append(obj.clone()).html();
+    }
+
+    var renderPages = function() {
+        var resume = $('#resume-body');
+        var dpi = 96;
+        var standardHeightAsCm = 29.7;
+        var inch = 2.54;
+        var standardA4Height = standardHeightAsCm * dpi / inch;
+        var totalHeight = parseFloat(resume.css('height'));
+
+        console.log( "Document Size: ", resume.css('width'), resume.css('height'));
+        console.log( "Standard Height: ", standardA4Height);
+
+        if (totalHeight <= standardA4Height)
+            return;
+
+        var emptyDom = "<page size='a4'>\
+                            <div class='row'>\
+                                <aside class='col-3 text-break'>\
+                                </aside>\
+                                <div class='col-9'>";
+        var sideDom = "<page size='a4'>\
+                            <div class='row'>\
+                                " + getOuterHTML($('#resume-body aside')) +
+                                "<div class='col-9'>";
+
+        var emptyDomClose =    "</div>\
+                            </div>\
+                        </page>";
+
+
+        var titleHeight = parseFloat($('#resume-title').css('height'));
+        var memoHeight = parseFloat($('#resume-memo').css('height'));
+
+        var stackedHeight;
+
+        var experienceHeight = parseFloat($('#experience-section').css('height'));
+        var experienceMarginTop = parseFloat($('#experience-section').css('margin-top'));
+        var experienceMarginBottom = parseFloat($('#experience-section').css('margin-bottom'));
+        var educationHeight = parseFloat($('#education-section').css('height'));
+        var educationMarginBottom = parseFloat($('#education-section').css('margin-bottom'));
+        var academicHeight = parseFloat($('#academic-section').css('height'));
+        var academicMarginBottom = parseFloat($('#academic-section').css('margin-bottom'));
+        var skillsHeight = parseFloat($('#skills-section').css('height'));
+        var skillsMarginBottom = parseFloat($('#skills-section').css('margin-bottom'));
+        var achievementsHeight = parseFloat($('#achievements-section').css('height'));
+        var achievementsMarginBottom = parseFloat($('#achievements-section').css('margin-bottom'));
+        var certificationsHeight = parseFloat($('#certifications-section').css('height'));
+        var certificationsMarginBottom = parseFloat($('#certifications-section').css('margin-bottom'));
+        var pagePadding = parseFloat(resume.css('padding'));
+
+        console.log( "Title Height: ", titleHeight);
+        console.log( "Memo Height: ", memoHeight);
+        console.log( "Work Experience Height:  ", experienceHeight);
+        console.log( "Work Experience Margin: ", "Top: ", experienceMarginTop, "Bottom: ", experienceMarginBottom);
+        console.log( "Education Height: ", educationHeight);
+        console.log( "Education Margin Bottom: ", educationMarginBottom);
+        console.log( "Academic Height: ", academicHeight);
+        console.log( "Academic Margin Bottom: ", academicMarginBottom);
+        console.log( "Skills Height: ", skillsHeight);
+        console.log( "Skills Margin Bottom: ", skillsMarginBottom);
+        console.log( "Achievements Height: ", achievementsHeight);
+        console.log( "Achievements Margin Bottom: ", achievementsMarginBottom);
+        console.log( "Certifications Height: ", certificationsHeight);
+        console.log( "Certifications Margin Bottom: ", certificationsMarginBottom);
+        console.log( "Page padding: ", pagePadding);
+
+        stackedHeight = titleHeight + memoHeight;
+
+        standardA4Height -= pagePadding * 2;
+
+        // Check work experience
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // In case of work experience doesn't exceed the first page
+
+        // console.log(stackedHeight + experienceHeight + experienceMarginTop);
+        // console.log(standardA4Height);
+
+        if (stackedHeight + experienceHeight + experienceMarginTop <= standardA4Height) {
+            stackedHeight += experienceHeight + experienceMarginTop + experienceMarginBottom;
+            resume.after(sideDom + getOuterHTML($("#resume-title")) + getOuterHTML($('#resume-memo')) + getOuterHTML($('#experience-section')) + emptyDomClose);
+        }
+        else {
+            console.log( "Work Experience Header Height: ", $('#experience-section h4').css('height'));
+            stackedHeight += parseFloat($('#experience-section h4').css('height')) + experienceMarginTop + parseFloat($('#experience-section h4').css('margin-bottom'));
+            console.log( "Exp1 Height: ", $('#proExp_1').css('height'));
+            var expCount = $('#experience-section .professional-experience').length;
+            console.log( "Work Experience Count: ", expCount);
+            var exps = $('#experience-section .professional-experience');
+            var it;
+            var domHtml =   '<div class="row mt-3 flex-column">\
+                                <h4 class="section_title text-uppercase font-10pt px-2">Work experience</h4>';
+            for( it = 0 ; it < expCount && stackedHeight + parseFloat($(exps[it]).css('height')) <= standardA4Height ; ++it ) {
+                console.log( "Experience ", it, "th Height: ", parseFloat($(exps[it]).css('height')));
+                stackedHeight += parseFloat($(exps[it]).css('height'));
+                domHtml += getOuterHTML($(exps[it]));
+            }
+
+            domHtml += '</div>';
+
+            resume.after(sideDom + getOuterHTML($("#resume-title")) + getOuterHTML($('#resume-memo')) + domHtml + emptyDomClose);
+            
+            domHtml = '<div class="row flex-column mb-1">';
+            stackedHeight = experienceMarginBottom;
+            
+            for( ; it < expCount ; ++it ) {
+                console.log( "Experience ", it, "th Height: ", parseFloat($(exps[it]).css('height')));
+                stackedHeight += parseFloat($(exps[it]).css('height'));
+                domHtml += getOuterHTML($(exps[it]));
+            }
+
+            domHtml += '</div>';
+
+            resume = $('page').last();
+            resume.after(emptyDom + domHtml + emptyDomClose);
+
+            console.log("Stacked Height: ", stackedHeight);
+        }
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Check Education
+        resume = $('page').last();
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        if (stackedHeight + educationHeight + educationMarginBottom < standardA4Height) {
+            stackedHeight += educationHeight + educationMarginBottom;
+            resume.find('.col-9 .row').last().after(getOuterHTML($('#education-section')));
+        }
+        else {
+            var domHtml = '';
+            stackedHeight += parseFloat($('#education-section h4').css('height')) + parseFloat($('#education-section h4').css('margin-bottom'));
+            var eduCount = $('#education-section .education-details').length;
+            var edus = $('#education-section .education-details');
+            var it;
+            console.log("Education Count: ", eduCount);
+            domHtml += '<div class="row flex-column mb-1" id="education-section">\
+                            <h4 class="section_title text-uppercase font-10pt px-2">Education</h4>';
+            for( it = 0 ; it < eduCount && stackedHeight + parseFloat($(edus[it]).css('height')) <= standardA4Height ; ++it ) {
+                console.log( "Education ", it, "th Height: ", parseFloat($(edus[it]).css('height')));
+                stackedHeight += parseFloat($(edus[it]).css('height'));
+                domHtml += getOuterHTML($(edus[it]));
+            }
+
+            domHtml += '</div>';
+
+            resume.find('.col-9 .row').last().after(domHtml + emptyDomClose);
+
+            domHtml = '<div class="row flex-column mb-1">';
+            stackedHeight = educationMarginBottom;
+            
+            for( ; it < eduCount ; ++it ) {
+                console.log( "Education ", it, "th Height: ", parseFloat($(edus[it]).css('height')));
+                stackedHeight += parseFloat($(edus[it]).css('height'));
+                domHtml += getOuterHTML($(edus[it]));
+            }
+
+            domHtml += '</div>';
+
+            resume = $('page').last();
+            resume.after(emptyDom + domHtml + emptyDomClose);
+
+            console.log("Stacked Height: ", stackedHeight);
+        }
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Check Academic Experiences
+        resume = $('page').last();
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        if (stackedHeight + academicHeight + academicMarginBottom < standardA4Height) {
+            stackedHeight += academicHeight + academicMarginBottom;
+            resume.find('.col-9 .row').last().after(getOuterHTML($('#academic-section')));
+        }
+        else {
+            var domHtml = '';
+            stackedHeight += parseFloat($('#academic-section h4').css('height')) + parseFloat($('#academic-section h4').css('margin-bottom'));
+            var acaCount = $('#academic-section .academic-project').length;
+            var acas = $('#academic-section .academic-project');
+            var it;
+            console.log("Academic Count: ", acaCount);
+            domHtml += '<div class="row flex-column  mb-1" id="academic-section">\
+                            <h4 class="section_title text-uppercase font-10pt px-2">Academic Projects</h4>';
+            for( it = 0 ; it < acaCount && stackedHeight + parseFloat($(acas[it]).css('height')) <= standardA4Height ; ++it ) {
+                console.log( "Academic ", it, "th Height: ", parseFloat($(acas[it]).css('height')));
+                stackedHeight += parseFloat($(acas[it]).css('height'));
+                domHtml += getOuterHTML($(acas[it]));
+            }
+
+            domHtml += '</div>';
+
+            resume.find('.col-9 .row').last().after(domHtml + emptyDomClose);
+
+            domHtml = '<div class="row flex-column mb-1">';
+            stackedHeight = academicMarginBottom;
+            
+            for( ; it < acaCount ; ++it ) {
+                console.log( "Academic ", it, "th Height: ", parseFloat($(acas[it]).css('height')));
+                stackedHeight += parseFloat($(acas[it]).css('height'));
+                domHtml += getOuterHTML($(acas[it]));
+            }
+
+            domHtml += '</div>';
+
+            resume = $('page').last();
+            resume.after(emptyDom + domHtml + emptyDomClose);
+
+            console.log("Stacked Height: ", stackedHeight);
+        }
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    }
+
 });

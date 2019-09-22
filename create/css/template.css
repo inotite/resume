@@ -232,6 +232,7 @@ page[size='a4'] {
     margin: auto;
     padding: 1.3cm;
     box-sizing: border-box;
+    margin-bottom: 1cm;
 }
 
 [contenteditable=true]:empty:before {
