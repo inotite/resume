@@ -2,30 +2,26 @@
 <html lang="en">
 
 <head>
+	<!--header tag of resume =-->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="theme-color" content="#ffffff">
-	<title>Workruit Instant Resume — Pricing</title>
-	<link rel='shortcut icon' type='image/x-icon' href='favicon.png' />
+	<title>Workruit - Instant Resume</title>
 
 	<link rel='shortcut icon' type='image/x-icon' href='favicon.png' />
-	<link rel='stylesheet' type='text/css'
-		href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="css/aos.css" />
-	<link rel="stylesheet" type="text/css" href="css/main.css" />
-
-	<style>
-		button span {
-			color: #ffffff;
-		}
-
-		.dropdown>a {
-			background: url('./images/app/icons/dropdown.svg') no-repeat center right;
-		}
-	</style>
+	<link rel='stylesheet' type='text/css' href='assets/vendors/css/font-awesome.min.css' />
+	<link rel='stylesheet' type='text/css' href='assets/vendors/css/fontawesome.min.css' />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-reboot.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-grid.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/aos.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/main.css" />
+	
+	<!--<style>
+	.first-quto{
+		padding-top: 50%;
+	}
+	</style>-->
 	<!-- Hotjar Tracking Code for www.workruit.com -->
 	<script>
 		(function (h, o, t, j, a, r) {
@@ -81,7 +77,7 @@
 </head>
 
 <body>
-	<div id="header-with-out-login"></div>
+	<div w3-include-html="app/includes/header.html"></div>
 
 	<div class="container-fluid layout-hero layout-hero__inner">
 		<div class="container">
@@ -107,23 +103,18 @@
 		<!-- <div w3-include-html="includes/plans.html"></div> -->
 	</div>
 
-	<div id="load-footer"></div>
+	<div w3-include-html="app/includes/footer.html"></div>
 
 
-	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/popper.min.js"></script>
-	<script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
-	<script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/holder.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/w3includes.js"></script>
-	<script src="js/jquery.loadTemplate.js"></script>
-	<script src="js/main-scripts.js"></script>
-	<script src="js/main.js"></script>
-	<script src="js/account-scripts.js"></script>
+	<!-- Scripts -->
+	<script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/sweetalert.min.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/aos.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/w3includes.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/jquery.loadTemplate.js"></script>
+	<script type="text/javascript" src="assets/js/main.js"></script>
 
 	<script>
-		$('#load-footer').load('./includes/footer-2.html');
-		$('#header-with-out-login').load('./includes/header.html');
 		includeHTML();
 		AOS.init({
 			offset: 100,
@@ -216,8 +207,8 @@
 					item.redirectUrl = localStorage.getItem('userData') ?
 						'checkout/index.html?' +
 						pId :
-						'login/index.html';
-					item.price = item.price == 0 ? 'Free' : '&#8377; '+item.price;
+						'app/auth/login.html';
+					item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
 				});
 				// console.log(response);
 				console.log(response);

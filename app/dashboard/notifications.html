@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#ffffff">
+    <title>Workruit — My Account</title>
+    <script>
+        let sessionId = sessionStorage.getItem('sessionId');
+        if (!sessionId) {
+            window.location.href = window.location.origin + "/index.html";
+        }
+    </script>
+    <link rel='shortcut icon' type='image/x-icon' href='../../favicon.png' />
+    <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/css/custom.css" />
+</head>
+
+
+<body class="account-page">
+    <div class="loading-container">
+        <img src="../../assets/images/oval.svg" style="width:55px">
+    </div>
+    <div id="newErrorMessageID" class="alert alert-danger">
+        <span class="message-text"></span>
+        <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img
+                src="../../assets/images/app/icons/close.png" width="10" /></a>
+    </div>
+    <div id="newSuccessMessageID" class="alert alert-success">
+        <span class="message-text"></span>
+        <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img
+                src="../../assets/images/app/icons/close.png" width="10" /></a>
+    </div>
+
+    <div id="load-header"></div>
+
+    <div class="content w-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <ul class="nav nav-pills nav-fill" role="tablist" id="tabs">
+                        <li class="nav-item">
+                            <a class="nav-link tab-item" href="./account.html" data-item="account">Account</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active tab-item" href="./notifications.html"
+                                data-item="notifications">Notifications</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tab-item" href="./o-history.html" data-item="notifications">Order
+                                History</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-5 justify-content-center">
+
+                <!-- Account Tab Body -->
+                <div class="tab-pane col-md-8 tab-body-container" id="accountTabBody">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <form id="myProfileForm" name="myProfileForm" role="form">
+
+                                        <!-- First Name -->
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text"
+                                                class="form-control myprofile transition with-icon icon-user"
+                                                placeholder="First Name" minlength="3" maxlength="50" name="firstname">
+                                        </div>
+
+                                        <!-- Last Name -->
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text"
+                                                class="form-control myprofile transition with-icon icon-user"
+                                                placeholder="Last Name" minlength="3" maxlength="50" name="lastname">
+                                        </div>
+
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email"
+                                                class="form-control myprofile transition with-icon icon-mail"
+                                                name="email" placeholder="Email" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-lg btn-save"
+                                                id="updateProfile">Save
+                                                changes</button>
+                                        </div>
+                                        <div class="form-group change-pass-section">
+                                            <button type="button" class="btn btn-default btn-lg btn-change-password"
+                                                id="changePassBtn">Change
+                                                password</button>
+                                        </div>
+                                    </form>
+
+
+                                    <!-- Change Password -->
+
+                                    <div id="changePasswordForm">
+                                        <form id="resetPasswordForm" name="resetPasswordForm" role="form">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <div class="form-group">
+                                                    <input type="password" name="oldPassword"
+                                                        class="form-control transition with-icon icon-password password-changer"
+                                                        placeholder="Old Password" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="newPassword"
+                                                        class="form-control transition with-icon icon-password password-changer"
+                                                        placeholder="New Password" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="reenterNewPassword"
+                                                        class="form-control transition with-icon icon-password password-changer"
+                                                        placeholder="Re-Enter New Password" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="form-group control-buttons2">
+                                            <button type="button" class="btn btn-primary btn-lg btn-save"
+                                                id="updatePassBtn">Save
+                                                password</button>
+                                            <button type="button" class="btn btn-default btn-close btn-lg"
+                                                id="cancelBtn">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center pt-3">
+                                    <div class="mb-3">
+                                        <!-- ngIf: !company.picture -->
+                                        <!-- ngIf: company.picture -->
+                                        <img src="../images/app/pic1.png" class="clogo" id="profilePicEdit">
+                                        <!-- end ngIf: company.picture -->
+                                    </div>
+                                    <button type="button" class="btn btn-default btn-block btn-remove"
+                                        data-toggle="modal" data-target="#myModelUploadPhoto" onclick="">Change
+                                        image</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upgrade Section -->
+                    <div class="card w-100 mt-5">
+                        <div class="card-body">
+                            <div class="row subscription-section">
+                                <div class="col-md-9">Upgrade your account to get access to all the premium features.
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="../pricing.html" target="_blank" class="btn btn-primary upgrade-btn"
+                                        id="change_password_button">Upgrade Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Account Tab Body -->
+
+                <!-- Notifications Tab Body -->
+                <div class="tab-pane col-md-6   tab-body-show tab-body-container" id="notificationsTabBody">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <form id="settingsForm" name="settingsForm" role="form" class="ng-pristine ng-valid">
+                                <table class="table notifications">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>General Updates</td>
+                                            <td class="text-center">
+                                                <input type="checkbox" class="switch" id="general_updates">
+                                                <label class="switch-label" for="general_updates">Toggle</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Job Updates</td>
+                                            <td class="text-center">
+                                                <input type="checkbox" class="switch" id="job_updates">
+                                                <label class="switch-label" for="job_updates">Toggle</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Notifications Tab Body -->
+
+            </div>
+        </div>
+    </div>
+    <!-- downloadApp popup -->
+    <div class="modal fade bd-example-modal-lg" id="downloadApp" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <img src="../images/app/phone.png" class="img_download" alt="phone" height="320px"
+                                width="auto">
+                        </div>
+                        <div class="col-md-7 pt-5">
+                            <div class="modal-title">Find the right person on the go.</div>
+                            <div class="modal-description">
+                                Post jobs, chat with applicants. All features in
+                                <br /> your pocket.</div>
+                            <div class="getapp px-4 text-center mt-3">
+                                <span class="pr-3">Get the app</span>
+                                <a href="https://itunes.apple.com/in/app/workruit/id1189752813?mt=8"
+                                    class="pr-2 transition">
+                                    <img src="../images/app/icons/ios-white.svg" alt="ios">
+                                </a>
+                                <a class="transition"
+                                    href="https://play.google.com/store/apps/details?id=com.workruit&amp;hl=en">
+                                    <img src="../images/app/icons/android-white.svg" alt="android">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /downloadApp popup -->
+    <!-- Model popup -->
+    <div class="modal fade bd-example-modal-lg" id="myModelUploadPhoto" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div id="foto">
+                                <label for="inputfoto2" class="select-pic-section">
+                                    <div class="cont_fotodiv">
+                                        <div id="inserta_imagenlabel">
+                                            <img src="../images/icon_image.svg">SELECT YOUR PICTURE</div>
+                                    </div>
+                                </label>
+                                <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+                                    <input type='file' id="inputfoto2" name="pic" style="display:none"
+                                        accept="image/*" />
+                                </form>
+                                <img src="" id="image-preview" />
+                                <canvas id="canvas-element"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="getapp px-4 text-center mt-3" id="saveProfilePic">
+                                <span class="pr-3">Save</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Model popup -->
+    <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
+    <script>
+        $(function () {
+            $('#load-header').load('../includes/user-header.html');
+            $('.account-page').paraCount();
+            $(window).ready(function () {
+                JSON.parse(sessionStorage.getItem('userData')).email_verified === 0 ? $(
+                    '#newSuccessMessageID').css(
+                    'display',
+                    'none') : $('.preview_btn').css('display', 'block');
+                // console.log(sessionStorage.getItem('isPremiumUser'));
+                if (sessionStorage.getItem('isPremiumUser') === 'true') {
+                    $('.premium-feature').removeClass('d-none');
+                } else {
+                    $('.trail-feature').removeClass('d-none');
+                }
+            })
+            // console.log(sessionStorage.getItem('previewData')) newSuccessMessageID
+
+            sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $(
+                    '.preview_btn')
+                .css('display', 'inline-block')
+        });
+    </script>
+    <script>
+        $(function () {
+            $('.account-page').paraCount();
+        });
+
+        function storeTheImage() {
+            var imgCanvas = document.getElementById('canvas-element'),
+                imgContext = imgCanvas.getContext("2d");
+
+            var img = document.getElementById('image-preview');
+            // Make sure canvas is as big as the picture BUT make it half size to the file size is small enough
+            imgCanvas.width = (img.width / 4);
+            imgCanvas.height = (img.height / 4);
+
+            // Draw image into canvas element
+            imgContext.drawImage(img, 0, 0, (img.width / 4), (img.height / 4));
+
+            // Get canvas contents as a data URL
+            var imgAsDataURL = imgCanvas.toDataURL("image/png");
+
+            // Save image into sessionStorage
+            try {
+                window.sessionStorage.setItem("imageStoreData", imgAsDataURL);
+                $('.sessionStorage-output').html(window.sessionStorage.getItem('imageStoreData'));
+                $('.cont_fotodiv').css('background', 'transparent');
+            } catch (e) {
+                console.log("Storage failed: " + e);
+            }
+        }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image-preview').show();
+                    $('#image-preview').attr('src', e.target.result);
+                    storeTheImage();
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $('.loading-container').delay(1000).fadeOut();
+
+        $('#image-preview').attr('src', window.sessionStorage.getItem('imageStoreData'));
+
+        $('#inputfoto2').on('change', function () {
+            readURL(this);
+        });
+    </script>
+
+</body>
+
+</html>

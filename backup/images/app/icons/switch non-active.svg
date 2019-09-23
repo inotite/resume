@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="49px" height="25px" viewBox="0 0 49 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>checkbox / non-active</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="36.399998" cy="12.3759993" r="12.3759993"></circle>
+        <filter x="-44.4%" y="-40.4%" width="188.9%" height="188.9%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="checkbox-/-non-active">
+            <g id="Group" transform="translate(24.387999, 12.375999) scale(-1, 1) translate(-24.387999, -12.375999) ">
+                <rect id="Rectangle-2-Copy" fill="#DCDDE1" x="0" y="3.6399998" width="47.3199975" height="18.199999" rx="9.09999951"></rect>
+                <g id="Oval-4-Copy">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <circle stroke="#FFFFFF" stroke-width="0.727999961" cx="36.399998" cy="12.3759993" r="12.0119994"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

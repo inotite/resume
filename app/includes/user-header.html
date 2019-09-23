@@ -1,0 +1,181 @@
+<style>
+    .img1 {
+        margin-top: -48px;
+
+    }
+</style>
+
+<header class="w-100">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-5">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link transition" href="../dashboard/home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link transition" href="../create/index.html?edit">Resume</a>
+                    </li>
+                    <li class="nav-item" id="shareNavItem">
+                        <a class="nav-link transition" href="">Share</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#">
+                    <img src="../../assets/images/workruit-resume-logo-color.svg" class="img-responsive resume-logo-big"
+                        alt="workruit-instent-resume">
+                </a>
+            </div>
+            <div class="col-md-5">
+                <ul class="nav justify-content-end">
+                    <li>
+                        <a href="../../pricing.html" target="_blank" class="btn btn-primary upgrade-btn"
+                            id="change_password_button">Upgrade</a>
+                    </li>
+                    <li class="nav-item user dropdown">
+                        <a class="nav-link transition dropdown-toggle" data-toggle="dropdown" id="profileMenu"
+                            aria-haspopup="true" aria-expanded="false">
+                            <img src="../../assets/images/app/pic1.png" style="border-radius: 50%;" alt="">
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="profile">
+                            <a class="dropdown-item transition" id="userName"></a>
+                            <a href="javascript:void(0)" class="dropdown-item transition">
+                                <span id="UserEmail"></span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item transition" href="../dashboard/account.html">Account</a>
+                            <a class="dropdown-item transition"
+                                href="../dashboard/notifications.html">Notifications</a>
+                            <a class="dropdown-item transition" href="javascript:void(0)" data-toggle="modal"
+                                data-target="#downloadApp">Download App</a>
+                            <a class="dropdown-item transition" href="javascript:void(0)" id="signOut">Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- upgrade popup -->
+<div class="modal fade bd-example-modal-lg" id="upgrade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 text-center">
+                        <img src="../../assets/images/Icon3.svg" class="img1" alt="phone" height="320px" width="auto">
+                    </div>
+                    <div class="col-md-7 pt-5">
+                        <div class="modal-title">Upgrade Today</div>
+                        <div class="modal-description">
+                            Get access to your custom resume URL and share it instantly with hiring managers, companies,
+                            friends & family.</div>
+                        <a href="../resumepricing.html"><button type="button"
+                                class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /upgrade popup -->
+<script>
+    var baseUrl2 = "https://stageapi.workruit.com";
+    var userPlanStatus = {
+        "async": true,
+        "crossDomain": true,
+        "url": baseUrl2 + "/resume/user/" + JSON.parse(sessionStorage.getItem('userData')).userId +
+            "/checkUserStatus",
+        "method": "GET",
+        "headers": {
+            "token": JSON.parse(sessionStorage.getItem('userData')).sessionId,
+            "content-type": "application/json"
+        },
+    };
+    sessionStorage.removeItem('userPlanStatus');
+    console.log(!sessionStorage.getItem('userPlanStatus'))
+    if (!sessionStorage.getItem('userPlanStatus')) {
+        $.ajax(userPlanStatus).done(function (response) {
+            console.log(response);
+            if (response.data) {
+                sessionStorage.setItem('userPlanStatus', JSON.stringify(response.data))
+            };
+            if (response.msg.description == "user transaction not found") {
+                if (response.data) {
+                    if (response.data[0].planId == 1) {
+                        sessionStorage.setItem('isPremiumUser', 'false');
+                    }
+                }
+                $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade').attr(
+                    'href',
+                    'javascript:void(0)');
+            } else {
+                if (sessionStorage.getItem('userPlanStatus')) {
+                    $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
+                        '../dashboard/share.html');
+                }
+                sessionStorage.setItem('isPremiumUser', 'false');
+            }
+            // response = typeof (response) !== "object" ? JSON.parse(response) : response;
+        });
+    } else {
+        if (sessionStorage.getItem('userPlanStatus')) {
+            $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
+                '../share/index.html');
+        } else {
+            $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade').attr(
+                'href',
+                'javascript:void(0)');
+        }
+    }
+</script>
+<script>
+    var userData = JSON.parse(sessionStorage.getItem('userData'));
+    var userId = userData.userId;
+    //console.log(userData);
+    var fromPage = sessionStorage.getItem('fromPage');
+
+    //console.log("fromPage ::::::"+fromPage);
+    //if(fromPage == 'signin'){
+    $('#userName').text(userData.firstname + " " + userData.lastname);
+    $('#UserEmail').text(userData.email);
+    var pic = sessionStorage.getItem('imageStore');
+    var picpath = pic.search('1631033876795164.jpg');
+
+    if (picpath > -1 || pic == '') {
+        $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
+        $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
+
+    } else {
+        $('#profileMenu img').attr('src', pic);
+        $('#profilePicEdit').attr('src', pic);
+    }
+    /* Logout functionality */
+    var apiUrl = 'https://stageapi.workruit.com/api';
+    let sessionId2 = sessionStorage.getItem('sessionId');
+
+    $('#signOut').on('click', function () {
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": apiUrl + "/user/" + userId + "/" + sessionId2 + "/resUserLogout",
+            "method": "GET",
+            "headers": {
+                "token": sessionId2,
+                "content-type": "application/json"
+            },
+            "processData": false
+        }
+        $.ajax(settings).done(function (response) {
+            //console.log(response);
+            sessionStorage.clear();
+            window.location.href = "../index.html";
+        });
+    });
+</script>

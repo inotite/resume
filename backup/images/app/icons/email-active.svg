@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>icons / email copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M39,18.680197 L25.4203326,24.9530312 C25.0094617,25.1428241 24.5348605,25.1369565 24.1288045,24.937064 C16.4220991,21.1431646 12.3665907,19.1915284 11,18.6553563 L11,18 L11,18 C11,16.8954305 11.8954305,16 13,16 L13,16 L37,16 C38.1045695,16 39,16.8954305 39,18 L39,18.680197 Z M39,19.7817314 L39,32 C39,33.1045695 38.1045695,34 37,34 L13,34 C11.8954305,34 11,33.1045695 11,32 L11,19.7059669 C12.4559806,20.3595847 16.9955136,22.5400536 23.6871391,25.8342438 C24.3638987,26.1673978 25.1548984,26.1771771 25.8396826,25.8608558 L39,19.7817314 Z" id="path-1"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons-/-email-copy">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Combined-Shape" fill="#337AB7" xlink:href="#path-1"></use>
+            <g id="color-/-blue" mask="url(#mask-2)" fill="#337AB7">
+                <g transform="translate(-70.000000, -62.000000)" id="Rectangle-19-Copy">
+                    <rect x="0" y="0" width="150" height="150"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

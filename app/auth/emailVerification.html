@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--header tag of resume =-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#ffffff">
+  <title>Workruit - Instant Resume</title>
+
+  <link rel='shortcut icon' type='image/x-icon' href='../../favicon.png' />
+  <link rel='stylesheet' type='text/css' href='../../assets/vendors/css/font-awesome.min.css' />
+  <link rel='stylesheet' type='text/css' href='../../assets/vendors/css/fontawesome.min.css' />
+  <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap-reboot.css" />
+  <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap-grid.css" />
+  <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/aos.css" />
+  <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../assets/css/custom.css" />
+
+  <!--<style>
+.first-quto{
+  padding-top: 50%;
+}
+</style>-->
+  <!-- Hotjar Tracking Code for www.workruit.com -->
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () {
+        (h.hj.q = h.hj.q || []).push(arguments)
+      };
+      h._hjSettings = {
+        hjid: 737967,
+        hjsv: 6
+      };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script');
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94088165-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-94088165-1');
+  </script>
+</head>
+
+<body class="account-page">
+
+  <div class="content h-100 w-100">
+    <div class="container h-100">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-12 empty text-center">
+          <h1>Thank you for Verifying your email address</h1>
+          <h2><a href="./login.html">Login</a> to continue</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var jsEncode = {
+      encode: function (s, k) {
+        var enc = "";
+        var str = "";
+        // make sure that input is string
+        str = s.toString();
+        for (var i = 0; i < s.length; i++) {
+          // create block
+          var a = s.charCodeAt(i);
+          // bitwise XOR
+          var b = a ^ k;
+          enc = enc + String.fromCharCode(b);
+        }
+        return enc;
+      }
+    };
+    /* Email Verification functionality */
+    $(function () {
+      var parameters = window.location.search.split('/');
+      var emailVerificationId = parameters[0].substring(1);
+      var companyName = 'workruit';
+      var userId = parameters[2];
+      console.log(emailVerificationId, companyName, userId)
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://stageapi.workruit.com/employeer/emailVerificationForResumeUser/" + emailVerificationId +
+          "/" + companyName + "/" + userId,
+        "method": "GET",
+        "headers": {
+          // "token": sessionId,
+          "content-type": "application/json"
+        },
+        "processData": false
+      }
+      console.log(settings);
+      $.ajax(jsEncode.encode(settings)).done(function (response) {
+        console.log(jsEncode.encode(response), 'response');
+        if (response) {
+          localStorage.clear();
+          window.location.href = "../index.html";
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
