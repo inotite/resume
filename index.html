@@ -397,8 +397,8 @@
                     </ul>
                 </div>
                 <div class="form-group mt-4">
-                    <button type="submit" id="btn-fbsignup" class="btn btn-primary btn-lg btn-block select_plan"> <a
-                            data-href="redirectUrl"><span>BUILD RESUME</span></a></button>
+                    <a data-href="redirectUrl" class="btn btn-primary btn-lg btn-block select_plan"><span>BUILD
+                            RESUME</span></a>
                 </div>
                 <!--
 							<div class="select" >
@@ -428,9 +428,9 @@
                     item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
                     if (item.planId !== 1) {
                         item.redirectUrl = sessionStorage.getItem('userData') ?
-                            'checkout/index.html?' +
+                            'app/order/cart.html?' +
                             pId :
-                            'login/index.html';
+                            'app/auth/login.html';
                     } else {
                         item.redirectUrl = sessionStorage.getItem('userData') ?
                             'home/index.html' :

@@ -53,58 +53,54 @@
 </head>
 
 <body>
-	<div w3-include-html="app/includes/header.html"></div>
+	<div class="shareresume">
+		<style>
+			body {
+				font-family: 'Source Sans Pro', sans-serif;
+				/* overflow: hidden; */
+				width: 100%;
+				min-height: 100vh;
+				height: 100vh;
+				position: relative;
+				overflow: hidden;
+			}
 
+			.the-canvas {
+				width: 100%;
+				display: flex;
+				margin: 0 auto;
+				margin-top: 10px;
+				min-height: 100%;
+				/* position: absolute; */
+				z-index: 2;
+				top: 70px;
+				min-height: 100vh;
+			}
 
-	<div class="container-fluid layout-hero layout-hero__inner">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-8">
-					<h1 id="topBlock">Careers</h1>
-					<p>Join Our Team</p>
+			.position-fixed {
+				position: fixed;
+				top: 0;
+			}
+		</style>
+		<header class="w-100 py-3 position-fixed bg-white">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-md-5">
+					</div>
+					<div class="col-md-2 text-center">
+						<a href="./index.html">
+							<img src="assets/images/workruit-resume-logo-color.svg"
+								class="img-responsive resume-logo-big" alt="workruit-instent-resume">
+						</a>
+					</div>
+					<div class="col-md-5">
+					</div>
 				</div>
 			</div>
-		</div>
+		</header>
+
+		<iframe src="" frameborder="0" id="pdfViewer" class="the-canvas mb-5"></iframe>
 	</div>
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
-				<h2>Current Openings</h2>
-				<p style="color:#337ab7">
-					<a href="careers/senior-full-stack-developer.html" target="_blank">Sr Full Stack Developer</a>
-				</p>
-				<p style="color:#337ab7">
-					<a href="careers/talent-acquisition-specialist.html" target="_blank"> Talent Acquisition
-						Specialist</a>
-				</p>
-				<p style="color:#337ab7">
-					<a href="careers/project-manager.html" target="_blank"> Project Manager</a>
-				</p>
-				<p style="color:#337ab7">
-					<a href="careers/workruit-student-partner-program.html" target="_blank">Workruit Student Partner
-						Program</a>
-				</p>
-
-				<!-- <p style="color:#337ab7" >
-					<a href="careers/marketing-interns.html" target="_blank">Marketing Interns</a>
-				</p>
-				<p style="color:#337ab7">
-					<a href="mailto:careers@workruit.com?subject=Technology Interns">Technology Interns</a>
-				</p> -->
-				<br>
-				<p>Don’t find what you’re looking for? Send us your resume at
-					<a href="mailto:careers@workruit.com">careers@workruit.com</a> and we’ll get in touch with you.</p>
-
-			</div>
-		</div>
-	</div>
-
-	<div w3-include-html="app/includes/footer.html"></div>
-
-
 	<!-- Scripts -->
 	<script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/sweetalert.min.js"></script>
@@ -112,27 +108,28 @@
 	<script type="text/javascript" src="assets/vendors/js/w3includes.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/jquery.loadTemplate.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
-
 	<script>
-		includeHTML();
-		AOS.init({
-			offset: 100,
-			duration: 800,
-			disable: 'mobile',
-			//easing: 'ease-in',
-			//delay: 100,
+		$(window).ready(function () {
+			var environment = JSON.parse(sessionStorage.getItem("environment"));
+			var shareParameter = window.location.search.substr(1).substring(1);
+			console.log(shareParameter);
+			if (shareParameter) {
+				$('.mainPage').css('display', 'none');
+				$('.shareresume').removeClass('d-none');
+				var googleDocsUrl = "https://docs.google.com/viewer?url=";
+				var windowLocation = window.location;
+				var baseUrl = environment.baseApiUrl + "user/getShareFile?name=" + shareParameter
+				shareParameter ? true : window.location = '../../404.html'
+				console.log(shareParameter ? true : false);
+				$.get(baseUrl, function (data) {
+					data.status === "failed" ? swal(data.msg.description, "", "error") : document
+						.getElementById('pdfViewer').src = googleDocsUrl + data.data + "&embedded=true";
+				});
+			} else {
+				$('.mainPage').removeClass('d-none');
+			}
 		});
-		setTimeout(() => {
-			var current = location.pathname;
-			$('.footer-nav .nav-link a').each(function () {
-				console.log($(this).attr('href'));
-				if ($(this).attr('href') === current.split("/")[1]) {
-					$(this).addClass('footer__active');
-				}
-			})
-		}, 1000);
 	</script>
-
 </body>
 
 </html>

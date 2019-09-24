@@ -50,29 +50,6 @@
 
 		gtag('config', 'UA-94088165-1');
 	</script>
-	<!-- Chatra {literal} -->
-	<script>
-		(function (d, w, c) {
-			w.ChatraID = 'aeF8KSek7P9EJiSLt';
-			var s = d.createElement('script');
-			w[c] = w[c] || function () {
-				(w[c].q = w[c].q || []).push(arguments);
-			};
-			s.async = true;
-			s.src = (d.location.protocol === 'https:' ? 'https:' : 'http:') +
-				'//call.chatra.io/chatra.js';
-			if (d.head) d.head.appendChild(s);
-		})(document, window, 'Chatra');
-		//chatra custom set up 
-		window.ChatraSetup = {
-			colors: {
-				buttonText: '#ffffff',
-				/* chat button text color */
-				buttonBg: '#337ab7' /* chat button background color */
-			}
-		};
-	</script>
-	<!-- /Chatra {/literal} -->
 </head>
 
 <body>
@@ -128,7 +105,7 @@
 			<div class="col-5" data-aos="fade-up">
 				<center>
 					<div class="col">
-						<img class="customer-avatar" style="vertical-align: center;" src="images/mc.png">
+						<img class="customer-avatar" style="vertical-align: center;" src="assets/images/mc.png">
 					</div>
 					<div class="col">
 						<p class="customer-name">
@@ -141,7 +118,7 @@
 					<div class="col">
 						<!-- <a class="facebook" href="https://www.facebook.com/telldesigntales/"><img src="images/facebook.svg"></a> -->
 						<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/manikanthchalla">
-							<img src="images/linkedin.png">
+							<img src="assets/images/linkedin.png">
 						</a>
 					</div>
 				</center>
@@ -149,7 +126,7 @@
 			<div class="col-6" data-aos="fade-up">
 				<center>
 					<div class="col">
-						<img class="customer-avatar" src="images/srg.png">
+						<img class="customer-avatar" src="assets/images/srg.png">
 					</div>
 					<div class="col">
 						<p class="customer-name">
@@ -163,7 +140,7 @@
 						<!-- <a class="facebook" href="https://www.facebook.com/telldesigntales/"><img src="images/facebook.svg"></a> -->
 						<a class="linkedin" target="_blank"
 							href="https://www.linkedin.com/in/sudheerreddy-gatla-01562258">
-							<img src="images/linkedin.png">
+							<img src="assets/images/linkedin.png">
 						</a>
 					</div>
 				</center>
@@ -210,6 +187,15 @@
 			//easing: 'ease-in',
 			//delay: 100,
 		});
+		setTimeout(() => {
+			var current = location.pathname;
+			$('.footer-nav .nav-link a').each(function () {
+				console.log($(this).attr('href'));
+				if ($(this).attr('href') === current.split("/")[1]) {
+					$(this).addClass('footer__active');
+				}
+			})
+		}, 1000);
 	</script>
 
 </body>
