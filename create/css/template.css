@@ -603,6 +603,18 @@ input.switch {
     background: var(--color-green);
 }
 
+.theme-black .color path, .theme-black .color polygon {
+    fill: var(--color-black);
+}
+
+.theme-blue .color path, .theme-blue .color polygon {
+    fill: var(--color-blue);
+}
+
+.theme-green .color path, .theme-green .color polygon {
+    fill: var(--color-green);
+}
+
 .border-dashed {
     border: 2px dashed transparent;
     position: relative;
@@ -755,6 +767,10 @@ input {
     line-height: 1.5;
     background: transparent;
     height: auto;
+}
+
+.nice-select .current {
+    padding-left: 2px !important;
 }
 
 .nice-select .list {

@@ -205,6 +205,39 @@ $(window).ready(function () {
         $('.resume-container').addClass(newColor).removeClass(oldColor);
         $('.resume-container').attr('data-oldcolor', newColor);
     });
+    $('img.svg').each(function(){
+        var $img = jQuery(this);
+        var imgID = $img.attr('id');
+        var imgClass = $img.attr('class');
+        var imgURL = $img.attr('src');
+    
+        jQuery.get(imgURL, function(data) {
+            // Get the SVG tag, ignore the rest
+            var $svg = jQuery(data).find('svg');
+    
+            // Add replaced image's ID to the new SVG
+            if(typeof imgID !== 'undefined') {
+                $svg = $svg.attr('id', imgID);
+            }
+            // Add replaced image's classes to the new SVG
+            if(typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass+' replaced-svg');
+            }
+    
+            // Remove any invalid XML tags as per http://validator.w3.org
+            $svg = $svg.removeAttr('xmlns:a');
+    
+            // Check if the viewport is set, if the viewport is not set the SVG wont't scale.
+            if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+                $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+            }
+    
+            // Replace image with new SVG
+            $img.replaceWith($svg);
+    
+        }, 'xml');
+    
+    });
     $('.actions').click(function (e) {
         e.stopPropagation();
     });
@@ -810,33 +843,33 @@ $(window).ready(function () {
     });
 
     function bindUserDataForSave() {
-        const jobfunctions = $('input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
-            $('input[data-content="jobfunctions"]').attr('data-item-id'))] : []
+        const jobfunctions = $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
+            $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id'))] : []
         postObj.pic = localStorage.getItem('imageStore');
-        postObj.firstname = $('[data-content="firstname"]').text();
-        postObj.lastname = $('[data-content="lastname"]').text();
+        postObj.firstname = $('#resume-body [data-content="firstname"]').text();
+        postObj.lastname = $('#resume-body [data-content="lastname"]').text();
         postObj.jobfunctions = jobfunctions;
-        postObj.coverLetter = $('[data-content="coverLetter"]').text();
-        postObj.userJobTitle = $('[data-content="userJobTitle"]').text();
-        postObj.expDisplay = $('[data-content="totalexperience"]').text();
-        postObj.location = $('[data-content="location"]').text();
-        postObj.date_of_birth = $('[data-content="dob"]').val();
-        postObj.gender = $('.gender .current').text();
+        postObj.coverLetter = $('#resume-body [data-content="coverLetter"]').text();
+        postObj.userJobTitle = $('#resume-body [data-content="userJobTitle"]').text();
+        postObj.expDisplay = $('#resume-body [data-content="totalexperience"]').text();
+        postObj.location = $('#resume-body [data-content="location"]').text();
+        postObj.date_of_birth = $('#resume-body [data-content="dob"]').val();
+        postObj.gender = $('#resume-body .gender .current').text();
 
-        postObj.email = $('[data-content="email"]').text();
-        postObj.telephone = $('[data-content="phone"]').text();
-        postObj.user_linkdin = $('[data-content="linkedin"]').text();
+        postObj.email = $('#resume-body [data-content="email"]').text();
+        postObj.telephone = $('#resume-body [data-content="phone"]').text();
+        postObj.user_linkdin = $('#resume-body [data-content="linkedin"]').text();
         // postObj.user_github = !$('.social-github').hasClass('d-none') ? '' : $('[data-content="github"]').text();
         // postObj.user_twitter = !$('.social-twitter').hasClass('d-none') ? '' : $('[data-content="twitter"]').text();
         // postObj.user_website = !$('.social-website').hasClass('d-none') ? '' : $('[data-content="website"]').text();
         // postObj.user_blog = !$('.social-blog').hasClass('d-none') ? '' : $('[data-content="blog"]').text();
-        postObj.user_github = $('[data-content="github"]').text();
-        postObj.user_twitter = $('[data-content="twitter"]').text();
-        postObj.user_website = $('[data-content="website"]').text();
-        postObj.user_blog = $('[data-content="blog"]').text();
+        postObj.user_github = $('#resume-body [data-content="github"]').text();
+        postObj.user_twitter = $('#resume-body [data-content="twitter"]').text();
+        postObj.user_website = $('#resume-body [data-content="website"]').text();
+        postObj.user_blog = $('#resume-body [data-content="blog"]').text();
 
-        postObj.interests = $('[data-content="achivements"]').text();
-        postObj.certifications = $('[data-content="certifications"]').text();
+        postObj.interests = $('#resume-body [data-content="achivements"]').text();
+        postObj.certifications = $('#resume-body [data-content="certifications"]').text();
         // console.log("resumeObj", resumeObj)
         GetThemeOptions();
         getExperinceDetails();
@@ -848,27 +881,27 @@ $(window).ready(function () {
 
     function getExperinceDetails() {
         postObj.experience = [];
-        $('.professional-experience').each(function (i, v) {
+        $('#resume-body .professional-experience').each(function (i, v) {
             var id = $(this).attr('id');
-            var exp_endDate = $('#' + id).find('input[data-content="exp_endDate"]').val();
-            var exp_startDate = $('#' + id).find('input[data-content="exp_startDate"]')
+            var exp_endDate = $('#resume-body #' + id).find('input[data-content="exp_endDate"]').val();
+            var exp_startDate = $('#resume-body #' + id).find('input[data-content="exp_startDate"]')
                 .val();
-            var exp_jobTitle = ($('#' + id).find('span[data-content="exp_jobTitle"]').attr(
-                        'placeholder') != $('#' + id).find('span[data-content="exp_jobTitle"]')
+            var exp_jobTitle = ($('#resume-body #' + id).find('span[data-content="exp_jobTitle"]').attr(
+                        'placeholder') != $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]')
                     .text()) ?
-                $('#' + id).find('span[data-content="exp_jobTitle"]').text() : '';
-            var exp_location = ($('#' + id).find('span[data-content="exp_location"]').attr(
-                        'placeholder') != $('#' + id).find('span[data-content="exp_location"]')
+                $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]').text() : '';
+            var exp_location = ($('#resume-body #' + id).find('span[data-content="exp_location"]').attr(
+                        'placeholder') != $('#resume-body #' + id).find('span[data-content="exp_location"]')
                     .text()) ?
-                $('#' + id).find('span[data-content="exp_location"]').text() : '';
-            var exp_company = ($('#' + id).find('span[data-content="exp_company"]').attr(
-                    'placeholder') != $('#' + id).find('span[data-content="exp_company"]')
+                $('#resume-body #' + id).find('span[data-content="exp_location"]').text() : '';
+            var exp_company = ($('#resume-body #' + id).find('span[data-content="exp_company"]').attr(
+                    'placeholder') != $('#resume-body #' + id).find('span[data-content="exp_company"]')
                 .text()) ? $(
-                '#' + id).find('span[data-content="exp_company"]').text() : '';
-            var exp_description = ($('#' + id).find('p[data-content="exp_description"]')
-                .attr('placeholder') != $('#' + id).find(
+                '#resume-body #' + id).find('span[data-content="exp_company"]').text() : '';
+            var exp_description = ($('#resume-body #' + id).find('p[data-content="exp_description"]')
+                .attr('placeholder') != $('#resume-body #' + id).find(
                     'p[data-content="exp_description"]')
-                .text()) ? $('#' + id).find('p[data-content="exp_description"]').text() : '';
+                .text()) ? $('#resume-body #' + id).find('p[data-content="exp_description"]').text() : '';
 
             postObj.experience.push({
                 "endDate": exp_endDate,
@@ -886,52 +919,52 @@ $(window).ready(function () {
 
     function getAcademicDetails() {
         postObj.academic = [];
-        if (!$('#academic-section').hasClass('d-none')) {
-            $('.academic-project').each(function (i, v) {
+        if (!$('#resume-body #academic-section').hasClass('d-none')) {
+            $('#resume-body .academic-project').each(function (i, v) {
                 var id = $(this).attr('id');
-                var acd_endDate = $('#' + id).find(
+                var acd_endDate = $('#resume-body #' + id).find(
                     'input[data-content="acd_endDate"]').val();
-                var acd_startDate = $('#' + id).find(
+                var acd_startDate = $('#resume-body #' + id).find(
                         'input[data-content="acd_startDate"]')
                     .val();
-                var institution = ($('#' + id).find(
+                var institution = ($('#resume-body #' + id).find(
                             'span[data-content="acd_institution"]')
                         .attr(
-                            'placeholder') != $('#' + id).find(
+                            'placeholder') != $('#resume-body #' + id).find(
                             'span[data-content="acd_institution"]')
                         .text()) ?
-                    $('#' + id).find(
+                    $('#resume-body #' + id).find(
                         'span[data-content="acd_institution"]')
                     .text() : '';
-                var location = ($('#' + id).find(
+                var location = ($('#resume-body #' + id).find(
                             'span[data-content="acd_location"]').attr(
-                            'placeholder') != $('#' + id).find(
+                            'placeholder') != $('#resume-body #' + id).find(
                             'span[data-content="acd_location"]')
                         .text()) ?
-                    $('#' + id).find(
+                    $('#resume-body #' + id).find(
                         'span[data-content="acd_location"]').text() :
                     '';
-                var project = ($('#' + id).find(
+                var project = ($('#resume-body #' + id).find(
                             'span[data-content="acd_projectTitle"]')
                         .attr(
-                            'placeholder') != $('#' + id).find(
+                            'placeholder') != $('#resume-body #' + id).find(
                             'span[data-content="acd_projectTitle"]')
                         .text()) ? $(
                         '#' + id).find(
                         'span[data-content="acd_projectTitle"]')
                     .text() : '';
-                var description = ($('#' + id).find(
+                var description = ($('#resume-body #' + id).find(
                             'p[data-content="acd_description"]')
-                        .attr('placeholder') != $('#' + id).find(
+                        .attr('placeholder') != $('#resume-body #' + id).find(
                             'p[data-content="acd_description"]')
-                        .text()) ? $('#' + id).find(
+                        .text()) ? $('#resume-body #' + id).find(
                         'p[data-content="acd_description"]')
                     .text() : '';
-                var role = ($('#' + id).find(
+                var role = ($('#resume-body #' + id).find(
                             'span[data-content="acd_role"]')
-                        .attr('placeholder') != $('#' + id).find(
+                        .attr('placeholder') != $('#resume-body #' + id).find(
                             'span[data-content="acd_role"]')
-                        .text()) ? $('#' + id).find(
+                        .text()) ? $('#resume-body #' + id).find(
                         'span[data-content="acd_role"]')
                     .text() : ''
                 postObj.academic.push({
@@ -950,48 +983,44 @@ $(window).ready(function () {
 
     function getEducationDetails() {
         postObj.education = [];
-        $('.education-details').each(function (i, v) {
+        $('#resume-body .education-details').each(function (i, v) {
             // console.log(v);
             var id = $(this).attr('id');
-            var endDate = $('#' + id).find(
+            var endDate = $('#resume-body #' + id).find(
                 'input[data-content="edu_endDate"]').val();
-            var startDate = $('#' + id).find(
+            var startDate = $('#resume-body #' + id).find(
                     'input[data-content="edu_startDate"]')
                 .val();
-            var fieldOfStudy = ($('#' + id).find('span[data-content="fieldOfStudy"]')
+            var fieldOfStudy = ($('#resume-body #' + id).find('span[data-content="fieldOfStudy"]')
                 .attr(
-                    'placeholder') != $('#' + id).find(
+                    'placeholder') != $('#resume-body #' + id).find(
                     'span[data-content="fieldOfStudy"]').text()) ? $(
                 '#' + id).find('span[data-content="fieldOfStudy"]').text() : '';
-            var institution = ($('#' + id).find(
+            var institution = ($('#resume-body #' + id).find(
                     'span[data-content="edu_institution"]').attr(
-                    'placeholder') != $('#' + id).find(
+                    'placeholder') != $('#resume-body #' + id).find(
                     'span[data-content="edu_institution"]').text()) ?
-                $('#' + id).find('span[data-content="edu_institution"]').text() :
+                $('#resume-body #' + id).find('span[data-content="edu_institution"]').text() :
                 '';
-            var location = ($('#' + id).find('span[data-content="edu_location"]')
+            var location = ($('#resume-body #' + id).find('span[data-content="edu_location"]')
                     .attr(
-                        'placeholder') != $('#' + id).find(
+                        'placeholder') != $('#resume-body #' + id).find(
                         'span[data-content="edu_location"]').text()) ?
-                $('#' + id).find('span[data-content="edu_location"]').text() : '';
-            var degree = {
-                title: $('#' + id).find('input[data-content="degree_title"]').val(),
-                degreeId: $('#' + id).find('input[data-content="degree_title"]').attr(
-                    'data-id'),
-                shortTitle: $('#' + id).find('input[data-content="degree_title"]').attr(
-                    'data-shorttitle'),
-            };
-            var description = ($('#' + id).find(
+                $('#resume-body #' + id).find('span[data-content="edu_location"]').text() : '';
+            // var degree = {
+            //     title: $('#resume-body #' + id).find('input[data-content="degree_title"]').val(),
+            //     degreeId: $('#resume-body #' + id).find('input[data-content="degree_title"]').attr(
+            //         'data-id'),
+            //     shortTitle: $('#resume-body #' + id).find('input[data-content="degree_title"]').attr(
+            //         'data-shorttitle'),
+            // };
+            var degree = $('#resume-body #' + id).find('input[data-content="degree_title"]').attr('data-id');
+            var description = ($('#resume-body #' + id).find(
                     'p[data-content="edu_description"]')
-                .attr('placeholder') != $('#' + id).find(
+                .attr('placeholder') != $('#resume-body #' + id).find(
                     'p[data-content="edu_description"]')
-                .text()) ? $('#' + id).find(
+                .text()) ? $('#resume-body #' + id).find(
                 'p[data-content="edu_description"]').text() : '';
-            
-            console.log("******************", degree);
-            if (degree.title == '')
-                degree = {};
-            console.log("-------------------", degree);
 
             if (endDate != '' || startDate != '' || institution != '' ||
                 location != '' || degree != '' || description != '' || fieldOfStudy != '') {
@@ -1011,18 +1040,18 @@ $(window).ready(function () {
 
     function getLanguageDetails() {
         postObj.languages = [];
-        $('.lang_details').each(function (i, v) {
+        $('#resume-body .lang_details').each(function (i, v) {
             // console.log(v);
             var id = $(this).attr('id');
             $(".rating-chosen").length * 25;
-            var lng_percentage = $('#' + id + ' li.rating-chosen').length;
+            var lng_percentage = $('#resume-body #' + id + ' li.rating-chosen').length;
             var lngName = $('#' + id + ' [data-content="languageName"]').text();
-            // var title = $('#' + id).find(
+            // var title = $('#resume-body #' + id).find(
             //         '[data-content="languageName"]')
             //     .val();
-            // var percentage = ($('#' + id).find('[data-langpercentage]')
+            // var percentage = ($('#resume-body #' + id).find('[data-langpercentage]')
             //     .attr(
-            //         'placeholder') != $('#' + id).find(
+            //         'placeholder') != $('#resume-body #' + id).find(
             //         'span[data-content="fieldOfStudy"]').text()) ? $(
             //     '#' + id).find('span[data-content="fieldOfStudy"]').text() : '';
             postObj.languages.push({
@@ -1034,10 +1063,10 @@ $(window).ready(function () {
 
     function getSkillsDetails() {
         postObj.skill = []
-        $('.skills-item').each(function (i, v) {
+        $('#resume-body .skills-item').each(function (i, v) {
             var id = $(this).attr('id');
-            var skill_name = $('#' + id + ' .skill-input-value').text();
-            var skill_value = parseInt($('#' + id).find('.skill-value').attr('data-skill'));
+            var skill_name = $('#' + id + '#resume-body .skill-input-value').text();
+            var skill_value = parseInt($('#resume-body #' + id).find('.skill-value').attr('data-skill'));
             // console.log(i, skill_name, skill_value, "skill_value");
             postObj.skill.push({
                 "skillName": skill_name,
@@ -1126,22 +1155,22 @@ $(window).ready(function () {
         }
         $(resumeObj.userExperienceResSet).each(function (i, v) {
             var id = 'proExp_' + (i + 1);
-            $('#' + id).find('input[data-content="exp_endDate"]').val(resumeObj
+            $('#resume-body #' + id).find('input[data-content="exp_endDate"]').val(resumeObj
                 .userExperienceResSet[i]
                 .endDate);
-            $('#' + id).find('input[data-content="exp_startDate"]').val(resumeObj
+            $('#resume-body #' + id).find('input[data-content="exp_startDate"]').val(resumeObj
                 .userExperienceResSet[i]
                 .startDate);
-            $('#' + id).find('span[data-content="exp_jobTitle"]').text(resumeObj
+            $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]').text(resumeObj
                 .userExperienceResSet[i]
                 .jobTitle);
-            $('#' + id).find('span[data-content="exp_location"]').text(resumeObj
+            $('#resume-body #' + id).find('span[data-content="exp_location"]').text(resumeObj
                 .userExperienceResSet[i]
                 .location);
-            $('#' + id).find('span[data-content="exp_company"]').text(resumeObj
+            $('#resume-body #' + id).find('span[data-content="exp_company"]').text(resumeObj
                 .userExperienceResSet[i]
                 .company);
-            $('#' + id).find('p[data-content="exp_description"]').text(resumeObj
+            $('#resume-body #' + id).find('p[data-content="exp_description"]').text(resumeObj
                 .userExperienceResSet[i]
                 .description);
         });
@@ -1158,24 +1187,24 @@ $(window).ready(function () {
         }
         $(resumeObj.userEducationResSet).each(function (i, v) {
             var id = 'education_' + (i + 1);
-            $('#' + id).find('span[data-content="fieldOfStudy"]').text(resumeObj
+            $('#resume-body #' + id).find('span[data-content="fieldOfStudy"]').text(resumeObj
                 .userEducationResSet[i].fieldOfStudy);
-            $('#' + id).find('span[data-content="edu_institution"]').text(resumeObj
+            $('#resume-body #' + id).find('span[data-content="edu_institution"]').text(resumeObj
                 .userEducationResSet[i].institution);
-            $('#' + id).find('span[data-content="edu_location"]').text(resumeObj
+            $('#resume-body #' + id).find('span[data-content="edu_location"]').text(resumeObj
                 .userEducationResSet[i].location);
-            $('#' + id).find('input[data-content="edu_startDate"]').val(resumeObj
+            $('#resume-body #' + id).find('input[data-content="edu_startDate"]').val(resumeObj
                 .userEducationResSet[i].startDate);
-            $('#' + id).find('input[data-content="edu_endDate"]').val(resumeObj
+            $('#resume-body #' + id).find('input[data-content="edu_endDate"]').val(resumeObj
                 .userEducationResSet[i].endDate);
-            $('#' + id).find('p[data-content="edu_description"]').text(resumeObj
+            $('#resume-body #' + id).find('p[data-content="edu_description"]').text(resumeObj
                 .userEducationResSet[i].description);
-            $('#' + id).find('input[data-content="degree_title"]').attr({
+            $('#resume-body #' + id).find('input[data-content="degree_title"]').attr({
                 'data-id': resumeObj.userEducationResSet[i].degree.degreeId,
                 'data-shortTitle': resumeObj.userEducationResSet[i].degree.shortTitle
             }).val(resumeObj.userEducationResSet[i].degree.title);
-            // $('#' + id).find('span[data-content="degree_title"]').attr('data-id', resumeObj.userEducationResSet[i].degree.degreeId);
-            // $('#' + id).find('span[data-content="degree_title"]').attr('data-shorttitle', resumeObj.userEducationResSet[i].degree.shortTitle);
+            // $('#resume-body #' + id).find('span[data-content="degree_title"]').attr('data-id', resumeObj.userEducationResSet[i].degree.degreeId);
+            // $('#resume-body #' + id).find('span[data-content="degree_title"]').attr('data-shorttitle', resumeObj.userEducationResSet[i].degree.shortTitle);
         });
     }
 
@@ -1192,13 +1221,13 @@ $(window).ready(function () {
             const ap = resumeObj.userAcademicResSet[i];
             var id = 'academic_projects_' + (i + 1);
             console.log(id);
-            $('#' + id).find('span[data-content="acd_role"]').text(ap.role);
-            $('#' + id).find('span[data-content="acd_projectTitle"]').text(ap.projectTitle);
-            $('#' + id).find('span[data-content="acd_institution"]').text(ap.institution);
-            $('#' + id).find('span[data-content="acd_location"]').text(ap.location);
-            $('#' + id).find('input[data-content="acd_startDate"]').val(ap.startDate);
-            $('#' + id).find('input[data-content="acd_endDate"]').val(ap.endDate);
-            $('#' + id).find('p[data-content="acd_description"]').text(ap.description);
+            $('#resume-body #' + id).find('span[data-content="acd_role"]').text(ap.role);
+            $('#resume-body #' + id).find('span[data-content="acd_projectTitle"]').text(ap.projectTitle);
+            $('#resume-body #' + id).find('span[data-content="acd_institution"]').text(ap.institution);
+            $('#resume-body #' + id).find('span[data-content="acd_location"]').text(ap.location);
+            $('#resume-body #' + id).find('input[data-content="acd_startDate"]').val(ap.startDate);
+            $('#resume-body #' + id).find('input[data-content="acd_endDate"]').val(ap.endDate);
+            $('#resume-body #' + id).find('p[data-content="acd_description"]').text(ap.description);
         });
     }
 
@@ -1403,7 +1432,7 @@ $(window).ready(function () {
     function saveUserProfile(applicantData) {
         if (applicantData.education.length) {
             var educationValidArray = applicantData.education.filter(function (item, index) {
-                return !item.institution && !item.location && !item.degree.title && !item
+                return !item.institution && !item.location && !item.degree && !item
                     .fieldOfStudy && !item.endDate && !item.startDate;
             });
             console.log(educationValidArray);
@@ -1551,7 +1580,7 @@ $(window).ready(function () {
                 if (logoImg) {
                     saveUserPic();
                 }
-                // savePdf();
+                savePdf();
                 getShareNameFile();
 
             } else {
@@ -1590,95 +1619,116 @@ $(window).ready(function () {
 
     }
 
-    function savePdf() {
+    async function savePdf() {
         $('.loading-container').show();
         if (planInfo) {
-            var ele = $('#resume-body')[0];
-            console.log(ele)
-            /* ele.css({'height': ''});
-            ele.css({'max-height': ''});*/
-            ele.style.boxShadow = "none";
-            html2canvas(ele, {
-                allowTaint: true,
-                logging: true,
-                useCORS: true,
-                scale: 3
-            }).then(function (canvas) {
-                var doc = new jsPDF('p', 'cm', 'a4', true);
-                const data = canvas.toDataURL(canvas, {
-                    type: 'image/png',
+            var eles = $('page');
+            var pageCount = eles.length;
+            var doc = new jsPDF('p', 'cm', [89.1, 63], true);
+            // watermark resume
+            var docWaterMark = new jsPDF('p', 'cm', [89.1, 63], true);
+            $(eles[1]).find('.nice-select ul.list').remove();
+            var color;
+            if (selectedcolor == 'theme-black') {
+                color = '#2f2f2f';
+            }
+            else if (selectedcolor == 'theme-blue') {
+                color = '#337ab7';
+            }
+            else {
+                color = '#3ebb64';
+            }
+            console.log(color);
+            $(eles[1]).find('path').attr('fill', color);
+            $(eles[1]).find('polygon').attr('fill', color);
+            for ( var i = 1 ; i < pageCount ; ++i ) {
+                var ele = eles[i];
+                $(ele).find('.border-dashed').removeClass('border-dashed');
+                console.log(ele);
+                /* ele.css({'height': ''});
+                ele.css({'max-height': ''});*/
+                ele.style.boxShadow = "none";
+                var canvas = await html2canvas(ele, {
+                    allowTaint: true,
+                    logging: true,
+                    useCORS: true,
+                    scale: 3
                 });
+
+                if (i > 1) {
+                    doc.addPage();
+                }
+                doc.setPage(i);
+                
+                const data = await canvas.toDataURL("image/jpeg");
                 console.log("Raw", data);
                 var image = new Image();
                 image.src = data;
-                doc.addImage(image, 'PNG', -0.3, 0.5, 0, 0, '', 'SLOW');
-                var pdfOut = doc.output('blob');
-                console.log(pdfOut);
-                var form2 = new FormData();
-                form2.append("type", "resume");
-                form2.append("userId", userId);
-                form2.append('file', pdfOut);
-                axios({
-                        method: 'post',
-                        url: apiUrl + "/uploadFile",
-                        data: form2,
-                        config: {
-                            headers: {
-                                "token": sessionId,
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        }
-                    })
-                    .then(function (response) {
-                        //handle success
-                        // console.log(response);
-                    })
-                    .catch(function (response) {
-                        //handle error
-                        // console.log(response);
-                    })
-                // watermark resume
-                var docWaterMark = new jsPDF('p', 'cm', 'a4', true);
-                const dataWaterMark = canvas.toDataURL(canvas, {
-                    type: 'image/png',
-                })
-                var waterMarkImage = new Image();
-                waterMarkImage.src = dataWaterMark;
-                docWaterMark = addWaterMark(docWaterMark);
-                docWaterMark.addImage(waterMarkImage, 'PNG', -0.3, 0.5, 0, 0, '', 'SLOW');
-                var pdfOutWaterMark = docWaterMark.output('blob');
-                // console.log(pdfOutWaterMark);
-                var formWatermark = new FormData();
-                formWatermark.append("type", "watermark");
-                formWatermark.append("userId", userId);
-                formWatermark.append('file', pdfOutWaterMark);
-                axios({
-                        method: 'post',
-                        url: apiUrl + "/uploadFile",
-                        data: formWatermark,
-                        config: {
-                            headers: {
-                                "token": sessionId,
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        }
-                    })
-                    .then(function (response) {
-                        //handle success
-                        // console.log(response);
-                    })
-                    .catch(function (response) {
-                        //handle error
-                        // console.log(response);
-                    })
-                if (planInfo && planInfo[0].planId == 1) {
-                    docWaterMark.save(userId + '_resume.pdf');
-                } else {
-                    doc.save(resumeObj.firstname + '_resume.pdf');
-                }
+
+                doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
+                // const dataWaterMark = data;
+                // var waterMarkImage = new Image();
+                // waterMarkImage.src = dataWaterMark;
+                // docWaterMark = addWaterMark(docWaterMark);
+                // docWaterMark.addImage(waterMarkImage, 'PNG', -0.3, 0.5, 0, 0, '', 'FAST');
+            
                 ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
-                $('.loading-container').delay(2000).fadeOut();
-            });
+
+            }
+            var pdfOut = doc.output('blob');
+            var form2 = new FormData();
+            form2.append("type", "resume");
+            form2.append("userId", userId);
+            form2.append('file', pdfOut);
+            axios({
+                    method: 'post',
+                    url: apiUrl + "/uploadFile",
+                    data: form2,
+                    config: {
+                        headers: {
+                            "token": sessionId,
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                })
+                .then(function (response) {
+                    //handle success
+                    // console.log(response);
+                })
+                .catch(function (response) {
+                    //handle error
+                    // console.log(response);
+                });
+            // var pdfOutWaterMark = docWaterMark.output('blob');
+            // var formWatermark = new FormData();
+            // formWatermark.append("type", "watermark");
+            // formWatermark.append("userId", userId);
+            // formWatermark.append('file', pdfOutWaterMark);
+            // axios({
+            //         method: 'post',
+            //         url: apiUrl + "/uploadFile",
+            //         data: formWatermark,
+            //         config: {
+            //             headers: {
+            //                 "token": sessionId,
+            //                 'Content-Type': 'multipart/form-data'
+            //             }
+            //         }
+            //     })
+            //     .then(function (response) {
+            //         //handle success
+            //         // console.log(response);
+            //     })
+            //     .catch(function (response) {
+            //         //handle error
+            //         // console.log(response);
+            //     });
+            if (planInfo && planInfo[0].planId == 1) {
+                doc.save(userId + '_resume.pdf');
+            } else {
+                doc.save(resumeObj.firstname + '_resume.pdf');
+            }
+            $('.loading-container').delay(2000).fadeOut();
         } else {
             window.location.href = window.origin + '/pricing.html';
         }
@@ -1791,9 +1841,6 @@ $(window).ready(function () {
         console.log( "Document Size: ", resume.css('width'), resume.css('height'));
         console.log( "Standard Height: ", standardA4Height);
 
-        if (totalHeight <= standardA4Height)
-            return;
-
         var emptyDom = "<page size='a4'>\
                             <div class='row'>\
                                 <aside class='col-3 text-break'>\
@@ -1895,6 +1942,20 @@ $(window).ready(function () {
 
             console.log("Stacked Height: ", stackedHeight);
         }
+
+        // Clone values from original one
+
+        $($('[data-content="jobfunctions"]')[1]).val($($('[data-content="jobfunctions"]')[0]).val());
+
+        var originExpCount = $('#resume-body #experience-section .professional-experience').length;
+        for (var i = 1 ; i <= originExpCount ; ++i) {
+            var origin = $($('[data-content="exp_startDate"]')[i - 1]);
+            var cloned = $($('[data-content="exp_startDate"]')[i + originExpCount - 1]);
+            cloned.val(origin.val());
+            origin = $($('[data-content="exp_endDate"]')[i - 1]);
+            cloned = $($('[data-content="exp_endDate"]')[i + originExpCount - 1]);
+            cloned.val(origin.val());
+        }
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check Education
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1937,6 +1998,21 @@ $(window).ready(function () {
             resume.after(emptyDom + domHtml + emptyDomClose);
 
             console.log("Stacked Height: ", stackedHeight);
+        }
+
+        // Clone values from original one
+
+        var originEduCount = $('#resume-body #education-section .education-details').length;
+        for (var i = 1 ; i <= originEduCount ; ++i) {
+            var origin = $($('[data-content="edu_startDate"]')[i - 1]);
+            var cloned = $($('[data-content="edu_startDate"]')[i + originEduCount - 1]);
+            cloned.val(origin.val());
+            origin = $($('[data-content="edu_endDate"]')[i - 1]);
+            cloned = $($('[data-content="edu_endDate"]')[i + originEduCount - 1]);
+            cloned.val(origin.val());
+            origin = $($('[data-content="degree_title"]')[i - 1]);
+            cloned = $($('[data-content="degree_title"]')[i + originEduCount - 1]);
+            cloned.val(origin.val());
         }
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check Academic Experiences
@@ -1981,6 +2057,18 @@ $(window).ready(function () {
 
             console.log("Stacked Height: ", stackedHeight);
         }
+
+        // Clone values from original one
+
+        var originAcaCount = $('#resume-body #academic-section .academic-project').length;
+        for (var i = 1 ; i <= originAcaCount ; ++i) {
+            var origin = $($('[data-content="acd_startDate"]')[i - 1]);
+            var cloned = $($('[data-content="acd_startDate"]')[i + originAcaCount - 1]);
+            cloned.val(origin.val());
+            origin = $($('[data-content="acd_endDate"]')[i - 1]);
+            cloned = $($('[data-content="acd_endDate"]')[i + originAcaCount - 1]);
+            cloned.val(origin.val());
+        }
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Skills Check
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2014,7 +2102,7 @@ $(window).ready(function () {
 
             resume.find('.col-9 .row').last().after(domHtml + emptyDomClose);
 
-            domHtml =   '<div class="row flex-column  mb-1" id="skills-section">\
+            domHtml =   '<div class="row flex-column mb-1">\
                             <div class="skills-section">\
                                 <ul class="list-unstyled w-100 skills-list mb-0">';
             stackedHeight = skillsMarginBottom;
