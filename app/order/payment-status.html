@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Payment Status - workruit</title>
+    <link rel='shortcut icon' type='image/x-icon' href='../../favicon.png' />
+    <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/css/custom.css" />
+    <style>
+        .btn-outline-primary {
+            border-color: #007bff;
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <!-- <link href="form-validation.css" rel="stylesheet"> -->
+</head>
+
+<body>
+    <div id="load-header"></div>
+    <div class="content success d-none">
+        <div class="container success">
+            <div class="row">
+                <div class="col-7">
+                    <div class="text-xs-center">
+                        <h3 class="display-4"> <i class="fas fa-check-circle text-success"></i> HI! <span
+                                class="paymentUserName"></span></h3>
+                        <p class="lead text-capitalize"><strong class="text-success">your transition is success</strong>
+                            <br> please check
+                            your
+                            mail for further instructions</p>
+                        <hr>
+                        <p>
+                            Having trouble? <a href="mailto:info@workruit.com">Contact us</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-outline-primary btn-sm" href="../dashboard/home.html"
+                                role="button">Continue
+                                to
+                                homepage</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-unstyled m-0 text-capitalize">
+                                <li>PLAN : <span class="Plan"></span></li>
+                                <li>TXNID : <span class="TXNID"></span>
+                                </li>
+                                <li>TXNAMOUNT : <span class="TXNAMOUNT"></span>
+                                </li>
+                                <li>PAYMENTMODE : <span class="PAYMENTMODE"></span>
+                                </li>
+                                <li>BANKNAME : <span class="BANKNAME"></span>
+                                </li>
+                                <li>TXNDATE : <span class="TXNDATE"></span>
+                                </li>
+                                <li>STATUS : <span class="STATUS"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="content fail d-none">
+        <div class="container success">
+            <div class="row">
+                <div class="col-7">
+                    <div class="text-xs-center">
+                        <h3 class="display-4"> <i class="fas fa-times-circle text-danger"></i> HI! <span
+                                class="paymentUserName"></span></h3>
+                        <p class="lead text-capitalize"><strong class="text-danger">your transition is fail</strong>
+                            <br> please contact
+                            with us if you have any quires </p>
+                        <hr>
+                        <p>
+                            Having trouble? <a href="mailto:info@workruit.com">Contact us</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-unstyled m-0 text-capitalize">
+                                <li>PLAN : <span class="Plan"></span></li>
+                                <li>TXNID : <span class="TXNID"></span>
+                                </li>
+                                <li>TXNAMOUNT : <span class="TXNAMOUNT"></span>
+                                </li>
+                                <li>PAYMENTMODE : <span class="PAYMENTMODE"></span>
+                                </li>
+                                <li>BANKNAME : <span class="BANKNAME"></span>
+                                </li>
+                                <li>TXNDATE : <span class="TXNDATE"></span>
+                                </li>
+                                <li>STATUS : <span class="STATUS"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="content pending d-none">
+        <div class="container success">
+            <div class="row">
+                <div class="col-7">
+                    <div class="text-xs-center">
+                        <h3 class="display-4"> <i class="fas fa-exclamation-circle text-warning"></i> HI! <span
+                                class="paymentUserName"></span></h3>
+                        <p class="lead text-capitalize"><strong class="text-warning">your transition is pending</strong>
+                            <br> please contact
+                            with us if you have any quires </p>
+                        <hr>
+                        <p>
+                            Having trouble? <a href="mailto:info@workruit.com">Contact us</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-unstyled m-0 text-capitalize">
+                                <li>PLAN : <span class="Plan"></span></li>
+                                <li>TXNID : <span class="TXNID"></span>
+                                </li>
+                                <li>TXNAMOUNT : <span class="TXNAMOUNT"></span>
+                                </li>
+                                <li>PAYMENTMODE : <span class="PAYMENTMODE"></span>
+                                </li>
+                                <li>BANKNAME : <span class="BANKNAME"></span>
+                                </li>
+                                <li>TXNDATE : <span class="TXNDATE"></span>
+                                </li>
+                                <li>STATUS : <span class="STATUS"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
+    <!-- <script>
+        window.jQuery || document.write('<script src="../../assets/vendors/js/jquery.min.js"><\/script>')
+    </script> -->
+    <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
+    <script type="text/javascript" src="assets/vendors/js/a6a57723a3.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/moment.min.js"></script>
+    <script>
+        axios.defaults.headers.common['Token'] = sessionStorage.getItem('sessionId');
+        $('#load-header').load('../includes/user-header.html');
+        var baseUrl = 'https://stageapi.workruit.com/resume/user/';
+        var userData = JSON.parse(sessionStorage.getItem("userData"));
+        var priceCalculationObj = {
+            "planId": 1,
+            "promoId": 1
+        }
+        $(window).ready(function () {
+            var orderId = sessionStorage.getItem("orderId");
+            var checksum = sessionStorage.getItem("CHECKSUMHASH");
+            axios.post(baseUrl + userData.userId + '/verifyChecksum', {
+                    orderId: orderId,
+                    checksum: checksum
+                })
+                .then(function (response) {
+                    console.log(response);
+                    var paytmInfo = response.data.data;
+                    $(".paymentUserName").text(userData.firstname + " " + userData.lastname);
+                    if (response.status == 200) {
+                        switch (response.data.data.STATUS) {
+                            case "TXN_SUCCESS":
+                                $('.success').removeClass('d-none');
+                                $(".STATUS").text(paytmInfo.STATUS !== '' ? 'Success' : 'NA');
+                                break;
+                            case "TXN_FAILURE":
+                                $('.fail').removeClass('d-none');
+                                $(".STATUS").text(paytmInfo.STATUS !== '' ? 'Failed' : 'NA');
+                            default:
+                                break;
+                        };
+                        $(".Plan").text(paytmInfo.planInfo.planInfo.planTitle !== '' ? paytmInfo
+                            .planInfo.planInfo.planTitle : 'NA');
+                        $(".TXNID").text(paytmInfo.TXNID !== '' ? paytmInfo
+                            .TXNID : 'NA');
+                        $(".TXNAMOUNT").text(paytmInfo.TXNAMOUNT !== '' ? paytmInfo
+                            .BANKTXNID : 'NA');
+                        $(".PAYMENTMODE").text(paytmInfo.PAYMENTMODE !== '' ? paytmInfo
+                            .BANKTXNID : 'NA');
+                        $(".TXNDATE").text(paytmInfo.TXNDATE !== '' ? moment(paytmInfo
+                            .TXNDATE).format('YYYY MM DD HH:MM') : 'NA');
+                        $(".BANKNAME").text(paytmInfo.BANKNAME !== '' ? paytmInfo
+                            .BANKTXNID : 'NA');
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+        })
+    </script>
+</body>
+
+</html>
