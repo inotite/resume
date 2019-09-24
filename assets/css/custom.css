@@ -1609,6 +1609,11 @@ height: auto; */
     transition: opacity .15s linear;
 }
 
+.modal-open .fade {
+    opacity: 1;
+    transition: opacity .15s linear;
+}
+
 .fade.show {
     opacity: 1;
 }
@@ -3164,64 +3169,103 @@ button span {
     display: block;
     top: 50px;
 }
+
 .alert-danger,
 .alert-success {
-  top: 70px !important;
-  display: none;
+    top: 70px !important;
+    display: none;
 }
 
 .invalid-feedback {
-  display: block;
+    display: block;
 }
 
 .img1 {
-  margin-top: -63px;
+    margin-top: -63px;
 }
 
 .margin_center {
-  margin-top: 10px;
+    margin-top: 10px;
 }
+
 .alert-danger,
 .alert-success {
-  top: 70px !important;
-  display: none;
+    top: 70px !important;
+    display: none;
 }
 
 .invalid-feedback {
-  display: block;
+    display: block;
 }
 
 .sidebar {
-  overflow-y: auto;
+    overflow-y: auto;
 }
 
 #shareUpdatedSuccessfully.alert-success {
-  top: 0px !important;
-  opacity: 1;
-  z-index: 99999999;
-  position: fixed;
-  width: 100%;
-  border-radius: 0;
-  border: unset;
-  height: 68px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  visibility: hidden;
-  background: #34b95c;
-  color: #fff;
+    top: 0px !important;
+    opacity: 1;
+    z-index: 99999999;
+    position: fixed;
+    width: 100%;
+    border-radius: 0;
+    border: unset;
+    height: 68px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    background: #34b95c;
+    color: #fff;
 }
+
 .alert-danger,
-        .alert-success {
-            top: 70px !important;
-            display: none;
-        }
+.alert-success {
+    top: 70px !important;
+    display: none;
+}
 
-        .invalid-feedback {
-            display: block;
-        }
+.invalid-feedback {
+    display: block;
+}
 
-        .img1 {
-            margin-top: -49px;
-        }
+.img1 {
+    margin-top: -49px;
+}
+
+.text-bold {
+    font-weight: bold
+}
+
+.text-green {
+    color: #55bb65;
+}
+
+.font-14 {
+    font-size: 14px
+}
+
+.checkout-wrapper .checkout-view .checkout-box .checkout-box-col .price-summary .total-banner {
+    margin-top: 5px;
+}
+
+.total-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 4px solid #000;
+    border-bottom: 4px solid #000;
+    font-size: 1.5rem;
+    padding: 10px 10px 5px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+}
+
+.btn-outline-primary {
+    border-color: #007bff;
+}

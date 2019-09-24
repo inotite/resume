@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="assets/vendors/css/aos.css" />
 	<link rel="stylesheet" type="text/css" href="assets/vendors/css/main.css" />
-	
+
 	<!--<style>
 	.first-quto{
 		padding-top: 50%;
@@ -77,8 +77,12 @@
 </head>
 
 <body>
-	<div w3-include-html="app/includes/header.html"></div>
-
+	<div class="header">
+		<div w3-include-html="app/includes/header.html"></div>
+	</div>
+	<div class="auth-header d-none">
+		<div w3-include-html="app/includes/user-auth-header.html"></div>
+	</div>
 	<div class="container-fluid layout-hero layout-hero__inner">
 		<div class="container">
 			<div class="row">
@@ -98,7 +102,7 @@
 				<h2 class="h1" data-aos="fade-up">Pick your plan</h2>
 			</div>
 		</div>
-		<div class="row pricing_template px-5" data-aos="fade-up">
+		<div class="row pricing_template px-5 my-5" data-aos="fade-up">
 		</div>
 		<!-- <div w3-include-html="includes/plans.html"></div> -->
 	</div>
@@ -116,6 +120,10 @@
 
 	<script>
 		includeHTML();
+		if (sessionStorage.getItem('userData')) {
+			$(".auth-header").removeClass('d-none');
+			$(".header").addClass('d-none');
+		}
 		AOS.init({
 			offset: 100,
 			duration: 800,
@@ -174,8 +182,8 @@
 					</ul>
 				</div>
 				<div class="form-group mt-4">
-					<button type="submit" id="btn-fbsignup" class="btn btn-primary btn-lg btn-block select_plan"> <a
-							data-href="redirectUrl"><span>BUILD RESUME</span></a></button>
+					<a data-href="redirectUrl" class="btn btn-primary btn-lg btn-block select_plan"><span>BUILD
+							RESUME</span></a>
 				</div>
 				<!--
 							<div class="select" >
@@ -204,8 +212,8 @@
 			$.ajax(settings).done(function (response) {
 				response.map((item, index) => {
 					var pId = btoa(JSON.stringify(item));
-					item.redirectUrl = localStorage.getItem('userData') ?
-						'checkout/index.html?' +
+					item.redirectUrl = sessionStorage.getItem('userData') ?
+						'app/order/cart.html?' +
 						pId :
 						'app/auth/login.html';
 					item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;

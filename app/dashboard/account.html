@@ -224,8 +224,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-5 text-center">
-              <img src="../../assets/images/app/phone.png" class="img_download" alt="phone" height="320px"
-                width="auto">
+              <img src="../../assets/images/app/phone.png" class="img_download" alt="phone" height="320px" width="auto">
             </div>
             <div class="col-md-7 pt-5">
               <div class="modal-title">Find the right job on the go.</div>
@@ -319,11 +318,12 @@
   <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
   <script>
     // getCollegesInfo
-    var baseUrl2 = "https://stageapi.workruit.com";
+    var environment = JSON.parse(sessionStorage.getItem("environment"));
+
     var getCollegesInfo = {
       "async": true,
       "crossDomain": true,
-      "url": baseUrl2 + "/resume/getCollegesInfo",
+      "url": environment.baseResumeApiUrl + environment.resumeServiceUrls.get.getCollegesInfo,
       "method": "GET",
       "headers": {
         "token": JSON.parse(sessionStorage.getItem('userData')).sessionId,

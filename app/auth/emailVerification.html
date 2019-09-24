@@ -67,6 +67,7 @@
     </div>
   </div>
   <script>
+    var environment = JSON.parse(sessionStorage.getItem("environment"));
     var jsEncode = {
       encode: function (s, k) {
         var enc = "";
@@ -93,7 +94,8 @@
       var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "https://stageapi.workruit.com/employeer/emailVerificationForResumeUser/" + emailVerificationId +
+        "url": environment.baseUrl + environment.serviceUrls.get.emailVerificationForResumeUser +
+          emailVerificationId +
           "/" + companyName + "/" + userId,
         "method": "GET",
         "headers": {

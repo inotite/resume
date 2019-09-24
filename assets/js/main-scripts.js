@@ -257,7 +257,7 @@ if (loginStatus === true) {
 							sessionStorage.setItem('shareName', response.shareName);
 							sessionStorage.setItem('fromPage', 'signup');
 							sessionStorage.setItem('imageStore', '');
-							window.location.href = "../home/index.html";
+							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
 							$('#newErrorMessageID').html(response.msg.description)
 								.fadeIn()

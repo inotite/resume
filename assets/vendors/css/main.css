@@ -241,4 +241,13 @@
     width: 153px;
     height: auto;
 }
-
+.btn-primary{
+    color:#fff;
+    border: 1px solid transparent;
+}
+.btn-primary:hover{
+    background-color: transparent;
+    border: 1px solid #3ebb64;
+    color: #3ebb64;
+    opacity: 1;
+}

@@ -17,7 +17,7 @@
                         <a class="nav-link transition" href="../create/index.html?edit">Resume</a>
                     </li>
                     <li class="nav-item" id="shareNavItem">
-                        <a class="nav-link transition" href="">Share</a>
+                        <a class="nav-link transition">Share</a>
                     </li>
                 </ul>
             </div>
@@ -45,8 +45,7 @@
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item transition" href="../dashboard/account.html">Account</a>
-                            <a class="dropdown-item transition"
-                                href="../dashboard/notifications.html">Notifications</a>
+                            <a class="dropdown-item transition" href="../dashboard/notifications.html">Notifications</a>
                             <a class="dropdown-item transition" href="javascript:void(0)" data-toggle="modal"
                                 data-target="#downloadApp">Download App</a>
                             <a class="dropdown-item transition" href="javascript:void(0)" id="signOut">Sign Out</a>
@@ -85,11 +84,12 @@
 </div>
 <!-- /upgrade popup -->
 <script>
-    var baseUrl2 = "https://stageapi.workruit.com";
+    var environment = JSON.parse(sessionStorage.getItem("environment"));
+
     var userPlanStatus = {
         "async": true,
         "crossDomain": true,
-        "url": baseUrl2 + "/resume/user/" + JSON.parse(sessionStorage.getItem('userData')).userId +
+        "url": environment.baseUrl + "/resume/user/" + JSON.parse(sessionStorage.getItem('userData')).userId +
             "/checkUserStatus",
         "method": "GET",
         "headers": {
@@ -126,11 +126,9 @@
     } else {
         if (sessionStorage.getItem('userPlanStatus')) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
-                '../share/index.html');
+                './share.html');
         } else {
-            $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade').attr(
-                'href',
-                'javascript:void(0)');
+            $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade')
         }
     }
 </script>
@@ -156,7 +154,6 @@
         $('#profilePicEdit').attr('src', pic);
     }
     /* Logout functionality */
-    var apiUrl = 'https://stageapi.workruit.com/api';
     let sessionId2 = sessionStorage.getItem('sessionId');
 
     $('#signOut').on('click', function () {
@@ -164,7 +161,7 @@
         var settings = {
             "async": true,
             "crossDomain": true,
-            "url": apiUrl + "/user/" + userId + "/" + sessionId2 + "/resUserLogout",
+            "url": environment.baseApiUrl + "/user/" + userId + "/" + sessionId2 + "/resUserLogout",
             "method": "GET",
             "headers": {
                 "token": sessionId2,
@@ -175,7 +172,7 @@
         $.ajax(settings).done(function (response) {
             //console.log(response);
             sessionStorage.clear();
-            window.location.href = "../index.html";
+            window.location.href = window.location.origin + "/index.html";
         });
     });
 </script>

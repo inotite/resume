@@ -1,7 +1,6 @@
 {
     "baseUrl": "https://stageapi.workruit.com",
     "appUrl": "",
-    "appPath": "https://devresume.workruit.com",
     "baseApiUrl": "https://stageapi.workruit.com/api/",
     "baseResumeApiUrl": "https://stageapi.workruit.com/resume/",
     "authToken": "911ca088ab824095b82d3c98b32332e7",
@@ -16,13 +15,18 @@
             "updateProfileResume": "updateProfileResume"
         },
         "get": {
-            "resUserLogout": "resUserLogout"
+            "resUserLogout": "resUserLogout",
+            "emailVerificationForResumeUser": "employeer/emailVerificationForResumeUser/"
         }
     },
     "resumeServiceUrls": {
-        "post": {},
+        "post": {
+            "priceCalculation": "/priceCalculation"
+        },
         "get": {
-            "getResumePlans": "getResumePlans"
+            "getResumePlans": "getResumePlans",
+            "getCollegesInfo": "getCollegesInfo",
+            "getPaytmChecksum": "/getPaytmChecksum"
         }
     }
 }

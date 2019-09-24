@@ -44,10 +44,10 @@ function togNav() {
 var topBlock = $("#topBlock").offset().top;
 $(window).scroll(function () {
   if (($(window).scrollTop() > topBlock)) {
-    $("#header").addClass("on-scroll");
+    $(".header").addClass("on-scroll");
     $("header.on-scroll .resume-logo").attr('src', 'assets/images/workruit-resume-logo-color.svg')
   } else {
-    $("#header").removeClass("on-scroll");
+    $(".header").removeClass("on-scroll");
     $("header .resume-logo").attr('src', 'assets/images/workruit-resume-logo-white.svg')
   }
 });
