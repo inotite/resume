@@ -3262,7 +3262,7 @@ button span {
 
 .modal-header {
     display: flex;
-    justify-content: space-between !important;
+    /* justify-content: space-between !important; */
     align-items: center;
 }
 

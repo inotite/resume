@@ -252,7 +252,8 @@
                 // Price Calculation
                 var priceCalculationUrl = environment.baseResumeApiUrl + "user/" + userData.userId + environment
                     .resumeServiceUrls.post.priceCalculation;
-                priceCalculationObj.planId = priceCalculationObj.planInfo.planId
+                priceCalculationObj.planId = priceCalculationObj.planInfo.planId;
+                console.log(priceCalculationObj);
                 axios.post(priceCalculationUrl, priceCalculationObj)
                     .then(function (response) {
                         console.log(response);
