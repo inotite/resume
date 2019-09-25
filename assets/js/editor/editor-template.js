@@ -1,12 +1,7 @@
-const appDate = new Date();
-const apiAdminUrl = "https://stageapi.workruit.com/admin";
-const apiUrl = "https://stageapi.workruit.com/api";
-const userId = JSON.parse(sessionStorage.getItem('userData')).userId;
-const sessionId = sessionStorage.getItem('sessionId');
 const userStatus = sessionStorage.getItem('isPremiumUser');
 const planInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
 let resumeObj = JSON.parse(sessionStorage.getItem('userData'));
-const themeOptions = resumeObj.themeOptions ? resumeObj.themeOptions : null;
+const themeOptions = resumeObj.themeOptions ? typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions : null;
 const exp_total_count = 10;
 const edu_total_count = 10;
 const proj_total_count = 10;

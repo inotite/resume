@@ -230,9 +230,8 @@
     </script> -->
     <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/environment.js"></script>
     <script>
-        var environment = JSON.parse(sessionStorage.getItem("environment"));
-        var baseUrl = 'https://stageapi.workruit.com/resume/user/';
         var priceCalculationObj = {
             "planInfo": JSON.parse(atob(window.location.search.split('?')[1])),
             "promoId": '',
@@ -250,7 +249,7 @@
                 axios.defaults.headers.common['Token'] = sessionStorage.getItem('sessionId');
                 var userData = JSON.parse(sessionStorage.getItem("userData"));
                 // Price Calculation
-                var priceCalculationUrl = environment.baseResumeApiUrl + "user/" + userData.userId + environment
+                var priceCalculationUrl = baseResumeApiUrl + "user/" + userData.userId + environment
                     .resumeServiceUrls.post.priceCalculation;
                 priceCalculationObj.planId = priceCalculationObj.planInfo.planId;
                 console.log(priceCalculationObj);
@@ -282,9 +281,10 @@
                     console.log("procedd");
                     if (priceCalculationObj.planInfo.planId !== 1) {
                         // Paytm Checksum
-                        var checkSumUrl = environment.baseResumeApiUrl +"user/"+ userData.userId + "/plan/" +
+                        var checkSumUrl = baseResumeApiUrl + "user/" + userData.userId +
+                            "/plan/" +
                             priceCalculationObj
-                            .user_planId + environment.resumeServiceUrls.get.getPaytmChecksum;
+                            .user_planId + resumeServiceUrls.get.getPaytmChecksum;
                         axios.get(checkSumUrl)
                             .then(function (response) {
                                 // handle success

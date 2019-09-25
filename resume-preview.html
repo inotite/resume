@@ -108,9 +108,9 @@
 	<script type="text/javascript" src="assets/vendors/js/w3includes.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/jquery.loadTemplate.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
+	<script type="text/javascript" src="assets/js/environment.js"></script>
 	<script>
 		$(window).ready(function () {
-			var environment = JSON.parse(sessionStorage.getItem("environment"));
 			var shareParameter = window.location.search.substr(1).substring(1);
 			console.log(shareParameter);
 			if (shareParameter) {
@@ -118,7 +118,7 @@
 				$('.shareresume').removeClass('d-none');
 				var googleDocsUrl = "https://docs.google.com/viewer?url=";
 				var windowLocation = window.location;
-				var baseUrl = environment.baseApiUrl + "user/getShareFile?name=" + shareParameter
+				var baseUrl = baseApiUrl + "user/getShareFile?name=" + shareParameter
 				shareParameter ? true : window.location = '../../404.html'
 				console.log(shareParameter ? true : false);
 				$.get(baseUrl, function (data) {

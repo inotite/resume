@@ -1,34 +1,3 @@
-var environment;
-// plug it in, plug it in
-function load() {
-	var someData_notJSON = JSON.parse(data);
-	console.log("someData_notJSON", someData_notJSON[0].red);
-}
-
-function loadJSON(callback) {
-	var xobj = new XMLHttpRequest();
-	xobj.overrideMimeType("application/json");
-	xobj.open('GET', '../../environment.json', true);
-	xobj.onreadystatechange = function () {
-		if (xobj.readyState == 4 && xobj.status == "200") {
-			callback(xobj.responseText);
-		}
-	};
-	xobj.send(null);
-}
-
-function loadEnvironment() {
-	loadJSON(function (response) {
-		var actual_JSON = JSON.parse(response);
-		sessionStorage.setItem("environment", response);
-	});
-}
-if (!sessionStorage.getItem("environment")) {
-	loadEnvironment();
-	environment = JSON.parse(sessionStorage.getItem("environment"));
-} else {
-	environment = JSON.parse(sessionStorage.getItem("environment"));
-}
 // plug it in, plug it in
 (function ($) {
 
@@ -39,7 +8,7 @@ if (!sessionStorage.getItem("environment")) {
 			options: {
 				itemClass: 'awesome',
 				baseUrl: window.location.origin,
-				apiUrl: environment.baseUrl,
+				apiUrl: baseUrl,
 				navPath: "",
 				callMe: function () {
 					console.log("ring, ring...");
@@ -119,7 +88,7 @@ if (!sessionStorage.getItem("environment")) {
 						var settings = {
 							"async": true,
 							"crossDomain": true,
-							"url": environment.baseApiUrl + "/user/" + userId + "/" + sessionId + "/" + environment.serviceUrls.get.resUserLogout,
+							"url": baseApiUrl + "/user/" + userId + "/" + sessionId + "/" + serviceUrls.get.resUserLogout,
 							"method": "GET",
 							"headers": {
 								"token": sessionId,
@@ -147,7 +116,7 @@ if (!sessionStorage.getItem("environment")) {
 							var settings = {
 								"async": true,
 								"crossDomain": true,
-								"url": environment.baseApiUrl + environment.serviceUrls.post.updateShareName,
+								"url": baseApiUrl + serviceUrls.post.updateShareName,
 								"method": "POST",
 								"headers": {
 									"content-type": "application/json",
@@ -261,7 +230,7 @@ if (!sessionStorage.getItem("environment")) {
 					var settings = {
 						"async": true,
 						"crossDomain": true,
-						"url": environment.baseApiUrl + "/user/" + userId + "/" + environment.serviceUrls.post.updateResumeUserPassword,
+						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateResumeUserPassword,
 						"method": "POST",
 						"headers": {
 							"token": sessionId,
@@ -337,7 +306,7 @@ if (!sessionStorage.getItem("environment")) {
 						var settings = {
 							"async": true,
 							"crossDomain": true,
-							"url": environment.baseApiUrl + "/user/" + userId + "/" + environment.serviceUrls.post.updateProfileResume,
+							"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
 							"method": "POST",
 							"headers": {
 								"token": sessionId,
@@ -384,7 +353,7 @@ if (!sessionStorage.getItem("environment")) {
 					var settings = {
 						"async": true,
 						"crossDomain": true,
-						"url": environment.baseApiUrl + "/user/" + userId + "/" + environment.serviceUrls.post.updateProfileResume,
+						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
 						"method": "POST",
 						"headers": {
 							"token": sessionId,
@@ -430,7 +399,7 @@ if (!sessionStorage.getItem("environment")) {
 					var settings = {
 						"async": true,
 						"crossDomain": true,
-						"url": environment.baseApiUrl + "/user/" + userId + "/" + environment.serviceUrls.post.updateProfileResume,
+						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
 						"method": "POST",
 						"headers": {
 							"token": sessionId,
@@ -469,7 +438,7 @@ if (!sessionStorage.getItem("environment")) {
 				var imageSettings = {
 					"async": true,
 					"crossDomain": true,
-					"url": environment.baseApiUrl + environment.serviceUrls.post.uploadFile,
+					"url": baseApiUrl + serviceUrls.post.uploadFile,
 					"method": "POST",
 					"headers": {
 						"token": sessionId,

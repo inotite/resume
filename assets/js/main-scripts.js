@@ -3,35 +3,6 @@ function load() {
 	var someData_notJSON = JSON.parse(data);
 	console.log("someData_notJSON", someData_notJSON[0].red);
 }
-
-function loadJSON(callback) {
-	var xobj = new XMLHttpRequest();
-	xobj.overrideMimeType("application/json");
-	xobj.open('GET', '../../environment.json', true);
-	xobj.onreadystatechange = function () {
-		if (xobj.readyState == 4 && xobj.status == "200") {
-			callback(xobj.responseText);
-		}
-	};
-	xobj.send(null);
-}
-
-function loadEnvironment() {
-	loadJSON(function (response) {
-		var actual_JSON = JSON.parse(response);
-		sessionStorage.setItem("environment", response);
-	});
-}
-if (!sessionStorage.getItem("environment")) {
-	loadEnvironment();
-	var environment = JSON.parse(sessionStorage.getItem("environment"));
-} else {
-	var environment = JSON.parse(sessionStorage.getItem("environment"));
-}
-var loginStatus = sessionStorage.getItem("userData") !== null ? true : false;
-if (loginStatus === true) {
-	window.location.href = window.location.origin + '/app/dashboard/home.html';
-}
 (function ($) {
 
 	var paraCount = function () {
@@ -41,9 +12,9 @@ if (loginStatus === true) {
 			options: {
 				itemClass: 'awesome',
 				appPath: window.location.origin,
-				baseUrl2: environment.baseUrl,
+				baseUrl2: baseUrl,
 				navPath: "",
-				apiUrl: environment.baseApiUrl,
+				apiUrl: baseApiUrl,
 				callMe: function () {
 					console.log("ring, ring...");
 				}
@@ -141,11 +112,11 @@ if (loginStatus === true) {
 					var settings = {
 						"async": true,
 						"crossDomain": true,
-						"url": environment.baseApiUrl + environment.serviceUrls.post.loginResumeUser,
+						"url": baseApiUrl + serviceUrls.post.loginResumeUser,
 						"method": "POST",
 						"headers": {
-							'Access-Control-Allow-Origin': environment.baseApiUrl,
-							"token": environment.authToken,
+							'Access-Control-Allow-Origin': baseApiUrl,
+							"token": authToken,
 							"content-type": "application/json"
 						},
 						"processData": false,
@@ -237,10 +208,10 @@ if (loginStatus === true) {
 					var settings = {
 						"async": true,
 						"crossDomain": true,
-						"url": environment.baseApiUrl + environment.serviceUrls.post.signupResume,
+						"url": baseApiUrl + serviceUrls.post.signupResume,
 						"method": "POST",
 						"headers": {
-							"token": environment.authToken,
+							"token": authToken,
 							"content-type": "application/json"
 						},
 						"processData": false,
@@ -296,10 +267,10 @@ if (loginStatus === true) {
 					var settings = {
 						"async": true,
 						"crossDomain": true,
-						"url": environment.baseApiUrl + environment.serviceUrls.post.resetPasswordLinkToEmailResume,
+						"url": baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume,
 						"method": "POST",
 						"headers": {
-							"token": environment.authToken,
+							"token": authToken,
 							"content-type": "application/json",
 							"cache-control": "no-cache",
 						},

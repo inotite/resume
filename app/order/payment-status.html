@@ -162,11 +162,11 @@
     <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
     <script type="text/javascript" src="assets/vendors/js/a6a57723a3.js"></script>
+    <script type="text/javascript" src="../../assets/js/environment.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/moment.min.js"></script>
     <script>
         axios.defaults.headers.common['Token'] = sessionStorage.getItem('sessionId');
         $('#load-header').load('../includes/user-header.html');
-        var baseUrl = 'https://stageapi.workruit.com/resume/user/';
         var userData = JSON.parse(sessionStorage.getItem("userData"));
         var priceCalculationObj = {
             "planId": 1,

@@ -83,13 +83,13 @@
     </div>
 </div>
 <!-- /upgrade popup -->
+<script type="text/javascript" src="../../assets/js/environment.js"></script>
 <script>
-    var environment = JSON.parse(sessionStorage.getItem("environment"));
 
     var userPlanStatus = {
         "async": true,
         "crossDomain": true,
-        "url": environment.baseUrl + "/resume/user/" + JSON.parse(sessionStorage.getItem('userData')).userId +
+        "url": baseUrl + "/resume/user/" + JSON.parse(sessionStorage.getItem('userData')).userId +
             "/checkUserStatus",
         "method": "GET",
         "headers": {
@@ -161,7 +161,7 @@
         var settings = {
             "async": true,
             "crossDomain": true,
-            "url": environment.baseApiUrl + "/user/" + userId + "/" + sessionId2 + "/resUserLogout",
+            "url": baseApiUrl + "/user/" + userId + "/" + sessionId2 + "/resUserLogout",
             "method": "GET",
             "headers": {
                 "token": sessionId2,

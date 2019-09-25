@@ -315,15 +315,15 @@
   <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../assets/js/environment.js"></script>  
   <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
   <script>
     // getCollegesInfo
-    var environment = JSON.parse(sessionStorage.getItem("environment"));
 
     var getCollegesInfo = {
       "async": true,
       "crossDomain": true,
-      "url": environment.baseResumeApiUrl + environment.resumeServiceUrls.get.getCollegesInfo,
+      "url": baseResumeApiUrl + resumeServiceUrls.get.getCollegesInfo,
       "method": "GET",
       "headers": {
         "token": JSON.parse(sessionStorage.getItem('userData')).sessionId,
