@@ -64,7 +64,97 @@ var defaultSettings = [{
     status: false,
     text: 'Blog',
     dataText: 's-blog'
-}]
+}];
+let degreesAll = [];
+/* Job Functions Autocomplete */
+var jobFunctionsSettings = {
+    "async": true,
+    "crossDomain": true,
+    "url": apiAdminUrl + "/allJobFunctions",
+    "method": "GET",
+    "headers": {
+        "token": "911ca088ab824095b82d3c98b32332e7",
+    }
+}
+// console.log(apiAdminUrl + "/allJobFunctions");
+var jobFunctionsAll = new Array();
+$.ajax(jobFunctionsSettings).done(function (response) {
+
+    $.each(response.categoryArray, function (i1, object) {
+        $.each(object.categoryValues, function (i3, region) {
+            jobFunctionsAll.push({
+                "value": region.value,
+                "id": region.id
+            });
+        });
+    });
+
+    $("#allJobFunctions").autocomplete({
+        minLength: 0,
+        source: function (request, response) {
+            var results = $.ui.autocomplete.filter(jobFunctionsAll, request
+                .term);
+            response(results.slice(0, 10));
+            if (results.length <= 0) {
+                $('#allJobFunctions').attr('data-item-id', '');
+            }
+        },
+        select: function (event, ui) {
+            //console.log(ui.item)
+            $('#allJobFunctions').attr('data-item-id', ui.item.id);
+        }
+    }).focus(function () {
+        $(this).autocomplete("search");
+    });
+
+});
+/* Degrees Autocomplete */
+var degreesSettings = {
+    "async": true,
+    "crossDomain": true,
+    "url": apiAdminUrl + "/allDegrees",
+    "method": "GET",
+    "headers": {
+        "token": "911ca088ab824095b82d3c98b32332e7",
+    }
+}
+$.ajax(degreesSettings).done(function (response) {
+    //console.log(response.degrees[0].title);
+
+    $(response.degrees).each(function (k, object) {
+        degreesAll.push({
+            'id': response.degrees[k].degreeId,
+            'label': response.degrees[k].title,
+            'value': response.degrees[k].title,
+            'shortTitle': response.degrees[k].shortTitle
+        });
+    });
+
+    $(".degrees").autocomplete({
+        source: jobFunctionsAll,
+        minLength: 0,
+        source: function (request, response) {
+            var results = $.ui.autocomplete.filter(degreesAll, request.term);
+            response(results.slice(0, 10));
+        },
+        select: function (event, ui) {
+            $(this).attr({
+                'data-id': ui.item.id,
+                'data-shortTitle': ui.item.shortTitle
+            });
+        }
+    }).focus(function () {
+        $(this).autocomplete("search");
+    });
+
+    $(".degrees").each(function(idx, obj) {
+        var degree = 0;
+        var dataId = $(this).attr('data-id');
+        for ( ; degree < degreesAll.length && dataId != degreesAll[degree].id ; ++degree) ;
+        $(this).val(degreesAll[degree].label);
+    });
+
+});
 var settings = resumeObj.themeOptions ? resumeObj.themeOptions.settings : defaultSettings;
 $(window).ready(function () {
     $('.gender').niceSelect();
@@ -75,10 +165,10 @@ $(window).ready(function () {
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.png")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
-        $("page[size='a4']").css('background-size', 'contain');
-        $("page[size='a4']").css('background-position', '0px 700px');
+        $("page[size='a4']").css('background-size', '40%');
+        $("page[size='a4']").css('background-position', 'center 0');
     }
     var selectedFont = resumeObj.themeOptions ? resumeObj.themeOptions.font : fonts[0].fontFamily;
     var selectedcolor = resumeObj.themeOptions ? resumeObj.themeOptions.color : 'theme-black';
@@ -117,7 +207,7 @@ $(window).ready(function () {
         startView: "months",
         minViewMode: "months"
     });
-    console.log("A");
+    
     for (let index = 0; index < settings.length; index++) {
         const settingItem = settings[index];
         const settingLink = `<a class="dropdown-item action-item mt-0 font-10pt" href="#" data-setting="${settingItem.dataText}">
@@ -126,7 +216,7 @@ $(window).ready(function () {
                         </a>`;
         $('.actions').append(settingLink)
     }
-    console.log("B");
+    
     $('.action-item').on('click', function () {
         // console.log($('.action-item').index(this));
         var actionItemIndex = $('.action-item').index(this);
@@ -243,28 +333,19 @@ $(window).ready(function () {
     });
     // bind userData to Resume
 
-    $('#previewResume').on('click', function () {
-        $('.resume-preview').removeClass('d-none');
-        $('#previewResume').addClass('d-none');
-        $('#previewBack').removeClass('d-none');
-        $('.editorNav').addClass('d-none');
-        $('.previewNav').css('z-index', '2');
-        
+    var showMultiplePages = function() {
         renderPages();
 
         $('#resume-body').hide();
 
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.png")');
         $("page[size='a4']").css('background-repeat', 'no-repeat');
-        $("page[size='a4']").css('background-size', 'contain');
+        $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center');
-    });
-    $('#previewBack').on('click', function () {
-        $('.resume-preview').addClass('d-none');
-        $('#previewResume').removeClass('d-none');
-        $('#previewBack').addClass('d-none');
-        $('.editorNav').removeClass('d-none');
+    }
 
+    var hideMultiplePages = function() {
+        
         var length = $('page').length;
 
         console.log(length);
@@ -275,11 +356,34 @@ $(window).ready(function () {
 
         $('#resume-body').show();
         
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.png")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
-        $("page[size='a4']").css('background-size', 'contain');
-        $("page[size='a4']").css('background-position', '0px 700px');
+        $("page[size='a4']").css('background-size', '40%');
+        $("page[size='a4']").css('background-position', 'center 0');
+    }
 
+    $('#previewResume').on('click', function () {
+        $('.resume-preview').removeClass('d-none');
+        $('#previewResume').addClass('d-none');
+        $('#previewBack').removeClass('d-none');
+        $('.editorNav').addClass('d-none');
+        $('.previewNav').css('z-index', '2');
+        $('#saveResume').addClass('d-none');
+
+        
+        bindUserDataForSave();
+        saveUserProfile(postObj);
+
+        showMultiplePages();
+    });
+    $('#previewBack').on('click', function () {
+        $('.resume-preview').addClass('d-none');
+        $('#previewResume').removeClass('d-none');
+        $('#previewBack').addClass('d-none');
+        $('.editorNav').removeClass('d-none');
+        $('#saveResume').removeClass('d-none');
+
+        hideMultiplePages();
     });
 
     function ratingCircle() {
@@ -466,7 +570,7 @@ $(window).ready(function () {
                 'placeholder',
                 'Enter details about your education here');
             $('.month-picker').datepicker({
-                format: "M-yyyy",
+                format: "M yyyy",
                 endDate: moment(appDate).format('MMM-YYYY'),
                 startView: "months",
                 minViewMode: "months"
@@ -580,7 +684,7 @@ $(window).ready(function () {
                 'placeholder',
                 'Role');
             $('.month-picker').datepicker({
-                format: "M-yyyy",
+                format: "M yyyy",
                 endDate: moment(appDate).format('MMM-YYYY'),
                 startView: "months",
                 minViewMode: "months"
@@ -838,8 +942,18 @@ $(window).ready(function () {
         saveUserProfile(postObj);
     });
 
-    $('#downloadResume').on('click', function () {
-        savePdf()
+    $('#downloadResume').on('click', async function () {
+        if (!$('.editorNav').hasClass('d-none')) {
+            bindUserDataForSave();
+            saveUserProfile(postObj);
+            showMultiplePages();
+            await savePdf();
+            hideMultiplePages();
+        }
+        else {
+            console.log("hey, here!");
+            await savePdf();
+        }
     });
 
     function bindUserDataForSave() {
@@ -1200,9 +1314,9 @@ $(window).ready(function () {
             $('#resume-body #' + id).find('p[data-content="edu_description"]').text(resumeObj
                 .userEducationResSet[i].description);
             $('#resume-body #' + id).find('input[data-content="degree_title"]').attr({
-                'data-id': resumeObj.userEducationResSet[i].degree.degreeId,
-                'data-shortTitle': resumeObj.userEducationResSet[i].degree.shortTitle
-            }).val(resumeObj.userEducationResSet[i].degree.title);
+                'data-id': resumeObj.userEducationResSet[i].degree,
+                // 'data-shortTitle': resumeObj.userEducationResSet[i].degree.shortTitle
+            }).val();
             // $('#resume-body #' + id).find('span[data-content="degree_title"]').attr('data-id', resumeObj.userEducationResSet[i].degree.degreeId);
             // $('#resume-body #' + id).find('span[data-content="degree_title"]').attr('data-shorttitle', resumeObj.userEducationResSet[i].degree.shortTitle);
         });
@@ -1309,90 +1423,7 @@ $(window).ready(function () {
         });
     }
     // services
-    let degreesAll = [];
-    /* Job Functions Autocomplete */
-    var jobFunctionsSettings = {
-        "async": true,
-        "crossDomain": true,
-        "url": apiAdminUrl + "/allJobFunctions",
-        "method": "GET",
-        "headers": {
-            "token": "911ca088ab824095b82d3c98b32332e7",
-        }
-    }
-    // console.log(apiAdminUrl + "/allJobFunctions");
-    var jobFunctionsAll = new Array();
-    $.ajax(jobFunctionsSettings).done(function (response) {
-
-        $.each(response.categoryArray, function (i1, object) {
-            $.each(object.categoryValues, function (i3, region) {
-                jobFunctionsAll.push({
-                    "value": region.value,
-                    "id": region.id
-                });
-            });
-        });
-
-        $("#allJobFunctions").autocomplete({
-            minLength: 0,
-            source: function (request, response) {
-                var results = $.ui.autocomplete.filter(jobFunctionsAll, request
-                    .term);
-                response(results.slice(0, 10));
-                if (results.length <= 0) {
-                    $('#allJobFunctions').attr('data-item-id', '');
-                }
-            },
-            select: function (event, ui) {
-                //console.log(ui.item)
-                $('#allJobFunctions').attr('data-item-id', ui.item.id);
-            }
-        }).focus(function () {
-            $(this).autocomplete("search");
-        });
-
-    });
     var self = this;
-    /* Degrees Autocomplete */
-    var degreesSettings = {
-        "async": true,
-        "crossDomain": true,
-        "url": apiAdminUrl + "/allDegrees",
-        "method": "GET",
-        "headers": {
-            "token": "911ca088ab824095b82d3c98b32332e7",
-        }
-    }
-    $.ajax(degreesSettings).done(function (response) {
-        //console.log(response.degrees[0].title);
-
-        $(response.degrees).each(function (k, object) {
-            degreesAll.push({
-                'id': response.degrees[k].degreeId,
-                'label': response.degrees[k].title,
-                'value': response.degrees[k].title,
-                'shortTitle': response.degrees[k].shortTitle
-            });
-        });
-
-        $(".degrees").autocomplete({
-            source: jobFunctionsAll,
-            minLength: 0,
-            source: function (request, response) {
-                var results = $.ui.autocomplete.filter(degreesAll, request.term);
-                response(results.slice(0, 10));
-            },
-            select: function (event, ui) {
-                $(this).attr({
-                    'data-id': ui.item.id,
-                    'data-shortTitle': ui.item.shortTitle
-                });
-            }
-        }).focus(function () {
-            $(this).autocomplete("search");
-        });
-
-    });
 
     $('.skills').on('keydown', function () {
         var fieldVal = $(this).text();
@@ -1432,11 +1463,11 @@ $(window).ready(function () {
     function saveUserProfile(applicantData) {
         if (applicantData.education.length) {
             var educationValidArray = applicantData.education.filter(function (item, index) {
-                return !item.institution && !item.location && !item.degree && !item
-                    .fieldOfStudy && !item.endDate && !item.startDate;
+                return !(!item.institution && !item.location && !item.degree && !item
+                    .fieldOfStudy && !item.endDate && !item.startDate);
             });
-            console.log(educationValidArray);
-            if (!!educationValidArray.length) {
+            // console.log(educationValidArray);
+            if (educationValidArray.length == 0) {
                 // var errorMessage = "Please fill the all details in education";
                 // $('#newErrorMessageID .message-text').html(errorMessage)
                 // $('#newErrorMessageID').fadeIn().delay(2000)
@@ -1461,12 +1492,14 @@ $(window).ready(function () {
             }
         }
         if (applicantData.experience.length) {
-            experienceValidArray = applicantData.experience.filter(function (item, index) {
+            // console.log("Experience", applicantData.experience);
+            var experienceValidArray = applicantData.experience.filter(function (item, index) {
                 // return false;
-                return !item.jobTitle && !item.company && !item.endDate && !item.jobTitle && !item.location && !
-                    item.startDate;
+                return !(!item.jobTitle && !item.company && !item.endDate && !item.jobTitle && !item.location && !
+                    item.startDate);
             });
-            if (!!experienceValidArray.length) {
+            console.log("Experience", experienceValidArray);
+            if (experienceValidArray.length == 0) {
                 // var errorMessage = "Please fill the all details in experience";
                 // $('#newErrorMessageID .message-text').html(errorMessage)
                 // $('#newErrorMessageID').fadeIn().delay(2000)
@@ -1476,7 +1509,7 @@ $(window).ready(function () {
                 // return false;
                 applicantData.experience = [];
             } else {
-                applicantData.experience = applicantData.experience.map(function (item, index) {
+                applicantData.experience = experienceValidArray.map(function (item, index) {
                     return {
                         company: item.company,
                         description: item.description,
@@ -1490,13 +1523,12 @@ $(window).ready(function () {
             }
         }
         if (applicantData.academic.length) {
-            academicValidArray = applicantData.academic.filter(function (item, index) {
+            var academicValidArray = applicantData.academic.filter(function (item, index) {
                 // return false;
-                return !item.description && !item.endDate && !item.institution && !item
-                    .location && !item.startDate && !item.projectTitle && !item.role;
+                return !(!item.description && !item.endDate && !item.institution && !item
+                    .location && !item.startDate && !item.projectTitle && !item.role);
             });
-            console.log(academicValidArray);
-            if (!!academicValidArray.length) {
+            if (academicValidArray.length == 0) {
                 // var errorMessage = "Please fill the all details in academic project";
                 // $('#newErrorMessageID .message-text').html(errorMessage)
                 // $('#newErrorMessageID').fadeIn().delay(2000)
@@ -1506,7 +1538,7 @@ $(window).ready(function () {
                 // return false;
                 applicantData.academic = [];
             } else {
-                applicantData.academic = applicantData.academic.map(function (item, index) {
+                applicantData.academic = academicValidArray.map(function (item, index) {
                     return {
                         description: item.description,
                         endDate: item.endDate,
@@ -1521,12 +1553,12 @@ $(window).ready(function () {
             }
         }
         if (applicantData.skill.length) {
-            academicValidArray = applicantData.skill.filter(function (item, index) {
-                return false;
-                // return !item.skillName || !item.skill_percentage;
+            var skillValidArray = applicantData.skill.filter(function (item, index) {
+                // return false;
+                return !(!item.skillName && !item.skill_percentage);
             });
-            console.log(academicValidArray);
-            if (!!academicValidArray.length) {
+            // console.log(academicValidArray);
+            if (skillValidArray.length == 0) {
                 // var errorMessage = "Please fill the skills";
                 // $('#newErrorMessageID .message-text').html(errorMessage)
                 // $('#newErrorMessageID').fadeIn().delay(2000)
@@ -1536,7 +1568,7 @@ $(window).ready(function () {
                 // return false;
                 applicantData.skill = [];
             } else {
-                applicantData.skill = applicantData.skill.map(function (item, index) {
+                applicantData.skill = skillValidArray.map(function (item, index) {
                     return {
                         skillName: item.skillName,
                         skill_percentage: item.skill_percentage
@@ -1573,14 +1605,14 @@ $(window).ready(function () {
                         $('#saveResume').removeAttr('pointer-events');
                     });
                 localStorage.setItem('userData', JSON.stringify(response.data));
-                console.log("Ajax response");
-                console.log(response.data);
+                // console.log("Ajax response");
+                // console.log(response.data);
 
                 var logoImg = $('input[data-content="picture"]').get(0).files[0];
                 if (logoImg) {
                     saveUserPic();
                 }
-                savePdf();
+                // savePdf();
                 getShareNameFile();
 
             } else {
@@ -1623,6 +1655,7 @@ $(window).ready(function () {
         $('.loading-container').show();
         if (planInfo) {
             var eles = $('page');
+            console.log(eles);
             var pageCount = eles.length;
             var doc = new jsPDF('p', 'cm', [89.1, 63], true);
             // watermark resume
@@ -1644,6 +1677,12 @@ $(window).ready(function () {
             for ( var i = 1 ; i < pageCount ; ++i ) {
                 var ele = eles[i];
                 $(ele).find('.border-dashed').removeClass('border-dashed');
+                
+                $(ele).css('background-image', '');
+                $(ele).css('background-repeat', '');
+                $(ele).css('background-size', '');
+                $(ele).css('background-position', '');
+
                 console.log(ele);
                 /* ele.css({'height': ''});
                 ele.css({'max-height': ''});*/
@@ -1652,25 +1691,42 @@ $(window).ready(function () {
                     allowTaint: true,
                     logging: true,
                     useCORS: true,
+                    taintTest: false,
+                    scale: 3
+                });
+                
+                const data = await canvas.toDataURL("image/jpeg");
+                // console.log("Raw", data);
+                
+                if (i > 1) {
+                    doc.addPage();
+                    docWaterMark.addPage();
+                }
+                doc.setPage(i);
+                docWaterMark.setPage(i);
+
+                var image = new Image();
+                image.src = data;
+                doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
+                
+                $(ele).css('background-image', 'url("watermarkworkruit.png")');
+                $(ele).css('background-repeat', 'no-repeat');
+                $(ele).css('background-size', '40%');
+                $(ele).css('background-position', 'center');
+
+                canvas = await html2canvas(ele, {
+                    allowTaint: true,
+                    logging: true,
+                    useCORS: true,
+                    taintTest: false,
                     scale: 3
                 });
 
-                if (i > 1) {
-                    doc.addPage();
-                }
-                doc.setPage(i);
-                
-                const data = await canvas.toDataURL("image/jpeg");
-                console.log("Raw", data);
-                var image = new Image();
-                image.src = data;
-
-                doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
                 // const dataWaterMark = data;
-                // var waterMarkImage = new Image();
-                // waterMarkImage.src = dataWaterMark;
+                var waterMarkImage = new Image();
+                waterMarkImage.src = await canvas.toDataURL("image/jpeg");
                 // docWaterMark = addWaterMark(docWaterMark);
-                // docWaterMark.addImage(waterMarkImage, 'PNG', -0.3, 0.5, 0, 0, '', 'FAST');
+                docWaterMark.addImage(waterMarkImage, 'JPEG', -0.3, 0.5, 0, 0);
             
                 ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
 
@@ -1699,32 +1755,33 @@ $(window).ready(function () {
                     //handle error
                     // console.log(response);
                 });
-            // var pdfOutWaterMark = docWaterMark.output('blob');
-            // var formWatermark = new FormData();
-            // formWatermark.append("type", "watermark");
-            // formWatermark.append("userId", userId);
-            // formWatermark.append('file', pdfOutWaterMark);
-            // axios({
-            //         method: 'post',
-            //         url: apiUrl + "/uploadFile",
-            //         data: formWatermark,
-            //         config: {
-            //             headers: {
-            //                 "token": sessionId,
-            //                 'Content-Type': 'multipart/form-data'
-            //             }
-            //         }
-            //     })
-            //     .then(function (response) {
-            //         //handle success
-            //         // console.log(response);
-            //     })
-            //     .catch(function (response) {
-            //         //handle error
-            //         // console.log(response);
-            //     });
+            var pdfOutWaterMark = docWaterMark.output('blob');
+            var formWatermark = new FormData();
+            formWatermark.append("type", "watermark");
+            formWatermark.append("userId", userId);
+            formWatermark.append('file', pdfOutWaterMark);
+            axios({
+                    method: 'post',
+                    url: apiUrl + "/uploadFile",
+                    data: formWatermark,
+                    config: {
+                        headers: {
+                            "token": sessionId,
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                })
+                .then(function (response) {
+                    //handle success
+                    // console.log(response);
+                })
+                .catch(function (response) {
+                    //handle error
+                    // console.log(response);
+                });
             if (planInfo && planInfo[0].planId == 1) {
-                doc.save(userId + '_resume.pdf');
+                docWaterMark.save(userId + '_resume.pdf');
+                doc.save(resumeObj.firstname + '_resume.pdf');
             } else {
                 doc.save(resumeObj.firstname + '_resume.pdf');
             }
