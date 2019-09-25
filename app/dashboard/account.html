@@ -7,8 +7,7 @@
   <meta name="theme-color" content="#ffffff">
   <title>Workruit — My Account</title>
   <script>
-    let sessionId = sessionStorage.getItem('sessionId');
-    if (!sessionId) {
+    if (!sessionStorage.getItem('sessionId')) {
       window.location.href = window.location.origin + "/index.html";
     }
   </script>

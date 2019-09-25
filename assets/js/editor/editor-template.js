@@ -1,3 +1,4 @@
+const userId = JSON.parse(sessionStorage.getItem('userData')).userId;
 const userStatus = sessionStorage.getItem('isPremiumUser');
 const planInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
 let resumeObj = JSON.parse(sessionStorage.getItem('userData'));

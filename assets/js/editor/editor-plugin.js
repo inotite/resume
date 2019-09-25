@@ -7,10 +7,10 @@
 
 			options: {
 				itemClass: 'awesome',
-				baseUrl: "https://devresume.workruit.com",
+				baseUrl: window.location.origin,
 				navPath: "",
-				apiUrl: "https://stageapi.workruit.com/api",
-				apiAdminUrl: "https://stageapi.workruit.com/admin",
+				apiUrl: baseApiUrl,
+				apiAdminUrl: apiAdminUrl,
 				callMe: function () {
 					console.log("ring, ring...");
 				}
