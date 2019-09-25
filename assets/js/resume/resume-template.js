@@ -71,12 +71,12 @@ $(window).ready(function () {
     $('.gender').niceSelect();
     if ((planInfo && planInfo[0].planId == 1) || planInfo == null) {
         // $('#resume-body').css({
-        //     'background-image': 'url("watermarkworkruit.svg")',
+        //     'background-image': 'url("../../images/resume/svg/watermarkworkruit.svg")',
         //     'background-position': 'center',
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/svg/watermarkworkruit.svg")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', 'contain');
         $("page[size='a4']").css('background-position', '0px 700px');
@@ -255,7 +255,7 @@ $(window).ready(function () {
 
         $('#resume-body').hide();
 
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/svg/watermarkworkruit.svg")');
         $("page[size='a4']").css('background-repeat', 'no-repeat');
         $("page[size='a4']").css('background-size', 'contain');
         $("page[size='a4']").css('background-position', 'center');
@@ -276,7 +276,7 @@ $(window).ready(function () {
 
         $('#resume-body').show();
 
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.svg")');
+        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/svg/watermarkworkruit.svg")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', 'contain');
         $("page[size='a4']").css('background-position', '0px 700px');
