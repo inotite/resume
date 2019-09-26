@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="63px" height="62px" viewBox="0 0 63 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="14" y="18" width="36" height="23" rx="1.8"></rect>
+    </defs>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.800000012">
+        <g id="employer-design-04" transform="translate(-936.000000, -3260.000000)">
+            <g id="key-features" transform="translate(133.000000, 2728.000000)">
+                <g id="in-app-messenger" transform="translate(800.000000, 532.000000)">
+                    <g id="icon" transform="translate(3.000000, 0.000000)">
+                        <g id="Group-12">
+                            <ellipse id="Oval-2" fill="#540D6E" opacity="0.25" cx="31.5" cy="31" rx="31.5" ry="31"></ellipse>
+                            <polygon id="Rectangle-12" fill="#540D6E" points="28.4734701 37 36.5265299 37 38 48 27 48"></polygon>
+                            <path d="M25,48 L40,48" id="Line" stroke="#540D6E" stroke-width="2" stroke-linecap="round"></path>
+                            <g id="Rectangle-11">
+                                <use fill="#540D6E" fill-rule="evenodd" xlink:href="#path-1"></use>
+                                <rect stroke="#D4C2DB" stroke-width="2" x="13" y="17" width="38" height="25" rx="1.8"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

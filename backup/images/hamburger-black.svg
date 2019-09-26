@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="18px" viewBox="0 0 25 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>hamburger-black</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="development" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="hamburger-black" stroke-width="2" stroke="#000000">
+            <g id="menu">
+                <path d="M0.25390625,9 L23.6902544,9" id="Line"></path>
+                <path d="M0.25390625,1 L23.6902544,1" id="Line-Copy"></path>
+                <path d="M0.25390625,17 L23.6902544,17" id="Line-Copy-2"></path>
+            </g>
+        </g>
+    </g>
+</svg>

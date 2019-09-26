@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="40px" viewBox="0 0 42 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>notification / not-active copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="8" cy="8" r="8"></circle>
+        <path d="M16.0483336,35.4153669 C14.3302573,35.4153669 12.9369033,34.0232728 12.9369033,32.3042558 L19.1591255,32.3042558 C19.1594446,34.0232728 17.7662503,35.4153669 16.0483336,35.4153669 Z M25.7210033,27.3829447 C26.4170261,27.7205003 26.9011397,28.4303597 26.9011397,29.2606375 L26.9011397,29.4595199 L26.9003442,29.4595199 L26.9003442,29.4593597 C26.9003442,30.6139022 25.9707761,30.6898042 24.8245261,30.6898042 L8.01227606,30.6898042 C6.86554879,30.6898042 5.93693515,30.6139022 5.93693515,29.4593597 L5.93693515,29.2604774 C5.93693515,28.4301996 6.42120788,27.7192192 7.1172306,27.3819839 L7.77634424,21.6568303 C7.77634424,17.4654088 10.721117,13.9673532 14.6412761,13.1418794 L14.6412761,10.9194251 C14.6412761,9.93141857 15.4372079,9.13028458 16.4194351,9.13028458 C17.4010261,9.13028458 18.1969579,9.93141857 18.1969579,10.9194251 L18.1969579,13.1420395 C22.1172761,13.9673532 25.0618897,17.4650885 25.0618897,21.6569905 L25.7210033,27.3829447 Z" id="path-3"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="notification-/-not-active-copy">
+            <g id="badge" transform="translate(26.000000, 0.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#337AB7" xlink:href="#path-1"></use>
+                <g id="color-/-blue" mask="url(#mask-2)" fill="#337AB7">
+                    <g transform="translate(-75.000000, -60.000000)" id="Rectangle-19-Copy">
+                        <rect x="0" y="0" width="150" height="150"></rect>
+                    </g>
+                </g>
+                <text id="3" mask="url(#mask-2)" font-family="Lato-Regular, Lato" font-size="10" font-weight="normal" fill="#FFFFFF">
+                    <tspan x="5.2" y="12">3</tspan>
+                </text>
+            </g>
+            <mask id="mask-4" fill="white">
+                <use xlink:href="#path-3"></use>
+            </mask>
+            <use id="Mask" fill="#337AB7" transform="translate(16.419037, 22.272826) rotate(-330.000000) translate(-16.419037, -22.272826) " xlink:href="#path-3"></use>
+            <g id="color-/-blue" mask="url(#mask-4)" fill="#337AB7">
+                <g transform="translate(-55.000000, -67.000000)" id="Rectangle-19-Copy">
+                    <rect x="0" y="0" width="150" height="150"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

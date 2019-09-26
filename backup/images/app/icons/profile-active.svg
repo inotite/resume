@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>icons / profile --active</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M22.5,27.3808002 C17.3159602,28.7325404 13.475883,33.3077767 13.475883,34.9634966 L36.5546875,34.9634966 C36.5546875,33.2878382 33.4265551,28.9325619 28.61579,27.4796696 L28.61579,25.3134483 C30.0559198,24.2939297 31,22.5871869 31,20.6537771 C31,17.5312822 28.5375661,15 25.5,15 C22.4624339,15 20,17.5312822 20,20.6537771 C20,22.6385378 20.9948954,24.3844313 22.5,25.3932199 L22.5,27.3808002 L22.5,27.3808002 Z" id="path-1"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons-/-profile---active">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#337AB7" xlink:href="#path-1"></use>
+            <g id="color-/-blue" mask="url(#mask-2)" fill="#337AB7">
+                <g transform="translate(-47.000000, -62.000000)" id="Rectangle-19-Copy">
+                    <rect x="0" y="0" width="150" height="150"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

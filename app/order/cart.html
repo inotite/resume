@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#ffffff">
+    <title>My Cart — Workruit resume</title>
+    <script>
+        if (!sessionStorage.getItem('sessionId')) {
+            window.location.href = window.location.origin + "/index.html";
+        }
+    </script>
+    <link rel='shortcut icon' type='image/x-icon' href='../../favicon.png' />
+    <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/css/custom.css" />
+</head>
+
+<body>
+    <div id="load-header"></div>
+
+    <div class="content price-summary-box d-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 order-md-1 invisible">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-3 text-uppercase">Billing Details</h4>
+
+                            <div class="form">
+                                <form id="loginForm" name="loginForm" role="form" autocomplete="off" novalidate>
+                                    <!-- First Name -->
+                                    <div class="row">
+                                        <div class="form-group col">
+                                            <input type="text" class="form-control with-icon icon-user transition"
+                                                placeholder="First Name" name="firstname" minlength="3" maxlength="50"
+                                                autofocus autocomplete="off" required />
+                                        </div>
+                                        <!-- Last Name -->
+                                        <div class="form-group col">
+                                            <input type="text" class="form-control with-icon icon-user transition"
+                                                placeholder="Last Name" name="lastname" minlength="3" maxlength="50"
+                                                autofocus autocomplete="off" required />
+                                        </div>
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <input type="email" class="form-control with-icon icon-mail transition"
+                                            name="email" placeholder="Email address" autofocus autocomplete="off"
+                                            required />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 order-md-2 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Your Items</h4>
+                            <div class="border p-3 mb-3">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p class="text-bold m-0" id="planTitle">Plan A Registration</p>
+                                        <!-- <br> -->
+                                        <!-- <small><a href="" class="text-muted">View Plane Details</a></small> -->
+                                        <!-- <hr> -->
+                                        <!-- <select class="custom-select custom-select-sm w-75">
+                                            <option selected>Stater</option>
+                                            <option value="1">Most popular</option>
+                                            <option value="2">Regular</option>
+                                        </select> -->
+                                        <p class="text-muted mb-1"><span id="timePeriod">0 Days</span> at ₹ <span
+                                                id="netprice">000.00</span></p>
+                                        <small><a href="" class="text-muted" data-toggle="modal"
+                                                data-target="#termsandprivacy">Terms and Privacy</a></small>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <p class="text-bold m-0">₹<span id="finalPrice">000.00</span></p>
+                                        <!-- <p class="text-bold text-green font-14">25% off</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prices-purchase">
+                                <div class="price-summary">
+                                    <div class="subtotal text-ninth d-flex justify-content-between align-center">
+                                        <div class="">Subtotal</div>
+                                        <div class="price text-right" id="subtotal">₹000.00</div>
+                                    </div>
+                                    <div class="taxes-fees text-ninth d-flex justify-content-between align-center">
+                                        <span tabindex="0" class="text-default" id="">Taxes <small>GST <span
+                                                    id="GSTPercentage"></span></small></span>
+                                        <div class="price text-right" id="taxFees">₹00.00</div>
+                                    </div>
+                                    <div class="promo-add-link d-flex justify-content-between align-center mb-2"><a
+                                            class="text-default" data-toggle="modal" data-target="#promoCodeModal">Have
+                                            a
+                                            promo code?</a>
+                                        <div class="price text-right"><span id="promo-price" class="text-green"></span>
+                                        </div>
+                                    </div>
+                                    <div class="total-banner"><label>Total</label>
+                                        <div class="price text-secondary" id="totalprice">₹000.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <button id="proceed_btn" class="btn btn-outline-primary mt-2">Proceed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="promoCodeModal" tabindex="-1" role="dialog" aria-labelledby="promoCodeModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header pb-0">
+                    <h5 id="promoCodeLabel">Have a promo code?</h5>
+                    <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body mb-3" style="height: auto">
+                    <form>
+                        <div class="form-group mb-3">
+                            <label for="PromoCode">Promo Code</label>
+                            <input type="text" class="form-control" id="PromoCode" aria-describedby="emailHelp"
+                                placeholder="Enter Promo Code" autocomplete="off" value="" maxlength="8">
+                            <span id="promo-validation" class="text-capitalize text-danger"></span>
+                        </div>
+                        <span class="btn btn-primary applyPromo">Apply</span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="taxAndFees" tabindex="-1" role="dialog" aria-labelledby="taxAndFees" aria-hidden="true">
+        <div role="dialog" aria-label="TaxesFees-modal-dialog" id="TaxesFees-modal-dialog" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pb-0">
+                    <h2 class="modal-title">Taxes &amp; Fees</h2>
+                    <button tabindex="0" type="button" data-action="close" class="close mr-2" data-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="charges-view">
+                        <div class="charges-content">
+                            <div>
+                                <p class="headline-primary mb-0">Taxed items</p>
+                                <p class="text-muted m-0">Products not listed are not subject to tax</p>
+                                <hr class="my-1">
+                                <div class="taxed-item">
+                                    <h5 class="headline-primary mb-0">Provided by workruit.com, LLC</h5>
+                                    <p class="text-muted">Stater</p>
+                                </div>
+                            </div>
+                            <dl class="taxes-row d-flex justify-content-between align-center mb-0">
+                                <dt class="headline-primary">Total taxes</dt>
+                                <dd>₹67.35</dd>
+                            </dl>
+                            <dl class="d-flex justify-content-between align-center mb-0">
+                                <dt>Fees</dt>
+                                <dd>₹0.00</dd>
+                            </dl>
+                            <dl class="total-row total-banner ">
+                                <dt>
+                                    <h3 class="headline-primary">Total</h3>
+                                </dt>
+                                <dd class="total-price">
+                                    <h3 id="total-price">₹67.35</h3>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="termsandprivacy" tabindex="-1" role="dialog" aria-labelledby="taxAndFees"
+        aria-hidden="true">
+        <div role="dialog" aria-label="termsandprivacy-modal-dialog" id="termsandprivacy-modal-dialog"
+            class="modal-dialog termsandprivacy-modal">
+            <div class="modal-content">
+                <div class="modal-header pl-5">
+                    <h2 class="modal-title">Terms and Privacy</h2>
+                    <button tabindex="0" type="button" data-action="close" class="close mr-2" data-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="termsandprivacy-content">
+                        <ul>
+                            <li>Discounts are not applicable to ICANN fees, taxes, transfers, premium domains, premium
+                                templates, Search Engine Visibility advertising budget, gift cards or Trademark
+                                Holders/Priority Pre-registrations or pre-registration fees. Cannot be used in
+                                conjuction with any other offer, sale, discount or promotion. After the initial purchase
+                                term, discounted products will renew at the then-current renewal list price, Offer good
+                                towards new product purchases only and connot be used on product renewals.</li>
+                            <li>Private Registration will renew at the regular renewal rate.</li>
+                            <li>Savings are based on workruit regular pricing.</li>
+                            <li>Annual discounts available on NEW purchases only.</li>
+                            <li>Special offer price valid for the specified offer term of one new or transfer domain per
+                                customer. After the initial purchase term, additional years or domains may be purchased
+                                at the regular or then-current price. Discount offers cannot be used in conjunction with
+                                any other offer or promotion. Not all payment methods valid with this offer, acceptable
+                                payments will display in cart at checkout. Your discount will be applied in your
+                                shopping cart. After the initial purchase term, discounted products will renew at the
+                                then-current renewal rate. workruit reserves the right to deny use of this offer and/or
+                                cancel domains purchased using this offer if the offer is abused or used fraudulently,
+                                as determined by workruit in its sole discretion.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="paytm-checkout"></div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
+    <!-- <script>
+        window.jQuery || document.write('<script src="../../assets/vendors/js/jquery.min.js"><\/script>')
+    </script> -->
+    <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/environment.js"></script>
+    <script type="text/javascript" src="../../assets/js/cart.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

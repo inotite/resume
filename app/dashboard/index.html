@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#ffffff">
+    <title>Workruit — My Account</title>
+    <script>
+        let sessionId = sessionStorage.getItem('sessionId');
+        if (!sessionId) {
+            window.location.href = window.location.origin + "/index.html";
+        }
+    </script>
+    <link rel='shortcut icon' type='image/x-icon' href='../../favicon.png' />
+    <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/css/custom.css" />
+</head>
+
+<body class="account-page">
+    <div id="load-header"></div>
+    <div class="loading-container">
+        <img src="../../assets/images/oval.svg" style="width:55px">
+    </div>
+    <div id="newSuccessMessageID" class="alert alert-success">
+        <span>You are still required to verify your email address within 48 hours to use all the features.</span>
+        <!-- <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
+        width="10" /></a> -->
+    </div>
+
+
+    <div class="content w-100">
+        <div class="container">
+
+            <!-- Create Resume -->
+            <div class="row justify-content-center create-resume-container align-items-center"
+                id="createResumeContainer">
+                <div class="col-md-6 create-resume-text">
+                    <h1>My Resume</h1>
+                    <h2>Get started by creating your resume</h2>
+                    <a href="../create/index.html?edit"><button type="button"
+                            class="btn btn-primary btn-lg px-5 mt-3">Create</button></a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <a href="../create/index.html?edit" class="create-resume-card">
+                        <img src="../../assets/images/CreateResumeIcon.svg" />
+                        <!-- <h3>Create Resume</h3>-->
+                    </a>
+                </div>
+            </div>
+            <!-- /Create Resume -->
+
+            <!-- Update Resume -->
+            <div class="row justify-content-center create-resume-container align-items-center"
+                id="updateResumeContainer">
+                <div class="col-md-6 create-resume-text">
+                    <h1>My Resume</h1>
+                    <h2> Resume last updated at <span id="lastUpdated"></span></h2>
+                    <div class="premium-feature">
+                        <a href="../create/index.html?edit"><button type="button"
+                                class="btn btn-primary btn-lg px-5 mt-3">Edit</button></a>
+                        <a href="../create/index.html?preview"><button type="button"
+                                class="btn btn-primary btn-lg px-5 mt-3 preview_btn">Preview</button></a>
+                    </div>
+                    <!-- <div class="trail-feature d-none">
+            <a href="../pricing.html"><button type="button"
+                class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+            <a href="../create/index.html?preview"><button type="button"
+                class="btn btn-primary btn-lg px-5 mt-3 preview_btn">Preview</button></a>
+          </div> -->
+                </div>
+                <div class="col-md-6 text-right">
+                    <a href="../create/index.html?edit" class="create-resume-card">
+                        <img src="../../assets/images/EditResumeIcon.svg" />
+                        <!-- <h3>Create Resume</h3>-->
+                    </a>
+                </div>
+            </div>
+            <!-- /Update Resume -->
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
+    <script>
+        $('.loading-container').delay(1000).fadeOut();
+    </script>
+    <script>
+        $(function () {
+            $('#load-header').load('../includes/user-header.html');
+            $('.account-page').paraCount();
+            $(window).ready(function () {
+                JSON.parse(sessionStorage.getItem('userData')).email_verified === 0 ? $(
+                    '#newSuccessMessageID').css(
+                    'display',
+                    'none') : $('.preview_btn').css('display', 'block');
+                // console.log(localStorage.getItem('isPremiumUser'));
+                var freePlanInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
+                console.log(freePlanInfo);
+                // if (localStorage.getItem('isPremiumUser') === 'true') {
+                //   $('.premium-feature').removeClass('d-none');
+                // } else {
+                //   $('.trail-feature').removeClass('d-none');
+                // }
+            })
+            // console.log(localStorage.getItem('previewData')) newSuccessMessageID
+
+            sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $(
+                    '.preview_btn')
+                .css('display', 'inline-block')
+        });
+    </script>
+
+</body>
+
+</html>

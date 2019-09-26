@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#ffffff">
+  <title>Workruit Instant Resume — Share</title>
+
+  <script>
+    if (!sessionStorage.getItem('sessionId')) {
+      window.location.href = window.location.origin + "/index.html";
+    }
+  </script>
+
+  <link rel='shortcut icon' type='image/x-icon' href='../../favicon.png' />
+  <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../../assets/css/custom.css" />
+</head>
+
+<body class="account-page">
+  <div class="loading-container">
+    <img src="../../assets/images/oval.svg" style="width:55px">
+  </div>
+  <div id="newErrorMessageID" class="alert alert-danger">
+    <span class="message-text"></span>
+    <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img
+        src="../../assets/images/app/icons/close.png" width="10" /></a>
+  </div>
+  <div id="newSuccessMessageID" class="alert alert-success">
+    <span class="message-text"></span>
+    <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img
+        src="../../assets/images/app/icons/close.png" width="10" /></a>
+  </div>
+
+  <div id="shareUpdatedSuccessfully" class="alert alert-success">
+    <b>Resume Share Link Updated Successfully</b>
+  </div>
+  <div id="load-header"></div>
+
+  <div class="content w-100">
+    <div class="container">
+      <!-- <div class="row justify-content-center">
+        <div class="col-md-6">
+          <ul class="nav nav-pills nav-fill" role="tablist" id="tabs">
+            <li class="nav-item">
+              <a class="nav-link active">Share</a>
+            </li>
+          </ul>
+        </div>-->
+
+      <div class="row mt-5 justify-content-center">
+        <div class="tab-pane fade col-md-5 show active">
+          <div class="card w-100">
+            <div class="card-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label>Share</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-9">
+                    <input type="text" class="form-control myprofile transition sharename-field" name="shareDomain"
+                      id="shareDomain" minlength="3" value="" disabled />
+                    <input type="text" class="form-control myprofile transition sharename-field" placeholder="Share url"
+                      minlength="3" name="shareName" id="shareName">
+                    <input type="text" id="copyText" value="" style="opacity:0; height:0px;" />
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-primary btn-lg btn-save" id="shareNameBtn">Save</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button type="button" class="btn btn-primary btn-lg btn-save" id="copyLinkBtn">Copy Link</button>
+                  </div>
+                </div>
+                <div class="row plubic-url">
+                  <div class="col-md-6 resume-public">Make my resume public</div>
+                  <div class="col-md-6">
+                    <!-- <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                  </label> -->
+                    <label class="text-center">
+                      <input type="checkbox" class="switch" id="resume_piblic">
+                      <label class="switch-label" for="resume_piblic">Toggle</label>
+                    </label>
+                  </div>
+                </div>
+                <div class="row plubic-url">
+                  <div class="col-md-12">Note: Share the link to anyone, anytime without any hassle</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row steps-container">
+          <div class="col-md-4 steps">
+            <div class="img">1</div>
+            <h3>Step - 1</h3>
+          </div>
+          <div class="col-md-4 steps">
+            <div class="img">2</div>
+            <h3>Step - 2</h3>
+          </div>
+          <div class="col-md-4 steps">
+            <div class="img">3</div>
+            <h3>Step - 3</h3>
+          </div>
+        </div> -->
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../assets/js/environment.js"></script>
+  <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
+  <script>
+    $('#load-header').load('../includes/user-header.html');
+
+    var origin = window.location.origin;
+    var sharePath = origin == 'http://devresume.workruit.com' || origin == 'https://resume.workruit.com' ? origin +
+      '/?' : origin + '/?@';
+    $(function () {
+      $('.account-page').paraCount();
+      $("#shareDomain").attr('value', sharePath)
+    });
+    var resumePublicStatus = JSON.parse(sessionStorage.getItem('userData')).hideResume;
+    $('#resume_piblic').attr('checked', resumePublicStatus);
+    // var resume_piblic = $('input[type=checkbox]').prop('checked');
+    // console.log(resume_piblic);
+    $('.loading-container').delay(1000).fadeOut();
+  </script>
+
+</body>
+
+</html>

@@ -9,13 +9,13 @@
 	<title>Workruit - Instant Resume</title>
 
 	<link rel='shortcut icon' type='image/x-icon' href='favicon.png' />
-	<link rel='stylesheet' type='text/css'
-		href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="css/aos.css" />
-	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<link rel='stylesheet' type='text/css' href='assets/vendors/css/font-awesome.min.css' />
+	<link rel='stylesheet' type='text/css' href='assets/vendors/css/fontawesome.min.css' />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-reboot.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-grid.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/aos.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/main.css" />
 	<!--<style>
 	.first-quto{
 		padding-top: 50%;
@@ -50,29 +50,6 @@
 
 		gtag('config', 'UA-94088165-1');
 	</script>
-	<!-- Chatra {literal} -->
-	<script>
-		(function (d, w, c) {
-			w.ChatraID = 'aeF8KSek7P9EJiSLt';
-			var s = d.createElement('script');
-			w[c] = w[c] || function () {
-				(w[c].q = w[c].q || []).push(arguments);
-			};
-			s.async = true;
-			s.src = (d.location.protocol === 'https:' ? 'https:' : 'http:') +
-				'//call.chatra.io/chatra.js';
-			if (d.head) d.head.appendChild(s);
-		})(document, window, 'Chatra');
-		//chatra custom set up 
-		window.ChatraSetup = {
-			colors: {
-				buttonText: '#ffffff',
-				/* chat button text color */
-				buttonBg: '#337ab7' /* chat button background color */
-			}
-		};
-	</script>
-	<!-- /Chatra {/literal} -->
 </head>
 
 <body>
@@ -111,8 +88,8 @@
 					<div class="col-md-5">
 					</div>
 					<div class="col-md-2 text-center">
-						<a href="#">
-							<img src="https://devresume.workruit.com/images/workruit-resume-logo-color.svg"
+						<a href="./index.html">
+							<img src="assets/images/workruit-resume-logo-color.svg"
 								class="img-responsive resume-logo-big" alt="workruit-instent-resume">
 						</a>
 					</div>
@@ -125,12 +102,13 @@
 		<iframe src="" frameborder="0" id="pdfViewer" class="the-canvas mb-5"></iframe>
 	</div>
 	<!-- Scripts -->
-	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/w3includes.js"></script>
-	<script src="js/jquery.loadTemplate.js"></script>
-	<script src="js/main.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/sweetalert.min.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/aos.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/w3includes.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/jquery.loadTemplate.js"></script>
+	<script type="text/javascript" src="assets/js/main.js"></script>
+	<script type="text/javascript" src="assets/js/environment.js"></script>
 	<script>
 		$(window).ready(function () {
 			var shareParameter = window.location.search.substr(1).substring(1);
@@ -140,7 +118,7 @@
 				$('.shareresume').removeClass('d-none');
 				var googleDocsUrl = "https://docs.google.com/viewer?url=";
 				var windowLocation = window.location;
-				var baseUrl = "https://stageapi.workruit.com/api/user/getShareFile?name=" + shareParameter
+				var baseUrl = baseApiUrl + "user/getShareFile?name=" + shareParameter
 				shareParameter ? true : window.location = '../../404.html'
 				console.log(shareParameter ? true : false);
 				$.get(baseUrl, function (data) {

@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>Merchant Check Out Page</title>
+</head>
+
+<body>
+    <div id="paytm-checkout"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        // Paytm Checksum
+        var paytmHtml = JSON.parse(localStorage.getItem("CHECKSUMHASH"));
+        var payTmUrl = "https://securegw-stage.paytm.in/theia/processTransaction";
+        console.log(paytmHtml);
+        $(window).ready(function () {
+            console.log(paytmHtml.redirectUrl);
+            // $('#paytm-checkout').html(paytmHtml.redirectUrl)
+        })
+    </script>
+</body>
+
+</html>
