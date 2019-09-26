@@ -1779,7 +1779,7 @@ $(window).ready(function () {
                 });
             if (planInfo && planInfo[0].planId == 1) {
                 docWaterMark.save(userId + '_resume.pdf');
-                doc.save(resumeObj.firstname + '_resume.pdf');
+                // doc.save(resumeObj.firstname + '_resume.pdf');
             } else {
                 doc.save(resumeObj.firstname + '_resume.pdf');
             }
