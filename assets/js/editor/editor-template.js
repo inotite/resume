@@ -162,7 +162,7 @@ $(window).ready(function () {
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/watermarkworkruit.png'+'")');
+        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center 0');
@@ -335,7 +335,7 @@ $(window).ready(function () {
 
         $('#resume-body').hide();
 
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/watermarkworkruit.png'+'")');
+        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
         $("page[size='a4']").css('background-repeat', 'no-repeat');
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center');
@@ -353,7 +353,7 @@ $(window).ready(function () {
 
         $('#resume-body').show();
 
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/watermarkworkruit.png'+'")');
+        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center 0');
@@ -1703,7 +1703,7 @@ $(window).ready(function () {
                 image.src = data;
                 doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
 
-                $(ele).css('background-image', 'url("'+window.location.origin + '/assets/images/watermarkworkruit.png'+'")');
+                $(ele).css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
                 $(ele).css('background-repeat', 'no-repeat');
                 $(ele).css('background-size', '40%');
                 $(ele).css('background-position', 'center');
@@ -1830,7 +1830,7 @@ $(window).ready(function () {
             }
         });
     }
-    var imgData = window.location.origin + '/assets/images/watermarkworkruit.png';
+    var imgData = window.location.origin + '/assets/images/resume/watermarkworkruit.png';
     var base64Img;
     toDataURL(imgData, function (dataUrl) {
         base64Img = dataUrl;
