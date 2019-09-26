@@ -1,11 +1,8 @@
-const appDate = new Date();
-const apiAdminUrl = "https://stageapi.workruit.com/admin";
-const apiUrl = "https://stageapi.workruit.com/api";
 const userId = JSON.parse(localStorage.getItem('userData')).userId;
-const sessionId = localStorage.getItem('sessionId');
 const userStatus = localStorage.getItem('isPremiumUser');
 const planInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
 let resumeObj = JSON.parse(localStorage.getItem('userData'));
+let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
 const exp_total_count = 10;
 const edu_total_count = 10;
 const proj_total_count = 10;
@@ -147,15 +144,15 @@ $.ajax(degreesSettings).done(function (response) {
         $(this).autocomplete("search");
     });
 
-    $(".degrees").each(function(idx, obj) {
+    $(".degrees").each(function (idx, obj) {
         var degree = 0;
         var dataId = $(this).attr('data-id');
-        for ( ; degree < degreesAll.length && dataId != degreesAll[degree].id ; ++degree) ;
+        for (; degree < degreesAll.length && dataId != degreesAll[degree].id; ++degree);
         $(this).val(degreesAll[degree].label);
     });
 
 });
-var settings = resumeObj.themeOptions ? resumeObj.themeOptions.settings : defaultSettings;
+var settings = themeOptions ? themeOptions.settings : defaultSettings;
 $(window).ready(function () {
     $('.gender').niceSelect();
     if ((planInfo && planInfo[0].planId == 1) || planInfo == null) {
@@ -170,8 +167,8 @@ $(window).ready(function () {
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center 0');
     }
-    var selectedFont = resumeObj.themeOptions ? resumeObj.themeOptions.font : fonts[0].fontFamily;
-    var selectedcolor = resumeObj.themeOptions ? resumeObj.themeOptions.color : 'theme-black';
+    var selectedFont = themeOptions ? themeOptions.font : fonts[0].fontFamily;
+    var selectedcolor = themeOptions ? themeOptions.color : 'theme-black';
     $('.selected-font').text(selectedFont).attr('data-font', selectedFont);
     $('.selected-color').addClass(selectedcolor).attr('data-color', selectedcolor);
     $('.resume-container').attr('data-oldcolor', 'theme-black').removeClass('theme-black').addClass(selectedcolor);
@@ -207,7 +204,7 @@ $(window).ready(function () {
         startView: "months",
         minViewMode: "months"
     });
-    
+
     for (let index = 0; index < settings.length; index++) {
         const settingItem = settings[index];
         const settingLink = `<a class="dropdown-item action-item mt-0 font-10pt" href="#" data-setting="${settingItem.dataText}">
@@ -216,7 +213,7 @@ $(window).ready(function () {
                         </a>`;
         $('.actions').append(settingLink)
     }
-    
+
     $('.action-item').on('click', function () {
         // console.log($('.action-item').index(this));
         var actionItemIndex = $('.action-item').index(this);
@@ -295,45 +292,45 @@ $(window).ready(function () {
         $('.resume-container').addClass(newColor).removeClass(oldColor);
         $('.resume-container').attr('data-oldcolor', newColor);
     });
-    $('img.svg').each(function(){
+    $('img.svg').each(function () {
         var $img = jQuery(this);
         var imgID = $img.attr('id');
         var imgClass = $img.attr('class');
         var imgURL = $img.attr('src');
-    
-        jQuery.get(imgURL, function(data) {
+
+        jQuery.get(imgURL, function (data) {
             // Get the SVG tag, ignore the rest
             var $svg = jQuery(data).find('svg');
-    
+
             // Add replaced image's ID to the new SVG
-            if(typeof imgID !== 'undefined') {
+            if (typeof imgID !== 'undefined') {
                 $svg = $svg.attr('id', imgID);
             }
             // Add replaced image's classes to the new SVG
-            if(typeof imgClass !== 'undefined') {
-                $svg = $svg.attr('class', imgClass+' replaced-svg');
+            if (typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass + ' replaced-svg');
             }
-    
+
             // Remove any invalid XML tags as per http://validator.w3.org
             $svg = $svg.removeAttr('xmlns:a');
-    
+
             // Check if the viewport is set, if the viewport is not set the SVG wont't scale.
-            if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+            if (!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
                 $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
             }
-    
+
             // Replace image with new SVG
             $img.replaceWith($svg);
-    
+
         }, 'xml');
-    
+
     });
     $('.actions').click(function (e) {
         e.stopPropagation();
     });
     // bind userData to Resume
 
-    var showMultiplePages = function() {
+    var showMultiplePages = function () {
         renderPages();
 
         $('#resume-body').hide();
@@ -344,18 +341,18 @@ $(window).ready(function () {
         $("page[size='a4']").css('background-position', 'center');
     }
 
-    var hideMultiplePages = function() {
-        
+    var hideMultiplePages = function () {
+
         var length = $('page').length;
 
         console.log(length);
 
-        for (var i = 1 ; i < length ; ++i ) {
+        for (var i = 1; i < length; ++i) {
             $($('page')[1]).remove();
         }
 
         $('#resume-body').show();
-        
+
         $("page[size='a4']").css('background-image', 'url("watermarkworkruit.png")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
@@ -370,7 +367,7 @@ $(window).ready(function () {
         $('.previewNav').css('z-index', '2');
         $('#saveResume').addClass('d-none');
 
-        
+
         bindUserDataForSave();
         saveUserProfile(postObj);
 
@@ -490,35 +487,35 @@ $(window).ready(function () {
                 minViewMode: "months"
             });
 
-            $("#proExp_" + num + " .exp-role").keypress(function(e) {
+            $("#proExp_" + num + " .exp-role").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_EXP_ROLE, e);
             });
-            
-            $("#proExp_" + num + " .exp-role").keyup(function(e) {
+
+            $("#proExp_" + num + " .exp-role").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_EXP_ROLE, e);
             });
 
             $("#proExp_" + num + " .exp-company").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_EXP_COMPANY, e);
             });
-            
+
             $("#proExp_" + num + " .exp-company").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_EXP_COMPANY, e);
             });
-            
+
             $("#proExp_" + num + " .exp-location").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_EXP_LOCATION, e);
             });
-            
+
             $("#proExp_" + num + " .exp-location").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_EXP_LOCATION, e);
             });
-            
-            $("#proExp_" + num + " .exp-desc").keypress(function(e) {
+
+            $("#proExp_" + num + " .exp-desc").keypress(function (e) {
                 return limitLines($(this), LINE_EXP_DESC, e);
             });
-            
-            $("#proExp_" + num + " .exp-desc").keyup(function(e) {
+
+            $("#proExp_" + num + " .exp-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_EXP_DESC, e);
             });
         }
@@ -593,44 +590,44 @@ $(window).ready(function () {
                 $(this).autocomplete("search");
             });
             $(".ui-autocomplete").css("font-family", selectedFont);
-            
-            $("#education_" + num + " .edu-field").keypress(function(e) {
+
+            $("#education_" + num + " .edu-field").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_EDU_FIELD_OF_STUDY, e);
             });
 
-            $("#education_" + num + " .edu-field").keyup(function(e) {
+            $("#education_" + num + " .edu-field").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_EDU_FIELD_OF_STUDY, e);
             });
 
-            $("#education_" + num + " .edu-degree").keypress(function(e) {
+            $("#education_" + num + " .edu-degree").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_EDU_DEGREE, e);
             });
 
-            $("#education_" + num + " .edu-degree").keyup(function(e) {
+            $("#education_" + num + " .edu-degree").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_EDU_DEGREE, e);
             });
 
-            $("#education_" + num + " .edu-school").keypress(function(e) {
+            $("#education_" + num + " .edu-school").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_EDU_SCHOOL, e);
             });
 
-            $("#education_" + num + " .edu-school").keyup(function(e) {
+            $("#education_" + num + " .edu-school").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_EDU_SCHOOL, e);
             });
 
-            $("#education_" + num + " .edu-location").keypress(function(e) {
+            $("#education_" + num + " .edu-location").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_EDU_LOCATION, e);
             });
 
-            $("#education_" + num + " .edu-location").keyup(function(e) {
+            $("#education_" + num + " .edu-location").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_EDU_LOCATION, e);
             });
 
-            $("#education_" + num + " .edu-desc").keypress(function(e) {
+            $("#education_" + num + " .edu-desc").keypress(function (e) {
                 return limitLines($(this), LINE_EDU_DESC, e);
             });
 
-            $("#education_" + num + " .edu-desc").keyup(function(e) {
+            $("#education_" + num + " .edu-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_EDU_DESC, e);
             });
         }
@@ -690,44 +687,44 @@ $(window).ready(function () {
                 minViewMode: "months"
             });
 
-            
-            $("#academic_projects_" + num + " .project-title").keypress(function(e) {
+
+            $("#academic_projects_" + num + " .project-title").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_PROJ_TITLE, e);
             });
-            
-            $("#academic_projects_" + num + " .project-title").keyup(function(e) {
+
+            $("#academic_projects_" + num + " .project-title").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_PROJ_TITLE, e);
             });
 
-            $("#academic_projects_" + num + " .project-role").keypress(function(e) {
+            $("#academic_projects_" + num + " .project-role").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_PROJ_ROLE, e);
             });
 
-            $("#academic_projects_" + num + " .project-role").keyup(function(e) {
+            $("#academic_projects_" + num + " .project-role").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_PROJ_ROLE, e);
             });
 
-            $("#academic_projects_" + num + " .university").keypress(function(e) {
+            $("#academic_projects_" + num + " .university").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_PROJ_UNIVERSITY, e);
             });
 
-            $("#academic_projects_" + num + " .university").keyup(function(e) {
+            $("#academic_projects_" + num + " .university").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_PROJ_UNIVERSITY, e);
             });
 
-            $("#academic_projects_" + num + " .uni-location").keypress(function(e) {
+            $("#academic_projects_" + num + " .uni-location").keypress(function (e) {
                 return handleKeypress($(this), LENGTH_PROJ_LOCATION, e);
             });
 
-            $("#academic_projects_" + num + " .uni-location").keyup(function(e) {
+            $("#academic_projects_" + num + " .uni-location").keyup(function (e) {
                 return preventCopyPasteLength($(this), LENGTH_PROJ_LOCATION, e);
             });
 
-            $("#academic_projects_" + num + " .project-desc").keypress(function(e) {
+            $("#academic_projects_" + num + " .project-desc").keypress(function (e) {
                 return limitLines($(this), LINE_PROJ_DESC, e);
             });
 
-            $("#academic_projects_" + num + " .project-desc").keyup(function(e) {
+            $("#academic_projects_" + num + " .project-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_PROJ_DESC, e);
             });
         }
@@ -769,10 +766,10 @@ $(window).ready(function () {
         $('#skills_item_' + num + ' .skills-bar').attr('class', '').attr('class',
             'skills-bar color-blue at-75');
         $('#skills_item_' + num + ' .skill').attr('data-content', '').text('');
-        $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
+        $('#skills_item_' + num + ' .skill-name').keypress(function (e) {
             return limitLines($(this), LINE_SKILL_NAME, e);
         });
-        $('#skills_item_' + num + ' .skill-name').keyup(function(e) {
+        $('#skills_item_' + num + ' .skill-name').keyup(function (e) {
             return preventCopyPaste($(this), LINE_SKILL_NAME, e);
         });
     }
@@ -791,10 +788,10 @@ $(window).ready(function () {
             $('#skills_item_' + num + ' .skill').attr('data-content', '').text('');
             $('#skills_item_' + num + ' [data-content="skillText"]').text('');
             // console.log('i am add_exp')
-            $('#skills_item_' + num + ' .skill-name').keypress(function(e) {
+            $('#skills_item_' + num + ' .skill-name').keypress(function (e) {
                 return limitLines($(this), LINE_SKILL_NAME, e);
             });
-            $('#skills_item_' + num + ' .skill-name').keyup(function(e) {
+            $('#skills_item_' + num + ' .skill-name').keyup(function (e) {
                 return preventCopyPaste($(this), LINE_SKILL_NAME, e);
             });
         }
@@ -825,11 +822,11 @@ $(window).ready(function () {
                     });
                 // var results = $.ui.autocomplete.filter(skillsAll, request.term);
                 var skillsArray = [];
-                $('.skills').each(function(index) {
+                $('.skills').each(function (index) {
                     skillsArray.push($(this).text());
                 });
                 dom.autocomplete({
-                    source: skillsAll.filter(function(item, index) {
+                    source: skillsAll.filter(function (item, index) {
                         return skillsArray.indexOf(item) == -1;
                     }),
                     minLength: 0,
@@ -869,12 +866,12 @@ $(window).ready(function () {
                 'Language');
 
             $('#lang_' + num + ' .rating-container li').removeClass('rating-chosen');
-        
-            $(".info-language").keypress(function(e) {
+
+            $(".info-language").keypress(function (e) {
                 return limitLines($(this), LINE_LANGUAGES, e);
             });
 
-            $(".info-language").keyup(function(e) {
+            $(".info-language").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_LANGUAGES, e);
             });
 
@@ -949,8 +946,7 @@ $(window).ready(function () {
             showMultiplePages();
             await savePdf();
             hideMultiplePages();
-        }
-        else {
+        } else {
             console.log("hey, here!");
             await savePdf();
         }
@@ -1219,11 +1215,11 @@ $(window).ready(function () {
     bindUserData();
 
     function bindUserData() {
-        if ( !resumeObj.pic )
+        if (!resumeObj.pic)
             resumeObj.pic = 'data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAAFYUlEQVR4nO2d7W3bMBCGr0EHUCeoM0HUCWpP0HSC2BM0naDOBHEmsDtB3QniThB1groTRD/6vwWNlwYtyhJF3lFUqgcwEsgfol7d8eN4pF49P/+hRJjgNUVx3rcU6wf+7ohoj1fv9CloTkTXEE79n1mf6EZJRAWE3uL/6MQWVFnfDYQMFbCNEsJ+hRVHIYagSrg5EX2CS/eBqg4eiGgDocWQFFQJeQshpa3RlRLCrqSElRJ0mZiQVbSwS+udQLgFVXXkukfX7oqqChacdeyFdcQPZYn3RPQ4IDEJZX1E2Vm8icNCVZfn28CErENZ68fQ7laoharW++kFiEm4hidckzchgt6jvnxprHFtXvgKukaX6KVy62ssPoKuQ91iIMx9RO0qaCwxVQNxR0Qz1XBWXjO8FyMY0lnULq38fQQ3Vy3s5w79winKlVvv8LJCuVpxtdB5BDFVod917GTv8J2V9Q4vt66e6WKhOboTkiwQuAjBq87ryLu2fmqbhWbotEtyxyAm4TfurKO8fGsbUbUJ+kW4075jDlAshWOfE2hyliaXn2KcK8mlQGutLvqXdZSX2bkb12Sh0vXRRqjrs2eqQpo4q805QZcRxuffrSPD+G2CNrVVVZ3LZ3CZxsqXgVfCv//XOsJLiSrrJPJfZ6G3EcSsrX8Gdo6srm9eFTTD1MWIG9Y0T1XQecLzQCmSVUdQVUFH6+zOiWamoNOIkfcYXhDL08z0oRNBb6yPysGRetNEFiECZXLUzhT02vqYLJLn6+1atKDSFlOHpEfEbguOHqEFjX1HCfWOxHmvI7u7ed6joG25mFKsmT0jaxpnC3PQ0HT5PuCOt7bGKwU5uvyk5878lEEIfWOm1jvxUGWYXCSS9XGN2KuPp+T4bh/tQJWDoH3eVRM9d+WavTfBZ596rLKqTF9bh/pnjleBiNFvY2JMCfcWRpCKiCcoQa+so2mQpypaA1cXY3SJlawuwDwSwCgoM6OgzIyCMjMKyswoKC/layw2TWG0tEMH/ieyP4qG1W46/jhBPzpP5Bp+9jlSKpA9svOYQy/PfGeK14e+BgUqcyRGUpimwOrgbYSU7gkCJjcRxZ0pQWNkq22wtrIxWVWQHNMi0usDLnVu07PQEHQTcYGBCzq/U0JYVQ290a08t+XskUO5SEhMMhbLzgTKddBQC/rDetufrcfig9joxQ5bxvMeNNSCcv3wBgtQz3V3UqJEWbmScw8amvmhofWouusz6+gweAzsxx7qT6qMlEKsVN/toRLqVUftTEG/Wh9zR3xzFGHKQNc/amcKugto+aRz2mPgew17swGuBkcerI+78RKmUXyv4USz6qIF3wULBRqkobp95pkXYC1cqFpo6WmlecguCAngu6L5oWpE3MtqOBbBxsZ30a1lnVRjoRRgpYqh7fYQsoLZsk46Y6GaXwF5T0Ow1BAx97BOizoL1SysI+6kbqmha+vPatMk6C5wp4S1QEJtKJlRLl9WTYGfJpcnFCB0o6sCd7Sv4LImh5Ah0fs9olRW3alpslBiGqPrNMVlT9aa4dwcaY+tY36XaeSiqc7owBeOrdA6oreSa9yFwREnL+trm6E9AgoSG6PqVcI3jNnZztsMdd2dUaL13hrTyb7BmYkxfcydGr7p4qE+211Kdon2RrJDNdGhNOpgnehwZSQ8SNBJTArYP/R/2P+us5gUkNu0iLCbV5+sfBvikGSxz0ytf2osXBugOkKz7zbo6KY09+6L7rQHxSA40hmLSBv6SbJy2dfOhXHb9US3XdfsENa6S3w6pEQZL7kzXMZHVzAzPlyFmfHxP8yMD6hiJuVHqKlxepPI6T1CjYj+Af7+dGpiAOSrAAAAAElFTkSuQmCC';
         // console.log(resumeObj.pic);
         $('#user_pic').attr('src', resumeObj.pic);
-        if ( !resumeObj.collegeLogo )
+        if (!resumeObj.collegeLogo)
             resumeObj.collegeLogo = 'img/university_logo.svg';
         $('.clg_picture img').attr('src', resumeObj.collegeLogo)
         $('[data-content="firstname"]').text(resumeObj.firstname);
@@ -1238,7 +1234,7 @@ $(window).ready(function () {
         $('[data-content="totalexperience"]').text(resumeObj.expDisplay);
         $('[data-content="location"]').text(resumeObj.location);
         $('[data-content="dob"]').val(resumeObj.date_of_birth);
-        if ( resumeObj.gender )
+        if (resumeObj.gender)
             $('.gender .current').text(resumeObj.gender)
         // console.log("Email", resumeObj.email);
         $('[data-content="email"]').text(resumeObj.email);
@@ -1331,7 +1327,7 @@ $(window).ready(function () {
                 $div.after($klon);
             }
         }
-        $(resumeObj.userAcademicResSet).each(function(i, v) {
+        $(resumeObj.userAcademicResSet).each(function (i, v) {
             const ap = resumeObj.userAcademicResSet[i];
             var id = 'academic_projects_' + (i + 1);
             console.log(id);
@@ -1359,7 +1355,7 @@ $(window).ready(function () {
                 $('.skills-item .remove_skills').removeClass('d-none');
             }
         }
-        $(resumeObj.userSkillsSet).each(function(i, ev) {
+        $(resumeObj.userSkillsSet).each(function (i, ev) {
             const v = resumeObj.userSkillsSet[i];
             var a = i + 1;
             // console.log(v, '#skills_item_' + a + ' .skills-bar .skill-value');
@@ -1384,7 +1380,7 @@ $(window).ready(function () {
                 $div.after($klon);
             }
         }
-        $(resumeObj.userLngSet).each( function(i, ev) {
+        $(resumeObj.userLngSet).each(function (i, ev) {
             // var id = $('#lang_' + i);
             const v = resumeObj.userLngSet[i];
             var a = i + 1;
@@ -1446,11 +1442,11 @@ $(window).ready(function () {
                 });
             // var results = $.ui.autocomplete.filter(skillsAll, request.term);
             var skillsArray = [];
-            $('.skills').each(function(index) {
+            $('.skills').each(function (index) {
                 skillsArray.push($(this).text());
             });
             dom.autocomplete({
-                source: skillsAll.filter(function(item, index) {
+                source: skillsAll.filter(function (item, index) {
                     return skillsArray.indexOf(item) == -1;
                 }),
                 minLength: 0,
@@ -1594,7 +1590,7 @@ $(window).ready(function () {
             dataType: "json",
             contentType: "application/json"
         }
-        console.log("settings",settings.data);
+        console.log("settings", settings.data);
         // downloadResume
         $.ajax(settings).done(function (response) {
             if (response.status == 'success') {
@@ -1664,20 +1660,18 @@ $(window).ready(function () {
             var color;
             if (selectedcolor == 'theme-black') {
                 color = '#2f2f2f';
-            }
-            else if (selectedcolor == 'theme-blue') {
+            } else if (selectedcolor == 'theme-blue') {
                 color = '#337ab7';
-            }
-            else {
+            } else {
                 color = '#3ebb64';
             }
             console.log(color);
             $(eles[1]).find('path').attr('fill', color);
             $(eles[1]).find('polygon').attr('fill', color);
-            for ( var i = 1 ; i < pageCount ; ++i ) {
+            for (var i = 1; i < pageCount; ++i) {
                 var ele = eles[i];
                 $(ele).find('.border-dashed').removeClass('border-dashed');
-                
+
                 $(ele).css('background-image', '');
                 $(ele).css('background-repeat', '');
                 $(ele).css('background-size', '');
@@ -1694,10 +1688,10 @@ $(window).ready(function () {
                     taintTest: false,
                     scale: 3
                 });
-                
+
                 const data = await canvas.toDataURL("image/jpeg");
                 // console.log("Raw", data);
-                
+
                 if (i > 1) {
                     doc.addPage();
                     docWaterMark.addPage();
@@ -1708,7 +1702,7 @@ $(window).ready(function () {
                 var image = new Image();
                 image.src = data;
                 doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
-                
+
                 $(ele).css('background-image', 'url("watermarkworkruit.png")');
                 $(ele).css('background-repeat', 'no-repeat');
                 $(ele).css('background-size', '40%');
@@ -1727,7 +1721,7 @@ $(window).ready(function () {
                 waterMarkImage.src = await canvas.toDataURL("image/jpeg");
                 // docWaterMark = addWaterMark(docWaterMark);
                 docWaterMark.addImage(waterMarkImage, 'JPEG', -0.3, 0.5, 0, 0);
-            
+
                 ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
 
             }
@@ -1870,7 +1864,7 @@ $(window).ready(function () {
     $('#zoomResume').slider({
         animate: "fast",
         step: 10,
-        change: function(event, ui) {
+        change: function (event, ui) {
             // console.log(ui.value);
             var width = (ui.value * 0.8 + 100) / 100 * 21;
             $("page").css('min-width', width + "cm");
@@ -1879,15 +1873,15 @@ $(window).ready(function () {
         }
     });
 
-    $('.gender').on('change', function(e) {
+    $('.gender').on('change', function (e) {
         $('.gender .current').css('color', '#212529');
     });
 
-    var getOuterHTML = function(obj) {
+    var getOuterHTML = function (obj) {
         return $("<div />").append(obj.clone()).html();
     }
 
-    var renderPages = function() {
+    var renderPages = function () {
         var resume = $('#resume-body');
         var dpi = 96;
         var standardHeightAsCm = 29.7;
@@ -1895,8 +1889,8 @@ $(window).ready(function () {
         var standardA4Height = standardHeightAsCm * dpi / inch;
         var totalHeight = parseFloat(resume.css('height'));
 
-        console.log( "Document Size: ", resume.css('width'), resume.css('height'));
-        console.log( "Standard Height: ", standardA4Height);
+        console.log("Document Size: ", resume.css('width'), resume.css('height'));
+        console.log("Standard Height: ", standardA4Height);
 
         var emptyDom = "<page size='a4'>\
                             <div class='row'>\
@@ -1906,9 +1900,9 @@ $(window).ready(function () {
         var sideDom = "<page size='a4'>\
                             <div class='row'>\
                                 " + getOuterHTML($('#resume-body aside')) +
-                                "<div class='col-9'>";
+            "<div class='col-9'>";
 
-        var emptyDomClose =    "</div>\
+        var emptyDomClose = "</div>\
                             </div>\
                         </page>";
 
@@ -1933,21 +1927,21 @@ $(window).ready(function () {
         var certificationsMarginBottom = parseFloat($('#certifications-section').css('margin-bottom'));
         var pagePadding = parseFloat(resume.css('padding'));
 
-        console.log( "Title Height: ", titleHeight);
-        console.log( "Memo Height: ", memoHeight);
-        console.log( "Work Experience Height:  ", experienceHeight);
-        console.log( "Work Experience Margin: ", "Top: ", experienceMarginTop, "Bottom: ", experienceMarginBottom);
-        console.log( "Education Height: ", educationHeight);
-        console.log( "Education Margin Bottom: ", educationMarginBottom);
-        console.log( "Academic Height: ", academicHeight);
-        console.log( "Academic Margin Bottom: ", academicMarginBottom);
-        console.log( "Skills Height: ", skillsHeight);
-        console.log( "Skills Margin Bottom: ", skillsMarginBottom);
-        console.log( "Achievements Height: ", achievementsHeight);
-        console.log( "Achievements Margin Bottom: ", achievementsMarginBottom);
-        console.log( "Certifications Height: ", certificationsHeight);
-        console.log( "Certifications Margin Bottom: ", certificationsMarginBottom);
-        console.log( "Page padding: ", pagePadding);
+        console.log("Title Height: ", titleHeight);
+        console.log("Memo Height: ", memoHeight);
+        console.log("Work Experience Height:  ", experienceHeight);
+        console.log("Work Experience Margin: ", "Top: ", experienceMarginTop, "Bottom: ", experienceMarginBottom);
+        console.log("Education Height: ", educationHeight);
+        console.log("Education Margin Bottom: ", educationMarginBottom);
+        console.log("Academic Height: ", academicHeight);
+        console.log("Academic Margin Bottom: ", academicMarginBottom);
+        console.log("Skills Height: ", skillsHeight);
+        console.log("Skills Margin Bottom: ", skillsMarginBottom);
+        console.log("Achievements Height: ", achievementsHeight);
+        console.log("Achievements Margin Bottom: ", achievementsMarginBottom);
+        console.log("Certifications Height: ", certificationsHeight);
+        console.log("Certifications Margin Bottom: ", certificationsMarginBottom);
+        console.log("Page padding: ", pagePadding);
 
         stackedHeight = titleHeight + memoHeight;
 
@@ -1958,23 +1952,22 @@ $(window).ready(function () {
 
         // console.log(stackedHeight + experienceHeight + experienceMarginTop);
         // console.log(standardA4Height);
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (stackedHeight + experienceHeight + experienceMarginTop <= standardA4Height) {
             stackedHeight += experienceHeight + experienceMarginTop + experienceMarginBottom;
             resume.after(sideDom + getOuterHTML($("#resume-title")) + getOuterHTML($('#resume-memo')) + getOuterHTML($('#experience-section')) + emptyDomClose);
-        }
-        else {
-            console.log( "Work Experience Header Height: ", $('#experience-section h4').css('height'));
+        } else {
+            console.log("Work Experience Header Height: ", $('#experience-section h4').css('height'));
             stackedHeight += parseFloat($('#experience-section h4').css('height')) + experienceMarginTop + parseFloat($('#experience-section h4').css('margin-bottom'));
-            console.log( "Exp1 Height: ", $('#proExp_1').css('height'));
+            console.log("Exp1 Height: ", $('#proExp_1').css('height'));
             var expCount = $('#experience-section .professional-experience').length;
-            console.log( "Work Experience Count: ", expCount);
+            console.log("Work Experience Count: ", expCount);
             var exps = $('#experience-section .professional-experience');
             var it;
-            var domHtml =   '<div class="row mt-3 flex-column">\
+            var domHtml = '<div class="row mt-3 flex-column">\
                                 <h4 class="section_title text-uppercase font-10pt px-2">Work experience</h4>';
-            for( it = 0 ; it < expCount && stackedHeight + parseFloat($(exps[it]).css('height')) <= standardA4Height ; ++it ) {
-                console.log( "Experience ", it, "th Height: ", parseFloat($(exps[it]).css('height')));
+            for (it = 0; it < expCount && stackedHeight + parseFloat($(exps[it]).css('height')) <= standardA4Height; ++it) {
+                console.log("Experience ", it, "th Height: ", parseFloat($(exps[it]).css('height')));
                 stackedHeight += parseFloat($(exps[it]).css('height'));
                 domHtml += getOuterHTML($(exps[it]));
             }
@@ -1982,12 +1975,12 @@ $(window).ready(function () {
             domHtml += '</div>';
 
             resume.after(sideDom + getOuterHTML($("#resume-title")) + getOuterHTML($('#resume-memo')) + domHtml + emptyDomClose);
-            
+
             domHtml = '<div class="row flex-column mb-1">';
             stackedHeight = experienceMarginBottom;
-            
-            for( ; it < expCount ; ++it ) {
-                console.log( "Experience ", it, "th Height: ", parseFloat($(exps[it]).css('height')));
+
+            for (; it < expCount; ++it) {
+                console.log("Experience ", it, "th Height: ", parseFloat($(exps[it]).css('height')));
                 stackedHeight += parseFloat($(exps[it]).css('height'));
                 domHtml += getOuterHTML($(exps[it]));
             }
@@ -2005,7 +1998,7 @@ $(window).ready(function () {
         $($('[data-content="jobfunctions"]')[1]).val($($('[data-content="jobfunctions"]')[0]).val());
 
         var originExpCount = $('#resume-body #experience-section .professional-experience').length;
-        for (var i = 1 ; i <= originExpCount ; ++i) {
+        for (var i = 1; i <= originExpCount; ++i) {
             var origin = $($('[data-content="exp_startDate"]')[i - 1]);
             var cloned = $($('[data-content="exp_startDate"]')[i + originExpCount - 1]);
             cloned.val(origin.val());
@@ -2013,15 +2006,14 @@ $(window).ready(function () {
             cloned = $($('[data-content="exp_endDate"]')[i + originExpCount - 1]);
             cloned.val(origin.val());
         }
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check Education
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         resume = $('page').last();
         if (stackedHeight + educationHeight + educationMarginBottom < standardA4Height) {
             stackedHeight += educationHeight + educationMarginBottom;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#education-section')));
-        }
-        else {
+        } else {
             var domHtml = '';
             stackedHeight += parseFloat($('#education-section h4').css('height')) + parseFloat($('#education-section h4').css('margin-bottom'));
             var eduCount = $('#education-section .education-details').length;
@@ -2030,8 +2022,8 @@ $(window).ready(function () {
             console.log("Education Count: ", eduCount);
             domHtml += '<div class="row flex-column mb-1" id="education-section">\
                             <h4 class="section_title text-uppercase font-10pt px-2">Education</h4>';
-            for( it = 0 ; it < eduCount && stackedHeight + parseFloat($(edus[it]).css('height')) <= standardA4Height ; ++it ) {
-                console.log( "Education ", it, "th Height: ", parseFloat($(edus[it]).css('height')));
+            for (it = 0; it < eduCount && stackedHeight + parseFloat($(edus[it]).css('height')) <= standardA4Height; ++it) {
+                console.log("Education ", it, "th Height: ", parseFloat($(edus[it]).css('height')));
                 stackedHeight += parseFloat($(edus[it]).css('height'));
                 domHtml += getOuterHTML($(edus[it]));
             }
@@ -2042,9 +2034,9 @@ $(window).ready(function () {
 
             domHtml = '<div class="row flex-column mb-1">';
             stackedHeight = educationMarginBottom;
-            
-            for( ; it < eduCount ; ++it ) {
-                console.log( "Education ", it, "th Height: ", parseFloat($(edus[it]).css('height')));
+
+            for (; it < eduCount; ++it) {
+                console.log("Education ", it, "th Height: ", parseFloat($(edus[it]).css('height')));
                 stackedHeight += parseFloat($(edus[it]).css('height'));
                 domHtml += getOuterHTML($(edus[it]));
             }
@@ -2060,7 +2052,7 @@ $(window).ready(function () {
         // Clone values from original one
 
         var originEduCount = $('#resume-body #education-section .education-details').length;
-        for (var i = 1 ; i <= originEduCount ; ++i) {
+        for (var i = 1; i <= originEduCount; ++i) {
             var origin = $($('[data-content="edu_startDate"]')[i - 1]);
             var cloned = $($('[data-content="edu_startDate"]')[i + originEduCount - 1]);
             cloned.val(origin.val());
@@ -2071,15 +2063,14 @@ $(window).ready(function () {
             cloned = $($('[data-content="degree_title"]')[i + originEduCount - 1]);
             cloned.val(origin.val());
         }
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check Academic Experiences
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         resume = $('page').last();
         if (stackedHeight + academicHeight + academicMarginBottom < standardA4Height) {
             stackedHeight += academicHeight + academicMarginBottom;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#academic-section')));
-        }
-        else {
+        } else {
             var domHtml = '';
             stackedHeight += parseFloat($('#academic-section h4').css('height')) + parseFloat($('#academic-section h4').css('margin-bottom'));
             var acaCount = $('#academic-section .academic-project').length;
@@ -2088,8 +2079,8 @@ $(window).ready(function () {
             console.log("Academic Count: ", acaCount);
             domHtml += '<div class="row flex-column  mb-1" id="academic-section">\
                             <h4 class="section_title text-uppercase font-10pt px-2">Academic Projects</h4>';
-            for( it = 0 ; it < acaCount && stackedHeight + parseFloat($(acas[it]).css('height')) <= standardA4Height ; ++it ) {
-                console.log( "Academic ", it, "th Height: ", parseFloat($(acas[it]).css('height')));
+            for (it = 0; it < acaCount && stackedHeight + parseFloat($(acas[it]).css('height')) <= standardA4Height; ++it) {
+                console.log("Academic ", it, "th Height: ", parseFloat($(acas[it]).css('height')));
                 stackedHeight += parseFloat($(acas[it]).css('height'));
                 domHtml += getOuterHTML($(acas[it]));
             }
@@ -2100,9 +2091,9 @@ $(window).ready(function () {
 
             domHtml = '<div class="row flex-column mb-1">';
             stackedHeight = academicMarginBottom;
-            
-            for( ; it < acaCount ; ++it ) {
-                console.log( "Academic ", it, "th Height: ", parseFloat($(acas[it]).css('height')));
+
+            for (; it < acaCount; ++it) {
+                console.log("Academic ", it, "th Height: ", parseFloat($(acas[it]).css('height')));
                 stackedHeight += parseFloat($(acas[it]).css('height'));
                 domHtml += getOuterHTML($(acas[it]));
             }
@@ -2118,7 +2109,7 @@ $(window).ready(function () {
         // Clone values from original one
 
         var originAcaCount = $('#resume-body #academic-section .academic-project').length;
-        for (var i = 1 ; i <= originAcaCount ; ++i) {
+        for (var i = 1; i <= originAcaCount; ++i) {
             var origin = $($('[data-content="acd_startDate"]')[i - 1]);
             var cloned = $($('[data-content="acd_startDate"]')[i + originAcaCount - 1]);
             cloned.val(origin.val());
@@ -2126,15 +2117,14 @@ $(window).ready(function () {
             cloned = $($('[data-content="acd_endDate"]')[i + originAcaCount - 1]);
             cloned.val(origin.val());
         }
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Skills Check
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         resume = $('page').last();
         if (stackedHeight + skillsHeight + skillsMarginBottom < standardA4Height) {
             stackedHeight += skillsHeight + skillsMarginBottom;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#skills-section')));
-        }
-        else {
+        } else {
             var domHtml = '';
             stackedHeight += parseFloat($('#skills-section h4').css('height')) + parseFloat($('#skills-section h4').css('margin-bottom'));
             var skillCount = $('#skills-section .skills-item').length;
@@ -2145,12 +2135,12 @@ $(window).ready(function () {
                             <h4 class="section_title text-uppercase font-10pt px-2">Skills</h4>\
                             <div class="skills-section">\
                                 <ul class="list-unstyled w-100 skills-list mb-0">';
-            for( it = 0 ; it < skillCount && stackedHeight + parseFloat($(skills[it]).css('height')) <= standardA4Height ; it += 2 ) {
-                console.log( "Skills ", it, "th Height: ", parseFloat($(skills[it]).css('height')));
+            for (it = 0; it < skillCount && stackedHeight + parseFloat($(skills[it]).css('height')) <= standardA4Height; it += 2) {
+                console.log("Skills ", it, "th Height: ", parseFloat($(skills[it]).css('height')));
                 stackedHeight += parseFloat($(skills[it]).css('height'));
                 domHtml += getOuterHTML($(skills[it]));
                 if (it + 1 < skillCount)
-                    domHtml += getOuterHTML($(skills[it+1]));
+                    domHtml += getOuterHTML($(skills[it + 1]));
             }
 
             domHtml += '</ul>\
@@ -2159,17 +2149,17 @@ $(window).ready(function () {
 
             resume.find('.col-9 .row').last().after(domHtml + emptyDomClose);
 
-            domHtml =   '<div class="row flex-column mb-1">\
+            domHtml = '<div class="row flex-column mb-1">\
                             <div class="skills-section">\
                                 <ul class="list-unstyled w-100 skills-list mb-0">';
             stackedHeight = skillsMarginBottom;
-            
-            for( ; it < skillCount ; it += 2 ) {
-                console.log( "Skills ", it, "th Height: ", parseFloat($(skills[it]).css('height')));
+
+            for (; it < skillCount; it += 2) {
+                console.log("Skills ", it, "th Height: ", parseFloat($(skills[it]).css('height')));
                 stackedHeight += parseFloat($(skills[it]).css('height'));
                 domHtml += getOuterHTML($(skills[it]));
                 if (it + 1 < skillCount)
-                    domHtml += getOuterHTML($(skills[it+1]));
+                    domHtml += getOuterHTML($(skills[it + 1]));
             }
 
             domHtml += '</ul>\
@@ -2181,27 +2171,25 @@ $(window).ready(function () {
 
             console.log("Stacked Height: ", stackedHeight);
         }
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check achievements
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         resume = $('page').last();
         if (stackedHeight + achievementsHeight + achievementsMarginBottom < standardA4Height) {
             stackedHeight += achievementsHeight + achievementsMarginBottom;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#achievements-section')));
-        }
-        else {
+        } else {
             resume.after(emptyDom + getOuterHTML($('#achievements-section')) + emptyDomClose);
             stackedHeight = 0;
         }
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check certifications
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         resume = $('page').last();
         if (stackedHeight + certificationsHeight + certificationsMarginBottom < standardA4Height) {
             stackedHeight += certificationsHeight + certificationsMarginBottom;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#certifications-section')));
-        }
-        else {
+        } else {
             resume.after(emptyDom + getOuterHTML($('#certifications-section')) + emptyDomClose);
             stackedHeight = 0;
         }
