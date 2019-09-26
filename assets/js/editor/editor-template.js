@@ -1,9 +1,9 @@
-const userId = JSON.parse(localStorage.getItem('userData')).userId;
-const userStatus = localStorage.getItem('isPremiumUser');
-const planInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
-let resumeObj = JSON.parse(localStorage.getItem('userData'));
+const userId = JSON.parse(sessionStorage.getItem('userData')).userId;
+const userStatus = sessionStorage.getItem('isPremiumUser');
+const planInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
+let resumeObj = JSON.parse(sessionStorage.getItem('userData'));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
-const exp_total_count = 10;
+const exp_total_count = 10; 
 const edu_total_count = 10;
 const proj_total_count = 10;
 console.log(resumeObj);
@@ -162,7 +162,7 @@ $(window).ready(function () {
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.png")');
+        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/watermarkworkruit.png'+'")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center 0');
@@ -335,7 +335,7 @@ $(window).ready(function () {
 
         $('#resume-body').hide();
 
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.png")');
+        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/watermarkworkruit.png'+'")');
         $("page[size='a4']").css('background-repeat', 'no-repeat');
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center');
@@ -353,7 +353,7 @@ $(window).ready(function () {
 
         $('#resume-body').show();
 
-        $("page[size='a4']").css('background-image', 'url("watermarkworkruit.png")');
+        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/watermarkworkruit.png'+'")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center 0');
@@ -955,7 +955,7 @@ $(window).ready(function () {
     function bindUserDataForSave() {
         const jobfunctions = $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
             $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id'))] : []
-        postObj.pic = localStorage.getItem('imageStore');
+        postObj.pic = sessionStorage.getItem('imageStore');
         postObj.firstname = $('#resume-body [data-content="firstname"]').text();
         postObj.lastname = $('#resume-body [data-content="lastname"]').text();
         postObj.jobfunctions = jobfunctions;
@@ -1600,7 +1600,7 @@ $(window).ready(function () {
                     .fadeOut('slow', function () {
                         $('#saveResume').removeAttr('pointer-events');
                     });
-                localStorage.setItem('userData', JSON.stringify(response.data));
+                sessionStorage.setItem('userData', JSON.stringify(response.data));
                 // console.log("Ajax response");
                 // console.log(response.data);
 
@@ -1629,7 +1629,7 @@ $(window).ready(function () {
 
     function getShareNameFile() {
         var self = this;
-        var shareName = localStorage.getItem('shareName');
+        var shareName = sessionStorage.getItem('shareName');
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -1703,7 +1703,7 @@ $(window).ready(function () {
                 image.src = data;
                 doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
 
-                $(ele).css('background-image', 'url("watermarkworkruit.png")');
+                $(ele).css('background-image', 'url("'+window.location.origin + '/assets/images/watermarkworkruit.png'+'")');
                 $(ele).css('background-repeat', 'no-repeat');
                 $(ele).css('background-size', '40%');
                 $(ele).css('background-position', 'center');
@@ -1818,7 +1818,7 @@ $(window).ready(function () {
             //console.log(response.data.httpPath);
             if (response.status == 'success') {
                 // console.log(response.data.httpPath);
-                localStorage.setItem('imageStore', response.data.httpPath);
+                sessionStorage.setItem('imageStore', response.data.httpPath);
                 $('#profileMenu img').attr('src', response.data.httpPath);
                 $('#profilePicEdit').attr('src', response.data.httpPath);
                 $('#pimage-preview').attr('src', response.data.httpPath);
@@ -1830,7 +1830,7 @@ $(window).ready(function () {
             }
         });
     }
-    var imgData = './watermarkworkruit.png'
+    var imgData = window.location.origin + '/assets/images/watermarkworkruit.png';
     var base64Img;
     toDataURL(imgData, function (dataUrl) {
         base64Img = dataUrl;
