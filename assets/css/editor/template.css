@@ -866,3 +866,7 @@ input {
 .nice-select .current {
     color: grey;
 }
+
+.social-svg svg {
+    vertical-align: middle;
+}

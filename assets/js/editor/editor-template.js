@@ -147,6 +147,10 @@ $.ajax(degreesSettings).done(function (response) {
     $(".degrees").each(function (idx, obj) {
         var degree = 0;
         var dataId = $(this).attr('data-id');
+        if (dataId === undefined) { 
+            $(this).val("");
+            return;
+        }
         for (; degree < degreesAll.length && dataId != degreesAll[degree].id; ++degree);
         $(this).val(degreesAll[degree].label);
     });
@@ -556,7 +560,7 @@ $(window).ready(function () {
                 'End Date');
             $('#education_' + num + ' [data-content="degree_title"]').val('').attr(
                 'placeholder',
-                'Degree');
+                'Degree').attr('data-id', '');
             $('#education_' + num + ' [data-content="edu_institution"]').text('').attr(
                 'placeholder',
                 'School');
