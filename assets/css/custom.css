@@ -3269,3 +3269,14 @@ button span {
 .btn-outline-primary {
     border-color: #007bff;
 }
+.info_message{
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    top: 68px;
+    z-index:99;
+    display: none;
+}
+.info_message .close{
+    margin: 0;
+}

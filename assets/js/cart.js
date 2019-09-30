@@ -4,11 +4,11 @@ var priceCalculationObj = {
     "user_planId": ""
 }
 var priceInfoData = false;
-console.log(priceCalculationObj);
+$('.loading-container').delay(1000).fadeOut();
+
 $(window).ready(function () {
     $('#load-header').load('../includes/user-header.html');
-});
-$(window).ready(function () {
+    console.log("priceCalculationObj>>>>>", priceCalculationObj, priceCalculationObj.planInfo.planId == 1);
     var loginStatus = sessionStorage.getItem("userData") !== null ? true : false;
     if (loginStatus === true) {
         $('.status').css('display', 'flex');
@@ -22,21 +22,28 @@ $(window).ready(function () {
             .then(function (response) {
                 console.log(response);
                 console.log(response.data.data);
-                document.getElementById('finalPrice').innerText = response.data.priceInfo.NetAmount;
-                document.getElementById('GSTPercentage').innerText = response.data.priceInfo
-                    .GSTPercentage;
-                document.getElementById('taxFees').innerText = response.data.priceInfo.GSTMoney;
-                document.getElementById('timePeriod').innerText = priceCalculationObj.planInfo
-                    .timePeriod;
-                document.getElementById('netprice').innerText = response.data.priceInfo.finalPrice;
-                document.getElementById('planTitle').innerText = response.data.priceInfo.PlanTitle;
-                document.getElementById('subtotal').innerText = response.data.priceInfo.NetAmount;
-                document.getElementById('totalprice').innerText = response.data.priceInfo
-                    .finalPrice;
-                priceCalculationObj.user_planId = response.data.priceInfo.user_planId
-                var priceInfoData = true;
-                $('.price-summary-box').removeClass('d-none');
-                // $("#finalPrice").text().replace(response.data.data);
+                if (priceCalculationObj.planInfo.planId === 1 && response.data.status == "failed") {
+                    $('.error-description').html(response.data.msg.description);
+                    $('.error-box').removeClass('d-none');
+                } else if (priceCalculationObj.planInfo.planId === 1 && response.data.status == "success") {
+                    window.location.href = window.location.origin + locationPaths.homePage;
+                } else {
+                    document.getElementById('finalPrice').innerText = response.data.priceInfo.NetAmount;
+                    document.getElementById('GSTPercentage').innerText = response.data.priceInfo
+                        .GSTPercentage;
+                    document.getElementById('taxFees').innerText = response.data.priceInfo.GSTMoney;
+                    document.getElementById('timePeriod').innerText = priceCalculationObj.planInfo
+                        .timePeriod;
+                    document.getElementById('netprice').innerText = response.data.priceInfo.finalPrice;
+                    document.getElementById('planTitle').innerText = response.data.priceInfo.PlanTitle;
+                    document.getElementById('subtotal').innerText = response.data.priceInfo.NetAmount;
+                    document.getElementById('totalprice').innerText = response.data.priceInfo
+                        .finalPrice;
+                    priceCalculationObj.user_planId = response.data.priceInfo.user_planId
+                    var priceInfoData = true;
+                    $('.price-summary-box').removeClass('d-none');
+                    // $("#finalPrice").text().replace(response.data.data);
+                }
             })
             .catch(function (error) {
                 console.log(error);

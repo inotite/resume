@@ -36,7 +36,7 @@
                     <li class="nav-item user dropdown">
                         <a class="nav-link transition dropdown-toggle" data-toggle="dropdown" id="profileMenu"
                             aria-haspopup="true" aria-expanded="false">
-                            <img src="../../assets/images/app/pic1.png" style="border-radius: 50%;" alt="">
+                            <img src="" style="border-radius: 50%;" alt="">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="profile">
                             <a class="dropdown-item transition" id="userName"></a>
@@ -120,87 +120,59 @@
     </div>
 </div>
 <!-- /upgrade popup -->
+<!-- user plan info -->
+<div id="info_message" class="alert alert-warning info_message info_message_warning">
+    <span></span>
+    <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img
+            src="../../assets/images/app/icons/close.png" width="10" /></a>
+</div>
 <script type="text/javascript" src="../../assets/js/environment.js"></script>
 <script>
-    var userPlanStatus = {
-        "async": true,
-        "crossDomain": true,
-        "url": baseUrl + "/resume/user/" + JSON.parse(sessionStorage.getItem('userData')).userId +
-            "/checkUserStatus",
-        "method": "GET",
-        "headers": {
-            "token": JSON.parse(sessionStorage.getItem('userData')).sessionId,
-            "content-type": "application/json"
-        },
-    };
-    sessionStorage.removeItem('userPlanStatus');
-    console.log(!sessionStorage.getItem('userPlanStatus'))
-    if (!sessionStorage.getItem('userPlanStatus')) {
-        $.ajax(userPlanStatus).done(function (response) {
-            console.log(response);
-            if (response.data) {
-                sessionStorage.setItem('userPlanStatus', JSON.stringify(response.data))
-            };
-            if (response.msg.description == "user transaction not found") {
-                if (response.data) {
-                    if (response.data[0].planId == 1) {
-                        sessionStorage.setItem('isPremiumUser', 'false');
-                    }
-                }
-                $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade').attr(
-                    'href',
-                    'javascript:void(0)');
-            } else {
-                if (sessionStorage.getItem('userPlanStatus')) {
-                    $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
-                        '../dashboard/share.html');
-                }
-                sessionStorage.setItem('isPremiumUser', 'false');
-            }
-            // response = typeof (response) !== "object" ? JSON.parse(response) : response;
-        });
-    } else {
-        if (sessionStorage.getItem('userPlanStatus')) {
+    const userInfo = JSON.parse(sessionStorage.getItem('userData'));
+    if (userInfo) {
+        if ('validUser' in userInfo.planDetails) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
                 './share.html');
         } else {
-            $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade')
+            $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
+        }
+        if (location.href === location.origin + locationPaths.homePage && userInfo.planDetails.display) {
+            $('#info_message').css('display', 'block');
+            $('#info_message span').html(userInfo.planDetails.msg.description);
+            console.log(window.location.href);
         }
     }
-</script>
-<script>
-    var userData = JSON.parse(sessionStorage.getItem('userData'));
-    var userId = userData.userId;
-    //console.log(userData);
-    var fromPage = sessionStorage.getItem('fromPage');
-
-    //console.log("fromPage ::::::"+fromPage);
-    //if(fromPage == 'signin'){
-    $('#userName').text(userData.firstname + " " + userData.lastname);
-    $('#UserEmail').text(userData.email);
+    $('.info_message .close').on('click', function () {
+        $('#info_message').css('display', 'none');
+        userInfo.planDetails.display = false;
+        sessionStorage.setItem('userData', JSON.stringify(userInfo))
+    });
+    $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
+    $('#UserEmail').text(userInfo.email);
     var pic = sessionStorage.getItem('imageStore');
     var picpath = pic.search('1631033876795164.jpg');
-
-    if (picpath > -1 || pic == '') {
-        $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
-        $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
-
+    if (userInfo.pic) {
+        $('#profileMenu img').attr('src', userInfo.pic)
     } else {
-        $('#profileMenu img').attr('src', pic);
-        $('#profilePicEdit').attr('src', pic);
+        $('#profileMenu img').attr('src', '../../../assets/images/avatar.png');
     }
-    /* Logout functionality */
-    let sessionId2 = sessionStorage.getItem('sessionId');
+    // if (picpath > -1 || pic == '') {
+    //     $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
+    //     $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
 
+    // } else {
+    //     $('#profileMenu img').attr('src', pic);
+    //     $('#profilePicEdit').attr('src', pic);
+    // }
     $('#signOut').on('click', function () {
-
         var settings = {
             "async": true,
             "crossDomain": true,
-            "url": baseApiUrl + "/user/" + userId + "/" + sessionId2 + "/resUserLogout",
+            "url": baseApiUrl + "/user/" + userInfo.userId + "/" + sessionStorage.getItem(sessionId) + "/" +
+                serviceUrls.get.resUserLogout,
             "method": "GET",
             "headers": {
-                "token": sessionId2,
+                "token": sessionId,
                 "content-type": "application/json"
             },
             "processData": false
@@ -208,7 +180,29 @@
         $.ajax(settings).done(function (response) {
             //console.log(response);
             sessionStorage.clear();
-            window.location.href = window.location.origin + "/index.html";
+            window.location.href = window.origin + '/app/auth/login.html';
         });
     });
+</script>
+<script>
+    // var userData = JSON.parse(sessionStorage.getItem('userData'));
+    // var userId = userData.userId;
+    //console.log(userData);
+    // var fromPage = sessionStorage.getItem('fromPage');
+
+    //console.log("fromPage ::::::"+fromPage);
+    //if(fromPage == 'signin'){
+    // $('#userName').text(userData.firstname + " " + userData.lastname);
+    // $('#UserEmail').text(userData.email);
+    // var pic = sessionStorage.getItem('imageStore');
+    // var picpath = pic.search('1631033876795164.jpg');
+
+    // if (picpath > -1 || pic == '') {
+    //     $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
+    //     $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
+
+    // } else {
+    //     $('#profileMenu img').attr('src', pic);
+    //     $('#profilePicEdit').attr('src', pic);
+    // }
 </script>

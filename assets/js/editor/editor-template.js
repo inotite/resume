@@ -1,11 +1,11 @@
 const userId = JSON.parse(sessionStorage.getItem('userData')).userId;
 const userStatus = sessionStorage.getItem('isPremiumUser');
-const planInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
 let resumeObj = JSON.parse(sessionStorage.getItem('userData'));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
-const exp_total_count = 10; 
+const exp_total_count = 10;
 const edu_total_count = 10;
 const proj_total_count = 10;
+const planInfo = resumeObj.planDetails;
 console.log(resumeObj);
 // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
 // var twitterIcon = import('img/twitter.svg');
@@ -147,7 +147,7 @@ $.ajax(degreesSettings).done(function (response) {
     $(".degrees").each(function (idx, obj) {
         var degree = 0;
         var dataId = $(this).attr('data-id');
-        if (dataId === undefined) { 
+        if (dataId === undefined) {
             $(this).val("");
             return;
         }
@@ -159,14 +159,14 @@ $.ajax(degreesSettings).done(function (response) {
 var settings = themeOptions ? themeOptions.settings : defaultSettings;
 $(window).ready(function () {
     $('.gender').niceSelect();
-    if ((planInfo && planInfo[0].planId == 1) || planInfo == null) {
+    if (planInfo.planId === 1) {
         // $('#resume-body').css({
         //     'background-image': 'url("watermarkworkruit.svg")',
         //     'background-position': 'center',
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
+        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center 0');
@@ -338,11 +338,12 @@ $(window).ready(function () {
         renderPages();
 
         $('#resume-body').hide();
-
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
-        $("page[size='a4']").css('background-repeat', 'no-repeat');
-        $("page[size='a4']").css('background-size', '40%');
-        $("page[size='a4']").css('background-position', 'center');
+        if (planInfo.planId === 1) {
+            $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
+            $("page[size='a4']").css('background-repeat', 'no-repeat');
+            $("page[size='a4']").css('background-size', '40%');
+            $("page[size='a4']").css('background-position', 'center');
+        }
     }
 
     var hideMultiplePages = function () {
@@ -357,7 +358,7 @@ $(window).ready(function () {
 
         $('#resume-body').show();
 
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
+        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
         $("page[size='a4']").css('background-position', 'center 0');
@@ -376,15 +377,6 @@ $(window).ready(function () {
         saveUserProfile(postObj);
 
         showMultiplePages();
-    });
-    $('#previewBack').on('click', function () {
-        $('.resume-preview').addClass('d-none');
-        $('#previewResume').removeClass('d-none');
-        $('#previewBack').addClass('d-none');
-        $('.editorNav').removeClass('d-none');
-        $('#saveResume').removeClass('d-none');
-
-        hideMultiplePages();
     });
 
     function ratingCircle() {
@@ -1251,7 +1243,7 @@ $(window).ready(function () {
             //     };
             //     img.src = url;
             // }
-            
+
             // //function call
             // getBase64FromImageUrl(resumeObj.pic);
         }
@@ -1686,8 +1678,8 @@ $(window).ready(function () {
     }
 
     async function savePdf() {
-        $('.loading-container').show();
-        if (planInfo) {
+        if (planInfo.planId !== 1) {
+            $('.loading-container').show();
             var eles = $('page');
             console.log(eles);
             var pageCount = eles.length;
@@ -1741,7 +1733,7 @@ $(window).ready(function () {
                 image.src = data;
                 doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
 
-                $(ele).css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
+                $(ele).css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
                 $(ele).css('background-repeat', 'no-repeat');
                 $(ele).css('background-size', '40%');
                 $(ele).css('background-position', 'center');
@@ -1811,15 +1803,13 @@ $(window).ready(function () {
                     //handle error
                     // console.log(response);
                 });
-            if (planInfo && planInfo[0].planId == 1) {
+            if (planInfo.planId === 1) {
                 docWaterMark.save(userId + '_resume.pdf');
                 // doc.save(resumeObj.firstname + '_resume.pdf');
             } else {
                 doc.save(resumeObj.firstname + '_resume.pdf');
             }
             $('.loading-container').delay(2000).fadeOut();
-        } else {
-            window.location.href = window.origin + '/pricing.html';
         }
     }
 

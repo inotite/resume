@@ -70,7 +70,8 @@
             </div>
             <div class="row mt-5 justify-content-center">
                 <!-- Account Tab Body -->
-                <div class="tab-pane col-md-12 tab-body-container tab-body-show" id="accountTabBody">
+                <p id="txn-history" class="text-center text-uppercase text-muted"></p>
+                <div class="tab-pane col-md-12 tab-body-container tab-body-show" id="order_history_table">
                     <div class="card w-100">
                         <div class="card-body">
                             <div class="row">
@@ -93,111 +94,9 @@
                     </div>
                 </div>
                 <!-- /Account Tab Body -->
-
-                <!-- Notifications Tab Body -->
-                <div class="tab-pane col-md-6 tab-body-container" id="notificationsTabBody">
-                    <div class="card w-100">
-                        <div class="card-body">
-                            <form id="settingsForm" name="settingsForm" role="form" class="ng-pristine ng-valid">
-                                <table class="table notifications">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th class="text-center">Email</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>General Updates</td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="switch" id="general_updates">
-                                                <label class="switch-label" for="general_updates">Toggle</label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Job Updates</td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="switch" id="job_updates">
-                                                <label class="switch-label" for="job_updates">Toggle</label>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Notifications Tab Body -->
-
             </div>
         </div>
     </div>
-    <!-- Model popup -->
-    <div class="modal fade bd-example-modal-lg" id="myModelUploadPhoto" tabindex="-1" role="dialog"
-        aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <div id="foto">
-                                <label for="inputfoto2" class="select-pic-section">
-                                    <div class="cont_fotodiv">
-                                        <div id="inserta_imagenlabel">
-                                            <img src="../images/icon_image.svg">SELECT YOUR PICTURE</div>
-                                    </div>
-                                </label>
-                                <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
-                                    <input type='file' id="inputfoto2" name="pic" style="display:none"
-                                        accept="image/*" />
-                                </form>
-                                <img src="" id="image-preview" />
-                                <canvas id="canvas-element"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="getapp px-4 text-center mt-3 m-auto" id="saveProfilePic">
-                                <span class="pr-3">Save</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Model popup -->
-    <!-- upgrade popup -->
-    <div class="modal fade bd-example-modal-lg" id="upgrade" tabindex="-1" role="dialog"
-        aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-5 text-center">
-                            <img src="../images/Icon3.svg" alt="phone" height="320px" width="auto">
-                        </div>
-                        <div class="col-md-7 pt-5">
-                            <div class="modal-title">Upgrade Today</div>
-                            <div class="modal-description">
-                                Get access to your custom resume URL and share it instantly with hiring managers,
-                                companies, friends & family.</div>
-                            <a href="../resumepricing.html" style="margin-left: 5rem;"><button type="button"
-                                    class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /upgrade popup -->
     <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
@@ -218,7 +117,7 @@
                 <span data-content="promoCode"></span>
             </td>
             <td data-content="createDate"></td>
-            <td data-content="updateDate">Aug 20 2019</td>
+            <td data-content="expDate">Aug 20 2019</td>
             <td><a data-href="invoiceLink">Invoice</a></td>
         </tr>
     </script>
@@ -295,25 +194,46 @@
         $('#inputfoto2').on('change', function () {
             readURL(this);
         });
-        const userPlanInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
-        userPlanInfo.map(item => {
-            item.createDate = moment(item.createDate).format("DD MMM YYYY");
-            item.updateDate = moment(item.updateDate).format("DD MMM YYYY");
-            item.invoiceLink = "invoice.html";
-            item.planId === 1 ? item.price = 'Free' : item.price = '&#8377; ' + item.price;
-            item.promoCode = item.promoCode ? 'Promo: ' + item.promoCode : 'Promo: NA'
-        })
-        $('#order_history_template').loadTemplate(
-            //Specify the template container (or file name of external template)
-            $('.data-history-template'),
-            userPlanInfo, {
-                append: true,
-                elemPerPage: 20
+        // const userPlanInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": baseResumeApiUrl + "user/" + JSON.parse(sessionStorage.getItem('userData')).userId +
+                "/getTxnHistory",
+            "method": "GET",
+            "headers": {
+                "token": "911ca088ab824095b82d3c98b32332e7",
+                "content-type": "application/json"
+            },
+            "processData": false,
+            // "data": JSON.stringify(signupData)
+        }
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            if (response.status == "success") {
+                response.data.map(item => {
+                    item.createDate = moment(item.createDate).format("DD MMM YYYY");
+                    item.expDate = moment(item.expDate).format("DD MMM YYYY");
+                    item.invoiceLink = "invoice.html";
+                    item.planId === 1 ? item.price = 'Free' : item.price = '&#8377; ' + item.price;
+                    item.promoCode = item.promoCode ? 'Promo: ' + item.promoCode : 'Promo: NA'
+                });
+                $('#order_history_template').loadTemplate(
+                    //Specify the template container (or file name of external template)
+                    $('.data-history-template'),
+                    response.data, {
+                        append: true,
+                        elemPerPage: 20
+                    }
+                    // console.log(response.resumeplans[index]),
+                    //Specify the data to render
+                    // response.resumeplans[index]
+                );
+            } else {
+                $("#order_history_table").remove();
+                $("#txn-history").text(response.msg.description);
             }
-            // console.log(response.resumeplans[index]),
-            //Specify the data to render
-            // response.resumeplans[index]
-        );
+        });
     </script>
 
 </body>
