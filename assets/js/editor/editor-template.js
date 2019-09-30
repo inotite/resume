@@ -383,6 +383,16 @@ $(window).ready(function () {
 
         showMultiplePages();
     });
+    $('#previewBack').on('click', function () {
+        $('.resume-preview').addClass('d-none');
+        $('#previewResume').removeClass('d-none');
+        $('#previewBack').addClass('d-none');
+        $('.editorNav').removeClass('d-none');
+        $('#saveResume').removeClass('d-none');
+        // $('#resume-body').css('display','block!important');
+        hideMultiplePages();
+    });
+
 
     function ratingCircle() {
         var container = $("#rating-container");
