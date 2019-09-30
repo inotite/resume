@@ -159,13 +159,18 @@ $.ajax(degreesSettings).done(function (response) {
 var settings = themeOptions ? themeOptions.settings : defaultSettings;
 $(window).ready(function () {
     $('.gender').niceSelect();
-    if (planInfo.planId === 1) {
+    if (!('validUser' in planInfo)) {
         // $('#resume-body').css({
         //     'background-image': 'url("watermarkworkruit.svg")',
         //     'background-position': 'center',
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
+        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
+        $("page[size='a4']").css('background-repeat', 'repeat-y');
+        $("page[size='a4']").css('background-size', '40%');
+        $("page[size='a4']").css('background-position', 'center 0');
+    } else if (planInfo.planId === 1) {
         $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
@@ -947,7 +952,7 @@ $(window).ready(function () {
                 console.log("hey, here!");
                 await savePdf();
             }
-        }else{
+        } else {
             $('#downloadResume a').attr('href', location.origin + '/pricing.html');
         }
     });
