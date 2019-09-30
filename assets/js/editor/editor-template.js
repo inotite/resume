@@ -1642,6 +1642,7 @@ $(window).ready(function () {
                 // console.log("Ajax response");
                 // console.log(response.data);
 
+                console.log("Settings Done");
                 var logoImg = $('input[data-content="picture"]').get(0).files[0];
                 if (logoImg) {
                     saveUserPic();
