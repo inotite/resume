@@ -159,18 +159,13 @@ $.ajax(degreesSettings).done(function (response) {
 var settings = themeOptions ? themeOptions.settings : defaultSettings;
 $(window).ready(function () {
     $('.gender').niceSelect();
-    if (!('validUser' in planInfo)) {
+    if (!planInfo.subscribedUser || planInfo.planId === 1) {
         // $('#resume-body').css({
         //     'background-image': 'url("watermarkworkruit.svg")',
         //     'background-position': 'center',
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
-        $("page[size='a4']").css('background-repeat', 'repeat-y');
-        $("page[size='a4']").css('background-size', '40%');
-        $("page[size='a4']").css('background-position', 'center 0');
-    } else if (planInfo.planId === 1) {
         $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
         $("page[size='a4']").css('background-repeat', 'repeat-y');
         $("page[size='a4']").css('background-size', '40%');
@@ -951,7 +946,7 @@ $(window).ready(function () {
     });
 
     $('#downloadResume').on('click', async function () {
-        if ('validUser' in planInfo) {
+        if (planInfo.subscribedUser) {
             if (!$('.editorNav').hasClass('d-none')) {
                 bindUserDataForSave();
                 saveUserProfile(postObj);
@@ -1697,7 +1692,7 @@ $(window).ready(function () {
     }
 
     async function savePdf() {
-        if (planInfo.planId !== 1) {
+        // if (planInfo.planId !== 1) {
             $('.loading-container').show();
             var eles = $('page');
             console.log(eles);
@@ -1829,7 +1824,7 @@ $(window).ready(function () {
                 doc.save(resumeObj.firstname + '_resume.pdf');
             }
             $('.loading-container').delay(2000).fadeOut();
-        }
+        // }
     }
 
     $('#user-picture').on('change', function () {

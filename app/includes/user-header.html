@@ -130,7 +130,7 @@
 <script>
     const userInfo = JSON.parse(sessionStorage.getItem('userData'));
     if (userInfo) {
-        if ('validUser' in userInfo.planDetails) {
+        if (userInfo.planDetails.subscribedUser) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
                 './share.html');
         } else {

@@ -105,13 +105,37 @@
                 // } else {
                 //   $('.trail-feature').removeClass('d-none');
                 // }
-            })
-            // console.log(localStorage.getItem('previewData')) newSuccessMessageID
+                // console.log(localStorage.getItem('previewData')) newSuccessMessageID
 
-            sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $(
-                    '.preview_btn')
-                .css('display', 'inline-block')
-        });
+                sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display',
+                        'none') : $(
+                        '.preview_btn')
+                    .css('display', 'inline-block');
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl + "/user/" + userData.userId + "/getProfileResume",
+                    "type": "GET",
+                    "headers": {
+                        "token": sessionId,
+                        "content-type": "application/json"
+                    },
+                    "processData": false,
+                    // "data": JSON.stringify(userData),
+                    error: function (e) {
+                        console.log(e);
+                    },
+                    // dataType: "json",
+                    contentType: "application/json"
+                }
+                // downloadResume
+                $.ajax(settings).done(function (response) {
+                    sessionStorage.setItem('userData', JSON.stringify(response.data));
+                    // window.location.reload();
+                });
+            });
+        })
     </script>
 
 </body>
