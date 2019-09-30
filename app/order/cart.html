@@ -17,6 +17,9 @@
 </head>
 
 <body>
+    <div class="loading-container">
+        <img src="../../assets/images/oval.svg" style="width:55px">
+    </div>
     <div id="load-header"></div>
 
     <div class="content price-summary-box d-none">
@@ -114,6 +117,16 @@
             </div>
         </div>
     </div>
+    <div class="content error-box d-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="error-description"></p>
+                    <a href="../../pricing.html">Upgrade</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="promoCodeModal" tabindex="-1" role="dialog" aria-labelledby="promoCodeModal"
         aria-hidden="true">
@@ -193,23 +206,33 @@
                 <div class="modal-body">
                     <div class="termsandprivacy-content">
                         <ul>
-                            <li>Discounts are not applicable to ICANN fees, taxes, transfers, premium domains, premium
+                            <li>Discounts are not applicable to ICANN fees, taxes, transfers, premium domains,
+                                premium
                                 templates, Search Engine Visibility advertising budget, gift cards or Trademark
                                 Holders/Priority Pre-registrations or pre-registration fees. Cannot be used in
-                                conjuction with any other offer, sale, discount or promotion. After the initial purchase
-                                term, discounted products will renew at the then-current renewal list price, Offer good
+                                conjuction with any other offer, sale, discount or promotion. After the initial
+                                purchase
+                                term, discounted products will renew at the then-current renewal list price, Offer
+                                good
                                 towards new product purchases only and connot be used on product renewals.</li>
                             <li>Private Registration will renew at the regular renewal rate.</li>
                             <li>Savings are based on workruit regular pricing.</li>
                             <li>Annual discounts available on NEW purchases only.</li>
-                            <li>Special offer price valid for the specified offer term of one new or transfer domain per
-                                customer. After the initial purchase term, additional years or domains may be purchased
-                                at the regular or then-current price. Discount offers cannot be used in conjunction with
-                                any other offer or promotion. Not all payment methods valid with this offer, acceptable
+                            <li>Special offer price valid for the specified offer term of one new or transfer domain
+                                per
+                                customer. After the initial purchase term, additional years or domains may be
+                                purchased
+                                at the regular or then-current price. Discount offers cannot be used in conjunction
+                                with
+                                any other offer or promotion. Not all payment methods valid with this offer,
+                                acceptable
                                 payments will display in cart at checkout. Your discount will be applied in your
-                                shopping cart. After the initial purchase term, discounted products will renew at the
-                                then-current renewal rate. workruit reserves the right to deny use of this offer and/or
-                                cancel domains purchased using this offer if the offer is abused or used fraudulently,
+                                shopping cart. After the initial purchase term, discounted products will renew at
+                                the
+                                then-current renewal rate. workruit reserves the right to deny use of this offer
+                                and/or
+                                cancel domains purchased using this offer if the offer is abused or used
+                                fraudulently,
                                 as determined by workruit in its sole discretion.</li>
                         </ul>
                     </div>
@@ -229,6 +252,7 @@
     </script> -->
     <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/sweetalert.min.js"></script>
     <script type="text/javascript" src="../../assets/js/environment.js"></script>
     <script type="text/javascript" src="../../assets/js/cart.js"></script>
     <script>

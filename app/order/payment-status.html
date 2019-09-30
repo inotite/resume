@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel='shortcut icon' type='image/x-icon' href='favicon.png' />
+
     <title>Payment Status - workruit</title>
-    <link rel='shortcut icon' type='image/x-icon' href='../../favicon.png' />
-    <link rel="stylesheet" type="text/css" href="../../assets/vendors/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="../../assets/css/custom.css" />
+    <link rel='shortcut icon' type='image/x-icon' href='../favicon.png' />
+    <link rel="stylesheet" type="text/css" href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/custom.css" />
     <style>
         .btn-outline-primary {
             border-color: #007bff;
@@ -20,7 +23,57 @@
 </head>
 
 <body>
-    <div id="load-header"></div>
+    <header class="w-100">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-5">
+                    <ul class="nav status">
+                        <li class="nav-item active">
+                            <a class="nav-link transition" href="../home/index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link transition" href="../create/index.html">Resume</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link transition" href="../share/index.html">Share</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 text-center">
+                    <a href="#">
+                        <img src="../images/workruit-resume-logo-color.svg" class="img-responsive resume-logo-big"
+                            alt="workruit-instent-resume">
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <ul class="nav justify-content-end status">
+                        <!-- <li>
+                            <a href="../pricing.html" target="_blank" class="btn btn-primary upgrade-btn"
+                                id="change_password_button">Upgrade</a>
+                        </li> -->
+                        <li class="nav-item user dropdown">
+                            <a class="nav-link transition dropdown-toggle" data-toggle="dropdown" id="profileMenu"
+                                aria-haspopup="true" aria-expanded="false">
+                                <img src="../images/app/pic1.png" style="border-radius: 50%;" alt="">
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="profile">
+                                <a class="dropdown-item transition" href="" id="userName"></a>
+                                <a href="javascript:void(0)" class="dropdown-item transition">
+                                    <span id="UserEmail"></span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item transition" href="../account/index.html">Account</a>
+                                <a class="dropdown-item transition" href="#">Notifications</a>
+                                <a class="dropdown-item transition" href="javascript:void(0)" data-toggle="modal"
+                                    data-target="#downloadApp">Download App</a>
+                                <a class="dropdown-item transition" href="javascript:void(0)" id="signOut">Sign Out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
     <div class="content success d-none">
         <div class="container success">
             <div class="row">
@@ -37,8 +90,7 @@
                             Having trouble? <a href="mailto:info@workruit.com">Contact us</a>
                         </p>
                         <p>
-                            <a class="btn btn-outline-primary btn-sm" href="../dashboard/home.html"
-                                role="button">Continue
+                            <a class="btn btn-outline-primary btn-sm" href="/home/index.html" role="button">Continue
                                 to
                                 homepage</a>
                         </p>
@@ -154,19 +206,19 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
-    <!-- <script>
-        window.jQuery || document.write('<script src="../../assets/vendors/js/jquery.min.js"><\/script>')
-    </script> -->
-    <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
-    <script type="text/javascript" src="assets/vendors/js/a6a57723a3.js"></script>
-    <script type="text/javascript" src="../../assets/js/environment.js"></script>
-    <script type="text/javascript" src="../../assets/vendors/js/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/a6a57723a3.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+    </script>
+    <script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/popper.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.0/assets/js/vendor/holder.min.js"></script>
     <script>
         axios.defaults.headers.common['Token'] = sessionStorage.getItem('sessionId');
-        $('#load-header').load('../includes/user-header.html');
+        var baseUrl = 'https://stageapi.workruit.com/resume/user/';
         var userData = JSON.parse(sessionStorage.getItem("userData"));
         var priceCalculationObj = {
             "planId": 1,

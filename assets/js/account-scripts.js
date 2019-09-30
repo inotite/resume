@@ -41,7 +41,6 @@
 					//console.log("sessionId ::::::"+sessionId);
 					window.location.href = "../index.html";
 				} else {
-					var userData = JSON.parse(sessionStorage.getItem('userData'));
 					var userId = userData.userId;
 					//console.log(userData);
 					var fromPage = sessionStorage.getItem('fromPage');
@@ -81,27 +80,6 @@
 					}
 
 					//}
-
-					/* Logout functionality */
-					$('#signOut').on('click', function () {
-
-						var settings = {
-							"async": true,
-							"crossDomain": true,
-							"url": baseApiUrl + "/user/" + userId + "/" + sessionId + "/" + serviceUrls.get.resUserLogout,
-							"method": "GET",
-							"headers": {
-								"token": sessionId,
-								"content-type": "application/json"
-							},
-							"processData": false
-						}
-						$.ajax(settings).done(function (response) {
-							//console.log(response);
-							sessionStorage.clear();
-							window.location.href = "../index.html";
-						});
-					});
 
 					$('#shareNameBtn').on('click', function () {
 
@@ -179,7 +157,6 @@
 
 
 				}
-
 				$("#changePassBtn").on('click', function () {
 					$("#changePasswordForm").removeClass('d-none');
 					$("#changePassBtn").addClass('d-none');
@@ -195,7 +172,8 @@
 				$('#profileMenu').on('click', function () {
 					//$('.dropdown-menu').toggleClass('open');
 					//$('body').toggleClass('menu-open');
-				})
+				});
+				/* Logout functionality */
 				// $('.tab-item').on('click', function () {
 				// 	let idVal = $(this).attr('data-item');
 
@@ -267,7 +245,6 @@
 					var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
 					var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
 					// var clgName = 
-					var userData = JSON.parse(sessionStorage.getItem('userData'));
 					var email = userData.email;
 
 					$('.invalid-feedback').remove();
@@ -337,7 +314,6 @@
 					}
 				});
 				$('#updateProfile2').on('click', function () {
-					var userData = JSON.parse(sessionStorage.getItem('userData'));
 					var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
 					var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
 					// var clgName = 
@@ -428,7 +404,6 @@
 				var form = new FormData();
 				var logoImg = $('input[name="pic"]').get(0).files[0];
 
-				var userData = JSON.parse(sessionStorage.getItem('userData'));
 				var userId = userData.userId;
 
 				form.append("userId", userId);

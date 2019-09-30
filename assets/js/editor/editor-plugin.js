@@ -1,4 +1,5 @@
 // plug it in, plug it in
+
 (function ($) {
 
 	var paraCount = function () {
@@ -63,7 +64,7 @@
 					}
 					
 					*/
-					var userData = JSON.parse(sessionStorage.getItem('userData'));
+					// var userData = JSON.parse(sessionStorage.getItem('userData'));
 					// console.log(userData);
 
 					if (fromPage == 'signup') {
@@ -294,7 +295,7 @@
 							}
 						});
 						//pdf without matermark
-						if (sessionStorage.getItem('isPremiumUser') == 'true') {
+						if (userData.paidUser) {
 							var imgData = canvas.toDataURL('image/jpeg').slice('data:image/jpeg;base64,'.length);
 							var waterMarkImgData = canvas.toDataURL('image/jpeg').slice('data:image/jpeg;base64,'.length);
 							imgData = atob(imgData);
@@ -933,7 +934,7 @@
 
 
 					let shareName = sessionStorage.getItem('shareName');
-					var userData = JSON.parse(sessionStorage.getItem('userData'));
+					// var userData = JSON.parse(sessionStorage.getItem('userData'));
 					var sessionId = sessionStorage.getItem('sessionId');
 					var userId = userData.userId;
 					var fontStyle = $('#selectFontFamily').val();
@@ -1186,9 +1187,9 @@
 				$("#downloadResume").click(function () {
 					if (validateFormData(applicantData)) {
 						$('.loading-container').show();
-						var userStatus = sessionStorage.getItem('isPremiumUser');
+						// var userStatus = sessionStorage.getItem('isPremiumUser');
 						console.log(userStatus, 'downloadResume')
-						if (userStatus == 'true') {
+						if (userData.paidUser) {
 							html2canvas(document.getElementById("contimprimir"), {
 								//allowTaint: true,
 								//logging: true,

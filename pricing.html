@@ -196,7 +196,8 @@
 					item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
 				});
 				// console.log(response);
-				console.log(response);
+				const userD = JSON.parse(sessionStorage.getItem('userData'));
+				console.log("userD>>>>>", userD);
 				$('.pricing_template').loadTemplate(
 					//Specify the template container (or file name of external template)
 					$('.data-pricing-template'),

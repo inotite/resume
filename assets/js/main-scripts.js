@@ -222,7 +222,7 @@ function load() {
 						console.log('response new', response);
 						sessionStorage.clear();
 						if (response.status == "success") {
-							sessionStorage.setItem('userStatus', response.data.sessionId);
+							// sessionStorage.setItem('userStatus', response.data.sessionId);
 							sessionStorage.setItem('sessionId', response.data.sessionId);
 							sessionStorage.setItem('userData', JSON.stringify(response.data));
 							sessionStorage.setItem('shareName', response.shareName);

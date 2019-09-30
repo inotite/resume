@@ -136,9 +136,9 @@
           <form id="myProfileForm2" name="myProfileForm2" role="form">
             <div class="card w-100 mt-5">
               <div class="card-body">
-                <div class="row subscription-section">
+                <div class="row subscription-section p-0">
                   <!-- Collage Name -->
-                  <div class="col-md-9">
+                  <div class="col-md-9 p-0">
                     <div class="form-group">
                       <label>College Name</label>
                       <select name="" id="collageName" class="form-control myprofile">
@@ -280,7 +280,7 @@
   <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../../assets/js/environment.js"></script>  
+  <script type="text/javascript" src="../../assets/js/environment.js"></script>
   <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
   <script>
     // getCollegesInfo
@@ -332,6 +332,8 @@
           console.log("clgInfo2", clgInfo2);
           $('#collageName').val(clgInfo2);
         }
+        var option = `<option value="" data-clgLogo="">NA</option>`
+        $('#collageName').append(option)
       });
 
 
