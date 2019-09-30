@@ -111,7 +111,7 @@
                         <div class="modal-description">
                             Get access to your custom resume URL and share it instantly with hiring managers, companies,
                             friends & family.</div>
-                        <a href="../resumepricing.html"><button type="button"
+                        <a href="../../pricing.html"><button type="button"
                                 class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
                     </div>
                 </div>
@@ -142,20 +142,26 @@
             console.log(window.location.href);
         }
     }
+    var userId = userData.userId;
+    //console.log(userData);
+    var fromPage = sessionStorage.getItem('fromPage');
+    //console.log("fromPage ::::::"+fromPage);
+    //if(fromPage == 'signin'){
+    $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
+    $('#UserEmail').text(userInfo.email);
+    $('input[name="firstname"]').val(userInfo.firstname);
+    $('input[name="lastname"]').val(userInfo.lastname);
+    $('input[name="email"]').val(userInfo.email);
+    if (userInfo.pic) {
+        $('#profileMenu img').attr('src', userInfo.pic)
+    } else {
+        $('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
+    }
     $('.info_message .close').on('click', function () {
         $('#info_message').css('display', 'none');
         userInfo.planDetails.display = false;
         sessionStorage.setItem('userData', JSON.stringify(userInfo))
     });
-    $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
-    $('#UserEmail').text(userInfo.email);
-    var pic = sessionStorage.getItem('imageStore');
-    var picpath = pic.search('1631033876795164.jpg');
-    if (userInfo.pic) {
-        $('#profileMenu img').attr('src', userInfo.pic)
-    } else {
-        $('#profileMenu img').attr('src', '../../../assets/images/avatar.png');
-    }
     // if (picpath > -1 || pic == '') {
     //     $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
     //     $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');

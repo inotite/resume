@@ -37,7 +37,6 @@
 				// 	}
 				// });
 				let sessionId = sessionStorage.getItem('sessionId');
-				
 				if (!sessionId) {
 					//console.log("sessionId ::::::"+sessionId);
 					window.location.href = "../index.html";
@@ -157,6 +156,34 @@
 					});
 
 
+				}
+				if(!('planDetails' in userData)){
+					var settings = {
+						"async": true,
+						"crossDomain": true,
+						"url": apiUrl + "/user/" + userData.userId + "/updateProfileResume",
+						"type": "POST",
+						"headers": {
+							"token": sessionId,
+							"content-type": "application/json"
+						},
+						"processData": false,
+						"data": JSON.stringify(userData),
+						error: function (e) {
+							console.log(e);
+						},
+						dataType: "json",
+						contentType: "application/json"
+					}
+					console.log("settings", settings.data);
+					// downloadResume
+					$.ajax(settings).done(function (response) {
+						if (response.status == 'success') {
+							sessionStorage.setItem('userData', JSON.stringify(response.data));
+							window.location.reload();
+						} 
+			
+					});
 				}
 
 				$("#changePassBtn").on('click', function () {

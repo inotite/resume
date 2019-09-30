@@ -936,15 +936,19 @@ $(window).ready(function () {
     });
 
     $('#downloadResume').on('click', async function () {
-        if (!$('.editorNav').hasClass('d-none')) {
-            bindUserDataForSave();
-            saveUserProfile(postObj);
-            showMultiplePages();
-            await savePdf();
-            hideMultiplePages();
-        } else {
-            console.log("hey, here!");
-            await savePdf();
+        if ('validUser' in planInfo) {
+            if (!$('.editorNav').hasClass('d-none')) {
+                bindUserDataForSave();
+                saveUserProfile(postObj);
+                showMultiplePages();
+                await savePdf();
+                hideMultiplePages();
+            } else {
+                console.log("hey, here!");
+                await savePdf();
+            }
+        }else{
+            $('#downloadResume a').attr('href', location.origin + '/pricing.html');
         }
     });
 
