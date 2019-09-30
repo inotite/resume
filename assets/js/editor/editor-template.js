@@ -186,14 +186,24 @@ $(window).ready(function () {
             fontItem.fontFamily + '</a>';
         $('.font-items').append(fontLink);
     }
-    $('.font-items .font-item').on('click', function () {
+    $('.page-font .font-items .font-item').on('click', function () {
         var selectedFont = $(this).attr('data-font');
         fonts.filter(item => {
             if (selectedFont == item.fontInfo) {
-                $('.selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
+                $('.page-font .selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
                 $('body').css('font-family', item.fontFamily);
                 $('.ui-autocomplete').css('font-family', item.fontFamily);
                 console.log($('.ui-autocomplete'));
+                return;
+            };
+        });
+    });
+    $('.title-headers .font-items .font-item').on('click', function () {
+        var selectedFont = $(this).attr('data-font');
+        fonts.filter(item => {
+            if (selectedFont == item.fontInfo) {
+                $('.title-headers .selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
+                $('.sub-header').css('font-family', item.fontFamily);
                 return;
             };
         });

@@ -50,13 +50,14 @@ $(window).ready(function () {
             });
 
         $("#proceed_btn").on('click', function () {
-            console.log("procedd");
+            console.log("proceed");
             if (priceCalculationObj.planInfo.planId !== 1) {
                 // Paytm Checksum
                 var checkSumUrl = baseResumeApiUrl + "user/" + userData.userId +
                     "/plan/" +
                     priceCalculationObj
                     .user_planId + resumeServiceUrls.get.getPaytmChecksum;
+                console.log(checkSumUrl);
                 axios.get(checkSumUrl)
                     .then(function (response) {
                         // handle success
@@ -64,6 +65,7 @@ $(window).ready(function () {
                         var paytmInfo = jQuery('<div> ' + response.data.redirectUrl +
                             '</div>');
                         // console.log(paytmInfo);
+                        alert(response.data.redirectUrl);
                         sessionStorage.setItem('orderId', paytmInfo.find(
                                 "input[name=ORDER_ID]")
                             .val());
