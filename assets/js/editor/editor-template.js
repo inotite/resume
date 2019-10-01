@@ -204,6 +204,7 @@ $(window).ready(function () {
             if (selectedFont == item.fontInfo) {
                 $('.title-headers .selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
                 $('.sub-header').css('font-family', item.fontFamily);
+                $('.title-headers').css('font-family', item.fontFamily);
                 return;
             };
         });
