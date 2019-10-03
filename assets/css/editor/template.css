@@ -64,9 +64,11 @@ body {
 .pl-1p8x {
     padding-left: 1.9px;
 }
-.pl-7x{
+
+.pl-7x {
     padding-left: 7px;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -626,15 +628,18 @@ input.switch {
     background: var(--color-green);
 }
 
-.theme-black .color path, .theme-black .color polygon {
+.theme-black .color path,
+.theme-black .color polygon {
     fill: var(--color-black);
 }
 
-.theme-blue .color path, .theme-blue .color polygon {
+.theme-blue .color path,
+.theme-blue .color polygon {
     fill: var(--color-blue);
 }
 
-.theme-green .color path, .theme-green .color polygon {
+.theme-green .color path,
+.theme-green .color polygon {
     fill: var(--color-green);
 }
 
@@ -898,7 +903,12 @@ input {
     vertical-align: middle;
 }
 
-.social-phone, .social-linkedin, .social-github, .social-twitter, .social-website, .social-blog {
+.social-phone,
+.social-linkedin,
+.social-github,
+.social-twitter,
+.social-website,
+.social-blog {
     width: 100%;
 }
 
@@ -916,4 +926,18 @@ p {
 
 .skill-row {
     display: block !important;
+}
+
+#upgrade-popup .modal-header {
+    justify-content: flex-end;
+    border: 0;
+}
+
+#upgrade-popup .modal-header .close {
+    background: url(../../images/app/icons/close.svg) no-repeat;
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    cursor: pointer;
 }
