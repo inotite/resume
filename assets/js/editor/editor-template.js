@@ -481,22 +481,22 @@ $(window).ready(function () {
             case '25':
                 $(this).addClass('at-50').removeClass('at-25');
                 $(this).attr('data-border', '50');
-                $(this).children().attr('data-skill', '50%').text('50%');
+                $(this).parent().find('.skill-value').attr('data-skill', '50%').text('50%');
                 break;
             case '50':
                 $(this).addClass('at-75').removeClass('at-50');
                 $(this).attr('data-border', '75');
-                $(this).children().attr('data-skill', '75%').text('75%');
+                $(this).parent().find('.skill-value').attr('data-skill', '75%').text('75%');
                 break;
             case '75':
                 $(this).addClass('at-100').removeClass('at-75');
                 $(this).attr('data-border', '100');
-                $(this).children().attr('data-skill', '100%').text('100%');
+                $(this).parent().find('.skill-value').attr('data-skill', '100%').text('100%');
                 break;
             case '100':
                 $(this).addClass('at-25').removeClass('at-100');
                 $(this).attr('data-border', '25');
-                $(this).children().attr('data-skill', '25%').text('25%');
+                $(this).parent().find('.skill-value').attr('data-skill', '25%').text('25%');
                 break;
             default:
                 break;
@@ -1472,8 +1472,8 @@ $(window).ready(function () {
             const v = resumeObj.userSkillsSet[i];
             var a = i + 1;
             // console.log(v, '#skills_item_' + a + ' .skills-bar .skill-value');
-            $('#skills_item_' + a + ' .skills-bar .skill-value').attr('data-skill', v.percentage);
-            $('#skills_item_' + a + ' .skills-bar .skill-value').text(v.percentage + '%');
+            $('#skills_item_' + a + ' .skill-container .skill-value').attr('data-skill', v.percentage);
+            $('#skills_item_' + a + ' .skill-container .skill-value').text(v.percentage + '%');
             $('#skills_item_' + a + ' .skills-bar').attr('data-border', v.percentage);
             $('#skills_item_' + a + ' .skills-bar').attr('class', '').attr('class',
                 'skills-bar color-blue at-' + v.percentage);

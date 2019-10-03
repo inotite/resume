@@ -527,13 +527,19 @@ aside * {
     align-content: center;
 }
 
+.skill-container {
+    position: relative;
+}
+
 .skill-value {
     position: absolute;
     z-index: 9;
     text-align: center;
-    transform: translate(-3px, 0px);
     font-size: 13px;
-    width: 100%;
+    left: 0;
+    right: 0;
+    top: 16px;
+    bottom: 0;
 }
 
 .skill-value[data-skill='100'] {
