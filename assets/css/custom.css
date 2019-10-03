@@ -3262,7 +3262,7 @@ button span {
 
 .modal-header {
     display: flex;
-    justify-content: space-between !important;
+    /* justify-content: space-between !important; */
     align-items: center;
 }
 
@@ -3274,7 +3274,7 @@ button span {
     position: fixed;
     width: 100%;
     text-align: center;
-    top: 68px;
+    top: 68px!important;
     z-index: 99;
     display: none;
 }

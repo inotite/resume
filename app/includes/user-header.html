@@ -142,7 +142,7 @@
     if (userInfo) {
         if (userInfo.planDetails.subscribedUser) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
-                './share.html');
+                location.origin + '/app/dashboard/share.html');
         } else {
             $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
         }

@@ -35,6 +35,7 @@ const resumeServiceUrls = {
         "getCollegesInfo": "getCollegesInfo",
         "getPaytmChecksum": "/getPaytmChecksum",
         "checkUserStatus": "/checkUserStatus",
-        "getTxnHistory": "/getTxnHistory"
+        "getTxnHistory": "/getTxnHistory",
+        "getOrderInfo": "/getOrderInfo"
     }
 };

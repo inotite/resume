@@ -70,7 +70,7 @@ $(window).ready(function () {
                         sessionStorage.setItem('CHECKSUMHASH', paytmInfo.find(
                             "input[name=CHECKSUMHASH]").val());
                         console.log(response.data);
-                        // $('#paytm-checkout').html(response.data.redirectUrl)
+                        $('#paytm-checkout').html(response.data.redirectUrl)
 
                         // url = "./paytm.html";
                         // window.location = url
