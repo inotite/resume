@@ -51,30 +51,36 @@
     </script>
     <!-- Chatra {literal} -->
     <script>
-        (function (d, w, c) {
-            w.ChatraID = 'aeF8KSek7P9EJiSLt';
-            var s = d.createElement('script');
-            w[c] = w[c] || function () {
-                (w[c].q = w[c].q || []).push(arguments);
+        var shareParameter = window.location.href.split(location.origin + "/")[1];
+        if (shareParameter.length < 4) {
+            (function (d, w, c) {
+                w.ChatraID = 'aeF8KSek7P9EJiSLt';
+                var s = d.createElement('script');
+                w[c] = w[c] || function () {
+                    (w[c].q = w[c].q || []).push(arguments);
+                };
+                s.async = true;
+                s.src = (d.location.protocol === 'https:' ? 'https:' : 'http:') +
+                    '//call.chatra.io/chatra.js';
+                if (d.head) d.head.appendChild(s);
+            })(document, window, 'Chatra');
+            //chatra custom set up 
+            window.ChatraSetup = {
+                colors: {
+                    buttonText: '#ffffff',
+                    /* chat button text color */
+                    buttonBg: '#337ab7' /* chat button background color */
+                }
             };
-            s.async = true;
-            s.src = (d.location.protocol === 'https:' ? 'https:' : 'http:') +
-                '//call.chatra.io/chatra.js';
-            if (d.head) d.head.appendChild(s);
-        })(document, window, 'Chatra');
-        //chatra custom set up 
-        window.ChatraSetup = {
-            colors: {
-                buttonText: '#ffffff',
-                /* chat button text color */
-                buttonBg: '#337ab7' /* chat button background color */
-            }
-        };
+        }
     </script>
     <!-- /Chatra {/literal} -->
 </head>
 
 <body>
+    <div class="loading-container">
+        <img src="assets/images/oval.svg" style="width:55px">
+    </div>
     <div class="mainPage">
         <div w3-include-html="app/includes/header.html"></div>
         <div class="container-fluid layout-hero layout-hero__blue-green-employer layout-hero__a">
@@ -323,9 +329,15 @@
         <div w3-include-html="app/includes/footer.html"></div>
 
     </div>
+    <div class="resume-pdf-view d-none">
+        <div id="error-message" class="d-none text-center">
+            <p></p>
+        </div>
+        <iframe src="" frameborder="0" id="pdfViewer" class="the-canvas mb-5"></iframe>
+    </div>
     <!-- Scripts -->
     <script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="assets/vendors/js/a6a57723a3.js"></script>
+    <script type="text/javascript" src="assets/vendors/js/a6a57723a3.js"></script>
     <script type="text/javascript" src="assets/vendors/js/sweetalert.min.js"></script>
     <script type="text/javascript" src="assets/vendors/js/aos.js"></script>
     <script type="text/javascript" src="assets/vendors/js/w3includes.js"></script>
@@ -334,6 +346,7 @@
     <script type="text/javascript" src="assets/js/main.js"></script>
     <!-- turn on other screenshots on scroll-->
     <script type="text/javascript">
+        $('.loading-container').delay(1000).fadeOut();
         includeHTML();
     </script>
     <!-- AOS — animate on scroll library -->
@@ -458,14 +471,25 @@
     </script>
     <script>
         $(window).ready(function () {
-            var shareParameter = window.location.search.substr(1).substring(1);
+            var shareParameter = window.location.href.split(location.origin + "/")[1];
             var origin = window.origin;
             console.log(shareParameter);
-            if (shareParameter) {
-                window.location.href = origin == "http://127.0.0.1:5501" ? origin +
-                    '/workruit-site/resume/resume-preview.html?@' +
-                    shareParameter : origin + '/resume-preview.html?@' +
-                    shareParameter
+            if (shareParameter && (shareParameter.indexOf('#') !== -1 && shareParameter.length > 4)) {
+                $('.mainPage').addClass('d-none');
+                $('.resume-pdf-view').removeClass('d-none');
+                var googleDocsUrl = "https://docs.google.com/viewer?url=";
+                var baseUrl = baseApiUrl + "user/getShareFile?name=" + shareParameter.slice(1)
+                shareParameter ? true : window.location = location.origin + '/404.html'
+                console.log(shareParameter ? true : false);
+                $.get(baseUrl, function (data) {
+                    data.status === "failed" ? ($('#error-message p').text(data.msg.description), $(
+                            '#error-message').removeClass('d-none')) : document
+                        .getElementById('pdfViewer').src = googleDocsUrl + data.data + "&embedded=true";
+                });
+                // window.location.href = origin == "http://127.0.0.1:5501" ? origin +
+                //     '/workruit-site/resume/resume-preview.html?@' +
+                //     shareParameter : origin + '/resume-preview.html?@' +
+                //     shareParameter
             }
         });
     </script>

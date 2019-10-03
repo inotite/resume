@@ -3262,21 +3262,45 @@ button span {
 
 .modal-header {
     display: flex;
-    /* justify-content: space-between !important; */
+    justify-content: space-between !important;
     align-items: center;
 }
 
 .btn-outline-primary {
     border-color: #007bff;
 }
-.info_message{
+
+.info_message {
     position: fixed;
     width: 100%;
     text-align: center;
     top: 68px;
-    z-index:99;
+    z-index: 99;
     display: none;
 }
-.info_message .close{
+
+.info_message.alert-success {
+    background: #34b95c;
+    color: #fff !important;
+}
+.info_message.alert-danger{
+    background: #f54e4b;
+    color: #fff !important;
+}
+
+.info_message .close {
     margin: 0;
+}
+#pricing-modal .modal-dialog{
+    margin: 0;
+    max-width: 100%;
+    height: 1px;
+}
+
+#pricing-modal .modal-dialog iframe{
+    width: 100%;
+    height: 100vh;
+}
+#termsandprivacy .modal-body{
+    height: auto;
 }

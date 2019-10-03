@@ -1284,7 +1284,7 @@
 		}
 	})
 })(jQuery);
-var imgData = window.location.origin + '/assets/images/resume/watermarkworkruit.png'
+var imgData = window.location.origin + '/assets/images/resume/watermarkworkruit.png';
 var base64Img;
 toDataURL(imgData, function (dataUrl) {
 	// console.log('RESULT:', dataUrl)
