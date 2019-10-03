@@ -11,6 +11,18 @@ console.log(resumeObj);
 // var twitterIcon = import('img/twitter.svg');
 // console.log("twitterIcon", twitterIcon);
 // $('#twitter').prepend(twitterIcon);
+
+$.fn.textWidth = function(text, font) {
+    
+    if (!$.fn.textWidth.fakeEl) $.fn.textWidth.fakeEl = $('<span>').hide().appendTo(document.body);
+    
+    $.fn.textWidth.fakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
+    
+    // console.log(this.val() || this.text() || this.attr('placeholder'));
+    // console.log(this.css('font'));
+    return $.fn.textWidth.fakeEl.width();
+};
+
 const fonts = [{
         fontFamily: 'Lato',
         fontInfo: 'lato'
@@ -172,11 +184,15 @@ $(window).ready(function () {
         $("page[size='a4']").css('background-position', 'center 0');
     }
     var selectedFont = themeOptions ? themeOptions.font : fonts[0].fontFamily;
+    var selectedTitleFont = themeOptions ? themeOptions.fontTitle : fonts[0].fontFamily;
     var selectedcolor = themeOptions ? themeOptions.color : 'theme-black';
-    $('.selected-font').text(selectedFont).attr('data-font', selectedFont);
+    $('.page-font .selected-font').text(selectedFont).attr('data-font', selectedFont);
+    $('.title-headers .selected-font').text(selectedTitleFont).attr('data-font', selectedTitleFont);
     $('.selected-color').addClass(selectedcolor).attr('data-color', selectedcolor);
     $('.resume-container').attr('data-oldcolor', 'theme-black').removeClass('theme-black').addClass(selectedcolor);
     $('body').css('font-family', selectedFont);
+    $('.sub-header').css('font-family', selectedTitleFont);
+    $('.title-headers').css('font-family', selectedTitleFont);
     // Declare some global variables for later use:
     for (let index = 0; index < fonts.length; index++) {
         const fontItem = fonts[index];
@@ -193,7 +209,7 @@ $(window).ready(function () {
                 $('.page-font .selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
                 $('body').css('font-family', item.fontFamily);
                 $('.ui-autocomplete').css('font-family', item.fontFamily);
-                console.log($('.ui-autocomplete'));
+                $('.month-picker').trigger('change');
                 return;
             };
         });
@@ -417,18 +433,28 @@ $(window).ready(function () {
                 $(this).removeClass("rating-hover");
                 $(this).prevAll().removeClass("rating-hover");
 
-                if (index >= 0) {
-                    //Return the previously chosen choice (if any) back in green
-                    // Recall the choice using its index
-                    // "get" returns a DOM element, NOT a jQuery object
-                    var chosenCircle = container.children().get(index);
-                    //Convert to jQuery object
-                    var $rating = $(chosenCircle);
+                index = parseInt($(this).parent().parent().attr('data-langpercentage')) / 25;
 
-                    //Make them green again
-                    $rating.addClass("rating-chosen");
-                    $rating.prevAll().addClass("rating-chosen");
+                var itr = $(this).parent().children().first();
+
+                for ( var i = 0 ; i < index ; ++i ) {
+                    itr.addClass("rating-chosen");
+                    itr = itr.next();
                 }
+
+                // if (index >= 0) {
+                //     //Return the previously chosen choice (if any) back in green
+                //     // Recall the choice using its index
+                //     // "get" returns a DOM element, NOT a jQuery object
+                //     var chosenCircle = container.children().get(index);
+                //     //Convert to jQuery object
+                //     var $rating = $(chosenCircle);
+
+                //     //Make them green again
+                //     $rating.addClass("rating-chosen");
+                //     $rating.prevAll().addClass("rating-chosen");
+                // }
+                
             }
         );
 
@@ -443,10 +469,10 @@ $(window).ready(function () {
                 $(this).prevAll().addClass("rating-chosen");
                 // Remember the position of the click so it can be retrieved later
                 index = $(this).index();
+                $(this).parent().parent().attr('data-langpercentage', (index + 1) * 25);
             }
         );
     }
-    ratingCircle();
 
 
     $("body").on("click", ".skills-bar", function (e) {
@@ -535,6 +561,15 @@ $(window).ready(function () {
             $("#proExp_" + num + " .exp-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_EXP_DESC, e);
             });
+
+            setTimeout(function() {
+                $('#proExp_' + num + ' .month-picker').on('change', function() {
+                    var inputWidth = $(this).textWidth();
+                    $(this).css({
+                        width: inputWidth
+                    })
+                }).trigger('change');
+            }, 500);
         }
         if ($('.professional-experience').length == exp_total_count) {
             $('.professional-experience .add_exp').addClass('d-none');
@@ -647,6 +682,15 @@ $(window).ready(function () {
             $("#education_" + num + " .edu-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_EDU_DESC, e);
             });
+
+            setTimeout(function() {
+                $('#education_' + num + ' .month-picker').on('change', function() {
+                    var inputWidth = $(this).textWidth();
+                    $(this).css({
+                        width: inputWidth
+                    })
+                }).trigger('change');
+            }, 500);
         }
         if ($('.education-details').length == edu_total_count) {
             $('.education-details .add_edu').addClass('d-none');
@@ -744,6 +788,15 @@ $(window).ready(function () {
             $("#academic_projects_" + num + " .project-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_PROJ_DESC, e);
             });
+
+            setTimeout(function() {
+                $('#academic_projects_' + num + ' .month-picker').on('change', function() {
+                    var inputWidth = $(this).textWidth();
+                    $(this).css({
+                        width: inputWidth
+                    })
+                }).trigger('change');
+            }, 500);
         }
         if ($('.academic-project').length == proj_total_count) {
             $('.academic-project .add_acad').addClass('d-none');
@@ -883,6 +936,8 @@ $(window).ready(function () {
                 'Language');
 
             $('#lang_' + num + ' .rating-container li').removeClass('rating-chosen');
+            $('#lang_' + num + ' .rating-container li:first').addClass('rating-chosen')
+                .next().addClass('rating-chosen');
 
             $(".info-language").keypress(function (e) {
                 return limitLines($(this), LINE_LANGUAGES, e);
@@ -957,7 +1012,7 @@ $(window).ready(function () {
     });
 
     $('#downloadResume').on('click', async function () {
-        if (planInfo.subscribedUser) {
+        // if (planInfo.subscribedUser) {
             if (!$('.editorNav').hasClass('d-none')) {
                 bindUserDataForSave();
                 saveUserProfile(postObj);
@@ -968,9 +1023,9 @@ $(window).ready(function () {
                 console.log("hey, here!");
                 await savePdf();
             }
-        } else {
-            $('#downloadResume a').attr('href', location.origin + '/pricing.html');
-        }
+        // } else {
+        //     $('#downloadResume a').attr('href', location.origin + '/pricing.html');
+        // }
     });
 
     function bindUserDataForSave() {
@@ -1196,9 +1251,9 @@ $(window).ready(function () {
         postObj.skill = []
         $('#resume-body .skills-item').each(function (i, v) {
             var id = $(this).attr('id');
-            var skill_name = $('#' + id + '#resume-body .skill-input-value').text();
+            var skill_name = $('#' + id + ' .skill-input-value').text();
             var skill_value = parseInt($('#resume-body #' + id).find('.skill-value').attr('data-skill'));
-            // console.log(i, skill_name, skill_value, "skill_value");
+            console.log(i, skill_name, skill_value, "skill_value");
             postObj.skill.push({
                 "skillName": skill_name,
                 "skill_percentage": skill_value
@@ -1209,7 +1264,8 @@ $(window).ready(function () {
     function GetThemeOptions() {
         const themeOptions = {
             color: $('.selected-color').attr('data-color'),
-            font: $('.selected-font').attr('data-font'),
+            font: $('.page-font .selected-font').attr('data-font'),
+            fontTitle: $('.title-headers .selected-font').attr('data-font'),
             settings: settings
         }
         postObj.themeOptions = themeOptions;
@@ -1289,8 +1345,10 @@ $(window).ready(function () {
         $('[data-content="totalexperience"]').text(resumeObj.expDisplay);
         $('[data-content="location"]').text(resumeObj.location);
         $('[data-content="dob"]').val(resumeObj.date_of_birth);
-        if (resumeObj.gender)
-            $('.gender .current').text(resumeObj.gender)
+        if (resumeObj.gender) {
+            $('.gender .current').text(resumeObj.gender);
+            $('.gender .current').css('color', 'rgb(33, 37, 41)');
+        }
         // console.log("Email", resumeObj.email);
         $('[data-content="email"]').text(resumeObj.email);
         $('[data-content="phone"]').text(resumeObj.telephone);
@@ -1605,8 +1663,8 @@ $(window).ready(function () {
         }
         if (applicantData.skill.length) {
             var skillValidArray = applicantData.skill.filter(function (item, index) {
-                // return false;
-                return !(!item.skillName && !item.skill_percentage);
+                // return !(!item.skillName && !item.skill_percentage);
+                return item.skillName;
             });
             // console.log(academicValidArray);
             if (skillValidArray.length == 0) {
@@ -1627,7 +1685,7 @@ $(window).ready(function () {
                 });
             }
         }
-        console.log("Application Data", JSON.stringify(applicantData));
+        // console.log("Application Data", JSON.stringify(applicantData));
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -1645,7 +1703,7 @@ $(window).ready(function () {
             dataType: "json",
             contentType: "application/json"
         }
-        console.log("settings", settings.data);
+        // console.log("settings", settings.data);
         // downloadResume
         $.ajax(settings).done(function (response) {
             if (response.status == 'success') {
@@ -1659,7 +1717,7 @@ $(window).ready(function () {
                 // console.log("Ajax response");
                 // console.log(response.data);
 
-                console.log("Settings Done");
+                // console.log("Settings Done");
                 var logoImg = $('input[data-content="picture"]').get(0).files[0];
                 if (logoImg) {
                     saveUserPic();
@@ -1712,7 +1770,7 @@ $(window).ready(function () {
             var doc = new jsPDF('p', 'cm', [89.1, 63], true);
             // watermark resume
             var docWaterMark = new jsPDF('p', 'cm', [89.1, 63], true);
-            $(eles[1]).find('.nice-select ul.list').remove();
+            // $(eles[1]).find('.nice-select ul.list').remove();
             var color;
             if (selectedcolor == 'theme-black') {
                 color = '#2f2f2f';
@@ -1726,7 +1784,7 @@ $(window).ready(function () {
             $(eles[1]).find('polygon').attr('fill', color);
             for (var i = 1; i < pageCount; ++i) {
                 var ele = eles[i];
-                $(ele).find('.border-dashed').removeClass('border-dashed');
+                $(ele).find('.border-dashed').removeClass('border-dashed').addClass('border-dashed-pdf');
 
                 $(ele).css('background-image', '');
                 $(ele).css('background-repeat', '');
@@ -2061,6 +2119,10 @@ $(window).ready(function () {
             cloned = $($('[data-content="exp_endDate"]')[i + originExpCount - 1]);
             cloned.val(origin.val());
         }
+
+        // 
+
+        $($('[data-content="dob"]')[1]).val($($('[data-content="dob"]')[0]).val());
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check Education
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2250,4 +2312,16 @@ $(window).ready(function () {
         }
     }
 
+    $('.month-picker').on('change', function() {
+        var inputWidth = $(this).textWidth();
+        $(this).css({
+            width: inputWidth
+        })
+    });
+
+    setTimeout(function() {
+        $('.month-picker').trigger('change');
+    }, 2000);
+
+    ratingCircle();
 });

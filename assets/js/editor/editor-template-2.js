@@ -17,26 +17,17 @@ var handleKeypressInput = function (obj, lengthLimit, e) {
     return obj.val().length < lengthLimit;
 }
 
-var moveCaretToEnd = function(nodeRef) {
-    range = document.createRange();//Create a range (a range is a like the selection but invisible)
-    range.selectNodeContents(nodeRef[0]);//Select the entire contents of the element with the range
-    range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-    selection = window.getSelection();//get the selection object (allows you to change selection)
-    selection.removeAllRanges();//remove any selections already made
-    selection.addRange(range);//make the range you have just created the visible selection
-}
-
 var limitLines = function(obj, lineLimit, e) {
     if (e.keyCode == 13) {
         e.preventDefault();
         return false;
     }
     var origin = obj.text();
-    obj.text(origin + "a");
-    var lines = Math.round(obj.height() / parseInt(obj.css('line-height')));
-    obj.text(origin);
-    moveCaretToEnd(obj);
-
+    var cloned = obj.clone();
+    cloned.text(origin + "a");
+    obj.after(cloned);
+    var lines = Math.round(cloned.height() / parseInt(obj.css('line-height')));
+    cloned.remove();
     if (lines > lineLimit)
         return false;
     return true;
@@ -46,14 +37,21 @@ var preventCopyPaste = function(obj, lineLimit, e) {
     var lineHeight = parseInt(obj.css('line-height'));
     var lines = Math.round(obj.height() / lineHeight);
 
+    console.log(lines);
+
     if (lines > lineLimit) {
         var origin = obj.text();
+        var cloned = obj.clone();
+        obj.after(cloned);
         for ( var i = origin.length - 1 ; i >= 0 ; --i ) {
-            obj.text(origin.substr(0, i));
-            var ln = Math.round(obj.height() / lineHeight);
-            if (lineLimit == ln) break;
+            cloned.text(origin.substr(0, i));
+            var ln = Math.round(cloned.height() / lineHeight);
+            if (lineLimit == ln) {
+                obj.text(cloned.text());
+                break;
+            }
         }
-        moveCaretToEnd(obj);
+        cloned.remove();
         return false;
     }
 
@@ -63,11 +61,16 @@ var preventCopyPaste = function(obj, lineLimit, e) {
 var preventCopyPasteLength = function(obj, lengthLimit, e) {
     if (obj.text().length > lengthLimit) {
         obj.text(obj.text().substr(0, lengthLimit-1));
-        moveCaretToEnd(obj);
         return false;
     }
     return true;
 }
+
+$('[contenteditable="true"]').on('paste', function(e) {
+    e.preventDefault();
+    var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+    document.execCommand('inserttext', false, text);
+});
 
 // -----------------------------------------------------------------------------------------------------
 
@@ -312,10 +315,11 @@ $(".social-phone").keypress(function(e) {
     }
     var obj = $(this);
     var origin = obj.text();
-    obj.text(origin + "a");
-    var lines = Math.round(obj.height() / parseInt(obj.css('line-height')));
-    obj.text(origin);
-    moveCaretToEnd(obj);
+    var cloned = obj.clone();
+    obj.after(cloned);
+    cloned.text(origin + "1");
+    var lines = Math.round(cloned.height() / parseInt(obj.css('line-height')));
+    cloned.remove();
 
     if (lines > LINE_PHONE)
         return false;
@@ -339,12 +343,17 @@ $(".social-phone").keyup(function(e) {
 
     if (lines > LINE_PHONE) {
         var origin = obj.text();
+        var cloned = obj.clone();
+        obj.after(cloned);
         for ( var i = origin.length - 1 ; i >= 0 ; --i ) {
-            obj.text(origin.substr(0, i));
+            cloned.text(origin.substr(0, i));
             var ln = Math.round(obj.height() / lineHeight);
-            if (LINE_PHONE == ln) break;
+            if (LINE_PHONE == ln) {
+                obj.text(cloned.text());
+                break;
+            } 
         }
-        moveCaretToEnd(obj);
+        cloned.remove();
         return false;
     }
 
