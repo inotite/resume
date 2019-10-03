@@ -51,7 +51,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-8 m-auto">
+            <div class="col-md-8 m-auto d-none upgrade-panel d-none">
                 <!-- Upgrade Section -->
                 <div class="card w-100 mt-5">
                     <div class="card-body">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-5 justify-content-center">
+            <div class="row mt-5 justify-content-center upgrade-table d-none">
                 <!-- Account Tab Body -->
                 <p id="txn-history" class="text-center text-uppercase text-muted"></p>
                 <div class="tab-pane col-md-12 tab-body-container tab-body-show" id="order_history_table">
@@ -150,50 +150,14 @@
         $(function () {
             $('.account-page').paraCount();
         });
-
-        function storeTheImage() {
-            var imgCanvas = document.getElementById('canvas-element'),
-                imgContext = imgCanvas.getContext("2d");
-
-            var img = document.getElementById('image-preview');
-            // Make sure canvas is as big as the picture BUT make it half size to the file size is small enough
-            imgCanvas.width = (img.width / 4);
-            imgCanvas.height = (img.height / 4);
-
-            // Draw image into canvas element
-            imgContext.drawImage(img, 0, 0, (img.width / 4), (img.height / 4));
-
-            // Get canvas contents as a data URL
-            var imgAsDataURL = imgCanvas.toDataURL("image/png");
-
-            // Save image into sessionStorage
-            try {
-                window.sessionStorage.setItem("imageStoreData", imgAsDataURL);
-                $('.sessionStorage-output').html(window.sessionStorage.getItem('imageStoreData'));
-                $('.cont_fotodiv').css('background', 'transparent');
-            } catch (e) {
-                console.log("Storage failed: " + e);
+        if (sessionStorage.getItem('userData')) {
+            if (!JSON.parse(sessionStorage.getItem('userData')).planDetails.subscribedUser || JSON.parse(sessionStorage
+                    .getItem('userData')).planDetails.planId === 1) {
+                $('.upgrade-panel').removeClass('d-none');
+            } else {
+                $('.upgrade-table').removeClass('d-none');
             }
         }
-
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#image-preview').show();
-                    $('#image-preview').attr('src', e.target.result);
-                    storeTheImage();
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $('#image-preview').attr('src', window.sessionStorage.getItem('imageStoreData'));
-
-        $('#inputfoto2').on('change', function () {
-            readURL(this);
-        });
         // const userPlanInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
         var settings = {
             "async": true,
@@ -211,12 +175,15 @@
         $.ajax(settings).done(function (response) {
             console.log(response);
             if (response.status == "success") {
+                response.data.sort(function (a, b) {
+                    return b.orderId - a.orderId
+                });
                 response.data.map(item => {
                     item.createDate = moment(item.createDate).format("DD MMM YYYY");
                     item.expDate = moment(item.expDate).format("DD MMM YYYY");
                     item.invoiceLink = "invoice.html";
                     item.planId === 1 ? item.price = 'Free' : item.price = '&#8377; ' + item.price;
-                    item.promoCode = item.promoCode ? 'Promo: ' + item.promoCode : 'Promo: NA'
+                    item.promoCode = item.promoCode ? 'Promo: ' + item.promoCode : ''
                 });
                 $('#order_history_template').loadTemplate(
                     //Specify the template container (or file name of external template)

@@ -90,6 +90,17 @@
     </script>
     <script>
         $(function () {
+            requestAnimationFrame(function () {
+
+                $('.dismiss-pricing-modal').on('click', function () {
+                    $('#pricing-modal').css({
+                        "display": 'none',
+                    }).removeClass('in');
+                    $('.modal-backdrop.fade.in').remove();
+                    $('body').removeClass('modal-open');
+                });
+            })
+
             $('#load-header').load('../includes/user-header.html');
             $('.account-page').paraCount();
             $(window).ready(function () {
@@ -112,28 +123,7 @@
                         '.preview_btn')
                     .css('display', 'inline-block');
 
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": apiUrl + "/user/" + userData.userId + "/getProfileResume",
-                    "type": "GET",
-                    "headers": {
-                        "token": sessionId,
-                        "content-type": "application/json"
-                    },
-                    "processData": false,
-                    // "data": JSON.stringify(userData),
-                    error: function (e) {
-                        console.log(e);
-                    },
-                    // dataType: "json",
-                    contentType: "application/json"
-                }
-                // downloadResume
-                $.ajax(settings).done(function (response) {
-                    sessionStorage.setItem('userData', JSON.stringify(response.data));
-                    // window.location.reload();
-                });
+
             });
         })
     </script>

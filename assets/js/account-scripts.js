@@ -1,3 +1,4 @@
+
 // plug it in, plug it in
 (function ($) {
 
@@ -26,7 +27,6 @@
 			// --------------------------------------------------------------------
 
 			attachEvents: function () {
-
 				var self = this;
 				// var urlArr = ['login', 'signup', 'forgotPassword', 'home', 'account', 'share'];
 				// $.each(urlArr, function (index, value) {
@@ -41,6 +41,7 @@
 					//console.log("sessionId ::::::"+sessionId);
 					window.location.href = "../index.html";
 				} else {
+					getUserProfile();
 					var userId = userData.userId;
 					//console.log(userData);
 					var fromPage = sessionStorage.getItem('fromPage');
@@ -60,8 +61,8 @@
 					var picpath = pic.search('1631033876795164.jpg');
 
 					if (picpath > -1 || pic == '') {
-						$('#profileMenu img').attr('src', '../images/app/pic1.png');
-						$('#profilePicEdit').attr('src', '../images/app/pic1.png');
+						$('#profileMenu img').attr('src', '../../assets/images/avatar.png');
+						$('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
 
 					} else {
 						$('#profileMenu img').attr('src', pic);
@@ -454,3 +455,55 @@
 	};
 
 })(jQuery);
+
+function getUserProfile() {
+	var settings = {
+		"async": true,
+		"crossDomain": true,
+		"url": apiUrl + "/user/" + userData.userId + "/getProfileResume",
+		"type": "GET",
+		"headers": {
+			"token": sessionId,
+			"content-type": "application/json"
+		},
+		"processData": false,
+		// "data": JSON.stringify(userData),
+		error: function (e) {
+			console.log(e);
+		},
+		// dataType: "json",
+		contentType: "application/json"
+	}
+	// downloadResume
+	$.ajax(settings).done(function (response) {
+		sessionStorage.setItem('userData', JSON.stringify(response.data));
+
+		setInfoMessage(userInfo.planDetails.msg.description);
+		console.log(window.location.href);
+		// window.location.reload();
+	});
+}
+
+function setInfoMessage(message) {
+	if (!$('#info_message span').length) {
+		requestAnimationFrame(function () {
+			setInfoMessage(message);
+		});
+		return;
+	}
+	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today")
+	if (!message.indexOf("2 days") || !message.indexOf("1 day") || !message.indexOf("today") || !message.indexOf('Please subscribe')) {
+		$('#info_message').addClass('alert-danger');
+	} else {
+		$('#info_message').addClass('alert-success');
+	}
+
+	$('#info_message span').html(message);
+}
+window.addEventListener("message", function (event) {
+	console.log(":: PARENT MESSAGE", event.data)
+
+	if (event.data && event.data.type === "CLOSE__MODAL") {
+		$(".modal").modal("hide");
+	}
+});

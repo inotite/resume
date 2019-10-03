@@ -6,6 +6,11 @@ const exp_total_count = 10;
 const edu_total_count = 10;
 const proj_total_count = 10;
 const planInfo = resumeObj.planDetails;
+const waterMarkCss = {
+    "background": 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '") #fff repeat-y',
+    "background-position": 'center 0',
+    "background-size": '40%'
+};
 console.log(resumeObj);
 // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
 // var twitterIcon = import('img/twitter.svg');
@@ -178,15 +183,15 @@ $(window).ready(function () {
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
-        $("page[size='a4']").css('background-repeat', 'repeat-y');
-        $("page[size='a4']").css('background-size', '40%');
-        $("page[size='a4']").css('background-position', 'center 0');
+        addWaterMarkImage('#resume-body, .watermark')
     }
     var selectedFont = themeOptions ? themeOptions.font : fonts[0].fontFamily;
     var selectedTitleFont = themeOptions ? themeOptions.fontTitle : fonts[0].fontFamily;
     var selectedcolor = themeOptions ? themeOptions.color : 'theme-black';
-    $('.page-font .selected-font').text(selectedFont).attr('data-font', selectedFont);
+    if (planInfo.subscribedUser && planInfo.planId !== 1) {
+        $('.theme-picker > a , #saveResume > a, #downloadResume > a').attr("data-toggle", "modal").attr('data-target', '#upgrade-popup');
+    }
+    $('.selected-font').text(selectedFont).attr('data-font', selectedFont);
     $('.title-headers .selected-font').text(selectedTitleFont).attr('data-font', selectedTitleFont);
     $('.selected-color').addClass(selectedcolor).attr('data-color', selectedcolor);
     $('.resume-container').attr('data-oldcolor', 'theme-black').removeClass('theme-black').addClass(selectedcolor);
@@ -365,11 +370,8 @@ $(window).ready(function () {
         renderPages();
 
         $('#resume-body').hide();
-        if (planInfo.planId === 1) {
-            $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
-            $("page[size='a4']").css('background-repeat', 'no-repeat');
-            $("page[size='a4']").css('background-size', '40%');
-            $("page[size='a4']").css('background-position', 'center');
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            addWaterMarkImage('#resume-body, .watermark')
         }
     }
 
@@ -384,11 +386,9 @@ $(window).ready(function () {
         }
 
         $('#resume-body').show();
-
-        $("page[size='a4']").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
-        $("page[size='a4']").css('background-repeat', 'repeat-y');
-        $("page[size='a4']").css('background-size', '40%');
-        $("page[size='a4']").css('background-position', 'center 0');
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            addWaterMarkImage('#resume-body, .watermark')
+        }
     }
 
     $('#previewResume').on('click', function () {
@@ -398,10 +398,12 @@ $(window).ready(function () {
         $('.editorNav').addClass('d-none');
         $('.previewNav').css('z-index', '2');
         $('#saveResume').addClass('d-none');
-
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            $('.watermark').css('display', 'block!important');
+        }
 
         bindUserDataForSave();
-        saveUserProfile(postObj);
+        saveUserProfile(postObj, 'preview');
 
         showMultiplePages();
     });
@@ -411,7 +413,6 @@ $(window).ready(function () {
         $('#previewBack').addClass('d-none');
         $('.editorNav').removeClass('d-none');
         $('#saveResume').removeClass('d-none');
-        // $('#resume-body').css('display','block!important');
         hideMultiplePages();
     });
 
@@ -1007,15 +1008,18 @@ $(window).ready(function () {
     }
 
     $('#saveResume').on('click', function () {
-        bindUserDataForSave();
-        saveUserProfile(postObj);
+        if (planInfo.subscribedUser || planInfo.planId === 1) {
+            bindUserDataForSave();
+            saveUserProfile(postObj, "save");
+        }
+
     });
 
     $('#downloadResume').on('click', async function () {
         // if (planInfo.subscribedUser) {
             if (!$('.editorNav').hasClass('d-none')) {
                 bindUserDataForSave();
-                saveUserProfile(postObj);
+                saveUserProfile(postObj, "download");
                 showMultiplePages();
                 await savePdf();
                 hideMultiplePages();
@@ -1569,7 +1573,7 @@ $(window).ready(function () {
         });
     });
 
-    function saveUserProfile(applicantData) {
+    function saveUserProfile(applicantData, action) {
         if (applicantData.education.length) {
             var educationValidArray = applicantData.education.filter(function (item, index) {
                 return !(!item.institution && !item.location && !item.degree && !item
@@ -1709,10 +1713,12 @@ $(window).ready(function () {
             if (response.status == 'success') {
                 $('#newSuccessMessageID .message-text').html(response.msg);
                 $('.loading-container').fadeOut();
-                $('#newSuccessMessageID').fadeIn().delay(2000)
-                    .fadeOut('slow', function () {
-                        $('#saveResume').removeAttr('pointer-events');
-                    });
+                if (action === 'save') {
+                    $('#newSuccessMessageID').fadeIn().delay(2000)
+                        .fadeOut('slow', function () {
+                            $('#saveResume').removeAttr('pointer-events');
+                        });
+                }
                 sessionStorage.setItem('userData', JSON.stringify(response.data));
                 // console.log("Ajax response");
                 // console.log(response.data);
@@ -1763,137 +1769,134 @@ $(window).ready(function () {
 
     async function savePdf() {
         // if (planInfo.planId !== 1) {
-            $('.loading-container').show();
-            var eles = $('page');
-            console.log(eles);
-            var pageCount = eles.length;
-            var doc = new jsPDF('p', 'cm', [89.1, 63], true);
-            // watermark resume
-            var docWaterMark = new jsPDF('p', 'cm', [89.1, 63], true);
-            // $(eles[1]).find('.nice-select ul.list').remove();
-            var color;
-            if (selectedcolor == 'theme-black') {
-                color = '#2f2f2f';
-            } else if (selectedcolor == 'theme-blue') {
-                color = '#337ab7';
-            } else {
-                color = '#3ebb64';
+        $('.loading-container').show();
+        var eles = $('page');
+        console.log(eles);
+        var pageCount = eles.length;
+        var doc = new jsPDF('p', 'cm', [89.1, 63], true);
+        // watermark resume
+        var docWaterMark = new jsPDF('p', 'cm', [89.1, 63], true);
+        $(eles[1]).find('.nice-select ul.list').remove();
+        var color;
+        if (selectedcolor == 'theme-black') {
+            color = '#2f2f2f';
+        } else if (selectedcolor == 'theme-blue') {
+            color = '#337ab7';
+        } else {
+            color = '#3ebb64';
+        }
+        console.log(color);
+        $(eles[1]).find('path').attr('fill', color);
+        $(eles[1]).find('polygon').attr('fill', color);
+        for (var i = 1; i < pageCount; ++i) {
+            var ele = eles[i];
+            $(ele).find('.border-dashed').removeClass('border-dashed');
+
+            $(ele).css('background-image', '');
+            $(ele).css('background-repeat', '');
+            $(ele).css('background-size', '');
+            $(ele).css('background-position', '');
+
+            console.log(ele);
+            /* ele.css({'height': ''});
+            ele.css({'max-height': ''});*/
+            ele.style.boxShadow = "none";
+            var canvas = await html2canvas(ele, {
+                allowTaint: true,
+                logging: true,
+                useCORS: true,
+                taintTest: false,
+                scale: 3
+            });
+
+            const data = await canvas.toDataURL("image/jpeg");
+            // console.log("Raw", data);
+
+            if (i > 1) {
+                doc.addPage();
+                docWaterMark.addPage();
             }
-            console.log(color);
-            $(eles[1]).find('path').attr('fill', color);
-            $(eles[1]).find('polygon').attr('fill', color);
-            for (var i = 1; i < pageCount; ++i) {
-                var ele = eles[i];
-                $(ele).find('.border-dashed').removeClass('border-dashed').addClass('border-dashed-pdf');
+            doc.setPage(i);
+            docWaterMark.setPage(i);
 
-                $(ele).css('background-image', '');
-                $(ele).css('background-repeat', '');
-                $(ele).css('background-size', '');
-                $(ele).css('background-position', '');
+            var image = new Image();
+            image.src = data;
+            doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
 
-                console.log(ele);
-                /* ele.css({'height': ''});
-                ele.css({'max-height': ''});*/
-                ele.style.boxShadow = "none";
-                var canvas = await html2canvas(ele, {
-                    allowTaint: true,
-                    logging: true,
-                    useCORS: true,
-                    taintTest: false,
-                    scale: 3
-                });
+            addWaterMarkImage(ele)
 
-                const data = await canvas.toDataURL("image/jpeg");
-                // console.log("Raw", data);
+            canvas = await html2canvas(ele, {
+                allowTaint: true,
+                logging: true,
+                useCORS: true,
+                taintTest: false,
+                scale: 3
+            });
 
-                if (i > 1) {
-                    doc.addPage();
-                    docWaterMark.addPage();
+            // const dataWaterMark = data;
+            var waterMarkImage = new Image();
+            waterMarkImage.src = await canvas.toDataURL("image/jpeg");
+            // docWaterMark = addWaterMark(docWaterMark);
+            docWaterMark.addImage(waterMarkImage, 'JPEG', -0.3, 0.5, 0, 0);
+
+            ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
+
+        }
+        var pdfOut = doc.output('blob');
+        var form2 = new FormData();
+        form2.append("type", "resume");
+        form2.append("userId", userId);
+        form2.append('file', pdfOut);
+        axios({
+                method: 'post',
+                url: apiUrl + "/uploadFile",
+                data: form2,
+                config: {
+                    headers: {
+                        "token": sessionId,
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
-                doc.setPage(i);
-                docWaterMark.setPage(i);
-
-                var image = new Image();
-                image.src = data;
-                doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
-
-                $(ele).css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
-                $(ele).css('background-repeat', 'no-repeat');
-                $(ele).css('background-size', '40%');
-                $(ele).css('background-position', 'center');
-
-                canvas = await html2canvas(ele, {
-                    allowTaint: true,
-                    logging: true,
-                    useCORS: true,
-                    taintTest: false,
-                    scale: 3
-                });
-
-                // const dataWaterMark = data;
-                var waterMarkImage = new Image();
-                waterMarkImage.src = await canvas.toDataURL("image/jpeg");
-                // docWaterMark = addWaterMark(docWaterMark);
-                docWaterMark.addImage(waterMarkImage, 'JPEG', -0.3, 0.5, 0, 0);
-
-                ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
-
-            }
-            var pdfOut = doc.output('blob');
-            var form2 = new FormData();
-            form2.append("type", "resume");
-            form2.append("userId", userId);
-            form2.append('file', pdfOut);
-            axios({
-                    method: 'post',
-                    url: apiUrl + "/uploadFile",
-                    data: form2,
-                    config: {
-                        headers: {
-                            "token": sessionId,
-                            'Content-Type': 'multipart/form-data'
-                        }
+            })
+            .then(function (response) {
+                //handle success
+                // console.log(response);
+            })
+            .catch(function (response) {
+                //handle error
+                // console.log(response);
+            });
+        var pdfOutWaterMark = docWaterMark.output('blob');
+        var formWatermark = new FormData();
+        formWatermark.append("type", "watermark");
+        formWatermark.append("userId", userId);
+        formWatermark.append('file', pdfOutWaterMark);
+        axios({
+                method: 'post',
+                url: apiUrl + "/uploadFile",
+                data: formWatermark,
+                config: {
+                    headers: {
+                        "token": sessionId,
+                        'Content-Type': 'multipart/form-data'
                     }
-                })
-                .then(function (response) {
-                    //handle success
-                    // console.log(response);
-                })
-                .catch(function (response) {
-                    //handle error
-                    // console.log(response);
-                });
-            var pdfOutWaterMark = docWaterMark.output('blob');
-            var formWatermark = new FormData();
-            formWatermark.append("type", "watermark");
-            formWatermark.append("userId", userId);
-            formWatermark.append('file', pdfOutWaterMark);
-            axios({
-                    method: 'post',
-                    url: apiUrl + "/uploadFile",
-                    data: formWatermark,
-                    config: {
-                        headers: {
-                            "token": sessionId,
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                })
-                .then(function (response) {
-                    //handle success
-                    // console.log(response);
-                })
-                .catch(function (response) {
-                    //handle error
-                    // console.log(response);
-                });
-            if (planInfo.planId === 1) {
-                docWaterMark.save(userId + '_resume.pdf');
-                // doc.save(resumeObj.firstname + '_resume.pdf');
-            } else {
-                doc.save(resumeObj.firstname + '_resume.pdf');
-            }
-            $('.loading-container').delay(2000).fadeOut();
+                }
+            })
+            .then(function (response) {
+                //handle success
+                // console.log(response);
+            })
+            .catch(function (response) {
+                //handle error
+                // console.log(response);
+            });
+        if (planInfo.planId === 1) {
+            docWaterMark.save(userId + '_resume.pdf');
+            // doc.save(resumeObj.firstname + '_resume.pdf');
+        } else {
+            doc.save(resumeObj.firstname + '_resume.pdf');
+        }
+        $('.loading-container').delay(2000).fadeOut();
         // }
     }
 
@@ -2005,12 +2008,12 @@ $(window).ready(function () {
         console.log("Document Size: ", resume.css('width'), resume.css('height'));
         console.log("Standard Height: ", standardA4Height);
 
-        var emptyDom = "<page size='a4'>\
+        var emptyDom = "<page size='a4' class='watermark'>\
                             <div class='row'>\
                                 <aside class='col-3 text-break'>\
                                 </aside>\
                                 <div class='col-9'>";
-        var sideDom = "<page size='a4'>\
+        var sideDom = "<page size='a4' class='watermark'>\
                             <div class='row'>\
                                 " + getOuterHTML($('#resume-body aside')) +
             "<div class='col-9'>";
@@ -2310,6 +2313,26 @@ $(window).ready(function () {
             resume.after(emptyDom + getOuterHTML($('#certifications-section')) + emptyDomClose);
             stackedHeight = 0;
         }
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            setTimeout(function () {
+                addWaterMarkImage('#resume-body, .watermark')
+            }, 0)
+        }
+    }
+
+
+    /**
+     * Add Water to page element
+     * @param SELECTOR_STRING
+     */
+
+
+    function addWaterMarkImage(selectorElements) {
+        $(selectorElements).css(waterMarkCss)
+        // $("#resume-body, .watermark").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
+        // $("#resume-body, .watermark").css('background-repeat', 'repeat-y');
+        // $("#resume-body, .watermark").css('background-size', '40%');
+        // $("#resume-body, .watermark").css('background-position', 'center 0');
     }
 
     $('.month-picker').on('change', function() {

@@ -126,11 +126,10 @@
     $('#load-header').load('../includes/user-header.html');
 
     var origin = window.location.origin;
-    var sharePath = origin == 'http://devresume.workruit.com' || origin == 'https://resume.workruit.com' ? origin +
-      '/?' : origin + '/?@';
+    // var sharePath = origin + '/#';
     $(function () {
       $('.account-page').paraCount();
-      $("#shareDomain").attr('value', sharePath)
+      $("#shareDomain").attr('value', origin + '/#')
     });
     var resumePublicStatus = JSON.parse(sessionStorage.getItem('userData')).hideResume;
     $('#resume_piblic').attr('checked', resumePublicStatus);

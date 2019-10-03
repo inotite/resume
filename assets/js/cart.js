@@ -25,8 +25,6 @@ $(window).ready(function () {
                 if (priceCalculationObj.planInfo.planId === 1 && response.data.status == "failed") {
                     $('.error-description').html(response.data.msg.description);
                     $('.error-box').removeClass('d-none');
-                } else if (priceCalculationObj.planInfo.planId === 1 && response.data.status == "success") {
-                    window.location.href = window.location.origin + locationPaths.homePage;
                 } else {
                     document.getElementById('finalPrice').innerText = response.data.priceInfo.NetAmount;
                     document.getElementById('GSTPercentage').innerText = response.data.priceInfo
@@ -72,7 +70,7 @@ $(window).ready(function () {
                         sessionStorage.setItem('CHECKSUMHASH', paytmInfo.find(
                             "input[name=CHECKSUMHASH]").val());
                         console.log(response.data);
-                        $('#paytm-checkout').html(response.data.redirectUrl)
+                        // $('#paytm-checkout').html(response.data.redirectUrl)
 
                         // url = "./paytm.html";
                         // window.location = url

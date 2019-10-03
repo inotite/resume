@@ -31,9 +31,9 @@ $(function () {
 });
 // autoplay vide on anroid devices
 var video = document.getElementById('video');
-video.addEventListener('click', function () {
-  video.play();
-}, false);
+// video.addEventListener('click', function () {
+//   video.play();
+// }, false);
 // animation effect
 var botOfTheF1 = $(".feature-1").offset().top + $(".feature-1").outerHeight(true);
 var botOfTheF2 = $(".feature-2").offset().top + $(".feature-2").outerHeight(true);
