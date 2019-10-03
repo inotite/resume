@@ -913,3 +913,7 @@ input {
 p {
     font-variant-ligatures: no-common-ligatures;
 }
+
+.skill-row {
+    display: block !important;
+}

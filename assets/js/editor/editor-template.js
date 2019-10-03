@@ -2255,7 +2255,7 @@ $(window).ready(function () {
             var skills = $('#skills-section .skills-item');
             var it;
             console.log("Skills Count: ", skillCount);
-            domHtml += '<div class="row flex-column  mb-1" id="skills-section">\
+            domHtml += '<div class="row flex-column  mb-1 skill-row" id="skills-section">\
                             <h4 class="section_title text-uppercase font-10pt px-2">Skills</h4>\
                             <div class="skills-section">\
                                 <ul class="list-unstyled w-100 skills-list mb-0">';
@@ -2273,7 +2273,7 @@ $(window).ready(function () {
 
             resume.find('.col-9 .row').last().after(domHtml + emptyDomClose);
 
-            domHtml = '<div class="row flex-column mb-1">\
+            domHtml = '<div class="row flex-column mb-1 skill-row">\
                             <div class="skills-section">\
                                 <ul class="list-unstyled w-100 skills-list mb-0">';
             stackedHeight = skillsMarginBottom;
