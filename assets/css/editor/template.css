@@ -595,11 +595,11 @@ input.switch {
 .switch-label.true:after {
     left: 50%;
     transform: translateX(-100%);
-    background: var(--color-black) !important;
+    background: #6a6a6a !important;
 }
 
 .switch-label.true {
-    border-color: var(--color-black) !important;
+    border-color: #6a6a6a !important;
 }
 
 .theme-black .switch-label {

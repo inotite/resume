@@ -195,8 +195,11 @@ $(window).ready(function () {
     }
     $('.selected-font').text(selectedFont).attr('data-font', selectedFont);
     $('.title-headers .selected-font').text(selectedTitleFont).attr('data-font', selectedTitleFont);
-    $('.selected-color').addClass(selectedcolor).attr('data-color', selectedcolor);
-    $('.resume-container').attr('data-oldcolor', 'theme-black').removeClass('theme-black').addClass(selectedcolor);
+    $('.selected-color').removeClass('theme-black').removeClass('theme-blue').removeClass('theme-green').addClass(selectedcolor).attr('data-color', selectedcolor);
+    $('.dropdown-menu.actions').removeClass('theme-black').removeClass('theme-blue').removeClass('theme-green').addClass(selectedcolor);
+    $('.resume-container').attr('data-oldcolor', selectedcolor).removeClass('theme-black').addClass(selectedcolor);
+    $('.theme-color-picker a').removeClass('active');
+    $('.theme-color-picker span.'+selectedcolor).parent().addClass('active');
     $('body').css('font-family', selectedFont);
     $('.sub-header').css('font-family', selectedTitleFont);
     $('.title-headers').css('font-family', selectedTitleFont);
