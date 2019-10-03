@@ -187,6 +187,8 @@ $(window).ready(function () {
     }
     var selectedFont = themeOptions ? themeOptions.font : fonts[0].fontFamily;
     var selectedTitleFont = themeOptions ? themeOptions.fontTitle : fonts[0].fontFamily;
+    if (!selectedTitleFont)
+        selectedTitleFont = fonts[0].fontFamily;
     var selectedcolor = themeOptions ? themeOptions.color : 'theme-black';
     if (planInfo.subscribedUser && planInfo.planId !== 1) {
         $('.theme-picker > a , #saveResume > a, #downloadResume > a').attr("data-toggle", "modal").attr('data-target', '#upgrade-popup');
