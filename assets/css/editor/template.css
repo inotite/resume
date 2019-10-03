@@ -533,7 +533,7 @@ aside * {
 
 .skill-value {
     position: absolute;
-    z-index: 9;
+    z-index: 0;
     text-align: center;
     font-size: 13px;
     left: 0;
@@ -908,4 +908,8 @@ input {
 
 .sub-header {
     font-weight: 500;
+}
+
+p {
+    font-variant-ligatures: no-common-ligatures;
 }

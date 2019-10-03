@@ -1796,6 +1796,8 @@ $(window).ready(function () {
             $(ele).css('background-repeat', '');
             $(ele).css('background-size', '');
             $(ele).css('background-position', '');
+            $(ele).css('font-variant-ligatures', 'no-common-ligatures');
+            // $(ele).find('p').css('font-feature-settings', '"smcp" 1');
 
             console.log(ele);
             /* ele.css({'height': ''});
