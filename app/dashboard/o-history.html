@@ -176,7 +176,7 @@
             console.log(response);
             if (response.status == "success") {
                 response.data.sort(function (a, b) {
-                    return b.orderId - a.orderId
+                    return b.userPlanId - a.userPlanId
                 });
                 response.data.map(item => {
                     item.createDate = moment(item.createDate).format("DD MMM YYYY");
