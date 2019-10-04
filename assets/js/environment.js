@@ -18,6 +18,7 @@ const serviceUrls = {
         "resetPasswordLinkToEmailResume": "resetPasswordLinkToEmailResume",
         "updateShareName": "updateShareName",
         "updateResumeUserPassword": "updateResumeUserPassword",
+        "resetPasswordResumeUser": "resetPasswordResumeUser",
         "uploadFile": "uploadFile",
         "updateProfileResume": "updateProfileResume"
     },

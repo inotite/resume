@@ -32,7 +32,9 @@ function load() {
 
 			attachEvents: function () {
 				var self = this;
-
+				if (sessionStorage.getItem("sessionId")) {
+					window.location.href = location.origin + "/app/dashboard/home.html";
+				}
 				var urlArr = ['login', 'signup', 'forgotPassword', 'home', 'account', 'share'];
 				// $.each(urlArr, function (index, value) {
 				// 	if (window.location.href.indexOf(urlArr + '.html') <= -1) {

@@ -131,11 +131,7 @@
     </div>
 </div>
 <!-- user plan info -->
-<div id="info_message" class="alert info_message">
-    <span></span>
-    <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img
-            src="../../assets/images/app/icons/close.png" width="10" /></a>
-</div>
+
 <script type="text/javascript" src="../../assets/js/environment.js"></script>
 <script>
     const userInfo = JSON.parse(sessionStorage.getItem('userData'));
@@ -145,10 +141,6 @@
                 location.origin + '/app/dashboard/share.html');
         } else {
             $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
-        }
-        if (location.href === location.origin + locationPaths.homePage && userInfo
-            .planDetails.display) {
-            $('#info_message').css('display', 'block');
         }
     }
     var userId = userData.userId;
@@ -166,11 +158,6 @@
     } else {
         $('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
     }
-    $('.info_message .close').on('click', function () {
-        $('#info_message').css('display', 'none');
-        userInfo.planDetails.display = false;
-        sessionStorage.setItem('userData', JSON.stringify(userInfo))
-    });
     // if (picpath > -1 || pic == '') {
     //     $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
     //     $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');

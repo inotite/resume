@@ -1,4 +1,3 @@
-
 // plug it in, plug it in
 (function ($) {
 
@@ -235,6 +234,53 @@
 								.delay(5000)
 								.fadeOut();
 						}
+					});
+				});
+				$('#changePassword2').on('click', function () {
+					var url_string = window.location.href;
+					var url = new URL(url_string);
+					var UrlUserId = url.searchParams.get("userId");
+					console.log(c);
+					let newPassword = $('input[name="newPassword"]').val();
+					let reenterNewPassword = $('input[name="reenterNewPassword"]').val();
+					let newPasswordObj = {
+						"newPassword": newPassword,
+						"reenterNewPassword": reenterNewPassword
+					};
+
+					var settings = {
+						"async": true,
+						"crossDomain": true,
+						"url": baseApiUrl + "/user/" + UrlUserId + "/" + serviceUrls.post.resetPasswordResumeUser,
+						"method": "POST",
+						"headers": {
+							"token": authToken,
+							"content-type": "application/json",
+							"cache-control": "no-cache",
+						},
+						"processData": false,
+						"data": JSON.stringify(newPasswordObj)
+					}
+					console.log(settings);
+					return;
+					$.ajax(settings).done(function (response) {
+						console.log(response);
+						if (response.status == "success") {
+							$('#newSuccessMessageID .message-text').html(response.msg.description);
+							$('#newSuccessMessageID').html(response.msg.description)
+								.fadeIn()
+								.delay(5000)
+								.fadeOut();
+							$('.signupbox').addClass('d-none');
+						} else {
+							$('#newErrorMessageID .message-text').html(response.msg.description)
+							$('#newErrorMessageID').html(response.msg.description)
+								.fadeIn()
+								.delay(5000)
+								.fadeOut();
+						}
+						$('.responce_message').removeClass('d-none');
+						$('.responce-message').text(response.msg.description);
 					});
 				});
 
@@ -491,8 +537,11 @@ function setInfoMessage(message) {
 		});
 		return;
 	}
-	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today");
-	if (!message.indexOf("2 days") || !message.indexOf("1 day") || !message.indexOf("today") || !message.indexOf('Please subscribe')) {
+	const numberOfDays = JSON.parse(message.match(/\d+/)[0]);
+	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today", numberOfDays);
+	if (numberOfDays && numberOfDays <= 3) {
+		$('#info_message').addClass('alert-danger');
+	} else if (!message.indexOf("today")) {
 		$('#info_message').addClass('alert-danger');
 	} else {
 		$('#info_message').addClass('alert-success');

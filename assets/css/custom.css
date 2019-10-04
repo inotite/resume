@@ -3276,7 +3276,7 @@ button span {
     text-align: center;
     top: 68px!important;
     z-index: 99;
-    display: none;
+    display: block;
 }
 
 .info_message.alert-success {

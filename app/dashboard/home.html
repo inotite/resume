@@ -21,6 +21,11 @@
     <div class="loading-container">
         <img src="../../assets/images/oval.svg" style="width:55px">
     </div>
+    <div id="info_message" class="alert info_message">
+        <span></span>
+        <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img
+                src="../../assets/images/app/icons/close.png" width="10" /></a>
+    </div>
     <div id="newSuccessMessageID" class="alert alert-success">
         <span>You are still required to verify your email address within 48 hours to use all the features.</span>
         <!-- <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
@@ -90,16 +95,11 @@
     </script>
     <script>
         $(function () {
-            requestAnimationFrame(function () {
-
-                $('.dismiss-pricing-modal').on('click', function () {
-                    $('#pricing-modal').css({
-                        "display": 'none',
-                    }).removeClass('in');
-                    $('.modal-backdrop.fade.in').remove();
-                    $('body').removeClass('modal-open');
-                });
-            })
+            $('.info_message .close').on('click', function () {
+                $('#info_message').css('display', 'none');
+                userInfo.planDetails.display = false;
+                sessionStorage.setItem('userData', JSON.stringify(userInfo))
+            });
 
             $('#load-header').load('../includes/user-header.html');
             $('.account-page').paraCount();

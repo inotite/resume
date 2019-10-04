@@ -116,7 +116,7 @@
                 <br>
                 <span data-content="promoCode"></span>
             </td>
-            <td data-content="createDate"></td>
+            <td data-content="startDate"></td>
             <td data-content="expDate">Aug 20 2019</td>
             <td><a data-href="invoiceLink">Invoice</a></td>
         </tr>
@@ -131,11 +131,6 @@
                     'display',
                     'none') : $('.preview_btn').css('display', 'block');
                 // console.log(sessionStorage.getItem('isPremiumUser'));
-                if (sessionStorage.getItem('isPremiumUser') === 'true') {
-                    $('.premium-feature').removeClass('d-none');
-                } else {
-                    $('.trail-feature').removeClass('d-none');
-                }
             })
             // console.log(sessionStorage.getItem('previewData')) newSuccessMessageID
             const userPlanStatus = JSON.parse(sessionStorage.getItem('userPlanStatus'));
@@ -150,11 +145,12 @@
         $(function () {
             $('.account-page').paraCount();
         });
+        var planDetails = JSON.parse(sessionStorage.getItem('userData')).planDetails;
         if (sessionStorage.getItem('userData')) {
-            if (!JSON.parse(sessionStorage.getItem('userData')).planDetails.subscribedUser || JSON.parse(sessionStorage
-                    .getItem('userData')).planDetails.planId === 1) {
+            if (planDetails.subscribedUser && planDetails.planId === 1) {
                 $('.upgrade-panel').removeClass('d-none');
-            } else {
+                $('.upgrade-table').removeClass('d-none');
+            } else if (planDetails.subscribedUser && planDetails.planId !== 1) {
                 $('.upgrade-table').removeClass('d-none');
             }
         }
@@ -180,6 +176,7 @@
                 });
                 response.data.map(item => {
                     item.createDate = moment(item.createDate).format("DD MMM YYYY");
+                    // item.startDate = moment(item.startDate).format("DD MMM YYYY");
                     item.expDate = moment(item.expDate).format("DD MMM YYYY");
                     item.invoiceLink = "invoice.html";
                     item.planId === 1 ? item.price = 'Free' : item.price = '&#8377; ' + item.price;
