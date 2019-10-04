@@ -28,6 +28,7 @@ var limitLines = function(obj, lineLimit, e) {
     obj.after(cloned);
     var lines = Math.round(cloned.height() / parseInt(obj.css('line-height')));
     cloned.remove();
+    console.log(lines);
     if (lines > lineLimit)
         return false;
     return true;
@@ -36,8 +37,6 @@ var limitLines = function(obj, lineLimit, e) {
 var preventCopyPaste = function(obj, lineLimit, e) {
     var lineHeight = parseInt(obj.css('line-height'));
     var lines = Math.round(obj.height() / lineHeight);
-
-    console.log(lines);
 
     if (lines > lineLimit) {
         var origin = obj.text();

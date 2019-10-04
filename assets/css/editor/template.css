@@ -898,6 +898,11 @@ input {
     vertical-align: middle;
 }
 
+
+.social-container {
+    width: 100%;
+}
+
 .social-phone, .social-linkedin, .social-github, .social-twitter, .social-website, .social-blog {
     width: 100%;
 }
@@ -916,4 +921,8 @@ p {
 
 .skill-row {
     display: block !important;
+}
+
+.language-container {
+    flex: 1;
 }

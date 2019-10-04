@@ -1539,6 +1539,10 @@ $(window).ready(function () {
                     break;
             }
         });
+
+        if (resumeObj.userLngSet.length <= 1) {
+            $('.remove_lang').addClass('d-none');
+        }
     }
     // services
     var self = this;
@@ -1795,7 +1799,7 @@ $(window).ready(function () {
         $(eles[1]).find('polygon').attr('fill', color);
         for (var i = 1; i < pageCount; ++i) {
             var ele = eles[i];
-            $(ele).find('.border-dashed').removeClass('border-dashed');
+            $(ele).find('.border-dashed').removeClass('border-dashed').addClass('border-dashed-pdf');
 
             $(ele).css('background-image', '');
             $(ele).css('background-repeat', '');
