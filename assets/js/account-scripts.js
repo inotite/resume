@@ -1,3 +1,4 @@
+
 // plug it in, plug it in
 (function ($) {
 
@@ -26,7 +27,6 @@
 			// --------------------------------------------------------------------
 
 			attachEvents: function () {
-
 				var self = this;
 				// var urlArr = ['login', 'signup', 'forgotPassword', 'home', 'account', 'share'];
 				// $.each(urlArr, function (index, value) {
@@ -41,7 +41,7 @@
 					//console.log("sessionId ::::::"+sessionId);
 					window.location.href = "../index.html";
 				} else {
-					var userData = JSON.parse(sessionStorage.getItem('userData'));
+					getUserProfile();
 					var userId = userData.userId;
 					//console.log(userData);
 					var fromPage = sessionStorage.getItem('fromPage');
@@ -61,8 +61,8 @@
 					var picpath = pic.search('1631033876795164.jpg');
 
 					if (picpath > -1 || pic == '') {
-						$('#profileMenu img').attr('src', '../images/app/pic1.png');
-						$('#profilePicEdit').attr('src', '../images/app/pic1.png');
+						$('#profileMenu img').attr('src', '../../assets/images/avatar.png');
+						$('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
 
 					} else {
 						$('#profileMenu img').attr('src', pic);
@@ -81,27 +81,6 @@
 					}
 
 					//}
-
-					/* Logout functionality */
-					$('#signOut').on('click', function () {
-
-						var settings = {
-							"async": true,
-							"crossDomain": true,
-							"url": baseApiUrl + "/user/" + userId + "/" + sessionId + "/" + serviceUrls.get.resUserLogout,
-							"method": "GET",
-							"headers": {
-								"token": sessionId,
-								"content-type": "application/json"
-							},
-							"processData": false
-						}
-						$.ajax(settings).done(function (response) {
-							//console.log(response);
-							sessionStorage.clear();
-							window.location.href = "../index.html";
-						});
-					});
 
 					$('#shareNameBtn').on('click', function () {
 
@@ -179,7 +158,6 @@
 
 
 				}
-
 				$("#changePassBtn").on('click', function () {
 					$("#changePasswordForm").removeClass('d-none');
 					$("#changePassBtn").addClass('d-none');
@@ -195,7 +173,8 @@
 				$('#profileMenu').on('click', function () {
 					//$('.dropdown-menu').toggleClass('open');
 					//$('body').toggleClass('menu-open');
-				})
+				});
+				/* Logout functionality */
 				// $('.tab-item').on('click', function () {
 				// 	let idVal = $(this).attr('data-item');
 
@@ -267,7 +246,6 @@
 					var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
 					var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
 					// var clgName = 
-					var userData = JSON.parse(sessionStorage.getItem('userData'));
 					var email = userData.email;
 
 					$('.invalid-feedback').remove();
@@ -337,7 +315,6 @@
 					}
 				});
 				$('#updateProfile2').on('click', function () {
-					var userData = JSON.parse(sessionStorage.getItem('userData'));
 					var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
 					var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
 					// var clgName = 
@@ -428,7 +405,6 @@
 				var form = new FormData();
 				var logoImg = $('input[name="pic"]').get(0).files[0];
 
-				var userData = JSON.parse(sessionStorage.getItem('userData'));
 				var userId = userData.userId;
 
 				form.append("userId", userId);
@@ -479,3 +455,55 @@
 	};
 
 })(jQuery);
+
+function getUserProfile() {
+	var settings = {
+		"async": true,
+		"crossDomain": true,
+		"url": apiUrl + "/user/" + userData.userId + "/getProfileResume",
+		"type": "GET",
+		"headers": {
+			"token": sessionId,
+			"content-type": "application/json"
+		},
+		"processData": false,
+		// "data": JSON.stringify(userData),
+		error: function (e) {
+			console.log(e);
+		},
+		// dataType: "json",
+		contentType: "application/json"
+	}
+	// downloadResume
+	$.ajax(settings).done(function (response) {
+		sessionStorage.setItem('userData', JSON.stringify(response.data));
+
+		setInfoMessage(userInfo.planDetails.msg.description);
+		console.log(window.location.href);
+		// window.location.reload();
+	});
+}
+
+function setInfoMessage(message) {
+	if (!$('#info_message span').length) {
+		requestAnimationFrame(function () {
+			setInfoMessage(message);
+		});
+		return;
+	}
+	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today")
+	if (!message.indexOf("2 days") || !message.indexOf("1 day") || !message.indexOf("today") || !message.indexOf('Please subscribe')) {
+		$('#info_message').addClass('alert-danger');
+	} else {
+		$('#info_message').addClass('alert-success');
+	}
+
+	$('#info_message span').html(message);
+}
+window.addEventListener("message", function (event) {
+	console.log(":: PARENT MESSAGE", event.data)
+
+	if (event.data && event.data.type === "CLOSE__MODAL") {
+		$(".modal").modal("hide");
+	}
+});

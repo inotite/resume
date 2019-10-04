@@ -58,6 +58,7 @@
 		<div w3-include-html="app/includes/header.html"></div>
 	</div>
 	<div class="auth-header d-none">
+		<div id="load-auth-header"></div>
 		<div w3-include-html="app/includes/user-auth-header.html"></div>
 	</div>
 	<div class="container-fluid layout-hero layout-hero__inner">
@@ -100,9 +101,17 @@
 	<script>
 		includeHTML();
 		if (sessionStorage.getItem('userData')) {
+			$('#load-auth-header').load('../includes/user-auth-header.html');
 			$(".auth-header").removeClass('d-none');
 			$(".header").addClass('d-none');
 		}
+		$("body").on("click", ".dismiss-pricing-modal", function () {
+			if (window.parent) {
+				window.parent.postMessage({
+					type: "CLOSE__MODAL"
+				});
+			}
+		});
 		AOS.init({
 			offset: 100,
 			duration: 800,
@@ -196,7 +205,8 @@
 					item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
 				});
 				// console.log(response);
-				console.log(response);
+				const userD = JSON.parse(sessionStorage.getItem('userData'));
+				console.log("userD>>>>>", userD);
 				$('.pricing_template').loadTemplate(
 					//Specify the template container (or file name of external template)
 					$('.data-pricing-template'),

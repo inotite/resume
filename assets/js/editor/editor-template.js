@@ -1,16 +1,33 @@
 const userId = JSON.parse(sessionStorage.getItem('userData')).userId;
 const userStatus = sessionStorage.getItem('isPremiumUser');
-const planInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
 let resumeObj = JSON.parse(sessionStorage.getItem('userData'));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
-const exp_total_count = 10; 
+const exp_total_count = 10;
 const edu_total_count = 10;
 const proj_total_count = 10;
+const planInfo = resumeObj.planDetails;
+const waterMarkCss = {
+    "background": 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '") #fff repeat-y',
+    "background-position": 'center 0',
+    "background-size": '40%'
+};
 console.log(resumeObj);
 // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
 // var twitterIcon = import('img/twitter.svg');
 // console.log("twitterIcon", twitterIcon);
 // $('#twitter').prepend(twitterIcon);
+
+$.fn.textWidth = function(text, font) {
+    
+    if (!$.fn.textWidth.fakeEl) $.fn.textWidth.fakeEl = $('<span>').hide().appendTo(document.body);
+    
+    $.fn.textWidth.fakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
+    
+    // console.log(this.val() || this.text() || this.attr('placeholder'));
+    // console.log(this.css('font'));
+    return $.fn.textWidth.fakeEl.width();
+};
+
 const fonts = [{
         fontFamily: 'Lato',
         fontInfo: 'lato'
@@ -147,7 +164,7 @@ $.ajax(degreesSettings).done(function (response) {
     $(".degrees").each(function (idx, obj) {
         var degree = 0;
         var dataId = $(this).attr('data-id');
-        if (dataId === undefined) { 
+        if (dataId === undefined) {
             $(this).val("");
             return;
         }
@@ -159,24 +176,33 @@ $.ajax(degreesSettings).done(function (response) {
 var settings = themeOptions ? themeOptions.settings : defaultSettings;
 $(window).ready(function () {
     $('.gender').niceSelect();
-    if ((planInfo && planInfo[0].planId == 1) || planInfo == null) {
+    if (!planInfo.subscribedUser || planInfo.planId === 1) {
         // $('#resume-body').css({
         //     'background-image': 'url("watermarkworkruit.svg")',
         //     'background-position': 'center',
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
-        $("page[size='a4']").css('background-repeat', 'repeat-y');
-        $("page[size='a4']").css('background-size', '40%');
-        $("page[size='a4']").css('background-position', 'center 0');
+        addWaterMarkImage('#resume-body, .watermark')
     }
     var selectedFont = themeOptions ? themeOptions.font : fonts[0].fontFamily;
+    var selectedTitleFont = themeOptions ? themeOptions.fontTitle : fonts[0].fontFamily;
+    if (!selectedTitleFont)
+        selectedTitleFont = fonts[0].fontFamily;
     var selectedcolor = themeOptions ? themeOptions.color : 'theme-black';
+    if (planInfo.subscribedUser && planInfo.planId !== 1) {
+        $('.theme-picker > a , #saveResume > a, #downloadResume > a').attr("data-toggle", "modal").attr('data-target', '#upgrade-popup');
+    }
     $('.selected-font').text(selectedFont).attr('data-font', selectedFont);
-    $('.selected-color').addClass(selectedcolor).attr('data-color', selectedcolor);
-    $('.resume-container').attr('data-oldcolor', 'theme-black').removeClass('theme-black').addClass(selectedcolor);
+    $('.title-headers .selected-font').text(selectedTitleFont).attr('data-font', selectedTitleFont);
+    $('.selected-color').removeClass('theme-black').removeClass('theme-blue').removeClass('theme-green').addClass(selectedcolor).attr('data-color', selectedcolor);
+    $('.dropdown-menu.actions').removeClass('theme-black').removeClass('theme-blue').removeClass('theme-green').addClass(selectedcolor);
+    $('.resume-container').attr('data-oldcolor', selectedcolor).removeClass('theme-black').addClass(selectedcolor);
+    $('.theme-color-picker a').removeClass('active');
+    $('.theme-color-picker span.'+selectedcolor).parent().addClass('active');
     $('body').css('font-family', selectedFont);
+    $('.sub-header').css('font-family', selectedTitleFont);
+    $('.title-headers').css('font-family', selectedTitleFont);
     // Declare some global variables for later use:
     for (let index = 0; index < fonts.length; index++) {
         const fontItem = fonts[index];
@@ -186,14 +212,25 @@ $(window).ready(function () {
             fontItem.fontFamily + '</a>';
         $('.font-items').append(fontLink);
     }
-    $('.font-items .font-item').on('click', function () {
+    $('.page-font .font-items .font-item').on('click', function () {
         var selectedFont = $(this).attr('data-font');
         fonts.filter(item => {
             if (selectedFont == item.fontInfo) {
-                $('.selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
+                $('.page-font .selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
                 $('body').css('font-family', item.fontFamily);
                 $('.ui-autocomplete').css('font-family', item.fontFamily);
-                console.log($('.ui-autocomplete'));
+                $('.month-picker').trigger('change');
+                return;
+            };
+        });
+    });
+    $('.title-headers .font-items .font-item').on('click', function () {
+        var selectedFont = $(this).attr('data-font');
+        fonts.filter(item => {
+            if (selectedFont == item.fontInfo) {
+                $('.title-headers .selected-font').text(item.fontFamily).attr('data-font', item.fontFamily);
+                $('.sub-header').css('font-family', item.fontFamily);
+                $('.title-headers').css('font-family', item.fontFamily);
                 return;
             };
         });
@@ -338,11 +375,9 @@ $(window).ready(function () {
         renderPages();
 
         $('#resume-body').hide();
-
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
-        $("page[size='a4']").css('background-repeat', 'no-repeat');
-        $("page[size='a4']").css('background-size', '40%');
-        $("page[size='a4']").css('background-position', 'center');
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            addWaterMarkImage('#resume-body, .watermark')
+        }
     }
 
     var hideMultiplePages = function () {
@@ -356,11 +391,9 @@ $(window).ready(function () {
         }
 
         $('#resume-body').show();
-
-        $("page[size='a4']").css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
-        $("page[size='a4']").css('background-repeat', 'repeat-y');
-        $("page[size='a4']").css('background-size', '40%');
-        $("page[size='a4']").css('background-position', 'center 0');
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            addWaterMarkImage('#resume-body, .watermark')
+        }
     }
 
     $('#previewResume').on('click', function () {
@@ -370,10 +403,12 @@ $(window).ready(function () {
         $('.editorNav').addClass('d-none');
         $('.previewNav').css('z-index', '2');
         $('#saveResume').addClass('d-none');
-
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            $('.watermark').css('display', 'block!important');
+        }
 
         bindUserDataForSave();
-        saveUserProfile(postObj);
+        saveUserProfile(postObj, 'preview');
 
         showMultiplePages();
     });
@@ -383,9 +418,9 @@ $(window).ready(function () {
         $('#previewBack').addClass('d-none');
         $('.editorNav').removeClass('d-none');
         $('#saveResume').removeClass('d-none');
-
         hideMultiplePages();
     });
+
 
     function ratingCircle() {
         var container = $("#rating-container");
@@ -404,18 +439,28 @@ $(window).ready(function () {
                 $(this).removeClass("rating-hover");
                 $(this).prevAll().removeClass("rating-hover");
 
-                if (index >= 0) {
-                    //Return the previously chosen choice (if any) back in green
-                    // Recall the choice using its index
-                    // "get" returns a DOM element, NOT a jQuery object
-                    var chosenCircle = container.children().get(index);
-                    //Convert to jQuery object
-                    var $rating = $(chosenCircle);
+                index = parseInt($(this).parent().parent().attr('data-langpercentage')) / 25;
 
-                    //Make them green again
-                    $rating.addClass("rating-chosen");
-                    $rating.prevAll().addClass("rating-chosen");
+                var itr = $(this).parent().children().first();
+
+                for ( var i = 0 ; i < index ; ++i ) {
+                    itr.addClass("rating-chosen");
+                    itr = itr.next();
                 }
+
+                // if (index >= 0) {
+                //     //Return the previously chosen choice (if any) back in green
+                //     // Recall the choice using its index
+                //     // "get" returns a DOM element, NOT a jQuery object
+                //     var chosenCircle = container.children().get(index);
+                //     //Convert to jQuery object
+                //     var $rating = $(chosenCircle);
+
+                //     //Make them green again
+                //     $rating.addClass("rating-chosen");
+                //     $rating.prevAll().addClass("rating-chosen");
+                // }
+                
             }
         );
 
@@ -430,10 +475,10 @@ $(window).ready(function () {
                 $(this).prevAll().addClass("rating-chosen");
                 // Remember the position of the click so it can be retrieved later
                 index = $(this).index();
+                $(this).parent().parent().attr('data-langpercentage', (index + 1) * 25);
             }
         );
     }
-    ratingCircle();
 
 
     $("body").on("click", ".skills-bar", function (e) {
@@ -442,22 +487,22 @@ $(window).ready(function () {
             case '25':
                 $(this).addClass('at-50').removeClass('at-25');
                 $(this).attr('data-border', '50');
-                $(this).children().attr('data-skill', '50%').text('50%');
+                $(this).parent().find('.skill-value').attr('data-skill', '50%').text('50%');
                 break;
             case '50':
                 $(this).addClass('at-75').removeClass('at-50');
                 $(this).attr('data-border', '75');
-                $(this).children().attr('data-skill', '75%').text('75%');
+                $(this).parent().find('.skill-value').attr('data-skill', '75%').text('75%');
                 break;
             case '75':
                 $(this).addClass('at-100').removeClass('at-75');
                 $(this).attr('data-border', '100');
-                $(this).children().attr('data-skill', '100%').text('100%');
+                $(this).parent().find('.skill-value').attr('data-skill', '100%').text('100%');
                 break;
             case '100':
                 $(this).addClass('at-25').removeClass('at-100');
                 $(this).attr('data-border', '25');
-                $(this).children().attr('data-skill', '25%').text('25%');
+                $(this).parent().find('.skill-value').attr('data-skill', '25%').text('25%');
                 break;
             default:
                 break;
@@ -522,6 +567,15 @@ $(window).ready(function () {
             $("#proExp_" + num + " .exp-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_EXP_DESC, e);
             });
+
+            setTimeout(function() {
+                $('#proExp_' + num + ' .month-picker').on('change', function() {
+                    var inputWidth = $(this).textWidth();
+                    $(this).css({
+                        width: inputWidth
+                    })
+                }).trigger('change');
+            }, 500);
         }
         if ($('.professional-experience').length == exp_total_count) {
             $('.professional-experience .add_exp').addClass('d-none');
@@ -634,6 +688,15 @@ $(window).ready(function () {
             $("#education_" + num + " .edu-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_EDU_DESC, e);
             });
+
+            setTimeout(function() {
+                $('#education_' + num + ' .month-picker').on('change', function() {
+                    var inputWidth = $(this).textWidth();
+                    $(this).css({
+                        width: inputWidth
+                    })
+                }).trigger('change');
+            }, 500);
         }
         if ($('.education-details').length == edu_total_count) {
             $('.education-details .add_edu').addClass('d-none');
@@ -731,6 +794,15 @@ $(window).ready(function () {
             $("#academic_projects_" + num + " .project-desc").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_PROJ_DESC, e);
             });
+
+            setTimeout(function() {
+                $('#academic_projects_' + num + ' .month-picker').on('change', function() {
+                    var inputWidth = $(this).textWidth();
+                    $(this).css({
+                        width: inputWidth
+                    })
+                }).trigger('change');
+            }, 500);
         }
         if ($('.academic-project').length == proj_total_count) {
             $('.academic-project .add_acad').addClass('d-none');
@@ -870,6 +942,8 @@ $(window).ready(function () {
                 'Language');
 
             $('#lang_' + num + ' .rating-container li').removeClass('rating-chosen');
+            $('#lang_' + num + ' .rating-container li:first').addClass('rating-chosen')
+                .next().addClass('rating-chosen');
 
             $(".info-language").keypress(function (e) {
                 return limitLines($(this), LINE_LANGUAGES, e);
@@ -939,21 +1013,28 @@ $(window).ready(function () {
     }
 
     $('#saveResume').on('click', function () {
-        bindUserDataForSave();
-        saveUserProfile(postObj);
+        if (planInfo.subscribedUser || planInfo.planId === 1) {
+            bindUserDataForSave();
+            saveUserProfile(postObj, "save");
+        }
+
     });
 
     $('#downloadResume').on('click', async function () {
-        if (!$('.editorNav').hasClass('d-none')) {
-            bindUserDataForSave();
-            saveUserProfile(postObj);
-            showMultiplePages();
-            await savePdf();
-            hideMultiplePages();
-        } else {
-            console.log("hey, here!");
-            await savePdf();
-        }
+        // if (planInfo.subscribedUser) {
+            if (!$('.editorNav').hasClass('d-none')) {
+                bindUserDataForSave();
+                saveUserProfile(postObj, "download");
+                showMultiplePages();
+                await savePdf();
+                hideMultiplePages();
+            } else {
+                console.log("hey, here!");
+                await savePdf();
+            }
+        // } else {
+        //     $('#downloadResume a').attr('href', location.origin + '/pricing.html');
+        // }
     });
 
     function bindUserDataForSave() {
@@ -1179,9 +1260,9 @@ $(window).ready(function () {
         postObj.skill = []
         $('#resume-body .skills-item').each(function (i, v) {
             var id = $(this).attr('id');
-            var skill_name = $('#' + id + '#resume-body .skill-input-value').text();
+            var skill_name = $('#' + id + ' .skill-input-value').text();
             var skill_value = parseInt($('#resume-body #' + id).find('.skill-value').attr('data-skill'));
-            // console.log(i, skill_name, skill_value, "skill_value");
+            console.log(i, skill_name, skill_value, "skill_value");
             postObj.skill.push({
                 "skillName": skill_name,
                 "skill_percentage": skill_value
@@ -1192,7 +1273,8 @@ $(window).ready(function () {
     function GetThemeOptions() {
         const themeOptions = {
             color: $('.selected-color').attr('data-color'),
-            font: $('.selected-font').attr('data-font'),
+            font: $('.page-font .selected-font').attr('data-font'),
+            fontTitle: $('.title-headers .selected-font').attr('data-font'),
             settings: settings
         }
         postObj.themeOptions = themeOptions;
@@ -1211,16 +1293,50 @@ $(window).ready(function () {
         }
     }
 
-    $("#user-picture").change(function () {
-        console.log("Here");
-        readURL(this);
-    });
+    // $("#user-picture").change(function () {
+    //     console.log("Here");
+    //     readURL(this);
+    // });
 
     bindUserData();
 
     function bindUserData() {
         if (!resumeObj.pic)
             resumeObj.pic = 'data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAAFYUlEQVR4nO2d7W3bMBCGr0EHUCeoM0HUCWpP0HSC2BM0naDOBHEmsDtB3QniThB1groTRD/6vwWNlwYtyhJF3lFUqgcwEsgfol7d8eN4pF49P/+hRJjgNUVx3rcU6wf+7ohoj1fv9CloTkTXEE79n1mf6EZJRAWE3uL/6MQWVFnfDYQMFbCNEsJ+hRVHIYagSrg5EX2CS/eBqg4eiGgDocWQFFQJeQshpa3RlRLCrqSElRJ0mZiQVbSwS+udQLgFVXXkukfX7oqqChacdeyFdcQPZYn3RPQ4IDEJZX1E2Vm8icNCVZfn28CErENZ68fQ7laoharW++kFiEm4hidckzchgt6jvnxprHFtXvgKukaX6KVy62ssPoKuQ91iIMx9RO0qaCwxVQNxR0Qz1XBWXjO8FyMY0lnULq38fQQ3Vy3s5w79winKlVvv8LJCuVpxtdB5BDFVod917GTv8J2V9Q4vt66e6WKhOboTkiwQuAjBq87ryLu2fmqbhWbotEtyxyAm4TfurKO8fGsbUbUJ+kW4075jDlAshWOfE2hyliaXn2KcK8mlQGutLvqXdZSX2bkb12Sh0vXRRqjrs2eqQpo4q805QZcRxuffrSPD+G2CNrVVVZ3LZ3CZxsqXgVfCv//XOsJLiSrrJPJfZ6G3EcSsrX8Gdo6srm9eFTTD1MWIG9Y0T1XQecLzQCmSVUdQVUFH6+zOiWamoNOIkfcYXhDL08z0oRNBb6yPysGRetNEFiECZXLUzhT02vqYLJLn6+1atKDSFlOHpEfEbguOHqEFjX1HCfWOxHmvI7u7ed6joG25mFKsmT0jaxpnC3PQ0HT5PuCOt7bGKwU5uvyk5878lEEIfWOm1jvxUGWYXCSS9XGN2KuPp+T4bh/tQJWDoH3eVRM9d+WavTfBZ596rLKqTF9bh/pnjleBiNFvY2JMCfcWRpCKiCcoQa+so2mQpypaA1cXY3SJlawuwDwSwCgoM6OgzIyCMjMKyswoKC/layw2TWG0tEMH/ieyP4qG1W46/jhBPzpP5Bp+9jlSKpA9svOYQy/PfGeK14e+BgUqcyRGUpimwOrgbYSU7gkCJjcRxZ0pQWNkq22wtrIxWVWQHNMi0usDLnVu07PQEHQTcYGBCzq/U0JYVQ290a08t+XskUO5SEhMMhbLzgTKddBQC/rDetufrcfig9joxQ5bxvMeNNSCcv3wBgtQz3V3UqJEWbmScw8amvmhofWouusz6+gweAzsxx7qT6qMlEKsVN/toRLqVUftTEG/Wh9zR3xzFGHKQNc/amcKugto+aRz2mPgew17swGuBkcerI+78RKmUXyv4USz6qIF3wULBRqkobp95pkXYC1cqFpo6WmlecguCAngu6L5oWpE3MtqOBbBxsZ30a1lnVRjoRRgpYqh7fYQsoLZsk46Y6GaXwF5T0Ow1BAx97BOizoL1SysI+6kbqmha+vPatMk6C5wp4S1QEJtKJlRLl9WTYGfJpcnFCB0o6sCd7Sv4LImh5Ah0fs9olRW3alpslBiGqPrNMVlT9aa4dwcaY+tY36XaeSiqc7owBeOrdA6oreSa9yFwREnL+trm6E9AgoSG6PqVcI3jNnZztsMdd2dUaL13hrTyb7BmYkxfcydGr7p4qE+211Kdon2RrJDNdGhNOpgnehwZSQ8SNBJTArYP/R/2P+us5gUkNu0iLCbV5+sfBvikGSxz0ytf2osXBugOkKz7zbo6KY09+6L7rQHxSA40hmLSBv6SbJy2dfOhXHb9US3XdfsENa6S3w6pEQZL7kzXMZHVzAzPlyFmfHxP8yMD6hiJuVHqKlxepPI6T1CjYj+Af7+dGpiAOSrAAAAAElFTkSuQmCC';
+        else {
+            // var xhr = new XMLHttpRequest();
+            // xhr.onload = function () {
+            //     var reader = new FileReader();
+            //     reader.onloadend = function () {
+            //         resumeObj.pic = reader.result;
+            //     }
+            //     reader.readAsDataURL(xhr.response);
+            // };
+            // xhr.open('GET', resumeObj.pic);
+            // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+            // xhr.setRequestHeader("Access-Control-Allow-Methods", "GET");
+            // xhr.setRequestHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
+            // xhr.withCredentials = true;
+            // xhr.responseType = 'blob';
+            // xhr.send();
+            // function getBase64FromImageUrl(url) {
+            //     var img = new Image();
+            //     img.crossOrigin = "anonymous";
+            //     img.onload = function () {
+            //         var canvas = document.createElement("canvas");
+            //         canvas.width =this.width;
+            //         canvas.height =this.height;
+            //         var ctx = canvas.getContext("2d");
+            //         ctx.drawImage(this, 0, 0);
+            //         var dataURL = canvas.toDataURL("image/png");
+            //         console.log(dataURL);
+            //     };
+            //     img.src = url;
+            // }
+
+            // //function call
+            // getBase64FromImageUrl(resumeObj.pic);
+        }
         // console.log(resumeObj.pic);
         $('#user_pic').attr('src', resumeObj.pic);
         if (!resumeObj.collegeLogo)
@@ -1238,8 +1354,10 @@ $(window).ready(function () {
         $('[data-content="totalexperience"]').text(resumeObj.expDisplay);
         $('[data-content="location"]').text(resumeObj.location);
         $('[data-content="dob"]').val(resumeObj.date_of_birth);
-        if (resumeObj.gender)
-            $('.gender .current').text(resumeObj.gender)
+        if (resumeObj.gender) {
+            $('.gender .current').text(resumeObj.gender);
+            $('.gender .current').css('color', 'rgb(33, 37, 41)');
+        }
         // console.log("Email", resumeObj.email);
         $('[data-content="email"]').text(resumeObj.email);
         $('[data-content="phone"]').text(resumeObj.telephone);
@@ -1363,8 +1481,8 @@ $(window).ready(function () {
             const v = resumeObj.userSkillsSet[i];
             var a = i + 1;
             // console.log(v, '#skills_item_' + a + ' .skills-bar .skill-value');
-            $('#skills_item_' + a + ' .skills-bar .skill-value').attr('data-skill', v.percentage);
-            $('#skills_item_' + a + ' .skills-bar .skill-value').text(v.percentage + '%');
+            $('#skills_item_' + a + ' .skill-container .skill-value').attr('data-skill', v.percentage);
+            $('#skills_item_' + a + ' .skill-container .skill-value').text(v.percentage + '%');
             $('#skills_item_' + a + ' .skills-bar').attr('data-border', v.percentage);
             $('#skills_item_' + a + ' .skills-bar').attr('class', '').attr('class',
                 'skills-bar color-blue at-' + v.percentage);
@@ -1460,7 +1578,7 @@ $(window).ready(function () {
         });
     });
 
-    function saveUserProfile(applicantData) {
+    function saveUserProfile(applicantData, action) {
         if (applicantData.education.length) {
             var educationValidArray = applicantData.education.filter(function (item, index) {
                 return !(!item.institution && !item.location && !item.degree && !item
@@ -1554,8 +1672,8 @@ $(window).ready(function () {
         }
         if (applicantData.skill.length) {
             var skillValidArray = applicantData.skill.filter(function (item, index) {
-                // return false;
-                return !(!item.skillName && !item.skill_percentage);
+                // return !(!item.skillName && !item.skill_percentage);
+                return item.skillName;
             });
             // console.log(academicValidArray);
             if (skillValidArray.length == 0) {
@@ -1576,7 +1694,7 @@ $(window).ready(function () {
                 });
             }
         }
-        console.log("Application Data", JSON.stringify(applicantData));
+        // console.log("Application Data", JSON.stringify(applicantData));
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -1594,20 +1712,23 @@ $(window).ready(function () {
             dataType: "json",
             contentType: "application/json"
         }
-        console.log("settings", settings.data);
+        // console.log("settings", settings.data);
         // downloadResume
         $.ajax(settings).done(function (response) {
             if (response.status == 'success') {
                 $('#newSuccessMessageID .message-text').html(response.msg);
                 $('.loading-container').fadeOut();
-                $('#newSuccessMessageID').fadeIn().delay(2000)
-                    .fadeOut('slow', function () {
-                        $('#saveResume').removeAttr('pointer-events');
-                    });
+                if (action === 'save') {
+                    $('#newSuccessMessageID').fadeIn().delay(2000)
+                        .fadeOut('slow', function () {
+                            $('#saveResume').removeAttr('pointer-events');
+                        });
+                }
                 sessionStorage.setItem('userData', JSON.stringify(response.data));
                 // console.log("Ajax response");
                 // console.log(response.data);
 
+                // console.log("Settings Done");
                 var logoImg = $('input[data-content="picture"]').get(0).files[0];
                 if (logoImg) {
                     saveUserPic();
@@ -1652,141 +1773,138 @@ $(window).ready(function () {
     }
 
     async function savePdf() {
+        // if (planInfo.planId !== 1) {
         $('.loading-container').show();
-        if (planInfo) {
-            var eles = $('page');
-            console.log(eles);
-            var pageCount = eles.length;
-            var doc = new jsPDF('p', 'cm', [89.1, 63], true);
-            // watermark resume
-            var docWaterMark = new jsPDF('p', 'cm', [89.1, 63], true);
-            $(eles[1]).find('.nice-select ul.list').remove();
-            var color;
-            if (selectedcolor == 'theme-black') {
-                color = '#2f2f2f';
-            } else if (selectedcolor == 'theme-blue') {
-                color = '#337ab7';
-            } else {
-                color = '#3ebb64';
-            }
-            console.log(color);
-            $(eles[1]).find('path').attr('fill', color);
-            $(eles[1]).find('polygon').attr('fill', color);
-            for (var i = 1; i < pageCount; ++i) {
-                var ele = eles[i];
-                $(ele).find('.border-dashed').removeClass('border-dashed');
-
-                $(ele).css('background-image', '');
-                $(ele).css('background-repeat', '');
-                $(ele).css('background-size', '');
-                $(ele).css('background-position', '');
-
-                console.log(ele);
-                /* ele.css({'height': ''});
-                ele.css({'max-height': ''});*/
-                ele.style.boxShadow = "none";
-                var canvas = await html2canvas(ele, {
-                    allowTaint: true,
-                    logging: true,
-                    useCORS: true,
-                    taintTest: false,
-                    scale: 3
-                });
-
-                const data = await canvas.toDataURL("image/jpeg");
-                // console.log("Raw", data);
-
-                if (i > 1) {
-                    doc.addPage();
-                    docWaterMark.addPage();
-                }
-                doc.setPage(i);
-                docWaterMark.setPage(i);
-
-                var image = new Image();
-                image.src = data;
-                doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
-
-                $(ele).css('background-image', 'url("'+window.location.origin + '/assets/images/resume/watermarkworkruit.png'+'")');
-                $(ele).css('background-repeat', 'no-repeat');
-                $(ele).css('background-size', '40%');
-                $(ele).css('background-position', 'center');
-
-                canvas = await html2canvas(ele, {
-                    allowTaint: true,
-                    logging: true,
-                    useCORS: true,
-                    taintTest: false,
-                    scale: 3
-                });
-
-                // const dataWaterMark = data;
-                var waterMarkImage = new Image();
-                waterMarkImage.src = await canvas.toDataURL("image/jpeg");
-                // docWaterMark = addWaterMark(docWaterMark);
-                docWaterMark.addImage(waterMarkImage, 'JPEG', -0.3, 0.5, 0, 0);
-
-                ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
-
-            }
-            var pdfOut = doc.output('blob');
-            var form2 = new FormData();
-            form2.append("type", "resume");
-            form2.append("userId", userId);
-            form2.append('file', pdfOut);
-            axios({
-                    method: 'post',
-                    url: apiUrl + "/uploadFile",
-                    data: form2,
-                    config: {
-                        headers: {
-                            "token": sessionId,
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                })
-                .then(function (response) {
-                    //handle success
-                    // console.log(response);
-                })
-                .catch(function (response) {
-                    //handle error
-                    // console.log(response);
-                });
-            var pdfOutWaterMark = docWaterMark.output('blob');
-            var formWatermark = new FormData();
-            formWatermark.append("type", "watermark");
-            formWatermark.append("userId", userId);
-            formWatermark.append('file', pdfOutWaterMark);
-            axios({
-                    method: 'post',
-                    url: apiUrl + "/uploadFile",
-                    data: formWatermark,
-                    config: {
-                        headers: {
-                            "token": sessionId,
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                })
-                .then(function (response) {
-                    //handle success
-                    // console.log(response);
-                })
-                .catch(function (response) {
-                    //handle error
-                    // console.log(response);
-                });
-            if (planInfo && planInfo[0].planId == 1) {
-                docWaterMark.save(userId + '_resume.pdf');
-                doc.save(resumeObj.firstname + '_resume.pdf');
-            } else {
-                doc.save(resumeObj.firstname + '_resume.pdf');
-            }
-            $('.loading-container').delay(2000).fadeOut();
+        var eles = $('page');
+        console.log(eles);
+        var pageCount = eles.length;
+        var doc = new jsPDF('p', 'cm', [89.1, 63], true);
+        // watermark resume
+        var docWaterMark = new jsPDF('p', 'cm', [89.1, 63], true);
+        $(eles[1]).find('.nice-select ul.list').remove();
+        var color;
+        if (selectedcolor == 'theme-black') {
+            color = '#2f2f2f';
+        } else if (selectedcolor == 'theme-blue') {
+            color = '#337ab7';
         } else {
-            window.location.href = window.origin + '/pricing.html';
+            color = '#3ebb64';
         }
+        console.log(color);
+        $(eles[1]).find('path').attr('fill', color);
+        $(eles[1]).find('polygon').attr('fill', color);
+        for (var i = 1; i < pageCount; ++i) {
+            var ele = eles[i];
+            $(ele).find('.border-dashed').removeClass('border-dashed');
+
+            $(ele).css('background-image', '');
+            $(ele).css('background-repeat', '');
+            $(ele).css('background-size', '');
+            $(ele).css('background-position', '');
+            $(ele).css('font-variant-ligatures', 'no-common-ligatures');
+            // $(ele).find('p').css('font-feature-settings', '"smcp" 1');
+
+            console.log(ele);
+            /* ele.css({'height': ''});
+            ele.css({'max-height': ''});*/
+            ele.style.boxShadow = "none";
+            var canvas = await html2canvas(ele, {
+                allowTaint: true,
+                logging: true,
+                useCORS: true,
+                taintTest: false,
+                scale: 3
+            });
+
+            const data = await canvas.toDataURL("image/jpeg");
+            // console.log("Raw", data);
+
+            if (i > 1) {
+                doc.addPage();
+                docWaterMark.addPage();
+            }
+            doc.setPage(i);
+            docWaterMark.setPage(i);
+
+            var image = new Image();
+            image.src = data;
+            doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
+
+            addWaterMarkImage(ele)
+
+            canvas = await html2canvas(ele, {
+                allowTaint: true,
+                logging: true,
+                useCORS: true,
+                taintTest: false,
+                scale: 3
+            });
+
+            // const dataWaterMark = data;
+            var waterMarkImage = new Image();
+            waterMarkImage.src = await canvas.toDataURL("image/jpeg");
+            // docWaterMark = addWaterMark(docWaterMark);
+            docWaterMark.addImage(waterMarkImage, 'JPEG', -0.3, 0.5, 0, 0);
+
+            ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
+
+        }
+        var pdfOut = doc.output('blob');
+        var form2 = new FormData();
+        form2.append("type", "resume");
+        form2.append("userId", userId);
+        form2.append('file', pdfOut);
+        axios({
+                method: 'post',
+                url: apiUrl + "/uploadFile",
+                data: form2,
+                config: {
+                    headers: {
+                        "token": sessionId,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            })
+            .then(function (response) {
+                //handle success
+                // console.log(response);
+            })
+            .catch(function (response) {
+                //handle error
+                // console.log(response);
+            });
+        var pdfOutWaterMark = docWaterMark.output('blob');
+        var formWatermark = new FormData();
+        formWatermark.append("type", "watermark");
+        formWatermark.append("userId", userId);
+        formWatermark.append('file', pdfOutWaterMark);
+        axios({
+                method: 'post',
+                url: apiUrl + "/uploadFile",
+                data: formWatermark,
+                config: {
+                    headers: {
+                        "token": sessionId,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            })
+            .then(function (response) {
+                //handle success
+                // console.log(response);
+            })
+            .catch(function (response) {
+                //handle error
+                // console.log(response);
+            });
+        if (planInfo.planId === 1) {
+            docWaterMark.save(userId + '_resume.pdf');
+            // doc.save(resumeObj.firstname + '_resume.pdf');
+        } else {
+            doc.save(resumeObj.firstname + '_resume.pdf');
+        }
+        $('.loading-container').delay(2000).fadeOut();
+        // }
     }
 
     $('#user-picture').on('change', function () {
@@ -1820,6 +1938,7 @@ $(window).ready(function () {
         $.ajax(imageSettings).done(function (responseData) {
             var response = JSON.parse(responseData);
             //console.log(response.data.httpPath);
+            console.log(response);
             if (response.status == 'success') {
                 // console.log(response.data.httpPath);
                 sessionStorage.setItem('imageStore', response.data.httpPath);
@@ -1896,12 +2015,12 @@ $(window).ready(function () {
         console.log("Document Size: ", resume.css('width'), resume.css('height'));
         console.log("Standard Height: ", standardA4Height);
 
-        var emptyDom = "<page size='a4'>\
+        var emptyDom = "<page size='a4' class='watermark'>\
                             <div class='row'>\
                                 <aside class='col-3 text-break'>\
                                 </aside>\
                                 <div class='col-9'>";
-        var sideDom = "<page size='a4'>\
+        var sideDom = "<page size='a4' class='watermark'>\
                             <div class='row'>\
                                 " + getOuterHTML($('#resume-body aside')) +
             "<div class='col-9'>";
@@ -2010,6 +2129,10 @@ $(window).ready(function () {
             cloned = $($('[data-content="exp_endDate"]')[i + originExpCount - 1]);
             cloned.val(origin.val());
         }
+
+        // 
+
+        $($('[data-content="dob"]')[1]).val($($('[data-content="dob"]')[0]).val());
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check Education
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2135,7 +2258,7 @@ $(window).ready(function () {
             var skills = $('#skills-section .skills-item');
             var it;
             console.log("Skills Count: ", skillCount);
-            domHtml += '<div class="row flex-column  mb-1" id="skills-section">\
+            domHtml += '<div class="row flex-column  mb-1 skill-row" id="skills-section">\
                             <h4 class="section_title text-uppercase font-10pt px-2">Skills</h4>\
                             <div class="skills-section">\
                                 <ul class="list-unstyled w-100 skills-list mb-0">';
@@ -2153,7 +2276,7 @@ $(window).ready(function () {
 
             resume.find('.col-9 .row').last().after(domHtml + emptyDomClose);
 
-            domHtml = '<div class="row flex-column mb-1">\
+            domHtml = '<div class="row flex-column mb-1 skill-row">\
                             <div class="skills-section">\
                                 <ul class="list-unstyled w-100 skills-list mb-0">';
             stackedHeight = skillsMarginBottom;
@@ -2197,6 +2320,38 @@ $(window).ready(function () {
             resume.after(emptyDom + getOuterHTML($('#certifications-section')) + emptyDomClose);
             stackedHeight = 0;
         }
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            setTimeout(function () {
+                addWaterMarkImage('#resume-body, .watermark')
+            }, 0)
+        }
     }
 
+
+    /**
+     * Add Water to page element
+     * @param SELECTOR_STRING
+     */
+
+
+    function addWaterMarkImage(selectorElements) {
+        $(selectorElements).css(waterMarkCss)
+        // $("#resume-body, .watermark").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
+        // $("#resume-body, .watermark").css('background-repeat', 'repeat-y');
+        // $("#resume-body, .watermark").css('background-size', '40%');
+        // $("#resume-body, .watermark").css('background-position', 'center 0');
+    }
+
+    $('.month-picker').on('change', function() {
+        var inputWidth = $(this).textWidth();
+        $(this).css({
+            width: inputWidth
+        })
+    });
+
+    setTimeout(function() {
+        $('.month-picker').trigger('change');
+    }, 2000);
+
+    ratingCircle();
 });

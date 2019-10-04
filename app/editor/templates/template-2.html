@@ -75,13 +75,27 @@
                                         data-oldcolor='theme-green'></span></a>
                             </div>
                         </li>
-                        <li class="nav-item theme-picker">
-                            <a class="nav-link dropdown-toggle font selected-font" href="#" id="navbarDropdownMenuLink"
-                                role="button" data-toggle="dropdown" data-font="" aria-haspopup="true"
-                                aria-expanded="false">
-                                Merriweather </a>
-                            <div class="dropdown-menu font-items" aria-labelledby="navbarDropdownMenuLink">
-                            </div>
+                        <li class="nav-item theme-picker page-font">
+                            <span class="nav-link font">
+                                <p class="nav-hint">Page font</p>
+                                <a class="dropdown-toggle selected-font" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-toggle="dropdown" data-font="" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Merriweather </a>
+                                <div class="dropdown-menu font-items" aria-labelledby="navbarDropdownMenuLink">
+                                </div>
+                            </span>
+                        </li>
+                        <li class="nav-item theme-picker title-headers">
+                            <span class="nav-link font">
+                                <p class="nav-hint">Title font</p>
+                                <a class="dropdown-toggle selected-font" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-toggle="dropdown" data-font="" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Merriweather </a>
+                                <div class="dropdown-menu font-items" aria-labelledby="navbarDropdownMenuLink">
+                                </div>
+                            </span>
                         </li>
                         <li class="nav-item theme-picker-2 theme-picker">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -128,7 +142,7 @@
         </header>
         <div class="container m-auto resume-container theme-black" data-oldcolor="theme-black">
             <section class="mb-3">
-                <page size="a4" id="resume-body">
+                <page size="a4" id="resume-body" class='watermark'>
                     <div class="row">
                         <aside class="col-3 text-break">
                             <div>
@@ -140,7 +154,7 @@
                                     </label>
                                 </div>
                                 <div class="professional_info">
-                                    <p class="text-uppercase  px-1 section_title title_info mb-1 pb-0">Personal Info</p>
+                                    <p class="text-uppercase  px-1 section_title title_info mb-1 pb-0 sub-header">Personal Info</p>
                                     <div class="user_info">
                                         <p class="title_info  px-1 section_title theme-text color m-0 mt-3 pb-0">
                                             Designation
@@ -150,7 +164,7 @@
                                             data-content="userJobTitle"></p>
                                     </div>
                                     <div class="user_info">
-                                        <p class="title_info section_title theme-text  px-1 color m-0 mt-3 pb-0">Years
+                                        <p class="title_info section_title theme-text  px-1 color m-0 mt-2 pb-0">Years
                                             of
                                             experience
                                         </p>
@@ -159,21 +173,21 @@
                                             data-content="totalexperience"></p>
                                     </div>
                                     <div class="user_info">
-                                        <p class="title_info section_title theme-text  px-1 color m-0 pb-0 mt-3">
+                                        <p class="title_info section_title theme-text  px-1 color m-0 pb-0 mt-2">
                                             Location
                                         </p>
                                         <p class="info-location info title_info px-1 location mb-0"
                                             placeholder="Location" contenteditable="true" data-content="location"></p>
                                     </div>
                                     <div class="user_info">
-                                        <p class="title_info section_title  px-1 theme-text color m-0 pb-0 mt-3">
+                                        <p class="title_info section_title  px-1 theme-text color m-0 pb-0 mt-2">
                                             Birthday
                                         </p>
                                         <input class="info title_info location  px-1 b-datepicker mb-0 border-0"
                                             data-content="dob" type="text" placeholder="Birthday" readonly>
                                     </div>
                                     <div class="user_info">
-                                        <p class="title_info section_title theme-text color m-0 mt-3 px-1 pb-0">Gender
+                                        <p class="title_info section_title theme-text color m-0 mt-2 px-1 pb-0">Gender
                                         </p>
                                         <!-- <p class="info title_info gender mb-0" contenteditable="true"
                                             placeholder="Gender" data-content="gender"></p> -->
@@ -185,7 +199,7 @@
                                         </select>
                                     </div>
                                     <div class="user_info">
-                                        <p class="title_info section_title theme-text color px-1 mt-3 m-0">Languages
+                                        <p class="title_info section_title theme-text color px-1 mt-2 m-0">Languages
                                         </p>
                                         <ul class="list-unstyled">
                                             <li class="d-flex align-items-center py-2 px-1 border-dashed lang_details"
@@ -220,69 +234,83 @@
                                     </div>
                                 </div>
                                 <div class="social_info">
-                                    <p class="text-uppercase section_title title_info mb-1 mt-3">Social</p>
+                                    <p class="text-uppercase section_title title_info mb-1 mt-3 sub-header">Social</p>
                                     <ul class="list-unstyled m-0">
                                         <li class="d-flex justify-content-start  px-1 align-items-center mb-3">
                                             <!-- <i class="fas fa-envelope color font-14pt"></i> -->
                                             <div class="social-svg">
                                                 <img src="../../../assets/images/resume/svg/email.svg"
-                                                class="svg color font-14pt" />
+                                                    class="svg color font-14pt" />
                                             </div>
-                                            <p class="m-0 ml-2" data-content="email"></p>
+                                            <div>
+                                                <p class="m-0 ml-2" data-content="email" contenteditable="true"></p>
+                                            </div>
                                         </li>
                                         <li class="d-flex justify-content-start  px-1 align-items-center mb-3">
                                             <!-- <i class="fas fa-phone-square-alt color font-14pt"></i> -->
                                             <div class="social-svg">
                                                 <img src="../../../assets/images/resume/svg/phone.svg"
-                                                class="svg color font-14pt" />
+                                                    class="svg color font-14pt" />
                                             </div>
-                                            <p contenteditable="true" placeholder="Phone" class="social-phone m-0 ml-1"
+                                            <div>
+                                                <p contenteditable="true" placeholder="Phone" class="social-phone m-0 ml-1"
                                                 data-content="phone"></p>
+                                            </div>
                                         </li>
                                         <li class="d-flex justify-content-start  px-1 align-items-center mb-3 linkedin">
                                             <!-- <i class="fab fa-linkedin color font-14pt"></i> -->
                                             <div class="social-svg">
                                                 <img src="../../../assets/images/resume/svg/linkedin.svg"
-                                                class="svg color font-14pt" />
+                                                    class="svg color font-14pt" />
                                             </div>
-                                            <p contenteditable="true" placeholder="LinkedIn"
+                                            <div>
+                                                <p contenteditable="true" placeholder="LinkedIn"
                                                 class="social-linkedin m-0 ml-1" data-content="linkedin"></p>
+                                            </div>
                                         </li>
                                         <li class="d-flex justify-content-start  px-1 align-items-center mb-3 github">
                                             <!-- <i class="fab fa-github color font-14pt"></i> -->
                                             <div class="social-svg">
                                                 <img src="../../../assets/images/resume/svg/github.svg"
-                                                class="svg color font-14pt" />
+                                                    class="svg color font-14pt" />
                                             </div>
-                                            <p contenteditable="true" placeholder="Github"
+                                            <div>
+                                                <p contenteditable="true" placeholder="Github"
                                                 class="social-github m-0 ml-1" data-content="github"></p>
+                                            </div>
                                         </li>
                                         <li class="d-flex justify-content-start  px-1 align-items-center mb-3 twitter">
                                             <!-- <i class="fab fa-twitter-square color font-14pt"></i> -->
                                             <div class="social-svg">
                                                 <img src="../../../assets/images/resume/svg/twitter.svg"
-                                                class="svg color font-14pt" />
+                                                    class="svg color font-14pt" />
                                             </div>
-                                            <p contenteditable="true" placeholder="Twitter"
+                                            <div>
+                                                <p contenteditable="true" placeholder="Twitter"
                                                 class="social-twitter m-0 ml-1" data-content="twitter"></p>
+                                            </div>
                                         </li>
                                         <li class="d-flex justify-content-start  px-1 align-items-center mb-3 website">
                                             <!-- <i class="fas fa-globe-europe color font-14pt"></i> -->
                                             <div class="social-svg">
                                                 <img src="../../../assets/images/resume/svg/chrome.svg"
-                                                class="svg color font-14pt" />
+                                                    class="svg color font-14pt" />
                                             </div>
-                                            <p contenteditable="true" placeholder="Website"
+                                            <div>
+                                                <p contenteditable="true" placeholder="Website"
                                                 class="social-website m-0 ml-1" data-content="website"></p>
+                                            </div>
                                         </li>
                                         <li class="d-flex justify-content-start  px-1 align-items-center mb-3 blog">
                                             <!-- <i class="fab fa-blogger color font-14pt"></i> -->
                                             <div class="social-svg">
                                                 <img src="../../../assets/images/resume/svg/blogger.svg"
-                                                class="svg color font-14pt" />
+                                                    class="svg color font-14pt" />
                                             </div>
-                                            <p contenteditable="true" placeholder="Blog" class="social-blog m-0 ml-1"
+                                            <div>
+                                                <p contenteditable="true" placeholder="Blog" class="social-blog m-0 ml-1"
                                                 data-content="blog"></p>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -293,11 +321,11 @@
                                 <div class="col-8 pl-0 px-1">
                                     <div class="personal_info">
                                         <h1 class="user_title font-26pt">
-                                            <span class="user_firstname color" contenteditable="true"
+                                            <span class="user_firstname color sub-header" contenteditable="true"
                                                 placeholder="Firstname" data-content="firstname"></span>
                                         </h1>
                                         <h1 class="user_title font-26pt">
-                                            <span class="user_lastname color" contenteditable="true"
+                                            <span class="user_lastname color sub-header" contenteditable="true"
                                                 placeholder="Lastname" data-content="lastname"></span>
                                         </h1>
                                         <!-- <h2 class="support_title text-uppercase font-12pt" contenteditable="true"
@@ -317,25 +345,26 @@
                             </div>
                             <div class="row" id="resume-memo">
                                 <div class="col-12 pl-0 px-1">
-                                    <h4 class="about_me font-10pt pl-1" id="aboutme" placeholder="About me"
+                                    <h4 class="about_me font-10pt pl-1 sub-header" id="aboutme" placeholder="About me"
                                         data-content="coverLetter" contenteditable="true"></h4>
                                 </div>
                             </div>
                             <div class="row mt-3 flex-column mb-1" id="experience-section">
-                                <h4 class="section_title text-uppercase font-10pt px-2">Work experience</h4>
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Work experience</h4>
                                 <div class="border-dashed professional-experience px-1" id="proExp_1">
                                     <div class="d-flex justify-content-between w-100">
                                         <p class="font-10pt mb-2 color">
                                             <span class="exp-role" data-content="exp_jobTitle" contenteditable="true"
                                                 placeholder="Role"></span></p>
                                         <div>
-                                            <p class="font-10pt mb-2 theme-text-dark saperator">
+                                            <p class="font-10pt mb-2 theme-text-dark">
                                                 <input
-                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0 text-right"
+                                                    class="info font-10pt location month-picker w-small mb-0 border-0 text-right"
                                                     data-content="exp_startDate" type="text" placeholder="Start Date"
                                                     readonly>
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
                                                 <input
-                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0 text-right"
+                                                    class="info font-10pt location month-picker w-small mb-0 border-0 text-right"
                                                     data-content="exp_endDate" type="text" placeholder="End Date"
                                                     readonly></p>
                                         </div>
@@ -364,7 +393,7 @@
                                 </div>
                             </div>
                             <div class="row flex-column mb-1" id="education-section">
-                                <h4 class="section_title text-uppercase font-10pt px-2">Education</h4>
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Education</h4>
                                 <div class="border-dashed education-details px-1" id="education_1">
                                     <div class="d-flex justify-content-between w-100">
                                         <div>
@@ -377,13 +406,14 @@
                                             </p>
                                         </div>
                                         <div>
-                                            <p class="font-10pt mb-0 theme-text-dark saperator">
+                                            <p class="font-10pt mb-0 theme-text-dark">
                                                 <input
-                                                    class="info title_info font-10pt location text-right month-picker w-small mb-0 border-0"
+                                                    class="info font-10pt location text-right month-picker w-small mb-0 border-0"
                                                     type="text" data-content="edu_startDate" placeholder="Start Date"
                                                     readonly>
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
                                                 <input
-                                                    class="info title_info font-10pt location text-right month-picker w-small mb-0 border-0"
+                                                    class="info font-10pt location text-right month-picker w-small mb-0 border-0"
                                                     type="text" data-content="edu_endDate" placeholder="End Date"
                                                     readonly>
                                             </p>
@@ -395,7 +425,7 @@
                                             placeholder="Degree" data-content="degree_title">
                                     </div>
                                     <div>
-                                        <p class="font-10pt mb-2 theme-text color"><span class="edu-school"
+                                        <p class="font-10pt mb-2"><span class="edu-school"
                                                 data-content="edu_institution" contenteditable="true"
                                                 placeholder="School"></span>
                                             <span class="edu-location" data-content="edu_location"
@@ -418,7 +448,7 @@
                                 </div>
                             </div>
                             <div class="row flex-column  mb-1" id="academic-section">
-                                <h4 class="section_title text-uppercase font-10pt px-2">Academic Projects</h4>
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Academic Projects</h4>
                                 <div class="border-dashed academic-project px-1" id="academic_projects_1">
                                     <div class="d-flex justify-content-between w-100">
                                         <p class="font-10pt mb-2 theme-text color"><span class="project-title"
@@ -427,13 +457,14 @@
                                             <span class="project-role" data-content="acd_role" contenteditable="true"
                                                 placeholder="Role"></span></p>
                                         <div>
-                                            <p class="font-10pt mb-2 theme-text-dark saperator">
+                                            <p class="font-10pt mb-2 theme-text-dark">
                                                 <input
-                                                    class="info title_info text-right font-10pt location month-picker w-small mb-0 border-0"
+                                                    class="info text-right font-10pt location month-picker w-small mb-0 border-0"
                                                     type="text" data-content="acd_startDate" placeholder="Start Date"
                                                     readonly>
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
                                                 <input
-                                                    class="info title_info font-10pt text-right location month-picker w-small mb-0 border-0"
+                                                    class="info font-10pt text-right location month-picker w-small mb-0 border-0"
                                                     type="text" data-content="acd_endDate" placeholder="End Date"
                                                     readonly>
                                             </p>
@@ -447,7 +478,7 @@
                                                 placeholder="Location"></span></p>
                                     </div>
                                     <div>
-                                        <p class="font-10pt mb-4 project-desc" contenteditable="true"
+                                        <p class="font-10pt mb-2 project-desc" contenteditable="true"
                                             data-content="acd_description"
                                             placeholder="Enter Details About Your Project Here"></p>
                                     </div>
@@ -462,14 +493,17 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row flex-column  mb-1" id="skills-section">
-                                <h4 class="section_title text-uppercase font-10pt px-2">Skills</h4>
+                            <div class="row flex-column  mb-1 skill-row" id="skills-section">
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Skills</h4>
                                 <div class="skills-section">
                                     <ul class="list-unstyled w-100 skills-list mb-0">
                                         <li class=" border-dashed m-0 mb-3  pl-7x skills-item" id="skills_item_1">
                                             <div class="skill-box">
-                                                <div class="skills-bar color-blue at-75" data-border="75"><span
-                                                        data-skill="75%" class="skill-value">75%</span></div>
+                                                <div class="skill-container">
+                                                    <div class="skills-bar color-blue at-75" data-border="75">
+                                                    </div>
+                                                    <p data-skill="75%" class="skill-value">75%</p>
+                                                </div>
                                                 <p type="text"
                                                     class="skill-name aligned_input resume-input ml-2 skill-input-value skills w-14rem border-0 font-10pt"
                                                     placeholder="Skill name" data-content="skillText"
@@ -491,12 +525,12 @@
                                 </div>
                             </div>
                             <div class="row flex-column  mb-1" id="achievements-section">
-                                <h4 class="section_title px-2 text-uppercase font-10pt ">Achievements</h4>
+                                <h4 class="section_title px-2 text-uppercase font-10pt sub-header">Achievements</h4>
                                 <p class="achieve font-10pt mb-2 px-2" data-content="achivements" contenteditable="true"
                                     placeholder="Description"></p>
                             </div>
                             <div class="row  flex-column" id="certifications-section">
-                                <h4 class="section_title px-2 text-uppercase font-10pt ">Certifications</h4>
+                                <h4 class="section_title px-2 text-uppercase font-10pt sub-header">Certifications</h4>
                                 <p class="certificate font-10pt mb-2 px-2" data-content="certifications"
                                     contenteditable="true" placeholder="Description"></p>
                             </div>
@@ -506,6 +540,35 @@
             </section>
         </div>
     </div>
+    <!-- upgrade popup -->
+    <div class="modal fade bd-example-modal-lg" id="upgrade-popup" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <img src="../../assets/images/Icon3.svg" class="img1" alt="phone" height="320px"
+                                width="auto">
+                        </div>
+                        <div class="col-md-7 pt-5">
+                            <div class="modal-title">Upgrade Today</div>
+                            <div class="modal-description">
+                                Get access to your custom resume URL and share it instantly with hiring managers,
+                                companies,
+                                friends & family.</div>
+                            <a href="../../pricing.html"><button type="button"
+                                    class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /upgrade popup -->
     <script type="text/javascript" src="../../../assets/vendors/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../../../assets/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="../../../assets/vendors/js/popper.min.js"></script>

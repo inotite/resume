@@ -1,13 +1,35 @@
 module.exports = function (grunt) {
 
     grunt.initConfig({
-        jshint: {
-            files: ['Gruntfile.js', 'assets/js/**/*.js', 'test/**/*.js'],
-            esversion: 6,
-            options: {
-                globals: {
-                    jQuery: true
-                }
+        copy: {
+            main: {
+                files: [{
+                    expand: true,
+                    cwd: 'assets',
+                    src: ['**', '!**/**/**',],
+                    dest: 'dist/assets/', // Destination folder
+                }],
+            }
+        },
+        uglify: {
+            build: {
+                options: {
+                    banner: "/*! app.min.js file */\n"
+                },
+                src: ['*.js', 'assets/{,*/}*/{,*/}*.js'],
+                dest: 'dist/',
+                expand: true,
+            }
+
+        },
+        cssmin: {
+            target: {
+                options: {
+                    banner: "/*! style.min.css file */\n"
+                },
+                src: ['*.css', 'assets/{,*/}*/{,*/}*.css'],
+                dest: 'dist/',
+                expand: true,
             }
         },
         watch: {
@@ -25,18 +47,22 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: '<%= yeoman.dist %>',
-                    src: ['*.html', 'views/{,*/}*.html'],
-                    dest: '<%= yeoman.dist %>'
+                    // cwd: '<%= yeoman.dist %>',
+                    src: ['*.html', 'app/{,*/}*.html'],
+                    dest: 'dist/'
                 }]
             }
         },
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    // grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-contrib-uglify-es');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask('default', ['htmlmin']);
+
+    grunt.registerTask('default', ['htmlmin', 'uglify', 'cssmin', 'copy']);
 
 };

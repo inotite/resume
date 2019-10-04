@@ -81,11 +81,20 @@ body {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: rgba(0, 0, 0, .5);
     border-left: 1px solid #8080803b;
-    position: relative;
     padding: 1rem;
+}
+
+.navbar-light .navbar-nav .nav-link .dropdown-toggle {
+    color: rgba(0, 0, 0, .5);
+    position: relative;
+    text-decoration: none;
     line-height: 1.8;
+}
+
+.nav-hint {
+    font-size: 8pt;
+    margin: 0;
 }
 
 .navbar-light .navbar-nav .nav-item:first-child .nav-link {
@@ -99,18 +108,20 @@ body {
 .navbar-light .navbar-nav .nav-link.font {
     min-width: 200px;
     text-align: left;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
 }
 
 .dropdown-toggle::after {
     display: none;
 }
 
-.font.dropdown-toggle::after {
+/* .font .dropdown-toggle::after {
     display: inline-block;
     right: 7%;
     position: absolute;
     top: 46%;
-}
+} */
 
 .theme-picker-button {
     position: relative;
@@ -314,8 +325,8 @@ aside * {
 /*rating-circle*/
 
 .rating-circle {
-    height: 1rem;
-    width: 1rem;
+    height: 0.9rem;
+    width: 0.9rem;
     background: #eee;
     border-radius: 1.1em;
     display: inline-block;
@@ -516,12 +527,19 @@ aside * {
     align-content: center;
 }
 
+.skill-container {
+    position: relative;
+}
+
 .skill-value {
     position: absolute;
-    z-index: 9;
+    z-index: 0;
     text-align: center;
-    transform: translate(-3px, 0px);
     font-size: 13px;
+    left: 0;
+    right: 0;
+    top: 16px;
+    bottom: 0;
 }
 
 .skill-value[data-skill='100'] {
@@ -577,6 +595,11 @@ input.switch {
 .switch-label.true:after {
     left: 50%;
     transform: translateX(-100%);
+    background: #6a6a6a !important;
+}
+
+.switch-label.true {
+    border-color: #6a6a6a !important;
 }
 
 .theme-black .switch-label {
@@ -619,6 +642,10 @@ input.switch {
     border: 2px dashed transparent;
     position: relative;
     transition: all .2s;
+}
+
+.border-dashed-pdf {
+    border: 2px solid transparent;
 }
 
 .lang-text {
@@ -770,7 +797,7 @@ input {
 }
 
 .nice-select .current {
-    padding-left: 2px !important;
+    padding-left: 0px !important;
 }
 
 .nice-select .list {
@@ -869,4 +896,24 @@ input {
 
 .social-svg svg {
     vertical-align: middle;
+}
+
+.social-phone, .social-linkedin, .social-github, .social-twitter, .social-website, .social-blog {
+    width: 100%;
+}
+
+.about_me {
+    line-height: 1.5;
+}
+
+.sub-header {
+    font-weight: 500;
+}
+
+p {
+    font-variant-ligatures: no-common-ligatures;
+}
+
+.skill-row {
+    display: block !important;
 }
