@@ -1797,6 +1797,7 @@ $(window).ready(function () {
         console.log(color);
         $(eles[1]).find('path').attr('fill', color);
         $(eles[1]).find('polygon').attr('fill', color);
+        $(eles[1]).find('.nice-select').css('border', '1px solid transparent');
         for (var i = 1; i < pageCount; ++i) {
             var ele = eles[i];
             $(ele).find('.border-dashed').removeClass('border-dashed').addClass('border-dashed-pdf');
