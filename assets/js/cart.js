@@ -63,7 +63,7 @@ $(window).ready(function () {
                         var paytmInfo = jQuery('<div> ' + response.data.redirectUrl +
                             '</div>');
                         // console.log(paytmInfo);
-                        alert(response.data.redirectUrl);
+                        // alert(response.data.redirectUrl);
                         sessionStorage.setItem('orderId', paytmInfo.find(
                                 "input[name=ORDER_ID]")
                             .val());
