@@ -11,6 +11,10 @@ const waterMarkCss = {
     "background-position": 'center 0',
     "background-size": '40%'
 };
+const pdfWaterMarkCss = {
+    "background": 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '") #fff no-repeat',
+    "background-position": 'center'
+}
 console.log(resumeObj);
 // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
 // var twitterIcon = import('img/twitter.svg');
@@ -371,12 +375,17 @@ $(window).ready(function () {
     });
     // bind userData to Resume
 
+    var addPdfWaterMark = function() {
+        $('page').css( pdfWaterMarkCss );
+    }
+
     var showMultiplePages = function () {
         renderPages();
 
         $('#resume-body').hide();
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
-            addWaterMarkImage('#resume-body, .watermark')
+            console.log("Watermark");
+            addPdfWaterMark();
         }
     }
 
@@ -392,7 +401,7 @@ $(window).ready(function () {
 
         $('#resume-body').show();
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
-            addWaterMarkImage('#resume-body, .watermark')
+            addWaterMarkImage('page')
         }
     }
 
@@ -568,6 +577,8 @@ $(window).ready(function () {
                 return preventCopyPaste($(this), LINE_EXP_DESC, e);
             });
 
+            $("#proExp_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
+
             setTimeout(function() {
                 $('#proExp_' + num + ' .month-picker').on('change', function() {
                     var inputWidth = $(this).textWidth();
@@ -689,6 +700,8 @@ $(window).ready(function () {
                 return preventCopyPaste($(this), LINE_EDU_DESC, e);
             });
 
+            $("#education_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
+
             setTimeout(function() {
                 $('#education_' + num + ' .month-picker').on('change', function() {
                     var inputWidth = $(this).textWidth();
@@ -795,6 +808,8 @@ $(window).ready(function () {
                 return preventCopyPaste($(this), LINE_PROJ_DESC, e);
             });
 
+            $("#academic_projects_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
+
             setTimeout(function() {
                 $('#academic_projects_' + num + ' .month-picker').on('change', function() {
                     var inputWidth = $(this).textWidth();
@@ -870,6 +885,8 @@ $(window).ready(function () {
             $('#skills_item_' + num + ' .skill-name').keyup(function (e) {
                 return preventCopyPaste($(this), LINE_SKILL_NAME, e);
             });
+
+            $("#skills_item_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
         }
         if ($('.skills-item').length == 16) {
             $('.skills-item .add_skills').addClass('d-none');
@@ -941,6 +958,7 @@ $(window).ready(function () {
                 'placeholder',
                 'Language');
 
+            $('#lang_' + num + ' .rating-container').attr('data-langpercentage', '50');
             $('#lang_' + num + ' .rating-container li').removeClass('rating-chosen');
             $('#lang_' + num + ' .rating-container li:first').addClass('rating-chosen')
                 .next().addClass('rating-chosen');
@@ -952,6 +970,8 @@ $(window).ready(function () {
             $(".info-language").keyup(function (e) {
                 return preventCopyPaste($(this), LINE_LANGUAGES, e);
             });
+
+            $("#lang_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
             ratingCircle();
 
@@ -1085,14 +1105,14 @@ $(window).ready(function () {
                         'placeholder') != $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]')
                     .text()) ?
                 $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]').text() : '';
-            var exp_location = ($('#resume-body #' + id).find('span[data-content="exp_location"]').attr(
-                        'placeholder') != $('#resume-body #' + id).find('span[data-content="exp_location"]')
+            var exp_location = ($('#resume-body #' + id).find('div[data-content="exp_location"]').attr(
+                        'placeholder') != $('#resume-body #' + id).find('div[data-content="exp_location"]')
                     .text()) ?
-                $('#resume-body #' + id).find('span[data-content="exp_location"]').text() : '';
-            var exp_company = ($('#resume-body #' + id).find('span[data-content="exp_company"]').attr(
-                    'placeholder') != $('#resume-body #' + id).find('span[data-content="exp_company"]')
+                $('#resume-body #' + id).find('div[data-content="exp_location"]').text() : '';
+            var exp_company = ($('#resume-body #' + id).find('div[data-content="exp_company"]').attr(
+                    'placeholder') != $('#resume-body #' + id).find('div[data-content="exp_company"]')
                 .text()) ? $(
-                '#resume-body #' + id).find('span[data-content="exp_company"]').text() : '';
+                '#resume-body #' + id).find('div[data-content="exp_company"]').text() : '';
             var exp_description = ($('#resume-body #' + id).find('p[data-content="exp_description"]')
                 .attr('placeholder') != $('#resume-body #' + id).find(
                     'p[data-content="exp_description"]')
@@ -1123,21 +1143,21 @@ $(window).ready(function () {
                         'input[data-content="acd_startDate"]')
                     .val();
                 var institution = ($('#resume-body #' + id).find(
-                            'span[data-content="acd_institution"]')
+                            'div[data-content="acd_institution"]')
                         .attr(
                             'placeholder') != $('#resume-body #' + id).find(
-                            'span[data-content="acd_institution"]')
+                            'div[data-content="acd_institution"]')
                         .text()) ?
                     $('#resume-body #' + id).find(
-                        'span[data-content="acd_institution"]')
+                        'div[data-content="acd_institution"]')
                     .text() : '';
                 var location = ($('#resume-body #' + id).find(
-                            'span[data-content="acd_location"]').attr(
+                            'div[data-content="acd_location"]').attr(
                             'placeholder') != $('#resume-body #' + id).find(
-                            'span[data-content="acd_location"]')
+                            'div[data-content="acd_location"]')
                         .text()) ?
                     $('#resume-body #' + id).find(
-                        'span[data-content="acd_location"]').text() :
+                        'div[data-content="acd_location"]').text() :
                     '';
                 var project = ($('#resume-body #' + id).find(
                             'span[data-content="acd_projectTitle"]')
@@ -1192,16 +1212,16 @@ $(window).ready(function () {
                     'span[data-content="fieldOfStudy"]').text()) ? $(
                 '#' + id).find('span[data-content="fieldOfStudy"]').text() : '';
             var institution = ($('#resume-body #' + id).find(
-                    'span[data-content="edu_institution"]').attr(
+                    'div[data-content="edu_institution"]').attr(
                     'placeholder') != $('#resume-body #' + id).find(
-                    'span[data-content="edu_institution"]').text()) ?
-                $('#resume-body #' + id).find('span[data-content="edu_institution"]').text() :
+                    'div[data-content="edu_institution"]').text()) ?
+                $('#resume-body #' + id).find('div[data-content="edu_institution"]').text() :
                 '';
-            var location = ($('#resume-body #' + id).find('span[data-content="edu_location"]')
+            var location = ($('#resume-body #' + id).find('div[data-content="edu_location"]')
                     .attr(
                         'placeholder') != $('#resume-body #' + id).find(
-                        'span[data-content="edu_location"]').text()) ?
-                $('#resume-body #' + id).find('span[data-content="edu_location"]').text() : '';
+                        'div[data-content="edu_location"]').text()) ?
+                $('#resume-body #' + id).find('div[data-content="edu_location"]').text() : '';
             // var degree = {
             //     title: $('#resume-body #' + id).find('input[data-content="degree_title"]').val(),
             //     degreeId: $('#resume-body #' + id).find('input[data-content="degree_title"]').attr(
@@ -1374,6 +1394,16 @@ $(window).ready(function () {
         bindUserAcademicData();
         bindUserSkillsData();
         bindLanguagesData();
+
+        validateStyleCopy();
+        $('[contenteditable="true"]').on('focus', function() {
+            $(this).keyup(function(e) {
+                var code = e.keyCode ? e.keyCode : e.which;
+                if (code == 9) {
+                    moveCaretToEnd($(this)[0]);
+                }
+            });
+        });
     }
 
     function bindUserExpData() {
@@ -1396,16 +1426,17 @@ $(window).ready(function () {
             $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]').text(resumeObj
                 .userExperienceResSet[i]
                 .jobTitle);
-            $('#resume-body #' + id).find('span[data-content="exp_location"]').text(resumeObj
+            $('#resume-body #' + id).find('div[data-content="exp_location"]').text(resumeObj
                 .userExperienceResSet[i]
                 .location);
-            $('#resume-body #' + id).find('span[data-content="exp_company"]').text(resumeObj
+            $('#resume-body #' + id).find('div[data-content="exp_company"]').text(resumeObj
                 .userExperienceResSet[i]
                 .company);
             $('#resume-body #' + id).find('p[data-content="exp_description"]').text(resumeObj
                 .userExperienceResSet[i]
                 .description);
         });
+        validateWorkExp();
     }
 
     function bindUserEduData() {
@@ -1421,9 +1452,9 @@ $(window).ready(function () {
             var id = 'education_' + (i + 1);
             $('#resume-body #' + id).find('span[data-content="fieldOfStudy"]').text(resumeObj
                 .userEducationResSet[i].fieldOfStudy);
-            $('#resume-body #' + id).find('span[data-content="edu_institution"]').text(resumeObj
+            $('#resume-body #' + id).find('div[data-content="edu_institution"]').text(resumeObj
                 .userEducationResSet[i].institution);
-            $('#resume-body #' + id).find('span[data-content="edu_location"]').text(resumeObj
+            $('#resume-body #' + id).find('div[data-content="edu_location"]').text(resumeObj
                 .userEducationResSet[i].location);
             $('#resume-body #' + id).find('input[data-content="edu_startDate"]').val(resumeObj
                 .userEducationResSet[i].startDate);
@@ -1438,6 +1469,7 @@ $(window).ready(function () {
             // $('#resume-body #' + id).find('span[data-content="degree_title"]').attr('data-id', resumeObj.userEducationResSet[i].degree.degreeId);
             // $('#resume-body #' + id).find('span[data-content="degree_title"]').attr('data-shorttitle', resumeObj.userEducationResSet[i].degree.shortTitle);
         });
+        validateEduHistory();
     }
 
     function bindUserAcademicData() {
@@ -1455,12 +1487,13 @@ $(window).ready(function () {
             console.log(id);
             $('#resume-body #' + id).find('span[data-content="acd_role"]').text(ap.role);
             $('#resume-body #' + id).find('span[data-content="acd_projectTitle"]').text(ap.projectTitle);
-            $('#resume-body #' + id).find('span[data-content="acd_institution"]').text(ap.institution);
-            $('#resume-body #' + id).find('span[data-content="acd_location"]').text(ap.location);
+            $('#resume-body #' + id).find('div[data-content="acd_institution"]').text(ap.institution);
+            $('#resume-body #' + id).find('div[data-content="acd_location"]').text(ap.location);
             $('#resume-body #' + id).find('input[data-content="acd_startDate"]').val(ap.startDate);
             $('#resume-body #' + id).find('input[data-content="acd_endDate"]').val(ap.endDate);
             $('#resume-body #' + id).find('p[data-content="acd_description"]').text(ap.description);
         });
+        validateAcaProj();
     }
 
     function bindUserSkillsData() {
@@ -1491,6 +1524,37 @@ $(window).ready(function () {
 
         });
 
+        validateSkills();
+    }
+
+    function selectRatingCircle(a, percentage) {
+        switch (percentage) {
+            case 25:
+                $('#lang_' + a + ' .rating-container .rating-circle:first-child').addClass(
+                    'rating-chosen')
+                break;
+            case 50:
+                $('#lang_' + a + ' .rating-container li.rating-circle:first-child').addClass(
+                    'rating-chosen')
+                $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(2)').addClass(
+                    'rating-chosen')
+
+                break;
+            case 75:
+                $('#lang_' + a + ' .rating-container li.rating-circle:first-child').addClass(
+                    'rating-chosen')
+                $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(2)').addClass(
+                    'rating-chosen')
+                $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(3)').addClass(
+                    'rating-chosen')
+
+                break;
+            case 100:
+                $('#lang_' + a + ' .rating-container li.rating-circle').addClass('rating-chosen')
+                break;
+            default:
+                break;
+        }
     }
 
     function bindLanguagesData() {
@@ -1509,40 +1573,18 @@ $(window).ready(function () {
             console.log(v);
             $('#lang_' + a + ' .rating-container').attr('data-langpercentage', v.percentage);
             $('#lang_' + a + ' [data-content="languageName"]').text(v.title);
-            //data-langpercentage
-            console.log(v.percentage);
-            switch (v.percentage) {
-                case 25:
-                    $('#lang_' + a + ' .rating-container .rating-circle:first-child').addClass(
-                        'rating-chosen')
-                    break;
-                case 50:
-                    $('#lang_' + a + ' .rating-container li.rating-circle:first-child').addClass(
-                        'rating-chosen')
-                    $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(2)').addClass(
-                        'rating-chosen')
-
-                    break;
-                case 75:
-                    $('#lang_' + a + ' .rating-container li.rating-circle:first-child').addClass(
-                        'rating-chosen')
-                    $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(2)').addClass(
-                        'rating-chosen')
-                    $('#lang_' + a + ' .rating-container li.rating-circle:nth-child(3)').addClass(
-                        'rating-chosen')
-
-                    break;
-                case 100:
-                    $('#lang_' + a + ' .rating-container li.rating-circle').addClass('rating-chosen')
-                    break;
-                default:
-                    break;
-            }
+            selectRatingCircle(a, v.percentage);
         });
 
         if (resumeObj.userLngSet.length <= 1) {
             $('.remove_lang').addClass('d-none');
         }
+
+        if (resumeObj.userLngSet.length == 0) {
+            selectRatingCircle(1, 50);
+        }
+
+        validateLanguages();
     }
     // services
     var self = this;
@@ -2020,12 +2062,12 @@ $(window).ready(function () {
         console.log("Document Size: ", resume.css('width'), resume.css('height'));
         console.log("Standard Height: ", standardA4Height);
 
-        var emptyDom = "<page size='a4' class='watermark'>\
+        var emptyDom = "<page size='a4'>\
                             <div class='row'>\
                                 <aside class='col-3 text-break'>\
                                 </aside>\
                                 <div class='col-9'>";
-        var sideDom = "<page size='a4' class='watermark'>\
+        var sideDom = "<page size='a4'>\
                             <div class='row'>\
                                 " + getOuterHTML($('#resume-body aside')) +
             "<div class='col-9'>";
@@ -2325,11 +2367,11 @@ $(window).ready(function () {
             resume.after(emptyDom + getOuterHTML($('#certifications-section')) + emptyDomClose);
             stackedHeight = 0;
         }
-        if (!planInfo.subscribedUser || planInfo.planId === 1) {
-            setTimeout(function () {
-                addWaterMarkImage('#resume-body, .watermark')
-            }, 0)
-        }
+        // if (!planInfo.subscribedUser || planInfo.planId === 1) {
+        //     setTimeout(function () {
+        //         addWaterMarkImage('#resume-body, .watermark')
+        //     }, 0)
+        // }
     }
 
 
@@ -2341,10 +2383,10 @@ $(window).ready(function () {
 
     function addWaterMarkImage(selectorElements) {
         $(selectorElements).css(waterMarkCss)
-        // $("#resume-body, .watermark").css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
-        // $("#resume-body, .watermark").css('background-repeat', 'repeat-y');
-        // $("#resume-body, .watermark").css('background-size', '40%');
-        // $("#resume-body, .watermark").css('background-position', 'center 0');
+        // $(selectorElements).css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
+        // $(selectorElements).css('background-repeat', 'repeat-y');
+        // $(selectorElements).css('background-size', '40%');
+        // $(selectorElements).css('background-position', 'center 0');
     }
 
     $('.month-picker').on('change', function() {

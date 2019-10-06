@@ -142,7 +142,7 @@
         </header>
         <div class="container m-auto resume-container theme-black" data-oldcolor="theme-black">
             <section class="mb-3">
-                <page size="a4" id="resume-body" class='watermark'>
+                <page size="a4" id="resume-body">
                     <div class="row">
                         <aside class="col-3 text-break">
                             <div>
@@ -204,7 +204,7 @@
                                         <ul class="list-unstyled">
                                             <li class="d-flex align-items-center py-2 px-1 border-dashed lang_details"
                                                 id="lang_1">
-                                                <div class="rating-container">
+                                                <div class="rating-container" data-langpercentage="50">
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item rating-circle m-0"
                                                             data-langpercentage=''></li>
@@ -372,11 +372,11 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <p class="font-10pt mb-2 theme-text-dark">
-                                            <span class="exp-company" data-content="exp_company" contenteditable="true"
-                                                placeholder="Company"></span>, <span class="exp-location"
+                                        <div class="font-10pt mb-2 theme-text-dark">
+                                            <div class="exp-company" data-content="exp_company" contenteditable="true"
+                                                placeholder="Company"></div>, <div class="exp-location"
                                                 contenteditable="true" data-content="exp_location"
-                                                placeholder="Location"></span></p>
+                                                placeholder="Location"></div></div>
                                     </div>
                                     <div>
                                         <p class="font-10pt mb-2 exp-desc" contenteditable="true"
@@ -427,11 +427,11 @@
                                             placeholder="Degree" data-content="degree_title">
                                     </div>
                                     <div>
-                                        <p class="font-10pt mb-2"><span class="edu-school"
+                                        <div class="font-10pt mb-2"><div class="edu-school"
                                                 data-content="edu_institution" contenteditable="true"
-                                                placeholder="School"></span>
-                                            <span class="edu-location" data-content="edu_location"
-                                                contenteditable="true" placeholder="Location"></span></p>
+                                                placeholder="School"></div>
+                                            <div class="edu-location" data-content="edu_location"
+                                                contenteditable="true" placeholder="Location"></div></div>
                                     </div>
                                     <div>
                                         <p class="font-10pt mb-2 edu-desc" contenteditable="true"
@@ -473,11 +473,11 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <p class="font-10pt mb-2 theme-text-dark">
-                                            <span class="university" data-content="acd_institution"
-                                                contenteditable="true" placeholder="University"></span>, <span
+                                        <div class="font-10pt mb-2 theme-text-dark">
+                                            <div class="university" data-content="acd_institution"
+                                                contenteditable="true" placeholder="University"></div>, <div
                                                 class="uni-location" contenteditable="true" data-content="acd_location"
-                                                placeholder="Location"></span></p>
+                                                placeholder="Location"></div></div>
                                     </div>
                                     <div>
                                         <p class="font-10pt mb-2 project-desc" contenteditable="true"
@@ -506,10 +506,12 @@
                                                     </div>
                                                     <p data-skill="75%" class="skill-value">75%</p>
                                                 </div>
-                                                <p type="text"
-                                                    class="skill-name aligned_input resume-input ml-2 skill-input-value skills w-14rem border-0 font-10pt"
+                                                <div class="skill-text-container ml-2 mr-2">
+                                                    <p type="text"
+                                                    class="skill-name aligned_input resume-input skill-input-value skills w-14rem border-0 font-10pt"
                                                     placeholder="Skill name" data-content="skillText"
                                                     contenteditable="true"></p>
+                                                </div>
                                             </div>
                                             <ul class="append-section-actions list-inline bottom-50"
                                                 data-html2canvas-ignore>

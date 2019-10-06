@@ -888,6 +888,8 @@ input {
 
 .skill-name {
     margin-bottom: 0;
+    margin-right: 0.25rem;
+    width: 100%;
 }
 
 .nice-select .current {
@@ -925,4 +927,18 @@ p {
 
 .language-container {
     flex: 1;
+}
+
+.skill-text-container {
+    width: 100%;
+}
+
+.exp-company, .exp-location, .edu-school, .edu-location, .university, .uni-location {
+    display: inline-block;
+    line-height: 1.5;
+}
+
+.month-picker {
+    padding-left: 0;
+    padding-right: 0;
 }
