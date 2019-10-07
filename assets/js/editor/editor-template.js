@@ -1404,6 +1404,17 @@ $(window).ready(function () {
                 }
             });
         });
+
+        $('.month-picker').on('change', function() {
+            var inputWidth = $(this).textWidth();
+            $(this).css({
+                width: inputWidth
+            })
+        });
+    
+        setTimeout(function() {
+            $('.month-picker').trigger('change');
+        }, 2000);
     }
 
     function bindUserExpData() {
@@ -2388,17 +2399,6 @@ $(window).ready(function () {
         // $(selectorElements).css('background-size', '40%');
         // $(selectorElements).css('background-position', 'center 0');
     }
-
-    $('.month-picker').on('change', function() {
-        var inputWidth = $(this).textWidth();
-        $(this).css({
-            width: inputWidth
-        })
-    });
-
-    setTimeout(function() {
-        $('.month-picker').trigger('change');
-    }, 2000);
 
     ratingCircle();
 });
