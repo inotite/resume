@@ -917,10 +917,6 @@ input {
     font-weight: 500;
 }
 
-p {
-    font-variant-ligatures: no-common-ligatures;
-}
-
 .skill-row {
     display: block !important;
 }
@@ -941,4 +937,13 @@ p {
 .month-picker {
     padding-left: 0;
     padding-right: 0;
+}
+
+p {
+    word-break: break-all;
+}
+
+.hyphen {
+    position: relative;
+    top: -1px;
 }

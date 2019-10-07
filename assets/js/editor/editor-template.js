@@ -28,7 +28,7 @@ $.fn.textWidth = function(text, font) {
     $.fn.textWidth.fakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
     
     // console.log(this.val() || this.text() || this.attr('placeholder'));
-    // console.log(this.css('font'));
+    console.log(this.css('font'));
     return $.fn.textWidth.fakeEl.width() + 0.2;
 };
 
@@ -1859,8 +1859,11 @@ $(window).ready(function () {
             $(ele).css('background-repeat', '');
             $(ele).css('background-size', '');
             $(ele).css('background-position', '');
-            $(ele).css('font-variant-ligatures', 'no-common-ligatures');
-            // $(ele).find('p').css('font-feature-settings', '"smcp" 1');
+            // $(ele).find('p').each(function(idx) {
+            //     if (!$(this).text())
+            //         $(this).text($(this).attr('placeholder'));
+            // });
+            // $(ele).find('p').attr('contenteditable', 'false');
 
             console.log(ele);
             /* ele.css({'height': ''});
@@ -1871,6 +1874,9 @@ $(window).ready(function () {
                 logging: true,
                 useCORS: true,
                 taintTest: false,
+                proxy: "https://s3.ap-south-1.amazonaws.com/workruit-resume-users/photo",
+                timeout: 0,
+                letterRendering: true,
                 scale: 3
             });
 
@@ -1895,6 +1901,8 @@ $(window).ready(function () {
                 logging: true,
                 useCORS: true,
                 taintTest: false,
+                imageTimeout: 0,
+                letterRendering: true,
                 scale: 3
             });
 
