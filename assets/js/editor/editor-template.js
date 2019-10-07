@@ -29,7 +29,7 @@ $.fn.textWidth = function(text, font) {
     
     // console.log(this.val() || this.text() || this.attr('placeholder'));
     // console.log(this.css('font'));
-    return $.fn.textWidth.fakeEl.width();
+    return $.fn.textWidth.fakeEl.width() + 0.2;
 };
 
 const fonts = [{
