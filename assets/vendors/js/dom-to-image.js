@@ -53,7 +53,7 @@
     function toSvg(node, options) {
         options = options || {};
         copyOptions(options);
-        console.log("To SVG");
+        // console.log("To SVG");
         return Promise.resolve(node)
             .then(function (node) {
                 return cloneNode(node, options.filter, true);
@@ -232,8 +232,23 @@
                 copyStyle(window.getComputedStyle(original), clone.style);
 
                 function copyStyle(source, target) {
+                    // console.log(JSON.parse(source.cssText));
                     if (source.cssText) target.cssText = source.cssText;
                     else copyProperties(source, target);
+                    
+                    if (original.getAttribute("contenteditable")) {
+                        var styles = source.cssText.split("; ");
+                        var length = styles.length;
+                        for (var i = 0 ; i < length ; ++i) {
+                            var ar = styles[i].split(":");
+                            if (ar[0] == "width") {
+                                var newWidth = parseFloat(ar[1]) + 0.2;
+                                // console.log(ar[1], newWidth);
+                                target.cssText = source.cssText.replace(styles[i], "width: " + newWidth + "px");
+                                break;
+                            }
+                        }
+                    }
 
                     function copyProperties(source, target) {
                         util.asArray(source).forEach(function (name) {
@@ -331,9 +346,9 @@
         return Promise.resolve(node)
             .then(function (node) {
                 node.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-                console.log('------------------------------');
-                console.log(node);
-                console.log(new XMLSerializer().serializeToString(node));
+                // console.log('------------------------------');
+                // console.log(node);
+                // console.log(new XMLSerializer().serializeToString(node));
                 return new XMLSerializer().serializeToString(node);
             })
             .then(util.escapeXhtml)

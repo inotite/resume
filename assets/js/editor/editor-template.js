@@ -1101,10 +1101,10 @@ $(window).ready(function () {
             var exp_endDate = $('#resume-body #' + id).find('input[data-content="exp_endDate"]').val();
             var exp_startDate = $('#resume-body #' + id).find('input[data-content="exp_startDate"]')
                 .val();
-            var exp_jobTitle = ($('#resume-body #' + id).find('span[data-content="exp_jobTitle"]').attr(
-                        'placeholder') != $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]')
+            var exp_jobTitle = ($('#resume-body #' + id).find('p[data-content="exp_jobTitle"]').attr(
+                        'placeholder') != $('#resume-body #' + id).find('p[data-content="exp_jobTitle"]')
                     .text()) ?
-                $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]').text() : '';
+                $('#resume-body #' + id).find('p[data-content="exp_jobTitle"]').text() : '';
             var exp_location = ($('#resume-body #' + id).find('div[data-content="exp_location"]').attr(
                         'placeholder') != $('#resume-body #' + id).find('div[data-content="exp_location"]')
                     .text()) ?
@@ -1321,8 +1321,10 @@ $(window).ready(function () {
     bindUserData();
 
     function bindUserData() {
-        if (!resumeObj.pic)
+        if (!resumeObj.pic) {
             resumeObj.pic = 'data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAAFYUlEQVR4nO2d7W3bMBCGr0EHUCeoM0HUCWpP0HSC2BM0naDOBHEmsDtB3QniThB1groTRD/6vwWNlwYtyhJF3lFUqgcwEsgfol7d8eN4pF49P/+hRJjgNUVx3rcU6wf+7ohoj1fv9CloTkTXEE79n1mf6EZJRAWE3uL/6MQWVFnfDYQMFbCNEsJ+hRVHIYagSrg5EX2CS/eBqg4eiGgDocWQFFQJeQshpa3RlRLCrqSElRJ0mZiQVbSwS+udQLgFVXXkukfX7oqqChacdeyFdcQPZYn3RPQ4IDEJZX1E2Vm8icNCVZfn28CErENZ68fQ7laoharW++kFiEm4hidckzchgt6jvnxprHFtXvgKukaX6KVy62ssPoKuQ91iIMx9RO0qaCwxVQNxR0Qz1XBWXjO8FyMY0lnULq38fQQ3Vy3s5w79winKlVvv8LJCuVpxtdB5BDFVod917GTv8J2V9Q4vt66e6WKhOboTkiwQuAjBq87ryLu2fmqbhWbotEtyxyAm4TfurKO8fGsbUbUJ+kW4075jDlAshWOfE2hyliaXn2KcK8mlQGutLvqXdZSX2bkb12Sh0vXRRqjrs2eqQpo4q805QZcRxuffrSPD+G2CNrVVVZ3LZ3CZxsqXgVfCv//XOsJLiSrrJPJfZ6G3EcSsrX8Gdo6srm9eFTTD1MWIG9Y0T1XQecLzQCmSVUdQVUFH6+zOiWamoNOIkfcYXhDL08z0oRNBb6yPysGRetNEFiECZXLUzhT02vqYLJLn6+1atKDSFlOHpEfEbguOHqEFjX1HCfWOxHmvI7u7ed6joG25mFKsmT0jaxpnC3PQ0HT5PuCOt7bGKwU5uvyk5878lEEIfWOm1jvxUGWYXCSS9XGN2KuPp+T4bh/tQJWDoH3eVRM9d+WavTfBZ596rLKqTF9bh/pnjleBiNFvY2JMCfcWRpCKiCcoQa+so2mQpypaA1cXY3SJlawuwDwSwCgoM6OgzIyCMjMKyswoKC/layw2TWG0tEMH/ieyP4qG1W46/jhBPzpP5Bp+9jlSKpA9svOYQy/PfGeK14e+BgUqcyRGUpimwOrgbYSU7gkCJjcRxZ0pQWNkq22wtrIxWVWQHNMi0usDLnVu07PQEHQTcYGBCzq/U0JYVQ290a08t+XskUO5SEhMMhbLzgTKddBQC/rDetufrcfig9joxQ5bxvMeNNSCcv3wBgtQz3V3UqJEWbmScw8amvmhofWouusz6+gweAzsxx7qT6qMlEKsVN/toRLqVUftTEG/Wh9zR3xzFGHKQNc/amcKugto+aRz2mPgew17swGuBkcerI+78RKmUXyv4USz6qIF3wULBRqkobp95pkXYC1cqFpo6WmlecguCAngu6L5oWpE3MtqOBbBxsZ30a1lnVRjoRRgpYqh7fYQsoLZsk46Y6GaXwF5T0Ow1BAx97BOizoL1SysI+6kbqmha+vPatMk6C5wp4S1QEJtKJlRLl9WTYGfJpcnFCB0o6sCd7Sv4LImh5Ah0fs9olRW3alpslBiGqPrNMVlT9aa4dwcaY+tY36XaeSiqc7owBeOrdA6oreSa9yFwREnL+trm6E9AgoSG6PqVcI3jNnZztsMdd2dUaL13hrTyb7BmYkxfcydGr7p4qE+211Kdon2RrJDNdGhNOpgnehwZSQ8SNBJTArYP/R/2P+us5gUkNu0iLCbV5+sfBvikGSxz0ytf2osXBugOkKz7zbo6KY09+6L7rQHxSA40hmLSBv6SbJy2dfOhXHb9US3XdfsENa6S3w6pEQZL7kzXMZHVzAzPlyFmfHxP8yMD6hiJuVHqKlxepPI6T1CjYj+Af7+dGpiAOSrAAAAAElFTkSuQmCC';
+            $('#user_pic').attr('src', resumeObj.pic);
+        }
         else {
             // var xhr = new XMLHttpRequest();
             // xhr.onload = function () {
@@ -1339,26 +1341,39 @@ $(window).ready(function () {
             // xhr.withCredentials = true;
             // xhr.responseType = 'blob';
             // xhr.send();
-            // function getBase64FromImageUrl(url) {
-            //     var img = new Image();
-            //     img.crossOrigin = "anonymous";
-            //     img.onload = function () {
-            //         var canvas = document.createElement("canvas");
-            //         canvas.width =this.width;
-            //         canvas.height =this.height;
-            //         var ctx = canvas.getContext("2d");
-            //         ctx.drawImage(this, 0, 0);
-            //         var dataURL = canvas.toDataURL("image/png");
-            //         console.log(dataURL);
-            //     };
-            //     img.src = url;
+            
+            // function makeImage(uri) {
+            //     return new Promise(function (resolve, reject) {
+            //         var image = new Image();
+            //         console.log("HI");
+            //         image.onload = function () {
+            //             console.log("onload");
+            //             resolve(image);
+            //         };
+            //         image.crossOrigin = 'Anonymous';
+            //         image.onerror = reject;
+            //         image.src = uri;
+            //     });
             // }
 
-            // //function call
-            // getBase64FromImageUrl(resumeObj.pic);
+
+            // makeImage(resumeObj.pic)
+            //     .then(img => {
+            //         console.log("Hi");
+            //         let canvas = document.createElement('canvas');
+            //         canvas.width = img.width;
+            //         canvas.height = img.height;
+
+            //         // Copy the image contents to the canvas
+            //         var ctx = canvas.getContext("2d");
+            //         ctx.drawImage(img, 0, 0);
+            //         $('#user_pic').attr('src', canvas.toDataURL());
+            //         return canvas.toDataURL();
+            //     });
+            $('#user_pic').attr('src', resumeObj.pic);
         }
         // console.log(resumeObj.pic);
-        $('#user_pic').attr('src', resumeObj.pic);
+        
         if (!resumeObj.collegeLogo)
             resumeObj.collegeLogo = 'img/university_logo.svg';
         $('.clg_picture img').attr('src', resumeObj.collegeLogo)
@@ -1434,7 +1449,7 @@ $(window).ready(function () {
             $('#resume-body #' + id).find('input[data-content="exp_startDate"]').val(resumeObj
                 .userExperienceResSet[i]
                 .startDate);
-            $('#resume-body #' + id).find('span[data-content="exp_jobTitle"]').text(resumeObj
+            $('#resume-body #' + id).find('p[data-content="exp_jobTitle"]').text(resumeObj
                 .userExperienceResSet[i]
                 .jobTitle);
             $('#resume-body #' + id).find('div[data-content="exp_location"]').text(resumeObj
@@ -1485,7 +1500,7 @@ $(window).ready(function () {
 
     function bindUserAcademicData() {
         if (resumeObj.userAcademicResSet && resumeObj.userAcademicResSet.length > 1) {
-            for (let index = 0; index < resumeObj.userAcademicResSet.length; index++) {
+            for (let index = 1; index < resumeObj.userAcademicResSet.length; index++) {
                 var $div = $('div[id^="academic_projects_"]:last');
                 var num = parseInt($div.prop("id").match(/\d+/g), 10) + 1;
                 var $klon = $div.clone().prop('id', 'academic_projects_' + num);
@@ -2278,12 +2293,18 @@ $(window).ready(function () {
         // Check Academic Experiences
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         resume = $('page').last();
+        console.log("Hey", stackedHeight + academicHeight, standardA4Height);
         if (stackedHeight + academicHeight + academicMarginBottom < standardA4Height) {
             stackedHeight += academicHeight + academicMarginBottom;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#academic-section')));
+        }
+        else if(stackedHeight + academicHeight < standardA4Height) {
+            stackedHeight = 0;
+            resume.find('.col-9 .row').last().after(getOuterHTML($('#academic-section')));
         } else {
+            
             var domHtml = '';
-            stackedHeight += parseFloat($('#academic-section h4').css('height')) + parseFloat($('#academic-section h4').css('margin-bottom'));
+            stackedHeight += parseFloat($('#academic-section h4').css('height'));
             var acaCount = $('#academic-section .academic-project').length;
             var acas = $('#academic-section .academic-project');
             var it;
@@ -2292,6 +2313,7 @@ $(window).ready(function () {
                             <h4 class="section_title text-uppercase font-10pt px-2">Academic Projects</h4>';
             for (it = 0; it < acaCount && stackedHeight + parseFloat($(acas[it]).css('height')) <= standardA4Height; ++it) {
                 console.log("Academic ", it, "th Height: ", parseFloat($(acas[it]).css('height')));
+                console.log("Stacked Height", stackedHeight);
                 stackedHeight += parseFloat($(acas[it]).css('height'));
                 domHtml += getOuterHTML($(acas[it]));
             }

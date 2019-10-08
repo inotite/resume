@@ -148,7 +148,7 @@
                             <div>
                                 <div>
                                     <label for="user-picture" class="res_picture">
-                                        <!-- <img alt="..." class="rounded-circle" id="user_pic" crossorigin="anonymous"/> -->
+                                        <!-- <img alt="..." class="rounded-circle" id="user_pic"/> -->
                                         <input type="file" data-content="picture"
                                             accept="image/x-png,image/gif,image/jpeg" id="user-picture" class="d-none">
                                     </label>
@@ -355,16 +355,17 @@
                                 <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Work experience</h4>
                                 <div class="border-dashed professional-experience px-1" id="proExp_1">
                                     <div class="d-flex justify-content-between w-100">
-                                        <p class="font-10pt mb-2 color">
-                                            <span class="exp-role" data-content="exp_jobTitle" contenteditable="true"
-                                                placeholder="Role"></span></p>
-                                        <div>
+                                        <div class="float-left">
+                                            <p class="exp-role font-10pt mb-2 color" data-content="exp_jobTitle" contenteditable="true"
+                                                placeholder="Role"></p>
+                                        </div>
+                                        <div class="float-right">
                                             <p class="font-10pt mb-2 theme-text-dark">
                                                 <input
                                                     class="info font-10pt location month-picker w-small mb-0 border-0 text-right"
                                                     data-content="exp_startDate" type="text" placeholder="Start Date"
                                                     readonly>
-                                                <span>&nbsp;&nbsp;<img src="../../assets/images/resume/hyphen.png" class="hyphen"/>&nbsp;&nbsp;</span>
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
                                                 <input
                                                     class="info font-10pt location month-picker w-small mb-0 border-0 text-right"
                                                     data-content="exp_endDate" type="text" placeholder="End Date"
@@ -414,7 +415,7 @@
                                                     class="info font-10pt location text-right month-picker w-small mb-0 border-0"
                                                     type="text" data-content="edu_startDate" placeholder="Start Date"
                                                     readonly>
-                                                <span>&nbsp;&nbsp;<img src="../../assets/images/resume/hyphen.png" class="hyphen"/>&nbsp;&nbsp;</span>
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
                                                 <input
                                                     class="info font-10pt location text-right month-picker w-small mb-0 border-0"
                                                     type="text" data-content="edu_endDate" placeholder="End Date"
@@ -454,19 +455,20 @@
                                 <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Academic Projects</h4>
                                 <div class="border-dashed academic-project px-1" id="academic_projects_1">
                                     <div class="d-flex justify-content-between w-100">
-                                        <div class="font-10pt mb-2 theme-text color">
+                                        <div class="font-10pt mb-2 theme-text color project-title-container">
                                             <div class="project-title"
                                                 contenteditable="true" data-content="acd_projectTitle"
-                                                placeholder="Project Title"></div>,
+                                                placeholder="Project Title"></div><span style="box-sizing: content-box;">,</span>
                                             <div class="project-role" data-content="acd_role" contenteditable="true"
-                                                placeholder="Role"></div></div>
-                                        <div>
+                                                placeholder="Role"></div>
+                                        </div>
+                                        <div style="flex: initial">
                                             <p class="font-10pt mb-2 theme-text-dark">
                                                 <input
                                                     class="info text-right font-10pt location month-picker w-small mb-0 border-0"
                                                     type="text" data-content="acd_startDate" placeholder="Start Date"
                                                     readonly>
-                                                <span>&nbsp;&nbsp;<img src="../../assets/images/resume/hyphen.png" class="hyphen"/>&nbsp;&nbsp;</span>
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
                                                 <input
                                                     class="info font-10pt text-right location month-picker w-small mb-0 border-0"
                                                     type="text" data-content="acd_endDate" placeholder="End Date"
@@ -477,11 +479,11 @@
                                     <div>
                                         <div class="font-10pt mb-2 theme-text-dark">
                                             <div class="university" data-content="acd_institution"
-                                                contenteditable="true" placeholder="University"></div>, <div
+                                                contenteditable="true" placeholder="University"></div><span>, </span><div
                                                 class="uni-location" contenteditable="true" data-content="acd_location"
                                                 placeholder="Location"></div></div>
                                     </div>
-                                    <div style="width: 100%;">
+                                    <div>
                                         <p class="font-10pt mb-2 project-desc" contenteditable="true"
                                             data-content="acd_description"
                                             placeholder="Enter Details About Your Project Here"></p>
