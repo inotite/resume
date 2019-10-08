@@ -1160,13 +1160,13 @@ $(window).ready(function () {
                         'div[data-content="acd_location"]').text() :
                     '';
                 var project = ($('#resume-body #' + id).find(
-                            'span[data-content="acd_projectTitle"]')
+                            'div[data-content="acd_projectTitle"]')
                         .attr(
                             'placeholder') != $('#resume-body #' + id).find(
-                            'span[data-content="acd_projectTitle"]')
+                            'div[data-content="acd_projectTitle"]')
                         .text()) ? $(
                         '#' + id).find(
-                        'span[data-content="acd_projectTitle"]')
+                        'div[data-content="acd_projectTitle"]')
                     .text() : '';
                 var description = ($('#resume-body #' + id).find(
                             'p[data-content="acd_description"]')
@@ -1176,11 +1176,11 @@ $(window).ready(function () {
                         'p[data-content="acd_description"]')
                     .text() : '';
                 var role = ($('#resume-body #' + id).find(
-                            'span[data-content="acd_role"]')
+                            'div[data-content="acd_role"]')
                         .attr('placeholder') != $('#resume-body #' + id).find(
-                            'span[data-content="acd_role"]')
+                            'div[data-content="acd_role"]')
                         .text()) ? $('#resume-body #' + id).find(
-                        'span[data-content="acd_role"]')
+                        'div[data-content="acd_role"]')
                     .text() : ''
                 postObj.academic.push({
                     "endDate": acd_endDate,
@@ -1206,11 +1206,11 @@ $(window).ready(function () {
             var startDate = $('#resume-body #' + id).find(
                     'input[data-content="edu_startDate"]')
                 .val();
-            var fieldOfStudy = ($('#resume-body #' + id).find('span[data-content="fieldOfStudy"]')
+            var fieldOfStudy = ($('#resume-body #' + id).find('p[data-content="fieldOfStudy"]')
                 .attr(
                     'placeholder') != $('#resume-body #' + id).find(
-                    'span[data-content="fieldOfStudy"]').text()) ? $(
-                '#' + id).find('span[data-content="fieldOfStudy"]').text() : '';
+                    'p[data-content="fieldOfStudy"]').text()) ? $(
+                '#' + id).find('p[data-content="fieldOfStudy"]').text() : '';
             var institution = ($('#resume-body #' + id).find(
                     'div[data-content="edu_institution"]').attr(
                     'placeholder') != $('#resume-body #' + id).find(
@@ -1461,7 +1461,7 @@ $(window).ready(function () {
         }
         $(resumeObj.userEducationResSet).each(function (i, v) {
             var id = 'education_' + (i + 1);
-            $('#resume-body #' + id).find('span[data-content="fieldOfStudy"]').text(resumeObj
+            $('#resume-body #' + id).find('p[data-content="fieldOfStudy"]').text(resumeObj
                 .userEducationResSet[i].fieldOfStudy);
             $('#resume-body #' + id).find('div[data-content="edu_institution"]').text(resumeObj
                 .userEducationResSet[i].institution);
@@ -1496,8 +1496,8 @@ $(window).ready(function () {
             const ap = resumeObj.userAcademicResSet[i];
             var id = 'academic_projects_' + (i + 1);
             console.log(id);
-            $('#resume-body #' + id).find('span[data-content="acd_role"]').text(ap.role);
-            $('#resume-body #' + id).find('span[data-content="acd_projectTitle"]').text(ap.projectTitle);
+            $('#resume-body #' + id).find('div[data-content="acd_role"]').text(ap.role);
+            $('#resume-body #' + id).find('div[data-content="acd_projectTitle"]').text(ap.projectTitle);
             $('#resume-body #' + id).find('div[data-content="acd_institution"]').text(ap.institution);
             $('#resume-body #' + id).find('div[data-content="acd_location"]').text(ap.location);
             $('#resume-body #' + id).find('input[data-content="acd_startDate"]').val(ap.startDate);
@@ -1851,6 +1851,7 @@ $(window).ready(function () {
         $(eles[1]).find('path').attr('fill', color);
         $(eles[1]).find('polygon').attr('fill', color);
         $(eles[1]).find('.nice-select').css('border', '1px solid transparent');
+        // $(eles[1]).find('#user_pic').attr('crossorigin', 'Anonymous');
         for (var i = 1; i < pageCount; ++i) {
             var ele = eles[i];
             $(ele).find('.border-dashed').removeClass('border-dashed').addClass('border-dashed-pdf');
@@ -1866,23 +1867,7 @@ $(window).ready(function () {
             // $(ele).find('p').attr('contenteditable', 'false');
 
             console.log(ele);
-            /* ele.css({'height': ''});
-            ele.css({'max-height': ''});*/
-            ele.style.boxShadow = "none";
-            var canvas = await html2canvas(ele, {
-                allowTaint: true,
-                logging: true,
-                useCORS: true,
-                taintTest: false,
-                proxy: "https://s3.ap-south-1.amazonaws.com/workruit-resume-users/photo",
-                timeout: 0,
-                letterRendering: true,
-                scale: 3
-            });
-
-            const data = await canvas.toDataURL("image/jpeg");
-            // console.log("Raw", data);
-
+            
             if (i > 1) {
                 doc.addPage();
                 docWaterMark.addPage();
@@ -1890,27 +1875,60 @@ $(window).ready(function () {
             doc.setPage(i);
             docWaterMark.setPage(i);
 
-            var image = new Image();
-            image.src = data;
-            doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
+            var w = parseFloat($(ele).css('width'));
+            var h = parseFloat($(ele).css('height'));
+
+            // var canvas = document.createElement('canvas');
+            // canvas.width = w*3;
+            // canvas.height = h*3;
+            // canvas.style.width = w + 'px';
+            // canvas.style.height = h + 'px';
+            // var context = canvas.getContext('2d');
+            // context.scale(3, 3);
+
+            /* ele.css({'height': ''});
+            ele.css({'max-height': ''});*/
+            ele.style.boxShadow = "none";
+            // await html2canvas(ele, {
+            //     allowTaint: true,
+            //     logging: true,
+            //     useCORS: true,
+            //     letterRendering: true,
+            //     // foreignObjectRendering: true,
+            //     // canvas: canvas,
+            //     scale: 3
+            // })
+            // .then(function(canvas) {
+            //     doc.addImage(canvas.toDataURL("image/jpeg", 1), 'JPEG', -0.3, 0.5, 0, 0);
+            // });
+            await domtoimage.toJpeg(ele, {
+                style: {
+                    'transform': 'scale(3)',
+                    'transform-origin': 'top left',
+                    'margin': 0
+                },
+                width: w * 3,
+                height: h * 3
+            }).then(function (dataUrl) {
+                var img = new Image();
+                img.src = dataUrl;
+
+                doc.addImage(img, 'jpeg', 0, 0.5, 0, 0);
+            });
+            // console.log("Raw", data);
 
             addWaterMarkImage(ele)
 
-            canvas = await html2canvas(ele, {
-                allowTaint: true,
+            await html2canvas(ele, {
+                allowTaint: false,
                 logging: true,
                 useCORS: true,
-                taintTest: false,
-                imageTimeout: 0,
-                letterRendering: true,
+                // foreignObjectRendering: true,
                 scale: 3
+            })
+            .then(function(canvas) {
+                docWaterMark.addImage(canvas.toDataURL("image/jpeg", 1), 'JPEG', -0.3, 0.5, 0, 0);
             });
-
-            // const dataWaterMark = data;
-            var waterMarkImage = new Image();
-            waterMarkImage.src = await canvas.toDataURL("image/jpeg");
-            // docWaterMark = addWaterMark(docWaterMark);
-            docWaterMark.addImage(waterMarkImage, 'JPEG', -0.3, 0.5, 0, 0);
 
             ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
 
