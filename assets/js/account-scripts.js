@@ -522,9 +522,21 @@ function getUserProfile() {
 	}
 	// downloadResume
 	$.ajax(settings).done(function (response) {
-		sessionStorage.setItem('userData', JSON.stringify(response.data));
-
-		setInfoMessage(userInfo.planDetails.msg.description);
+		var userProfileData = response.data;
+		$('#info_message span').html(userProfileData.planDetails.msg.description);
+		if (userProfileData.planDetails.subscribedUser) {
+			$('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
+				location.origin + '/app/dashboard/share.html');
+		} else {
+			$('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
+		}
+		if (userProfileData.pic) {
+			$('#profileMenu img').attr('src', userProfileData.pic)
+		} else {
+			$('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
+		}
+		sessionStorage.setItem('userData', JSON.stringify(userProfileData));
+		setInfoMessage(response.data.planDetails.msg.description);
 		console.log(window.location.href);
 		// window.location.reload();
 	});
@@ -537,11 +549,11 @@ function setInfoMessage(message) {
 		});
 		return;
 	}
-	const numberOfDays = JSON.parse(message.match(/\d+/)[0]);
+	const numberOfDays = JSON.parse(message.match(/\d+/)) ? JSON.parse(message.match(/\d+/)[0]) : null;
 	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today", numberOfDays);
 	if (numberOfDays && numberOfDays <= 3) {
 		$('#info_message').addClass('alert-danger');
-	} else if (!message.indexOf("today")) {
+	} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired")) {
 		$('#info_message').addClass('alert-danger');
 	} else {
 		$('#info_message').addClass('alert-success');

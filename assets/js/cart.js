@@ -26,6 +26,7 @@ $(window).ready(function () {
                     $('.error-description').html(response.data.msg.description);
                     $('.error-box').removeClass('d-none');
                 } else {
+                    $('.promo-add-link').addClass('d-none').removeClass('d-flex');
                     document.getElementById('finalPrice').innerText = response.data.priceInfo.NetAmount;
                     document.getElementById('GSTPercentage').innerText = response.data.priceInfo
                         .GSTPercentage;

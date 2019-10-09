@@ -21,12 +21,12 @@ console.log(resumeObj);
 // console.log("twitterIcon", twitterIcon);
 // $('#twitter').prepend(twitterIcon);
 
-$.fn.textWidth = function(text, font) {
-    
+$.fn.textWidth = function (text, font) {
+
     if (!$.fn.textWidth.fakeEl) $.fn.textWidth.fakeEl = $('<span>').hide().appendTo(document.body);
-    
+
     $.fn.textWidth.fakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
-    
+
     // console.log(this.val() || this.text() || this.attr('placeholder'));
     console.log(this.css('font'));
     return $.fn.textWidth.fakeEl.width() + 0.2;
@@ -187,15 +187,18 @@ $(window).ready(function () {
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        addWaterMarkImage('#resume-body, .watermark')
+        addWaterMarkImage('#resume-body, .watermark', waterMarkCss)
     }
     var selectedFont = themeOptions ? themeOptions.font : fonts[0].fontFamily;
     var selectedTitleFont = themeOptions ? themeOptions.fontTitle : fonts[0].fontFamily;
     if (!selectedTitleFont)
         selectedTitleFont = fonts[0].fontFamily;
     var selectedcolor = themeOptions ? themeOptions.color : 'theme-black';
-    if (planInfo.subscribedUser && planInfo.planId !== 1) {
-        $('.theme-picker > a , #saveResume > a, #downloadResume > a').attr("data-toggle", "modal").attr('data-target', '#upgrade-popup');
+    if (!planInfo.validUser && !!planInfo.subscribedUser) {
+        $('.theme-picker > a , .selected-font').attr("data-toggle", "modal").attr('data-target', '#upgrade-popup');
+        $('.dropdown-menu').remove();
+        $('.resume-preview').removeClass('d-none');
+        $('.navbar').css('z-index', '2');
     }
     $('.selected-font').text(selectedFont).attr('data-font', selectedFont);
     $('.title-headers .selected-font').text(selectedTitleFont).attr('data-font', selectedTitleFont);
@@ -203,7 +206,7 @@ $(window).ready(function () {
     $('.dropdown-menu.actions').removeClass('theme-black').removeClass('theme-blue').removeClass('theme-green').addClass(selectedcolor);
     $('.resume-container').attr('data-oldcolor', selectedcolor).removeClass('theme-black').addClass(selectedcolor);
     $('.theme-color-picker a').removeClass('active');
-    $('.theme-color-picker span.'+selectedcolor).parent().addClass('active');
+    $('.theme-color-picker span.' + selectedcolor).parent().addClass('active');
     $('body').css('font-family', selectedFont);
     $('.sub-header').css('font-family', selectedTitleFont);
     $('.title-headers').css('font-family', selectedTitleFont);
@@ -375,8 +378,8 @@ $(window).ready(function () {
     });
     // bind userData to Resume
 
-    var addPdfWaterMark = function() {
-        $('page').css( pdfWaterMarkCss );
+    var addPdfWaterMark = function () {
+        $('page').css(pdfWaterMarkCss);
     }
 
     var showMultiplePages = function () {
@@ -401,7 +404,7 @@ $(window).ready(function () {
 
         $('#resume-body').show();
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
-            addWaterMarkImage('page')
+            addWaterMarkImage('page'.waterMarkCss)
         }
     }
 
@@ -452,7 +455,7 @@ $(window).ready(function () {
 
                 var itr = $(this).parent().children().first();
 
-                for ( var i = 0 ; i < index ; ++i ) {
+                for (var i = 0; i < index; ++i) {
                     itr.addClass("rating-chosen");
                     itr = itr.next();
                 }
@@ -469,7 +472,7 @@ $(window).ready(function () {
                 //     $rating.addClass("rating-chosen");
                 //     $rating.prevAll().addClass("rating-chosen");
                 // }
-                
+
             }
         );
 
@@ -579,8 +582,8 @@ $(window).ready(function () {
 
             $("#proExp_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function() {
-                $('#proExp_' + num + ' .month-picker').on('change', function() {
+            setTimeout(function () {
+                $('#proExp_' + num + ' .month-picker').on('change', function () {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -702,8 +705,8 @@ $(window).ready(function () {
 
             $("#education_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function() {
-                $('#education_' + num + ' .month-picker').on('change', function() {
+            setTimeout(function () {
+                $('#education_' + num + ' .month-picker').on('change', function () {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -810,8 +813,8 @@ $(window).ready(function () {
 
             $("#academic_projects_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function() {
-                $('#academic_projects_' + num + ' .month-picker').on('change', function() {
+            setTimeout(function () {
+                $('#academic_projects_' + num + ' .month-picker').on('change', function () {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -1033,7 +1036,14 @@ $(window).ready(function () {
     }
 
     $('#saveResume').on('click', function () {
-        if (planInfo.subscribedUser || planInfo.planId === 1) {
+        if (planInfo.subscribedUser && planInfo.validUser) {
+            bindUserDataForSave();
+            saveUserProfile(postObj, "save");
+        } else if (!planInfo.validUser && !!planInfo.subscribedUser) {
+            // bindUserDataForSave();
+            // saveUserProfile(postObj, "save");
+            $('#upgrade-popup').modal('show')
+        } else if (!planInfo.subscribedUser && !planInfo.planId) {
             bindUserDataForSave();
             saveUserProfile(postObj, "save");
         }
@@ -1041,20 +1051,20 @@ $(window).ready(function () {
     });
 
     $('#downloadResume').on('click', async function () {
-        // if (planInfo.subscribedUser) {
+        if (planInfo.subscribedUser && planInfo.planId) {
             if (!$('.editorNav').hasClass('d-none')) {
                 bindUserDataForSave();
                 saveUserProfile(postObj, "download");
                 showMultiplePages();
-                await savePdf();
+                await savePdf('fromDownload');
                 hideMultiplePages();
             } else {
                 console.log("hey, here!");
-                await savePdf();
+                await savePdf('fromDownload');
             }
-        // } else {
-        //     $('#downloadResume a').attr('href', location.origin + '/pricing.html');
-        // }
+        } else {
+            $('#upgrade-popup').modal('show')
+        }
     });
 
     function bindUserDataForSave() {
@@ -1324,8 +1334,7 @@ $(window).ready(function () {
         if (!resumeObj.pic) {
             resumeObj.pic = 'data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAAFYUlEQVR4nO2d7W3bMBCGr0EHUCeoM0HUCWpP0HSC2BM0naDOBHEmsDtB3QniThB1groTRD/6vwWNlwYtyhJF3lFUqgcwEsgfol7d8eN4pF49P/+hRJjgNUVx3rcU6wf+7ohoj1fv9CloTkTXEE79n1mf6EZJRAWE3uL/6MQWVFnfDYQMFbCNEsJ+hRVHIYagSrg5EX2CS/eBqg4eiGgDocWQFFQJeQshpa3RlRLCrqSElRJ0mZiQVbSwS+udQLgFVXXkukfX7oqqChacdeyFdcQPZYn3RPQ4IDEJZX1E2Vm8icNCVZfn28CErENZ68fQ7laoharW++kFiEm4hidckzchgt6jvnxprHFtXvgKukaX6KVy62ssPoKuQ91iIMx9RO0qaCwxVQNxR0Qz1XBWXjO8FyMY0lnULq38fQQ3Vy3s5w79winKlVvv8LJCuVpxtdB5BDFVod917GTv8J2V9Q4vt66e6WKhOboTkiwQuAjBq87ryLu2fmqbhWbotEtyxyAm4TfurKO8fGsbUbUJ+kW4075jDlAshWOfE2hyliaXn2KcK8mlQGutLvqXdZSX2bkb12Sh0vXRRqjrs2eqQpo4q805QZcRxuffrSPD+G2CNrVVVZ3LZ3CZxsqXgVfCv//XOsJLiSrrJPJfZ6G3EcSsrX8Gdo6srm9eFTTD1MWIG9Y0T1XQecLzQCmSVUdQVUFH6+zOiWamoNOIkfcYXhDL08z0oRNBb6yPysGRetNEFiECZXLUzhT02vqYLJLn6+1atKDSFlOHpEfEbguOHqEFjX1HCfWOxHmvI7u7ed6joG25mFKsmT0jaxpnC3PQ0HT5PuCOt7bGKwU5uvyk5878lEEIfWOm1jvxUGWYXCSS9XGN2KuPp+T4bh/tQJWDoH3eVRM9d+WavTfBZ596rLKqTF9bh/pnjleBiNFvY2JMCfcWRpCKiCcoQa+so2mQpypaA1cXY3SJlawuwDwSwCgoM6OgzIyCMjMKyswoKC/layw2TWG0tEMH/ieyP4qG1W46/jhBPzpP5Bp+9jlSKpA9svOYQy/PfGeK14e+BgUqcyRGUpimwOrgbYSU7gkCJjcRxZ0pQWNkq22wtrIxWVWQHNMi0usDLnVu07PQEHQTcYGBCzq/U0JYVQ290a08t+XskUO5SEhMMhbLzgTKddBQC/rDetufrcfig9joxQ5bxvMeNNSCcv3wBgtQz3V3UqJEWbmScw8amvmhofWouusz6+gweAzsxx7qT6qMlEKsVN/toRLqVUftTEG/Wh9zR3xzFGHKQNc/amcKugto+aRz2mPgew17swGuBkcerI+78RKmUXyv4USz6qIF3wULBRqkobp95pkXYC1cqFpo6WmlecguCAngu6L5oWpE3MtqOBbBxsZ30a1lnVRjoRRgpYqh7fYQsoLZsk46Y6GaXwF5T0Ow1BAx97BOizoL1SysI+6kbqmha+vPatMk6C5wp4S1QEJtKJlRLl9WTYGfJpcnFCB0o6sCd7Sv4LImh5Ah0fs9olRW3alpslBiGqPrNMVlT9aa4dwcaY+tY36XaeSiqc7owBeOrdA6oreSa9yFwREnL+trm6E9AgoSG6PqVcI3jNnZztsMdd2dUaL13hrTyb7BmYkxfcydGr7p4qE+211Kdon2RrJDNdGhNOpgnehwZSQ8SNBJTArYP/R/2P+us5gUkNu0iLCbV5+sfBvikGSxz0ytf2osXBugOkKz7zbo6KY09+6L7rQHxSA40hmLSBv6SbJy2dfOhXHb9US3XdfsENa6S3w6pEQZL7kzXMZHVzAzPlyFmfHxP8yMD6hiJuVHqKlxepPI6T1CjYj+Af7+dGpiAOSrAAAAAElFTkSuQmCC';
             $('#user_pic').attr('src', resumeObj.pic);
-        }
-        else {
+        } else {
             // var xhr = new XMLHttpRequest();
             // xhr.onload = function () {
             //     var reader = new FileReader();
@@ -1341,7 +1350,7 @@ $(window).ready(function () {
             // xhr.withCredentials = true;
             // xhr.responseType = 'blob';
             // xhr.send();
-            
+
             // function makeImage(uri) {
             //     return new Promise(function (resolve, reject) {
             //         var image = new Image();
@@ -1373,7 +1382,7 @@ $(window).ready(function () {
             $('#user_pic').attr('src', resumeObj.pic);
         }
         // console.log(resumeObj.pic);
-        
+
         if (!resumeObj.collegeLogo)
             resumeObj.collegeLogo = 'img/university_logo.svg';
         $('.clg_picture img').attr('src', resumeObj.collegeLogo)
@@ -1411,8 +1420,8 @@ $(window).ready(function () {
         bindLanguagesData();
 
         validateStyleCopy();
-        $('[contenteditable="true"]').on('focus', function() {
-            $(this).keyup(function(e) {
+        $('[contenteditable="true"]').on('focus', function () {
+            $(this).keyup(function (e) {
                 var code = e.keyCode ? e.keyCode : e.which;
                 if (code == 9) {
                     moveCaretToEnd($(this)[0]);
@@ -1420,14 +1429,14 @@ $(window).ready(function () {
             });
         });
 
-        $('.month-picker').on('change', function() {
+        $('.month-picker').on('change', function () {
             var inputWidth = $(this).textWidth();
             $(this).css({
                 width: inputWidth
             })
         });
-    
-        setTimeout(function() {
+
+        setTimeout(function () {
             $('.month-picker').trigger('change');
         }, 2000);
     }
@@ -1805,7 +1814,9 @@ $(window).ready(function () {
                 if (logoImg) {
                     saveUserPic();
                 }
-                // savePdf();
+                if (action === 'save') {
+                    savePdf('fromSave');
+                }
                 getShareNameFile();
 
             } else {
@@ -1844,7 +1855,7 @@ $(window).ready(function () {
 
     }
 
-    async function savePdf() {
+    async function savePdf(type) {
         // if (planInfo.planId !== 1) {
         $('.loading-container').show();
         var eles = $('page');
@@ -1882,7 +1893,7 @@ $(window).ready(function () {
             // $(ele).find('p').attr('contenteditable', 'false');
 
             console.log(ele);
-            
+
             if (i > 1) {
                 doc.addPage();
                 docWaterMark.addPage();
@@ -1932,18 +1943,18 @@ $(window).ready(function () {
             });
             // console.log("Raw", data);
 
-            addWaterMarkImage(ele)
+            addWaterMarkImage(ele, pdfWaterMarkCss);
 
             await html2canvas(ele, {
-                allowTaint: false,
-                logging: true,
-                useCORS: true,
-                // foreignObjectRendering: true,
-                scale: 3
-            })
-            .then(function(canvas) {
-                docWaterMark.addImage(canvas.toDataURL("image/jpeg", 1), 'JPEG', -0.3, 0.5, 0, 0);
-            });
+                    allowTaint: false,
+                    logging: true,
+                    useCORS: true,
+                    // foreignObjectRendering: true,
+                    scale: 3
+                })
+                .then(function (canvas) {
+                    docWaterMark.addImage(canvas.toDataURL("image/jpeg", 1), 'JPEG', -0.3, 0.5, 0, 0);
+                });
 
             ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
 
@@ -1952,7 +1963,7 @@ $(window).ready(function () {
         var form2 = new FormData();
         form2.append("type", "resume");
         form2.append("userId", userId);
-        form2.append('file', pdfOut);
+        form2.append('file', pdfOut, '_file.pdf');
         axios({
                 method: 'post',
                 url: apiUrl + "/uploadFile",
@@ -1976,7 +1987,7 @@ $(window).ready(function () {
         var formWatermark = new FormData();
         formWatermark.append("type", "watermark");
         formWatermark.append("userId", userId);
-        formWatermark.append('file', pdfOutWaterMark);
+        formWatermark.append('file', pdfOutWaterMark, '_file.pdf');
         axios({
                 method: 'post',
                 url: apiUrl + "/uploadFile",
@@ -1996,11 +2007,13 @@ $(window).ready(function () {
                 //handle error
                 // console.log(response);
             });
-        if (planInfo.planId === 1) {
-            docWaterMark.save(userId + '_resume.pdf');
-            // doc.save(resumeObj.firstname + '_resume.pdf');
-        } else {
-            doc.save(resumeObj.firstname + '_resume.pdf');
+        if (type == 'fromDownload') {
+            if (planInfo.planId === 1) {
+                docWaterMark.save(userId + '_resume.pdf');
+                // doc.save(resumeObj.firstname + '_resume.pdf');
+            } else {
+                doc.save(resumeObj.firstname + '_resume.pdf');
+            }
         }
         $('.loading-container').delay(2000).fadeOut();
         // }
@@ -2297,12 +2310,11 @@ $(window).ready(function () {
         if (stackedHeight + academicHeight + academicMarginBottom < standardA4Height) {
             stackedHeight += academicHeight + academicMarginBottom;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#academic-section')));
-        }
-        else if(stackedHeight + academicHeight < standardA4Height) {
+        } else if (stackedHeight + academicHeight < standardA4Height) {
             stackedHeight = 0;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#academic-section')));
         } else {
-            
+
             var domHtml = '';
             stackedHeight += parseFloat($('#academic-section h4').css('height'));
             var acaCount = $('#academic-section .academic-project').length;
@@ -2440,8 +2452,8 @@ $(window).ready(function () {
      */
 
 
-    function addWaterMarkImage(selectorElements) {
-        $(selectorElements).css(waterMarkCss)
+    function addWaterMarkImage(selectorElements, css) {
+        $(selectorElements).css(css)
         // $(selectorElements).css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
         // $(selectorElements).css('background-repeat', 'repeat-y');
         // $(selectorElements).css('background-size', '40%');
