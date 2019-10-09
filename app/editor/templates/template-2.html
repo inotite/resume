@@ -18,12 +18,12 @@
         }
     </script>
     <!--<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">-->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700,900" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,600,700" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900i&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" crossorigin="anonymous">
     <!-- <link href="plugins/datedropper/datedropper.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="../../../assets/vendors/css/bootstrap-datepicker3.standalone.css">
     <link rel="stylesheet" type="text/css" href="../../../assets/vendors/css/jquery-ui.css">
@@ -142,13 +142,13 @@
         </header>
         <div class="container m-auto resume-container theme-black" data-oldcolor="theme-black">
             <section class="mb-3">
-                <page size="a4" id="resume-body" class='watermark'>
+                <page size="a4" id="resume-body">
                     <div class="row">
                         <aside class="col-3 text-break">
                             <div>
                                 <div>
                                     <label for="user-picture" class="res_picture">
-                                        <img alt="..." class="rounded-circle" id="user_pic">
+                                        <!-- <img alt="..." class="rounded-circle" id="user_pic"/> -->
                                         <input type="file" data-content="picture"
                                             accept="image/x-png,image/gif,image/jpeg" id="user-picture" class="d-none">
                                     </label>
@@ -204,7 +204,7 @@
                                         <ul class="list-unstyled">
                                             <li class="d-flex align-items-center py-2 px-1 border-dashed lang_details"
                                                 id="lang_1">
-                                                <div class="rating-container">
+                                                <div class="rating-container" data-langpercentage="50">
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item rating-circle m-0"
                                                             data-langpercentage=''></li>
@@ -216,8 +216,10 @@
                                                             data-langpercentage=''></li>
                                                     </ul>
                                                 </div>
-                                                <p contenteditable="true" class="info-language mb-0 ml-1 lang-text"
+                                                <div class="language-container">
+                                                    <p contenteditable="true" class="info-language mb-0 ml-1 lang-text"
                                                     data-content="languageName" placeholder="Language"></p>
+                                                </div>
                                                 <ul class="append-section-actions list-inline" data-html2canvas-ignore>
                                                     <li
                                                         class="list-inline-item cursor-pointer remove_icon small-size color mr-1 remove_lang">
@@ -242,7 +244,7 @@
                                                 <img src="../../../assets/images/resume/svg/email.svg"
                                                     class="svg color font-14pt" />
                                             </div>
-                                            <div>
+                                            <div class="social-container">
                                                 <p class="m-0 ml-2" data-content="email" contenteditable="true"></p>
                                             </div>
                                         </li>
@@ -252,7 +254,7 @@
                                                 <img src="../../../assets/images/resume/svg/phone.svg"
                                                     class="svg color font-14pt" />
                                             </div>
-                                            <div>
+                                            <div class="social-container">
                                                 <p contenteditable="true" placeholder="Phone" class="social-phone m-0 ml-1"
                                                 data-content="phone"></p>
                                             </div>
@@ -263,7 +265,7 @@
                                                 <img src="../../../assets/images/resume/svg/linkedin.svg"
                                                     class="svg color font-14pt" />
                                             </div>
-                                            <div>
+                                            <div class="social-container">
                                                 <p contenteditable="true" placeholder="LinkedIn"
                                                 class="social-linkedin m-0 ml-1" data-content="linkedin"></p>
                                             </div>
@@ -274,7 +276,7 @@
                                                 <img src="../../../assets/images/resume/svg/github.svg"
                                                     class="svg color font-14pt" />
                                             </div>
-                                            <div>
+                                            <div class="social-container">
                                                 <p contenteditable="true" placeholder="Github"
                                                 class="social-github m-0 ml-1" data-content="github"></p>
                                             </div>
@@ -285,7 +287,7 @@
                                                 <img src="../../../assets/images/resume/svg/twitter.svg"
                                                     class="svg color font-14pt" />
                                             </div>
-                                            <div>
+                                            <div class="social-container">
                                                 <p contenteditable="true" placeholder="Twitter"
                                                 class="social-twitter m-0 ml-1" data-content="twitter"></p>
                                             </div>
@@ -296,7 +298,7 @@
                                                 <img src="../../../assets/images/resume/svg/chrome.svg"
                                                     class="svg color font-14pt" />
                                             </div>
-                                            <div>
+                                            <div class="social-container">
                                                 <p contenteditable="true" placeholder="Website"
                                                 class="social-website m-0 ml-1" data-content="website"></p>
                                             </div>
@@ -307,7 +309,7 @@
                                                 <img src="../../../assets/images/resume/svg/blogger.svg"
                                                     class="svg color font-14pt" />
                                             </div>
-                                            <div>
+                                            <div class="social-container">
                                                 <p contenteditable="true" placeholder="Blog" class="social-blog m-0 ml-1"
                                                 data-content="blog"></p>
                                             </div>
@@ -353,10 +355,11 @@
                                 <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Work experience</h4>
                                 <div class="border-dashed professional-experience px-1" id="proExp_1">
                                     <div class="d-flex justify-content-between w-100">
-                                        <p class="font-10pt mb-2 color">
-                                            <span class="exp-role" data-content="exp_jobTitle" contenteditable="true"
-                                                placeholder="Role"></span></p>
-                                        <div>
+                                        <div class="float-left">
+                                            <p class="exp-role font-10pt mb-2 color" data-content="exp_jobTitle" contenteditable="true"
+                                                placeholder="Role"></p>
+                                        </div>
+                                        <div class="float-right">
                                             <p class="font-10pt mb-2 theme-text-dark">
                                                 <input
                                                     class="info font-10pt location month-picker w-small mb-0 border-0 text-right"
@@ -370,11 +373,13 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <p class="font-10pt mb-2 theme-text-dark">
-                                            <span class="exp-company" data-content="exp_company" contenteditable="true"
-                                                placeholder="Company"></span>, <span class="exp-location"
+                                        <div class="font-10pt mb-2 theme-text-dark" style="overflow: hidden;">
+                                            <div class="exp-company" data-content="exp_company" contenteditable="true"
+                                                placeholder="Company"></div>, 
+                                            <div class="exp-location"
                                                 contenteditable="true" data-content="exp_location"
-                                                placeholder="Location"></span></p>
+                                                placeholder="Location"></div>
+                                        </div>
                                     </div>
                                     <div>
                                         <p class="font-10pt mb-2 exp-desc" contenteditable="true"
@@ -396,16 +401,15 @@
                                 <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Education</h4>
                                 <div class="border-dashed education-details px-1" id="education_1">
                                     <div class="d-flex justify-content-between w-100">
-                                        <div>
-                                            <p class="font-10pt mb-0 color"><span class="edu-field"
+                                        <div class="float-left">
+                                                <p class="edu-field font-10pt mb-2 color"
                                                     contenteditable="true" data-content="fieldOfStudy"
-                                                    placeholder="Field Of Study"></span>
+                                                    placeholder="Field Of Study"></p>
                                                 <!-- <span class="exp-company" data-content="degree_title"
                                                 contenteditable="true" placeholder="Degree"
                                                 onkeypress="return (this.innerText.length <= 29)"></span> -->
-                                            </p>
                                         </div>
-                                        <div>
+                                        <div class="float-right">
                                             <p class="font-10pt mb-0 theme-text-dark">
                                                 <input
                                                     class="info font-10pt location text-right month-picker w-small mb-0 border-0"
@@ -425,11 +429,11 @@
                                             placeholder="Degree" data-content="degree_title">
                                     </div>
                                     <div>
-                                        <p class="font-10pt mb-2"><span class="edu-school"
+                                        <div class="font-10pt mb-2"><div class="edu-school"
                                                 data-content="edu_institution" contenteditable="true"
-                                                placeholder="School"></span>
-                                            <span class="edu-location" data-content="edu_location"
-                                                contenteditable="true" placeholder="Location"></span></p>
+                                                placeholder="School"></div>
+                                            <div class="edu-location" data-content="edu_location"
+                                                contenteditable="true" placeholder="Location"></div></div>
                                     </div>
                                     <div>
                                         <p class="font-10pt mb-2 edu-desc" contenteditable="true"
@@ -451,12 +455,14 @@
                                 <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Academic Projects</h4>
                                 <div class="border-dashed academic-project px-1" id="academic_projects_1">
                                     <div class="d-flex justify-content-between w-100">
-                                        <p class="font-10pt mb-2 theme-text color"><span class="project-title"
+                                        <div class="font-10pt mb-2 theme-text color project-title-container">
+                                            <div class="project-title"
                                                 contenteditable="true" data-content="acd_projectTitle"
-                                                placeholder="Project Title"></span>,
-                                            <span class="project-role" data-content="acd_role" contenteditable="true"
-                                                placeholder="Role"></span></p>
-                                        <div>
+                                                placeholder="Project Title"></div><span style="box-sizing: content-box;">,</span>
+                                            <div class="project-role" data-content="acd_role" contenteditable="true"
+                                                placeholder="Role"></div>
+                                        </div>
+                                        <div style="flex: initial">
                                             <p class="font-10pt mb-2 theme-text-dark">
                                                 <input
                                                     class="info text-right font-10pt location month-picker w-small mb-0 border-0"
@@ -471,11 +477,11 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <p class="font-10pt mb-2 theme-text-dark">
-                                            <span class="university" data-content="acd_institution"
-                                                contenteditable="true" placeholder="University"></span>, <span
+                                        <div class="font-10pt mb-2 theme-text-dark">
+                                            <div class="university" data-content="acd_institution"
+                                                contenteditable="true" placeholder="University"></div><span>, </span><div
                                                 class="uni-location" contenteditable="true" data-content="acd_location"
-                                                placeholder="Location"></span></p>
+                                                placeholder="Location"></div></div>
                                     </div>
                                     <div>
                                         <p class="font-10pt mb-2 project-desc" contenteditable="true"
@@ -504,10 +510,12 @@
                                                     </div>
                                                     <p data-skill="75%" class="skill-value">75%</p>
                                                 </div>
-                                                <p type="text"
-                                                    class="skill-name aligned_input resume-input ml-2 skill-input-value skills w-14rem border-0 font-10pt"
+                                                <div class="skill-text-container ml-2 mr-2">
+                                                    <p type="text"
+                                                    class="skill-name aligned_input resume-input skill-input-value skills w-14rem border-0 font-10pt"
                                                     placeholder="Skill name" data-content="skillText"
                                                     contenteditable="true"></p>
+                                                </div>
                                             </div>
                                             <ul class="append-section-actions list-inline bottom-50"
                                                 data-html2canvas-ignore>
@@ -537,6 +545,9 @@
                         </div>
                     </div>
                 </page>
+                <!-- <page size="a4">
+                    <canvas id="draw-canvas" width="700" height="800"></canvas>
+                </page> -->
             </section>
         </div>
     </div>
@@ -579,6 +590,10 @@
     <script type="text/javascript" src="../../../assets/vendors/js/bootstrap-datepicker.min.js"> </script>
     <script type="text/javascript" src="../../../assets/vendors/js/moment.min.js"> </script>
     <script type="text/javascript" src="../../../assets/vendors/js/html2canvas.js"></script>
+    <!-- <script type="text/javascript" src="../../../assets/vendors/js/html2canvas_latest.js"></script> -->
+    <script type="text/javascript" src="../../../assets/vendors/js/canvas2image.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/dom-to-image.js"></script>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script> -->
     <script type="text/javascript" src="../../../assets/vendors/js/jspdf.debug.js"></script>
     <script type="text/javascript" src="../../../assets/vendors/js/canvg.min.js"></script>
     <script type="text/javascript" src="../../../assets/js/environment.js"></script>
