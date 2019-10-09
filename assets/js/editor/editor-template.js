@@ -13,7 +13,8 @@ const waterMarkCss = {
 };
 const pdfWaterMarkCss = {
     "background": 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '") #fff no-repeat',
-    "background-position": 'center'
+    "background-position": 'center',
+    "background-size": '40%'
 }
 console.log(resumeObj);
 // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
@@ -1848,7 +1849,7 @@ $(window).ready(function () {
         // if (planInfo.planId !== 1) {
         $('.loading-container').show();
         var eles = $('page');
-        console.log(eles);
+        // console.log(eles);
         var pageCount = eles.length;
         var doc = new jsPDF('p', 'cm', [89.1, 63], true);
         // watermark resume
@@ -1875,11 +1876,6 @@ $(window).ready(function () {
             $(ele).css('background-repeat', '');
             $(ele).css('background-size', '');
             $(ele).css('background-position', '');
-            // $(ele).find('p').each(function(idx) {
-            //     if (!$(this).text())
-            //         $(this).text($(this).attr('placeholder'));
-            // });
-            // $(ele).find('p').attr('contenteditable', 'false');
 
             console.log(ele);
             
@@ -1893,29 +1889,34 @@ $(window).ready(function () {
             var w = parseFloat($(ele).css('width'));
             var h = parseFloat($(ele).css('height'));
 
-            // var canvas = document.createElement('canvas');
-            // canvas.width = w*3;
-            // canvas.height = h*3;
-            // canvas.style.width = w + 'px';
-            // canvas.style.height = h + 'px';
-            // var context = canvas.getContext('2d');
-            // context.scale(3, 3);
-
-            /* ele.css({'height': ''});
-            ele.css({'max-height': ''});*/
             ele.style.boxShadow = "none";
-            // await html2canvas(ele, {
-            //     allowTaint: true,
-            //     logging: true,
-            //     useCORS: true,
-            //     letterRendering: true,
-            //     // foreignObjectRendering: true,
-            //     // canvas: canvas,
-            //     scale: 3
-            // })
-            // .then(function(canvas) {
-            //     doc.addImage(canvas.toDataURL("image/jpeg", 1), 'JPEG', -0.3, 0.5, 0, 0);
-            // });
+
+            await domtoimage.toJpeg(ele, {
+                style: {
+                    'transform': 'scale(3)',
+                    'transform-origin': 'top left',
+                    'margin': 0
+                },
+                width: w * 3,
+                height: h * 3
+            }).then(function (dataUrl) {
+                var img = new Image();
+                img.src = dataUrl;
+                // console.log(data)
+                doc.addImage(img, 'jpeg', 0, 0.5, 0, 0);
+            });
+            
+            // $(ele).css(pdfWaterMarkCss);
+            $(ele).css("background", 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '") #fff no-repeat');
+            $(ele).css("background-position", 'center');
+            $(ele).css("background-size", '40%');
+            $(ele).append("<img src='../../assets/images/resume/watermarkworkruit.png' width='"+ w * 0.4 +"' height='" + w * 0.4+ "' class='watermark-css'>");
+            $(ele).find('.watermark-css').css({
+                'left': w * 0.3 + 'px',
+                'top': (h * 0.5 - w * 0.2) + 'px'
+            });
+            console.log(ele);
+
             await domtoimage.toJpeg(ele, {
                 style: {
                     'transform': 'scale(3)',
@@ -1928,22 +1929,10 @@ $(window).ready(function () {
                 var img = new Image();
                 img.src = dataUrl;
 
-                doc.addImage(img, 'jpeg', 0, 0.5, 0, 0);
+                docWaterMark.addImage(img, 'jpeg', 0, 0.5, 0, 0);
             });
-            // console.log("Raw", data);
 
-            addWaterMarkImage(ele)
-
-            await html2canvas(ele, {
-                allowTaint: false,
-                logging: true,
-                useCORS: true,
-                // foreignObjectRendering: true,
-                scale: 3
-            })
-            .then(function(canvas) {
-                docWaterMark.addImage(canvas.toDataURL("image/jpeg", 1), 'JPEG', -0.3, 0.5, 0, 0);
-            });
+            $(ele).find('.watermark-css').remove();
 
             ele.style.boxShadow = "rgba(0, 0, 0, .2) 0.2rem 0.2rem 3rem 0.2rem";
 

@@ -544,10 +544,6 @@ aside * {
     bottom: 0;
 }
 
-.skill-value[data-skill='100'] {
-    transform: translate(-7px, 0px);
-}
-
 .w-small {
     width: 70px;
 }
@@ -967,4 +963,9 @@ input {
 
 .project-title-container {
     flex: auto;
+}
+
+.watermark-css {
+    position: absolute;
+    z-index: -2;
 }
