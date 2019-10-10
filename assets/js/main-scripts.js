@@ -124,6 +124,7 @@ function load() {
 						"processData": false,
 						"data": JSON.stringify(signupData)
 					}
+					$('.loading-container').css('display', 'block');
 					$.ajax(settings).done(function (response) {
 						console.log(response);
 						response = typeof (response) !== "object" ? JSON.parse(response) : response;
@@ -137,6 +138,7 @@ function load() {
 							sessionStorage.setItem('imageStore', response.data.pic);
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
+							$('.loading-container').css('display', 'none');
 							$('#newErrorMessageID').html(response.msg.description)
 								.fadeIn()
 								.delay(3000)
@@ -219,7 +221,7 @@ function load() {
 						"processData": false,
 						"data": JSON.stringify(signupData)
 					}
-
+					$('.loading-container').css('display', 'block');
 					$.ajax(settings).done(function (response) {
 						console.log('response new', response);
 						sessionStorage.clear();
@@ -232,6 +234,7 @@ function load() {
 							sessionStorage.setItem('imageStore', '');
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
+							$('.loading-container').css('display', 'block');
 							$('#newErrorMessageID').html(response.msg.description)
 								.fadeIn()
 								.delay(3000)

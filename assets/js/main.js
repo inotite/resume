@@ -11,8 +11,6 @@ function togNav() {
     $("#header").addClass("-opened");
   }
 }
-
-
 //Show Menu on Scroll
 var topBlock = $("#topBlock").offset().top;
 $(window).scroll(function () {
@@ -124,3 +122,5 @@ $(window).scroll(function () {
     $("#phone-in-4, #browser-in-4").removeClass("past");
   }
 });
+
+

@@ -40,3 +40,6 @@ const resumeServiceUrls = {
         "getOrderInfo": "/getOrderInfo"
     }
 };
+const messages = {
+    "emailVerified": "Please verify your email"
+}

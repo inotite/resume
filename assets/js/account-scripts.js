@@ -536,30 +536,44 @@ function getUserProfile() {
 			$('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
 		}
 		sessionStorage.setItem('userData', JSON.stringify(userProfileData));
-		setInfoMessage(response.data.planDetails.msg.description);
+		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);
 		// window.location.reload();
 	});
 }
 
-function setInfoMessage(message) {
-	if (!$('#info_message span').length) {
-		requestAnimationFrame(function () {
-			setInfoMessage(message);
-		});
-		return;
-	}
-	const numberOfDays = JSON.parse(message.match(/\d+/)) ? JSON.parse(message.match(/\d+/)[0]) : null;
-	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today", numberOfDays);
-	if (numberOfDays && numberOfDays <= 3) {
-		$('#info_message').addClass('alert-danger');
-	} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired")) {
-		$('#info_message').addClass('alert-danger');
+function setInfoMessage(message, emailVerified) {
+	if (emailVerified) {
+		$('#mail_message').addClass('d-none');
+		if (!$('#info_message span').length) {
+			requestAnimationFrame(function () {
+				setInfoMessage(message);
+			});
+			return;
+		}
+		const numberOfDays = JSON.parse(message.match(/\d+/)) ? JSON.parse(message.match(/\d+/)[0]) : null;
+		console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today", numberOfDays);
+		if (numberOfDays && numberOfDays <= 3) {
+			$('#info_message').addClass('alert-danger');
+		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired")) {
+			$('#info_message').addClass('alert-danger');
+		} else {
+			$('#info_message').addClass('alert-success');
+		}
+		$('#info_message span').html(message);
 	} else {
-		$('#info_message').addClass('alert-success');
+		if (!$('#mail_message span').length) {
+			requestAnimationFrame(function () {
+				setInfoMessage(message);
+			});
+			return;
+		}
+		$('#info_message').addClass('d-none');
+		$('#mail_message span').html(messages.emailVerified);
+		$('#mail_message').addClass('alert-danger');
+		$('#mail_message .close').remove();
 	}
 
-	$('#info_message span').html(message);
 }
 window.addEventListener("message", function (event) {
 	console.log(":: PARENT MESSAGE", event.data)
