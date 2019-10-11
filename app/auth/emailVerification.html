@@ -59,9 +59,13 @@
   <div class="content h-100 w-100">
     <div class="container h-100">
       <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-md-12 empty text-center">
+        <div class="col-md-12 empty success-email d-none text-center">
           <h1>Thank you for Verifying your email address</h1>
           <h2><a href="./login.html">Login</a> to continue</h2>
+        </div>
+        <div class="col-md-12 empty failed-email d-none text-center">
+          <h1></h1>
+          <h2><a class="resendEmail">Resend</a></h2>
         </div>
       </div>
     </div>
@@ -94,7 +98,7 @@
     var settings = {
       "async": true,
       "crossDomain": true,
-      "url": baseUrl +'/'+ serviceUrls.get.emailVerificationForResumeUser +
+      "url": baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser +
         emailVerificationId +
         "/" + companyName + '/123',
       "method": "GET",
@@ -107,10 +111,34 @@
     console.log(settings);
     $.ajax(settings).done(function (response) {
       console.log(response, 'response');
-      if (response) {
+      if (response.status == "success") {
         // localStorage.clear();
-        window.location.href = location.origin + '/index.html';
+        $('.success-email').removeClass('d-none');
+        // window.location.href = location.origin + '/index.html';
+      } else {
+        $('.failed-email').removeClass('d-none');
+        $('.failed-email h1').text(response.msg.description);
       }
+    });
+    $('.resendEmail').click(function () {
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": baseResumeApiUrl + 'user/' + userId + resumeServiceUrls.get.resendEmail,
+        "method": "GET",
+        "headers": {
+          "token": authToken,
+          "content-type": "application/json"
+        },
+        "processData": false
+      }
+      console.log(settings);
+      $.ajax(settings).done(function (response) {
+        console.log(response, 'response');
+        $('.failed-email').removeClass('d-none');
+        $('.failed-email h1').text(response.msg.description);
+        $('.resendEmail').addClass('d-none');
+      });
     });
   </script>
 

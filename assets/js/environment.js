@@ -37,11 +37,13 @@ const resumeServiceUrls = {
         "getPaytmChecksum": "/getPaytmChecksum",
         "checkUserStatus": "/checkUserStatus",
         "getTxnHistory": "/getTxnHistory",
-        "getOrderInfo": "/getOrderInfo"
+        "getOrderInfo": "/getOrderInfo",
+        "resendEmail": "/resendEmail"
     }
 };
 const messages = {
     "emailVerified": "Please verify your email",
     "emailVerifiedAtCart": "Please verify your email, to continue this service.",
     "emailVerifiedMessageSent": "Mail sent successfully, please check you mail",
+    "shareUrlLengthError": "Share Url Length should be equal minimum 6 characters and max 20 characters."
 }

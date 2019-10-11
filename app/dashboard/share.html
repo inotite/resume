@@ -22,7 +22,7 @@
   <div class="loading-container">
     <img src="../../assets/images/oval.svg" style="width:55px">
   </div>
-  <div id="newErrorMessageID" class="alert alert-danger">
+  <div id="newErrorMessageID" class="alert alert-danger shareMessage">
     <span class="message-text"></span>
     <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img
         src="../../assets/images/app/icons/close.png" width="10" /></a>
@@ -131,8 +131,15 @@
       $('.account-page').paraCount();
       $("#shareDomain").attr('value', origin + '/#')
     });
-    var resumePublicStatus = JSON.parse(sessionStorage.getItem('userData')).hideResume;
-    $('#resume_piblic').attr('checked', resumePublicStatus);
+    var userShareInfo = JSON.parse(sessionStorage.getItem('userData'));
+    $('#resume_piblic').attr('checked', userShareInfo.hideResume);
+    if (userShareInfo.planDetails.subscribedUser && userShareInfo.planDetails.validUser) {
+      $('#shareName').removeAttr('disabled');
+      $('#shareNameBtn').removeAttr('disabled');
+    } else if (!userShareInfo.planDetails.validUser && !!userShareInfo.planDetails.subscribedUser) {
+      $('#shareName').attr('disabled', 'true');
+      $('#shareNameBtn').attr('disabled','true');
+    }
     // var resume_piblic = $('input[type=checkbox]').prop('checked');
     // console.log(resume_piblic);
     $('.loading-container').delay(1000).fadeOut();

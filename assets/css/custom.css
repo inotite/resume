@@ -3275,7 +3275,11 @@ md-list-item, md-list-item ._md-list-item-inner {
 #newErrorMessageID.alert-danger {
     top: 0px !important;
 }
-
+#newErrorMessageID.shareMessage{
+    top:70px !important;
+    height: auto;
+    line-height: unset;
+}
 .alert-danger,
 .alert-success {
     top: 0px !important;

@@ -85,7 +85,7 @@
 
 						let shareName = $('input[name="shareName"]').val();
 						console.log(shareName, shareName.length, "shareName");
-						if (shareName.length == 8) {
+						if (shareName.length >= 6 && shareName.length <= 20) {
 							var shareData = {
 								"username": userData.email,
 								"sharename": shareName
@@ -122,9 +122,9 @@
 								$('input[name="shareName"]').val(sessionStorage.getItem('shareName'));
 							});
 						} else {
-							var errorMessage = 'Share Url Length should be 8.';
-							$('#newErrorMessageID .message-text').html(errorMessage)
-							$('#newErrorMessageID').html(errorMessage)
+							// var errorMessage = shareUrlLengthError;
+							$('#newErrorMessageID .message-text').html(messages.shareUrlLengthError)
+							$('#newErrorMessageID').html(messages.shareUrlLengthError)
 								.fadeIn()
 								.delay(5000)
 								.fadeOut();
@@ -555,7 +555,7 @@ function setInfoMessage(message, emailVerified) {
 		console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today", numberOfDays);
 		if (numberOfDays && numberOfDays <= 3) {
 			$('#info_message').addClass('alert-danger');
-		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired")) {
+		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired") || !message.indexOf('Your free plan is expiring today')) {
 			$('#info_message').addClass('alert-danger');
 		} else {
 			$('#info_message').addClass('alert-success');

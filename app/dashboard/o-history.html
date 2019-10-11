@@ -175,7 +175,7 @@
                     return b.userPlanId - a.userPlanId
                 });
                 response.data.map(item => {
-                    item.createDate = moment(item.createDate).format("DD MMM YYYY");
+                    // item.createDate = moment(item.createDate).format("DD MMM YYYY");
                     // item.startDate = moment(item.startDate).format("DD MMM YYYY");
                     item.expDate = moment(item.expDate).format("DD MMM YYYY");
                     item.invoiceLink = "invoice.html";
