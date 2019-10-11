@@ -9,8 +9,8 @@ $('.loading-container').delay(1000).fadeOut();
 $(window).ready(function () {
     $('#load-header').load('../includes/user-header.html');
     console.log("priceCalculationObj>>>>>", priceCalculationObj, priceCalculationObj.planInfo.planId == 1);
-    var loginStatus = sessionStorage.getItem("userData") !== null ? true : false;
-    if (loginStatus === true) {
+    var userInfo = JSON.parse(sessionStorage.getItem("userData"));
+    if (userInfo.planDetails.emailVerified) {
         $('.status').css('display', 'flex');
         axios.defaults.headers.common['Token'] = sessionStorage.getItem('sessionId');
         var userData = JSON.parse(sessionStorage.getItem("userData"));
@@ -25,6 +25,7 @@ $(window).ready(function () {
                 if (priceCalculationObj.planInfo.planId === 1 && response.data.status == "failed") {
                     $('.error-description').html(response.data.msg.description);
                     $('.error-box').removeClass('d-none');
+                    $('.error-upgrade-link').removeClass('d-none');
                 } else {
                     if (priceCalculationObj.planInfo.planId === 1) {
                         $('.promo-add-link').addClass('d-none').removeClass('d-flex');
@@ -140,6 +141,13 @@ $(window).ready(function () {
             };
         })
     } else {
-        $('.status').css('display', 'none')
+        $('.error-description').html(messages.emailVerifiedAtCart);
+        $('.error-box').removeClass('d-none');
+        $('.error-resend-link').removeClass('d-none');
+        $('.error-resend-link').click(function () {
+            alert("hello");
+            $('.error-description').html(messages.emailVerifiedAtCart);
+            $('.error-email').text(userInfo.email);
+        });
     }
-})
+});

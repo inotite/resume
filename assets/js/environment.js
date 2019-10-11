@@ -41,5 +41,7 @@ const resumeServiceUrls = {
     }
 };
 const messages = {
-    "emailVerified": "Please verify your email"
+    "emailVerified": "Please verify your email",
+    "emailVerifiedAtCart": "Please verify your email, to continue this service.",
+    "emailVerifiedMessageSent": "Mail sent successfully, please check you mail",
 }
