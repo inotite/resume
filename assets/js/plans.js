@@ -43,9 +43,16 @@ $("body").on("click", ".price-action-modal", function (e) {
     $('#price-action-modal').modal('show');
     $('#pricing-modal').css('z-index', '2999');
 });
+$("body").on("click", ".price-action-verify-modal", function (e) {
+    console.log("clickced ds");
+    $('body .modal-backdrop.fade.in').css("opacity", '0');
+    $('#price-action-verify-modal').modal('show');
+    $('#pricing-modal').css('z-index', '2999');
+});
 $('.close-free-plan-modal').click(function () {
     $('body .modal-backdrop.fade.in').css('opacity', '1');
     $('#price-action-modal').modal('hide');
+    $('#price-action-verify-modal').modal('hide');
     // $('body .modal-backdrop.fade.in').remove();
     // $("body").append('<div class="modal-backdrop fade in"></div>');
     $('#pricing-modal').css({
@@ -105,9 +112,9 @@ function PricingTemplate(item) {
             </ul>
         </div>
         <div class="form-group mt-4">
-        ${item.planId==1 && (sessionStorage.getItem('userData') && JSON.parse(sessionStorage.getItem('userData')).planDetails.planId) ? 
+        ${ JSON.parse(sessionStorage.getItem('userData')).planDetails.planId ? item.planId==1 && (sessionStorage.getItem('userData') && JSON.parse(sessionStorage.getItem('userData')).planDetails.planId) ? 
             `<button class="btn btn-primary btn-lg btn-block select_plan price-action-modal">BUILD RESUME</button>` 
-            : `<a href="${item.redirectUrl}" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`}
+            : `<a href="${item.redirectUrl}" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`:`<button class="btn btn-primary btn-lg btn-block select_plan price-action-verify-modal">BUILD RESUME</button>`}
         </div>
         </div>
     </div>`;

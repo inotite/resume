@@ -1612,6 +1612,7 @@ height: auto; */
 .modal-open .fade {
     opacity: 1;
     transition: opacity .15s linear;
+    height:;
 }
 
 .fade.show {
@@ -3466,8 +3467,9 @@ button span {
 }
 
 #pricing-modal .modal-dialog {
-    margin: 25vh auto 0px auto;
-    max-width: 90%;
+    margin: 10% auto 0px auto;
+    max-width: 89%;
+    height: 60%;
 }
 
 #pricing-modal .h1 {

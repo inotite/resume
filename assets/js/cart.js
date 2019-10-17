@@ -149,6 +149,7 @@ $(window).ready(function () {
             };
         })
     } else {
+        $('.loading-container').delay(1000).fadeOut();
         $('.error-description').html(messages.emailVerifiedAtCart);
         $('.error-box').removeClass('d-none');
         $('.error-resend-link').removeClass('d-none');
