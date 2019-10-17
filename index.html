@@ -329,11 +329,11 @@
         <div w3-include-html="app/includes/footer.html"></div>
 
     </div>
-    <div class="resume-pdf-view d-none">
+    <div class="resume-pdf-view">
         <div id="resume-error-view" class="d-none text-center">
-            <iframe src="app/includes/pdf-error.html" frameborder="0" id="pdfViewer" class="w-100"></iframe>
+            <iframe src="app/includes/pdf-error.html" frameborder="0" class="w-100 pdf-error"></iframe>
         </div>
-        <iframe src="" frameborder="0" id="pdfViewer" class="the-canvas mb-5 d-none"></iframe>
+        <iframe frameborder="0" id="pdfViewer" class="the-canvas mb-5 d-none"></iframe>
     </div>
     <!-- Scripts -->
     <script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
@@ -373,11 +373,15 @@
                 shareParameter ? true : window.location = location.origin + '/404.html'
                 console.log(shareParameter ? true : false);
                 $.get(baseUrl, function (data) {
-                    data.status === "failed" ? ($('#resume-error-view p').text(data.msg.description), $(
-                        '#resume-error-view').removeClass('d-none')) : (document
-                        .getElementById('pdfViewer').src = googleDocsUrl + data.data +
-                        "&embedded=true", $(
-                            '#pdfViewer').removeClass('d-none'));
+
+                    if (data.status === "failed") {
+                        $('#resume-error-view p').text(data.msg.description);
+                        $('#resume-error-view').removeClass('d-none');
+                    } else {
+                        var pdfViewUrl = googleDocsUrl + data.data + "&embedded=true";
+                        console.log(pdfViewUrl);
+                        $('#pdfViewer').removeClass('d-none').attr('src', pdfViewUrl);
+                    }
                 });
                 // window.location.href = origin == "http://127.0.0.1:5501" ? origin +
                 //     '/workruit-site/resume/resume-preview.html?@' +
