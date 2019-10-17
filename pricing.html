@@ -10,35 +10,11 @@
 
 	<link rel='shortcut icon' type='image/x-icon' href='favicon.png' />
 	<link rel='stylesheet' type='text/css' href='assets/vendors/css/font-awesome.min.css' />
-	<link rel='stylesheet' type='text/css' href='assets/vendors/css/fontawesome.min.css' />
-	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-reboot.css" />
-	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-grid.css" />
-	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-reboot.css" /> -->
+	<!-- <link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-grid.css" /> -->
 	<link rel="stylesheet" type="text/css" href="assets/vendors/css/aos.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="assets/vendors/css/main.css" />
-
-	<!--<style>
-	.first-quto{
-		padding-top: 50%;
-	}
-	</style>-->
-	<!-- Hotjar Tracking Code for www.workruit.com -->
-	<script>
-		(function (h, o, t, j, a, r) {
-			h.hj = h.hj || function () {
-				(h.hj.q = h.hj.q || []).push(arguments)
-			};
-			h._hjSettings = {
-				hjid: 737967,
-				hjsv: 6
-			};
-			a = o.getElementsByTagName('head')[0];
-			r = o.createElement('script');
-			r.async = 1;
-			r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-			a.appendChild(r);
-		})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-	</script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-94088165-1"></script>
 	<script>
@@ -59,7 +35,7 @@
 	</div>
 	<div class="auth-header d-none">
 		<div id="load-auth-header"></div>
-		<div w3-include-html="app/includes/user-auth-header.html"></div>
+		<!-- <div w3-include-html="app/includes/user-auth-header.html"></div> -->
 	</div>
 	<div class="container-fluid layout-hero layout-hero__inner">
 		<div class="container">
@@ -75,17 +51,46 @@
 	<div class="container-fluid px-5 center">
 		<div class="row">
 			<div class="col">
-				<h2 class="h1" data-aos="fade-up">Pick your plan</h2>
+				<h2 class="h1">Pick your plan</h2>
 			</div>
 		</div>
-		<div class="row pricing_template px-5 my-5" data-aos="fade-up">
+		<div class="row pricing_template px-5 my-5">
 		</div>
 		<!-- <div w3-include-html="includes/plans.html"></div> -->
+	</div>
+	<!-- Modal -->
+	<div class="modal fade bd-example-modal-lg" id="price-action-modal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close close-free-plan-modal"></button>
+				</div>
+				<div class="modal-body py-0 mb-4">
+					<div class="row align-items-center">
+						<div class="col-md-5 text-center">
+							<img src="assets/images/Icon3.svg" class="img_download m-0" alt="phone" height="320px"
+								width="auto">
+						</div>
+						<div class="col-md-7">
+							<div class="modal-title">Oops, free plan is expired.</div>
+							<div class="modal-description">
+								You need to upgrade to a paid plan
+								<br /> to get access to all the features.</div>
+							<div class="btn btn-primary px-5 btn-lg text-center mt-3 close-free-plan-modal">
+								Upgrade Now
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div w3-include-html="app/includes/footer.html"></div>
 	<!-- Scripts -->
 	<script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
 	<!-- <script type="text/javascript" src="assets/vendors/js/a6a57723a3.js"></script> -->
+	<script type="text/javascript" src="assets/vendors/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/sweetalert.min.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/aos.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/w3includes.js"></script>
@@ -97,7 +102,7 @@
 	<script>
 		includeHTML();
 		if (sessionStorage.getItem('userData')) {
-			$('#load-auth-header').load('../includes/user-auth-header.html');
+			$('#load-auth-header').load('app/includes/user-auth-header.html');
 			$(".auth-header").removeClass('d-none');
 			$(".header").addClass('d-none');
 		}

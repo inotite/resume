@@ -3,6 +3,7 @@ if (!sessionStorage.getItem('plans')) {
 } else {
     PricingTemplate(JSON.parse(atob(sessionStorage.getItem('plans'))));
 }
+const userPlansInfo = sessionStorage.getItem('userData') ? JSON.parse(sessionStorage.getItem('userData')).planDetails : null;
 
 function getResumePlans() {
     var settings = {
@@ -21,9 +22,9 @@ function getResumePlans() {
         response.map((item, index) => {
             var pId = btoa(JSON.stringify(item));
             item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
+            var redirectAction = location.origin + '/app/order/cart.html?' + pId;
             item.redirectUrl = sessionStorage.getItem('userData') ?
-                location.origin + '/app/order/cart.html?' +
-                pId :
+                redirectAction :
                 location.origin + '/app/auth/login.html';
         });
         sessionStorage.setItem('plans', btoa(JSON.stringify(response)));
@@ -36,6 +37,25 @@ function getResumePlans() {
         console.log($(this).html);
     })
 }
+$("body").on("click", ".price-action-modal", function (e) {
+    console.log("clickced ds");
+    $('body .modal-backdrop.fade.in').css("opacity", '0');
+    $('#price-action-modal').modal('show');
+    $('#pricing-modal').css('z-index', '2999');
+});
+$('.close-free-plan-modal').click(function () {
+    $('body .modal-backdrop.fade.in').css('opacity', '1');
+    $('#price-action-modal').modal('hide');
+    // $('body .modal-backdrop.fade.in').remove();
+    // $("body").append('<div class="modal-backdrop fade in"></div>');
+    $('#pricing-modal').css({
+        'z-index': '4000',
+        "opacity": 1,
+        "overflow-x": "hidden",
+        "overflow-y": "auto"
+    });
+
+});
 
 function PricingTemplate(item) {
     console.log(item);
@@ -85,7 +105,9 @@ function PricingTemplate(item) {
             </ul>
         </div>
         <div class="form-group mt-4">
-            <a href="${item.redirectUrl}" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>
+        ${item.planId==1 && (sessionStorage.getItem('userData') && JSON.parse(sessionStorage.getItem('userData')).planDetails.planId) ? 
+            `<button class="btn btn-primary btn-lg btn-block select_plan price-action-modal">BUILD RESUME</button>` 
+            : `<a href="${item.redirectUrl}" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`}
         </div>
         </div>
     </div>`;

@@ -3,6 +3,9 @@ function load() {
 	var someData_notJSON = JSON.parse(data);
 	console.log("someData_notJSON", someData_notJSON[0].red);
 }
+if (sessionStorage.getItem('plans')) {
+	sessionStorage.clear('plans');
+}
 (function ($) {
 
 	var paraCount = function () {

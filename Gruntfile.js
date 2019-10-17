@@ -6,17 +6,17 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'assets',
-                    src: ['**', '!**/**/',],
-                    dest: 'dist/assets/', // Destination folder
+                    src: ['**', 'images/**/',],
+                    dest: 'dist/assets/images/', // Destination folder
                 }],
             }
         },
         uglify: {
             build: {
                 options: {
-                    banner: "/*! app.min.js file */\n"
+                    banner: "/*! minified version file */\n"
                 },
-                src: ['*.js', 'assets/{,*/}*/{,*/}*.js'],
+                src: ['*.js', 'assets/js/{,*/}*.js'],
                 dest: 'dist/',
                 expand: true,
             }

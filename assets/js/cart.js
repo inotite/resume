@@ -4,7 +4,6 @@ var priceCalculationObj = {
     "user_planId": ""
 }
 var priceInfoData = false;
-$('.loading-container').delay(1000).fadeOut();
 
 $(window).ready(function () {
     $('#load-header').load('../includes/user-header.html');
@@ -22,10 +21,18 @@ $(window).ready(function () {
             .then(function (response) {
                 console.log(response);
                 console.log(response.data.data);
+                if (response) {
+                    $('.loading-container').delay(1000).fadeOut();
+                }
                 if (priceCalculationObj.planInfo.planId === 1 && response.data.status == "failed") {
                     $('.error-description').html(response.data.msg.description);
                     $('.error-box').removeClass('d-none');
                     $('.error-upgrade-link').removeClass('d-none');
+                    $('#price-action-modal').modal({
+                        show: true,
+                        // keyboard:false,
+                        // backdrop:'static'
+                    });
                 } else {
                     if (priceCalculationObj.planInfo.planId === 1) {
                         $('.promo-add-link').addClass('d-none').removeClass('d-flex');
@@ -68,12 +75,13 @@ $(window).ready(function () {
                             '</div>');
                         // console.log(paytmInfo);
                         // alert(response.data.redirectUrl);
-                        sessionStorage.setItem('orderId', paytmInfo.find(
-                                "input[name=ORDER_ID]")
-                            .val());
-                        sessionStorage.setItem('CHECKSUMHASH', paytmInfo.find(
-                            "input[name=CHECKSUMHASH]").val());
-                        console.log(response.data);
+                        // sessionStorage.setItem('orderId', paytmInfo.find(
+                        //         "input[name=ORDER_ID]")
+                        //     .val());
+                        // sessionStorage.setItem('CHECKSUMHASH', paytmInfo.find(
+                        //     "input[name=CHECKSUMHASH]").val());
+                        // console.log(response.data);
+                        $('.price-summary-box').addClass('d-none');
                         $('#paytm-checkout').html(response.data.redirectUrl)
 
                         // url = "./paytm.html";

@@ -21,7 +21,6 @@
         <img src="../../assets/images/oval.svg" style="width:55px">
     </div>
     <div id="load-header"></div>
-
     <div class="content price-summary-box d-none">
         <div class="container">
             <div class="row">
@@ -76,8 +75,8 @@
                                         </select> -->
                                         <p class="text-muted mb-1"><span id="timePeriod">0 Days</span> at ₹ <span
                                                 id="netprice">000.00</span></p>
-                                        <small><a href="" class="text-muted" data-toggle="modal"
-                                                data-target="#termsandprivacy">Terms and Privacy</a></small>
+                                        <!-- <small><a href="" class="text-muted" data-toggle="modal"
+                                                data-target="#termsandprivacy">Terms and Privacy</a></small> -->
                                     </div>
                                     <div class="col-4 text-right">
                                         <p class="text-bold m-0">₹<span id="finalPrice">000.00</span></p>
@@ -118,18 +117,35 @@
         </div>
     </div>
     <div class="content error-box d-none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p class="error-description"></p>
-                    <strong>
-                        <p class="error-email"></p>
-                    </strong>
-                    <a href="../../pricing.html" class="error-upgrade-link d-none">Upgrade</a>
-                    <!-- <a class="error-resend-link d-none">Resend Email</a> -->
+        <!-- downloadApp popup -->
+        <div class="modal fade bd-example-modal-lg in" id="price-action-modal" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header pb-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-0 mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-5 text-center">
+                                <img src="../../assets/images/Icon3.svg" class="img_download m-0" alt="phone"
+                                    height="320px" width="auto">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="modal-title">Oops, free plan is expired.</div>
+                                <div class="modal-description">
+                                    You need to upgrade to a paid plan
+                                    <br /> to get access to all the features.</div>
+                                <div class="btn btn-primary px-5 btn-lg text-center mt-3">
+                                    <a href="../../pricing.html" class="text-white">Upgrade Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- /downloadApp popup -->
     </div>
     <!-- Modal -->
     <div class="modal fade" id="promoCodeModal" tabindex="-1" role="dialog" aria-labelledby="promoCodeModal"
@@ -244,6 +260,43 @@
             </div>
         </div>
     </div>
+    <!-- downloadApp popup -->
+    <div class="modal fade bd-example-modal-lg" id="downloadApp" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <img src="../../assets/images/app/phone.png" class="img_download" alt="phone" height="320px"
+                                width="auto">
+                        </div>
+                        <div class="col-md-7 pt-5">
+                            <div class="modal-title">Find the right job on the go.</div>
+                            <div class="modal-description">
+                                Apply for jobs, chat with employers, get interview alerts.
+                                <br /> All features in your pocket.</div>
+                            <div class="getapp px-4 text-center mt-3">
+                                <span class="pr-3">Get the app</span>
+                                <a href="https://itunes.apple.com/in/app/workruit/id1189752813?mt=8"
+                                    class="pr-2 transition">
+                                    <img src="../../assets/images/app/icons/ios-white.svg" alt="ios">
+                                </a>
+                                <a class="transition"
+                                    href="https://play.google.com/store/apps/details?id=com.workruit&amp;hl=en">
+                                    <img src="../../assets/images/app/icons/android-white.svg" alt="android">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /downloadApp popup -->
     <div id="paytm-checkout"></div>
 
     <!-- Bootstrap core JavaScript

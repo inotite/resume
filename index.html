@@ -330,10 +330,10 @@
 
     </div>
     <div class="resume-pdf-view d-none">
-        <div id="error-message" class="d-none text-center">
-            <p></p>
+        <div id="resume-error-view" class="d-none text-center">
+            <iframe src="app/includes/pdf-error.html" frameborder="0" id="pdfViewer" class="w-100"></iframe>
         </div>
-        <iframe src="" frameborder="0" id="pdfViewer" class="the-canvas mb-5"></iframe>
+        <iframe src="" frameborder="0" id="pdfViewer" class="the-canvas mb-5 d-none"></iframe>
     </div>
     <!-- Scripts -->
     <script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
@@ -344,7 +344,7 @@
     <script type="text/javascript" src="assets/vendors/js/jquery.loadTemplate.js"></script>
     <script type="text/javascript" src="assets/js/environment.js"></script>
     <script type="text/javascript" src="assets/js/main.js"></script>
-	<script type="text/javascript" src="assets/js/plans.js"></script>
+    <script type="text/javascript" src="assets/js/plans.js"></script>
     <!-- turn on other screenshots on scroll-->
     <script type="text/javascript">
         $('.loading-container').delay(1000).fadeOut();
@@ -366,21 +366,25 @@
             var origin = window.origin;
             console.log(shareParameter);
             if (shareParameter && (shareParameter.indexOf('#') !== -1 && shareParameter.length > 4)) {
-                $('.mainPage').addClass('d-none');
+                $('.mainPage').remove();
                 $('.resume-pdf-view').removeClass('d-none');
                 var googleDocsUrl = "https://docs.google.com/viewer?url=";
                 var baseUrl = baseApiUrl + "user/getShareFile?name=" + shareParameter.slice(1)
                 shareParameter ? true : window.location = location.origin + '/404.html'
                 console.log(shareParameter ? true : false);
                 $.get(baseUrl, function (data) {
-                    data.status === "failed" ? ($('#error-message p').text(data.msg.description), $(
-                            '#error-message').removeClass('d-none')) : document
-                        .getElementById('pdfViewer').src = googleDocsUrl + data.data + "&embedded=true";
+                    data.status === "failed" ? ($('#resume-error-view p').text(data.msg.description), $(
+                        '#resume-error-view').removeClass('d-none')) : (document
+                        .getElementById('pdfViewer').src = googleDocsUrl + data.data +
+                        "&embedded=true", $(
+                            '#pdfViewer').removeClass('d-none'));
                 });
                 // window.location.href = origin == "http://127.0.0.1:5501" ? origin +
                 //     '/workruit-site/resume/resume-preview.html?@' +
                 //     shareParameter : origin + '/resume-preview.html?@' +
                 //     shareParameter
+            } else {
+                $('.resume-pdf-view').remove();
             }
         });
     </script>

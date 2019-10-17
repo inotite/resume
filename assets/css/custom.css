@@ -1605,7 +1605,7 @@ height: auto; */
 }
 
 .fade {
-    opacity: 0;
+    opacity: 1;
     transition: opacity .15s linear;
 }
 
