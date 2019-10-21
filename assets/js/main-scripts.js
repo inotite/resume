@@ -74,10 +74,9 @@ if (sessionStorage.getItem('plans')) {
 
 				$('body').on('keydown', function (e) {
 					var key = e.which;
-					if (key == 13) {
-
+					if (key === 13) {
 						if ($(this).attr('id') == 'login') self.loginResumeUser();
-						if ($(this).attr('id') == 'signupResume') self.singnupResumeUser();
+						if ($(this).attr('id') == 'signup') self.singnupResumeUser();
 						if ($(this).attr('id') == 'forgotPassword') self.resetPassword();
 					}
 				});
@@ -315,12 +314,12 @@ if (sessionStorage.getItem('plans')) {
 
 	$.fn.paraCount = function (options) {
 		// create an instance for each element in the set
-		console.log(options);
+		// console.log(options);
 		// return;
 		return this.each(function () {
 			var myParaCount = new paraCount();
 			myParaCount.init(options, this);
-			console.log(this);
+			// console.log(this);
 			// this lets us call methods on the selector
 			$(this).data("paraCount", myParaCount);
 		});

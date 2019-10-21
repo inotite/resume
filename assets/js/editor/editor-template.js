@@ -1042,7 +1042,7 @@ $(window).ready(function () {
             saveUserProfile(postObj, "save");
         } else if (!planInfo.validUser && !!planInfo.subscribedUser) {
             // bindUserDataForSave();
-            // saveUserProfile(postObj, "save");
+            saveUserProfile(postObj, "save");
             $('#upgrade-popup').modal('show')
         } else if (!planInfo.subscribedUser && !planInfo.planId) {
             bindUserDataForSave();

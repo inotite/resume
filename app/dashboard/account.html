@@ -32,7 +32,7 @@
   </div>
   <div id="load-header"></div>
   <div class="content w-100">
-    <div class="container">
+    <div class="container tabs-container">
       <div class="row justify-content-center">
         <div class="col-md-8">
           <ul class="nav nav-pills nav-fill" role="tablist" id="tabs">
@@ -40,9 +40,9 @@
               <a class="nav-link active tab-item" href="./account.html" data-item="account">Account</a>
             </li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link tab-item" href="./notifications.html" data-item="notifications">Notifications</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link tab-item" href="./o-history.html" data-item="notifications">Order History</a>
             </li>
@@ -307,6 +307,12 @@
           $('.premium-feature').removeClass('d-none');
         } else {
           $('.trail-feature').removeClass('d-none');
+        }
+        var planDetails = JSON.parse(sessionStorage.getItem('userData')).planDetails;
+        if (sessionStorage.getItem('userData')) {
+          if (!planDetails.emailVerified) {
+            $('.tabs-container').addClass('mt-5');
+          }
         }
       })
       // console.log(sessionStorage.getItem('previewData')) newSuccessMessageID

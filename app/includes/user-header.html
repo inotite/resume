@@ -45,7 +45,7 @@
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item transition" href="../dashboard/account.html">Account</a>
-                            <a class="dropdown-item transition" href="../dashboard/notifications.html">Notifications</a>
+                            <!-- <a class="dropdown-item transition" href="../dashboard/notifications.html">Notifications</a> -->
                             <a class="dropdown-item transition" href="../dashboard/o-history.html">Orders</a>
                             <a class="dropdown-item transition" href="javascript:void(0)" data-toggle="modal"
                                 data-target="#downloadApp">Download App</a>
@@ -211,6 +211,19 @@
                 location.origin + '/app/dashboard/share.html');
         } else {
             $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
+        }
+    }
+    if (location.pathname == "/app/order/cart.html") {
+        var priceCalculationObj = {
+            "planInfo": JSON.parse(atob(window.location.search.split('?')[1])),
+            "promoId": '',
+            "user_planId": ""
+        }
+        if (priceCalculationObj.planInfo.planId === 4) {
+            console.log('i am here before plane id;');
+            console.log('i am here before frame;');
+            $('.upgrade-btn').css('display', 'none');
+            console.log('i am here after frame;');
         }
     }
     if (location.pathname === "/app/order/payment-status.html") {

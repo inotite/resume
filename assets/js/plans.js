@@ -1,3 +1,15 @@
+if (sessionStorage.getItem('userData')) {
+    $('#load-auth-header').load('app/includes/user-auth-header.html');
+    $(".auth-header").removeClass('d-none');
+    $(".header").addClass('d-none');
+}
+$("body").on("click", ".dismiss-pricing-modal", function () {
+    if (window.parent) {
+        window.parent.postMessage({
+            type: "CLOSE__MODAL"
+        });
+    }
+});
 if (!sessionStorage.getItem('plans')) {
     getResumePlans();
 } else {

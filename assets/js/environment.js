@@ -45,5 +45,7 @@ const messages = {
     "emailVerified": "Please verify your email",
     "emailVerifiedAtCart": "Please verify your email, to continue this service.",
     "emailVerifiedMessageSent": "Mail sent successfully, please check you mail",
-    "shareUrlLengthError": "Share Url Length should be equal minimum 6 characters and max 20 characters."
+    "shareUrlLengthError": "Username should be between 6 to 20 characters.",
+    "shareUrlFormatError": "Username contains only alphabets and numerics.",
+    "shareUrlEditInfo": "Username can edit only once"
 }

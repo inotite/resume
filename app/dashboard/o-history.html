@@ -32,7 +32,7 @@
     </div>
     <div id="load-header"></div>
     <div class="content w-100">
-        <div class="container">
+        <div class="container tabs-container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <ul class="nav nav-pills nav-fill" role="tablist" id="tabs">
@@ -40,10 +40,10 @@
                             <a class="nav-link  tab-item" href="./account.html" data-item="account">Account</a>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link tab-item" href="./notifications.html"
                                 data-item="notifications">Notifications</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link active tab-item" href="./history.html" data-item="notifications">Order
                                 History</a>
@@ -66,6 +66,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="my-5 text-center">
+                    <h4>No Orders Found</h4>
                 </div>
             </div>
             <div class="row mt-5 justify-content-center upgrade-table d-none">
@@ -147,11 +150,11 @@
         });
         var planDetails = JSON.parse(sessionStorage.getItem('userData')).planDetails;
         if (sessionStorage.getItem('userData')) {
-            if (planDetails.subscribedUser && planDetails.planId === 1) {
+            if (!planDetails.emailVerified) {
+                $('.tabs-container').addClass('mt-5');
+            }
+            if ((planDetails.subscribedUser && planDetails.planId === 1) || !planDetails.paidUser) {
                 $('.upgrade-panel').removeClass('d-none');
-                $('.upgrade-table').removeClass('d-none');
-            } else if (planDetails.subscribedUser && planDetails.planId !== 1) {
-                $('.upgrade-table').removeClass('d-none');
             }
         }
         // const userPlanInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
@@ -193,6 +196,9 @@
                     //Specify the data to render
                     // response.resumeplans[index]
                 );
+                if (response.data.length) {
+                    $('.upgrade-table').removeClass('d-none');
+                }
             } else {
                 $("#order_history_table").remove();
                 $("#txn-history").text(response.msg.description);

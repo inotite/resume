@@ -116,9 +116,7 @@
 	<div w3-include-html="app/includes/footer.html"></div>
 	<!-- Scripts -->
 	<script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
-	<!-- <script type="text/javascript" src="assets/vendors/js/a6a57723a3.js"></script> -->
 	<script type="text/javascript" src="assets/vendors/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="assets/vendors/js/sweetalert.min.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/aos.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/w3includes.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/jquery.loadTemplate.js"></script>
@@ -128,18 +126,6 @@
 
 	<script>
 		includeHTML();
-		if (sessionStorage.getItem('userData')) {
-			$('#load-auth-header').load('app/includes/user-auth-header.html');
-			$(".auth-header").removeClass('d-none');
-			$(".header").addClass('d-none');
-		}
-		$("body").on("click", ".dismiss-pricing-modal", function () {
-			if (window.parent) {
-				window.parent.postMessage({
-					type: "CLOSE__MODAL"
-				});
-			}
-		});
 		AOS.init({
 			offset: 100,
 			duration: 800,

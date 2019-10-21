@@ -50,24 +50,24 @@
         </div>-->
 
       <div class="row mt-5 justify-content-center">
-        <div class="tab-pane fade col-md-5 show active">
+        <div class="tab-pane fade col-md-8 show active">
           <div class="card w-100">
             <div class="card-body">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Share</label>
+                    <label>username</label>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-9">
+                  <div class="col-md-10">
                     <input type="text" class="form-control myprofile transition sharename-field" name="shareDomain"
                       id="shareDomain" minlength="3" value="" disabled />
                     <input type="text" class="form-control myprofile transition sharename-field" placeholder="Share url"
                       minlength="3" name="shareName" id="shareName">
                     <input type="text" id="copyText" value="" style="opacity:0; height:0px;" />
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-2 text-center">
                     <button type="button" class="btn btn-primary btn-lg btn-save" id="shareNameBtn">Save</button>
                   </div>
                 </div>
@@ -77,7 +77,7 @@
                   </div>
                 </div>
                 <div class="row plubic-url">
-                  <div class="col-md-6 resume-public">Make my resume public</div>
+                  <div class="col-md-6 resume-public">Share Resume URL</div>
                   <div class="col-md-6">
                     <!-- <label class="switch">
                     <input type="checkbox" checked>
@@ -90,7 +90,13 @@
                   </div>
                 </div>
                 <div class="row plubic-url">
-                  <div class="col-md-12">Note: Share the link to anyone, anytime without any hassle</div>
+                  <div class="col-md-12">Note: <ul>
+                      <li class="text-danger">Username can edit only once</li>
+                      <li class="text-danger">Username should be in alphabets and numerics only</li>
+                      <li>Share the link to anyone, anytime without any hassle</li>
+                    </ul>
+                  </div>
+                  <!-- <div class="col-md-12">Note: </div> -->
                 </div>
               </div>
             </div>
@@ -118,6 +124,7 @@
   </div>
 
   <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/sweetalert.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="../../assets/js/environment.js"></script>
@@ -138,7 +145,7 @@
       $('#shareNameBtn').removeAttr('disabled');
     } else if (!userShareInfo.planDetails.validUser && !!userShareInfo.planDetails.subscribedUser) {
       $('#shareName').attr('disabled', 'true');
-      $('#shareNameBtn').attr('disabled','true');
+      $('#shareNameBtn').attr('disabled', 'true');
     }
     // var resume_piblic = $('input[type=checkbox]').prop('checked');
     // console.log(resume_piblic);
