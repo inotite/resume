@@ -112,22 +112,8 @@ if (sessionStorage.getItem('plans')) {
 						"password": password
 					};
 
-					console.log(signupData);
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + serviceUrls.post.loginResumeUser,
-						"method": "POST",
-						"headers": {
-							'Access-Control-Allow-Origin': baseApiUrl,
-							"token": authToken,
-							"content-type": "application/json"
-						},
-						"processData": false,
-						"data": JSON.stringify(signupData)
-					}
-					$('.loading-container').css('display', 'block');
-					$.ajax(settings).done(function (response) {
+					// console.log(signupData);
+					doPostWithEncrypt(baseApiUrl + serviceUrls.post.loginResumeUser, signupData).then(response => {
 						console.log(response);
 						response = typeof (response) !== "object" ? JSON.parse(response) : response;
 						sessionStorage.clear();
@@ -211,20 +197,43 @@ if (sessionStorage.getItem('plans')) {
 					};
 
 					//console.log(signupData);
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + serviceUrls.post.signupResume,
-						"method": "POST",
-						"headers": {
-							"token": authToken,
-							"content-type": "application/json"
-						},
-						"processData": false,
-						"data": JSON.stringify(signupData)
-					}
+					// var settings = {
+					// 	"async": true,
+					// 	"crossDomain": true,
+					// 	"url": baseApiUrl + serviceUrls.post.signupResume,
+					// 	"method": "POST",
+					// 	"headers": {
+					// 		"token": authToken,
+					// 		"content-type": "application/json"
+					// 	},
+					// 	"processData": false,
+					// 	"data": JSON.stringify(signupData)
+					// }
+					// $('.loading-container').css('display', 'block');
+					// $.ajax(settings).done(function (response) {
+					// 	console.log('response new', response);
+					// 	sessionStorage.clear();
+					// 	if (response.status == "success") {
+					// 		// sessionStorage.setItem('userStatus', response.data.sessionId);
+					// 		sessionStorage.setItem('sessionId', response.data.sessionId);
+					// 		sessionStorage.setItem('userData', JSON.stringify(response.data));
+					// 		sessionStorage.setItem('shareName', response.shareName);
+					// 		sessionStorage.setItem('fromPage', 'signup');
+					// 		sessionStorage.setItem('imageStore', '');
+					// 		window.location.href = window.location.origin + "/app/dashboard/home.html";
+					// 	} else {
+					// 		$('.loading-container').css('display', 'block');
+					// 		$('#newErrorMessageID').html(response.msg.description)
+					// 			.fadeIn()
+					// 			.delay(3000)
+					// 			.fadeOut('slow', function () {
+					// 				$('#signupResume').attr('disabled', false);
+					// 			});
+					// 	}
+
+					// });
 					$('.loading-container').css('display', 'block');
-					$.ajax(settings).done(function (response) {
+					doPostWithEncrypt(baseApiUrl + serviceUrls.post.signupResume, signupData).then(response => {
 						console.log('response new', response);
 						sessionStorage.clear();
 						if (response.status == "success") {
@@ -236,7 +245,7 @@ if (sessionStorage.getItem('plans')) {
 							sessionStorage.setItem('imageStore', '');
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
-							$('.loading-container').css('display', 'block');
+							$('.loading-container').css('display', 'none');
 							$('#newErrorMessageID').html(response.msg.description)
 								.fadeIn()
 								.delay(3000)
@@ -244,7 +253,6 @@ if (sessionStorage.getItem('plans')) {
 									$('#signupResume').attr('disabled', false);
 								});
 						}
-
 					});
 				}
 			},
@@ -268,24 +276,27 @@ if (sessionStorage.getItem('plans')) {
 
 				if (validate) {
 					$('#resetPassBtn').attr('disabled', true);
-					let userData = JSON.stringify({
+					let userData = {
 						'username': email
-					});
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume,
-						"method": "POST",
-						"headers": {
-							"token": authToken,
-							"content-type": "application/json",
-							"cache-control": "no-cache",
-						},
-						"processData": false,
-						"data": userData
-					}
+					};
+					// var settings = {
+					// 	"async": true,
+					// 	"crossDomain": true,
+					// 	"url": baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume,
+					// 	"method": "POST",
+					// 	"headers": {
+					// 		"token": authToken,
+					// 		"content-type": "application/json",
+					// 		"cache-control": "no-cache",
+					// 	},
+					// 	"processData": false,
+					// 	"data": userData
+					// }
 
-					$.ajax(settings).done(function (response) {
+					// $.ajax(settings).done(function (response) {
+
+					// });
+					doPostWithEncrypt(baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume, userData).then(response => {
 						console.log(response);
 						if (response.status == "success") {
 							$('#newSuccessMessageID .message-text').html(response.msg.description);
@@ -302,7 +313,8 @@ if (sessionStorage.getItem('plans')) {
 									$('#resetPassBtn').attr('disabled', false);
 								});
 						}
-					});
+					})
+
 				}
 			},
 

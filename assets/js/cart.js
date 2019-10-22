@@ -9,57 +9,48 @@ $(window).ready(function () {
     $('#load-header').load('../includes/user-header.html');
     console.log("priceCalculationObj>>>>>", priceCalculationObj, priceCalculationObj.planInfo.planId == 1);
     var userInfo = JSON.parse(sessionStorage.getItem("userData"));
-    if (userInfo.planDetails.emailVerified) {
+    if (userInfo.planDetails.emailVerified && priceCalculationObj, priceCalculationObj.planInfo.planId != 1) {
         $('.status').css('display', 'flex');
-        axios.defaults.headers.common['Token'] = sessionStorage.getItem('sessionId');
         var userData = JSON.parse(sessionStorage.getItem("userData"));
         // Price Calculation
         var priceCalculationUrl = baseResumeApiUrl + "user/" + userData.userId + resumeServiceUrls.post.priceCalculation;
         priceCalculationObj.planId = priceCalculationObj.planInfo.planId;
         console.log(priceCalculationObj);
-        axios.post(priceCalculationUrl, priceCalculationObj)
-            .then(function (response) {
-                console.log(response);
-                console.log(response.data.data);
-                if (response) {
-                    $('.loading-container').delay(1000).fadeOut();
+        doPostWithEncrypt(priceCalculationUrl, priceCalculationObj).then(response => {
+            if (response) {
+                $('.loading-container').delay(1000).fadeOut();
+            }
+            if (priceCalculationObj.planInfo.planId === 1 && response.data.status == "failed") {
+                $('.error-description').html(response.data.msg.description);
+                $('.error-box').removeClass('d-none');
+                $('.error-upgrade-link').removeClass('d-none');
+                $('#price-action-modal').modal({
+                    show: true,
+                    // keyboard:false,
+                    // backdrop:'static'
+                });
+            } else {
+                if (priceCalculationObj.planInfo.planId === 1) {
+                    $('.promo-add-link').addClass('d-none').removeClass('d-flex');
                 }
-                if (priceCalculationObj.planInfo.planId === 1 && response.data.status == "failed") {
-                    $('.error-description').html(response.data.msg.description);
-                    $('.error-box').removeClass('d-none');
-                    $('.error-upgrade-link').removeClass('d-none');
-                    $('#price-action-modal').modal({
-                        show: true,
-                        // keyboard:false,
-                        // backdrop:'static'
-                    });
-                } else {
-                    if (priceCalculationObj.planInfo.planId === 1) {
-                        $('.promo-add-link').addClass('d-none').removeClass('d-flex');
-                    }
-                    document.getElementById('finalPrice').innerText = response.data.priceInfo.NetAmount;
-                    document.getElementById('GSTPercentage').innerText = response.data.priceInfo
-                        .GSTPercentage;
-                    document.getElementById('taxFees').innerText = response.data.priceInfo.GSTMoney;
-                    document.getElementById('timePeriod').innerText = priceCalculationObj.planInfo
-                        .timePeriod;
-                    document.getElementById('netprice').innerText = response.data.priceInfo.finalPrice;
-                    document.getElementById('planTitle').innerText = response.data.priceInfo.PlanTitle;
-                    document.getElementById('subtotal').innerText = response.data.priceInfo.NetAmount;
-                    document.getElementById('totalprice').innerText = response.data.priceInfo
-                        .finalPrice;
-                    priceCalculationObj.user_planId = response.data.priceInfo.user_planId
-                    var priceInfoData = true;
-                    $('.price-summary-box').removeClass('d-none');
-                    // $("#finalPrice").text().replace(response.data.data);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
+                const priceCalculationPriceInfo = response.priceInfo
+                document.getElementById('finalPrice').innerText = priceCalculationPriceInfo.NetAmount;
+                document.getElementById('GSTPercentage').innerText = priceCalculationPriceInfo
+                    .GSTPercentage;
+                document.getElementById('taxFees').innerText = priceCalculationPriceInfo.GSTMoney;
+                document.getElementById('timePeriod').innerText = priceCalculationObj.planInfo.timePeriod;
+                document.getElementById('netprice').innerText = priceCalculationPriceInfo.finalPrice;
+                document.getElementById('planTitle').innerText = priceCalculationPriceInfo.PlanTitle;
+                document.getElementById('subtotal').innerText = priceCalculationPriceInfo.NetAmount;
+                document.getElementById('totalprice').innerText = priceCalculationPriceInfo.finalPrice;
+                priceCalculationObj.user_planId = priceCalculationPriceInfo.user_planId;
+                var priceInfoData = true;
+                $('.price-summary-box').removeClass('d-none');
+                // $("#finalPrice").text().replace(response.data.data);
+            }
+        });
         $("#proceed_btn").on('click', function () {
-            console.log("proceed");
+            console.log("proceed",priceCalculationObj);
             if (priceCalculationObj.planInfo.planId !== 1) {
                 // Paytm Checksum
                 var checkSumUrl = baseResumeApiUrl + "user/" + userData.userId +
@@ -91,12 +82,19 @@ $(window).ready(function () {
                         // handle error
                         console.log(error);
                     })
-            } else {
+            } else if (priceCalculationObj.planInfo.planId === 1) {
+                doPostWithEncrypt(priceCalculationUrl, priceCalculationObj).then(response => {
+                    if (response) {
+                        $('.loading-container').delay(1000).fadeOut();
+                    }
+                });
                 var dashboardPath = origin === 'http://devresume.workruit.com' ? origin +
                     '/app/dashboard/home.html' :
                     origin + '/app/dashboard/home.html';
 
                 window.location.replace(dashboardPath);
+            } else {
+                return false;
             }
 
         });
@@ -106,29 +104,18 @@ $(window).ready(function () {
         $('.applyPromo').click(function () {
             priceCalculationObj.promocode = $('#PromoCode').val();
             if (priceCalculationObj.promocode) {
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": priceCalculationUrl,
-                    "method": "POST",
-                    "headers": {
-                        "token": sessionStorage.getItem('sessionId'),
-                        "content-type": "application/json"
-                    },
-                    "processData": false,
-                    "data": JSON.stringify(priceCalculationObj)
-                }
-                $.ajax(settings).done(function (response) {
+                priceCalculationObj.planId = priceCalculationObj.planInfo.planId;
+                doPostWithEncrypt(priceCalculationUrl, priceCalculationObj).then(response => {
                     if (response.status === "success") {
-                        console.log(response.priceInfo.PromocodePrice);
+                        console.log(response);
                         $('#promoCodeModal').modal('hide');
+                        const applyPromoPriceInfo = response.priceInfo;
                         document.getElementById('PromoCode').value = '';
-                        document.getElementById('totalprice').innerText = response
-                            .priceInfo
+                        document.getElementById('totalprice').innerText = applyPromoPriceInfo
                             .finalPrice;
                         document.getElementById('promo-price').innerText = '- ₹ ' +
-                            response
-                            .priceInfo.PromocodePrice
+                            applyPromoPriceInfo.PromocodePrice;
+                        priceCalculationObj.user_planId = applyPromoPriceInfo.user_planId;
                     } else {
                         document.getElementById("promo-validation").innerText = response
                             .msg
@@ -148,6 +135,16 @@ $(window).ready(function () {
                     'Please Enter Promo code';
             };
         })
+    } else if (priceCalculationObj, priceCalculationObj.planInfo.planId == 1) {
+        document.getElementById('finalPrice').innerText = 0.00;
+        document.getElementById('GSTPercentage').innerText = 0.00;
+        document.getElementById('taxFees').innerText = 0.00;
+        document.getElementById('timePeriod').innerText = 0.00;
+        document.getElementById('netprice').innerText = 0.00;
+        document.getElementById('planTitle').innerText = 0.00;
+        document.getElementById('subtotal').innerText = 0.00;
+        document.getElementById('totalprice').innerText = 0.00;
+        $('.price-summary-box').removeClass('d-none');
     } else {
         $('.loading-container').delay(1000).fadeOut();
         $('.error-description').html(messages.emailVerifiedAtCart);

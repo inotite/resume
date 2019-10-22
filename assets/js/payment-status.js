@@ -1,10 +1,18 @@
 $('.loading-container').delay(1000).fadeOut();
 const url_string = window.location.href;
 const url = new URL(url_string);
-const paramUserId = JSON.parse(url.searchParams.get("userId"));
-const orderId = JSON.parse(url.searchParams.get("orderId"));
+const paramUserId = url.searchParams.get("userId") ? JSON.parse(url.searchParams.get("userId")) : null;
+const orderId = url.searchParams.get("orderid") ? JSON.parse(url.searchParams.get("orderid")) : null;
+console.log("paramUserId, orderId", paramUserId, orderId);
 $(window).ready(function () {
     $('#load-header').load('../includes/user-header.html');
+    if (!paramUserId || !orderId) {
+        if (sessionId) {
+            window.location.href = location.origin + '/app/dashboard/home.html';
+        } else {
+            window.location.href = location.origin;
+        }
+    }
     $('.loading-container').delay(1000).fadeOut();
     axios.defaults.headers.common['Token'] = sessionStorage.getItem('sessionId');
     // Price Calculation

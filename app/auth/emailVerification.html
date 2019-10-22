@@ -71,76 +71,11 @@
     </div>
   </div>
   <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/cryptojs.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
   <script type="text/javascript" src="../../assets/js/environment.js"></script>
-  <script>
-    var jsEncode = {
-      encode: function (s, k) {
-        var enc = "";
-        var str = "";
-        // make sure that input is string
-        str = s.toString();
-        for (var i = 0; i < s.length; i++) {
-          // create block
-          var a = s.charCodeAt(i);
-          // bitwise XOR
-          var b = a ^ k;
-          enc = enc + String.fromCharCode(b);
-        }
-        return enc;
-      }
-    };
-    /* Email Verification functionality */
-    var parameters = window.location.search.split('/');
-    var emailVerificationId = parameters[0].substring(1);
-    var companyName = 'workruit';
-    var userId = parameters[2];
-    console.log(emailVerificationId, companyName, userId)
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser +
-        emailVerificationId +
-        "/" + companyName + '/123',
-      "method": "GET",
-      "headers": {
-        "token": authToken,
-        "content-type": "application/json"
-      },
-      "processData": false
-    }
-    console.log(settings);
-    $.ajax(settings).done(function (response) {
-      console.log(response, 'response');
-      if (response.status == "success") {
-        // localStorage.clear();
-        $('.success-email').removeClass('d-none');
-        // window.location.href = location.origin + '/index.html';
-      } else {
-        $('.failed-email').removeClass('d-none');
-        $('.failed-email h1').text(response.msg.description);
-      }
-    });
-    $('.resendEmail').click(function () {
-      var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": baseResumeApiUrl + 'user/' + userId + resumeServiceUrls.get.resendEmail,
-        "method": "GET",
-        "headers": {
-          "token": authToken,
-          "content-type": "application/json"
-        },
-        "processData": false
-      }
-      console.log(settings);
-      $.ajax(settings).done(function (response) {
-        console.log(response, 'response');
-        $('.failed-email').removeClass('d-none');
-        $('.failed-email h1').text(response.msg.description);
-        $('.resendEmail').addClass('d-none');
-      });
-    });
-  </script>
+  <script type="text/javascript" src="../../assets/js/app.services.js"></script>
+  <script type="text/javascript" src="../../assets/js/email-verification.js"></script>
 
 </body>
 

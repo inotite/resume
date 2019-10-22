@@ -100,21 +100,7 @@
 												"username": userData.email,
 												"sharename": shareName
 											}
-											var settings = {
-												"async": true,
-												"crossDomain": true,
-												"url": baseApiUrl + serviceUrls.post.updateShareName,
-												"method": "POST",
-												"headers": {
-													"content-type": "application/json",
-													"token": sessionId,
-													"cache-control": "no-cache",
-												},
-												"processData": false,
-												"data": JSON.stringify(shareData)
-											}
-											$.ajax(settings).done(function (response) {
-												// console.log(response);
+											doPostWithEncrypt(baseApiUrl + serviceUrls.post.updateShareName, shareData).then(response => {
 												sessionStorage.setItem('shareName', shareName);
 												if (response.msg.title == "Success") {
 													getUserProfile();
@@ -129,7 +115,7 @@
 													// }, 2000);
 												}
 												$('input[name="shareName"]').val(sessionStorage.getItem('shareName'));
-											});
+											})
 										} else {
 											swal("Your imaginary file is safe!");
 										}
@@ -227,22 +213,7 @@
 						"newPassword": newPassword,
 						"reenterNewPassword": reenterNewPassword
 					}
-
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateResumeUserPassword,
-						"method": "POST",
-						"headers": {
-							"token": sessionId,
-							"content-type": "application/json",
-							"cache-control": "no-cache",
-						},
-						"processData": false,
-						"data": JSON.stringify(userData)
-					}
-
-					$.ajax(settings).done(function (response) {
+					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateResumeUserPassword, userData).then(response => {
 						console.log(response);
 						if (response.status == "success") {
 							$('#newSuccessMessageID .message-text').html(response.msg.description);
@@ -257,7 +228,7 @@
 								.delay(5000)
 								.fadeOut();
 						}
-					});
+					})
 				});
 				$('#changePassword2').on('click', function () {
 					var url_string = window.location.href;
@@ -270,23 +241,7 @@
 						"newPassword": newPassword,
 						"reenterNewPassword": reenterNewPassword
 					};
-
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + "/user/" + UrlUserId + "/" + serviceUrls.post.resetPasswordResumeUser,
-						"method": "POST",
-						"headers": {
-							"token": authToken,
-							"content-type": "application/json",
-							"cache-control": "no-cache",
-						},
-						"processData": false,
-						"data": JSON.stringify(newPasswordObj)
-					}
-					console.log(settings);
-					return;
-					$.ajax(settings).done(function (response) {
+					doPostWithEncrypt(baseApiUrl + "/user/" + UrlUserId + "/" + serviceUrls.post.resetPasswordResumeUser, newPasswordObj).then(response => {
 						console.log(response);
 						if (response.status == "success") {
 							$('#newSuccessMessageID .message-text').html(response.msg.description);
@@ -349,21 +304,7 @@
 							"collegeName": collegeName,
 							"collegeLogo": collegeLogo
 						}
-
-						var settings = {
-							"async": true,
-							"crossDomain": true,
-							"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
-							"method": "POST",
-							"headers": {
-								"token": sessionId,
-								"content-type": "application/json"
-							},
-							"processData": false,
-							"data": JSON.stringify(profileData)
-						}
-
-						$.ajax(settings).done(function (response) {
+						doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 							console.log(response);
 							if (response.status == "success") {
 								sessionStorage.setItem('userData', JSON.stringify(response.data));
@@ -380,7 +321,7 @@
 									$('#updateProfile').attr('disabled', false);
 								});
 							}
-						});
+						})
 					}
 				});
 				$('#updateProfile2').on('click', function () {
@@ -395,21 +336,7 @@
 						"collegeName": collegeName,
 						"collegeLogo": collegeLogo
 					}
-
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
-						"method": "POST",
-						"headers": {
-							"token": sessionId,
-							"content-type": "application/json"
-						},
-						"processData": false,
-						"data": JSON.stringify(profileData)
-					}
-
-					$.ajax(settings).done(function (response) {
+					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 						console.log(response);
 						if (response.status == "success") {
 							sessionStorage.setItem('userData', JSON.stringify(response.data));
@@ -424,7 +351,7 @@
 								$('#updateProfile').attr('disabled', false);
 							});
 						}
-					});
+					})
 				});
 				/*$('input').on('keypress', function (e) {
 					if (e.which == 32)
@@ -442,19 +369,7 @@
 						"hideResume": this.checked
 					};
 					// profileData.hideResume = this.checked
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
-						"method": "POST",
-						"headers": {
-							"token": sessionId,
-							"content-type": "application/json"
-						},
-						"processData": false,
-						"data": JSON.stringify(profileData)
-					}
-					$.ajax(settings).done(function (response) {
+					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 						//console.log(response);
 						if (response.status == "success") {
 							sessionStorage.setItem('userData', JSON.stringify(response.data));
@@ -465,7 +380,7 @@
 								.delay(5000)
 								.fadeOut();
 						}
-					});
+					})
 				})
 
 			},
@@ -526,25 +441,8 @@
 })(jQuery);
 
 function getUserProfile() {
-	var settings = {
-		"async": true,
-		"crossDomain": true,
-		"url": apiUrl + "/user/" + userData.userId + "/getProfileResume",
-		"type": "GET",
-		"headers": {
-			"token": sessionId,
-			"content-type": "application/json"
-		},
-		"processData": false,
-		// "data": JSON.stringify(userData),
-		error: function (e) {
-			console.log(e);
-		},
-		// dataType: "json",
-		contentType: "application/json"
-	}
-	// downloadResume
-	$.ajax(settings).done(function (response) {
+	doGetWithEncrypt(apiUrl + "/user/" + userData.userId + "/getProfileResume").then(response => {
+		console.log("doGetWithEncrypt", response);
 		var userProfileData = response.data;
 		$('#info_message span').html(userProfileData.planDetails.msg.description);
 		if (userProfileData.planDetails.subscribedUser) {
@@ -561,9 +459,7 @@ function getUserProfile() {
 		sessionStorage.setItem('userData', JSON.stringify(userProfileData));
 		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);
-		// window.location.reload();
 	});
-	// doGetWithEncrypt(apiUrl + "/user/" + userData.userId + "/getProfileResume");
 }
 
 function setInfoMessage(message, emailVerified) {
