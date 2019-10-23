@@ -84,60 +84,61 @@
 					$('#shareNameBtn').on('click', function () {
 
 						let shareName = $('input[name="shareName"]').val();
-						console.log(shareName, shareName.length, "shareName");
-						if (alphanumeric(shareName)) {
-							if (shareName.length >= 6 && shareName.length <= 20) {
-								swal({
-										title: "Are you sure?",
-										text: messages.shareUrlEditInfo,
-										icon: "warning",
-										buttons: true,
-										dangerMode: true,
-									})
-									.then((willDelete) => {
-										if (willDelete) {
-											var shareData = {
-												"username": userData.email,
-												"sharename": shareName
-											}
-											doPostWithEncrypt(baseApiUrl + serviceUrls.post.updateShareName, shareData).then(response => {
-												sessionStorage.setItem('shareName', shareName);
-												if (response.msg.title == "Success") {
-													getUserProfile();
-													$('#newSuccessMessageID .message-text').html(response.msg.description)
-													$('#newSuccessMessageID').html(response.msg.description)
-														.fadeIn()
-														.delay(5000)
-														.fadeOut();
-													// $('#shareUpdatedSuccessfully').css('visibility', 'visible').slideDown();
-													// setTimeout(function () {
-													// 	$('#shareUpdatedSuccessfully').css('visibility', 'hidden').slideUp();
-													// }, 2000);
+						if (shareName !== JSON.parse(sessionStorage.getItem('userData')).share_name) {
+							console.log(shareName, shareName.length, "shareName");
+							if (alphanumeric(shareName)) {
+								if (shareName.length >= 6 && shareName.length <= 20) {
+									swal({
+											title: "Are you sure?",
+											text: messages.shareUrlEditInfo,
+											icon: "warning",
+											buttons: true,
+											dangerMode: true,
+										})
+										.then((willDelete) => {
+											if (willDelete) {
+												var shareData = {
+													"username": userData.email,
+													"sharename": shareName
 												}
-												$('input[name="shareName"]').val(sessionStorage.getItem('shareName'));
-											})
-										} else {
-											swal("Your imaginary file is safe!");
-										}
+												doPostWithEncrypt(baseApiUrl + serviceUrls.post.updateShareName, shareData).then(response => {
+													sessionStorage.setItem('shareName', shareName);
+													if (response.msg.title == "Success") {
+														getUserProfile();
+														$('#newSuccessMessageID .message-text').html(response.msg.description);
+														$('#newSuccessMessageID').html(response.msg.description)
+															.fadeIn()
+															.delay(5000)
+															.fadeOut();
+													} else {
+														$('#newErrorMessageID .message-text').html(response.msg.description)
+														$('#newErrorMessageID').html(response.msg.description)
+															.fadeIn()
+															.delay(5000)
+															.fadeOut();
+													}
+													$('input[name="shareName"]').val(sessionStorage.getItem('shareName'));
+												})
+											}
 
-									});
+										});
+								} else {
+									// var errorMessage = shareUrlLengthError;
+									$('#newErrorMessageID .message-text').html(messages.shareUrlLengthError)
+									$('#newErrorMessageID').html(messages.shareUrlLengthError)
+										.fadeIn()
+										.delay(5000)
+										.fadeOut();
+								}
 							} else {
 								// var errorMessage = shareUrlLengthError;
-								$('#newErrorMessageID .message-text').html(messages.shareUrlLengthError)
-								$('#newErrorMessageID').html(messages.shareUrlLengthError)
+								$('#newErrorMessageID .message-text').html(messages.shareUrlFormatError)
+								$('#newErrorMessageID').html(messages.shareUrlFormatError)
 									.fadeIn()
 									.delay(5000)
 									.fadeOut();
 							}
-						} else {
-							// var errorMessage = shareUrlLengthError;
-							$('#newErrorMessageID .message-text').html(messages.shareUrlFormatError)
-							$('#newErrorMessageID').html(messages.shareUrlFormatError)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
 						}
-
 					});
 
 					$('#copyLinkBtn').on('click', function () {

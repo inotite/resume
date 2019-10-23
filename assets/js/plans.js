@@ -18,19 +18,7 @@ if (!sessionStorage.getItem('plans')) {
 const userPlansInfo = sessionStorage.getItem('userData') ? JSON.parse(sessionStorage.getItem('userData')).planDetails : null;
 
 function getResumePlans() {
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": baseResumeApiUrl + resumeServiceUrls.get.getResumePlans,
-        "method": "GET",
-        "headers": {
-            "token": authToken,
-            "content-type": "application/json"
-        },
-        "processData": false,
-        // "data": JSON.stringify(signupData)
-    };
-    $.ajax(settings).done(function (response) {
+    doGetWithEncrypt(baseResumeApiUrl + resumeServiceUrls.get.getResumePlans).then(response => {
         response.map((item, index) => {
             var pId = btoa(JSON.stringify(item));
             item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
@@ -44,9 +32,6 @@ function getResumePlans() {
         // console.log(response);
         // $('.pricing_template').append(pricing_template);
         // console.log("pricing_template", pricing_template);
-    });
-    $('.select_plan').on('click', function () {
-        console.log($(this).html);
     })
 }
 $("body").on("click", ".price-action-modal", function (e) {
@@ -128,8 +113,8 @@ function PricingTemplate(item) {
             JSON.parse(sessionStorage.getItem('userData')).planDetails.emailVerified ? 
             item.planId==1 && (sessionStorage.getItem('userData') && JSON.parse(sessionStorage.getItem('userData')).planDetails.planId) ? 
             `<button class="btn btn-primary btn-lg btn-block select_plan price-action-modal">BUILD RESUME</button>` 
-            : `<a href="${item.redirectUrl}" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`:`<button class="btn btn-primary btn-lg btn-block select_plan price-action-verify-modal">BUILD RESUME</button>`:
-             `<a href="${item.redirectUrl}" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`}
+            : `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`:`<button class="btn btn-primary btn-lg btn-block select_plan price-action-verify-modal">BUILD RESUME</button>`:
+             `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`}
         </div>
         </div>
     </div>`;

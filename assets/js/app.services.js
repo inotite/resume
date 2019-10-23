@@ -37,6 +37,23 @@ const doPostWithEncrypt = function (url, payload) {
             return error;
         });
 };
+const doUpload = function (url, payload) {
+    return axios.post(url, payload, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(function (response) {
+            // handle success
+            // console.log(decrypt(response, token));
+            return response.data;
+        })
+        .catch(function (error) {
+            // handle error
+            // console.log(decrypt(error, sessionId));
+            return error;
+        });
+}
 
 function decryptTheEncryptData(data, key) {
     console.log(data, key);

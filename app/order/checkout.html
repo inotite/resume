@@ -10,12 +10,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
         // Paytm Checksum
-        var paytmHtml = JSON.parse(localStorage.getItem("CHECKSUMHASH"));
-        var payTmUrl = "https://securegw-stage.paytm.in/theia/processTransaction";
-        console.log(paytmHtml);
         $(window).ready(function () {
-            console.log(paytmHtml.redirectUrl);
-            // $('#paytm-checkout').html(paytmHtml.redirectUrl)
+            const checkoutDecryptedInfo = atob(window.location.search.split('?')[1]);
+            $('#paytm-checkout').html(checkoutDecryptedInfo)
         })
     </script>
 </body>

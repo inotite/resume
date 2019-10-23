@@ -49,8 +49,9 @@ $(window).ready(function () {
                 // $("#finalPrice").text().replace(response.data.data);
             }
         });
-        $("#proceed_btn").on('click', function () {
-            console.log("proceed",priceCalculationObj);
+        $("#proceed_btn").on('click', function (e) {
+            e.preventDefault();
+            console.log("proceed", priceCalculationObj);
             if (priceCalculationObj.planInfo.planId !== 1) {
                 // Paytm Checksum
                 var checkSumUrl = baseResumeApiUrl + "user/" + userData.userId +
@@ -58,30 +59,15 @@ $(window).ready(function () {
                     priceCalculationObj
                     .user_planId + resumeServiceUrls.get.getPaytmChecksum;
                 console.log(checkSumUrl);
-                axios.get(checkSumUrl)
-                    .then(function (response) {
-                        // handle success
-                        console.log(response);
-                        var paytmInfo = jQuery('<div> ' + response.data.redirectUrl +
-                            '</div>');
-                        // console.log(paytmInfo);
-                        // alert(response.data.redirectUrl);
-                        // sessionStorage.setItem('orderId', paytmInfo.find(
-                        //         "input[name=ORDER_ID]")
-                        //     .val());
-                        // sessionStorage.setItem('CHECKSUMHASH', paytmInfo.find(
-                        //     "input[name=CHECKSUMHASH]").val());
-                        // console.log(response.data);
-                        $('.price-summary-box').addClass('d-none');
-                        $('#paytm-checkout').html(response.data.redirectUrl)
+                doGetWithEncrypt(checkSumUrl).then(function (response) {
+                    // handle success
+                    console.log(response);
+                    $('.price-summary-box').addClass('d-none');
+                    $('#paytm-checkout').html(response.redirectUrl)
 
-                        // url = "./paytm.html";
-                        // window.location = url
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    })
+                    // url = "./paytm.html";
+                    // window.location = url
+                });
             } else if (priceCalculationObj.planInfo.planId === 1) {
                 doPostWithEncrypt(priceCalculationUrl, priceCalculationObj).then(response => {
                     if (response) {
@@ -101,7 +87,8 @@ $(window).ready(function () {
         $('#promoCodeModal').on('hidden.bs.modal', function (e) {
             document.getElementById("promo-validation").innerText = ""
         })
-        $('.applyPromo').click(function () {
+        $('.applyPromo').click(function (e) {
+            e.preventDefault();
             priceCalculationObj.promocode = $('#PromoCode').val();
             if (priceCalculationObj.promocode) {
                 priceCalculationObj.planId = priceCalculationObj.planInfo.planId;
