@@ -1,4 +1,4 @@
-if (sessionStorage.getItem('userData')) {
+if (localStorage.getItem('userData')) {
     $('#load-auth-header').load('app/includes/user-auth-header.html');
     $(".auth-header").removeClass('d-none');
     $(".header").addClass('d-none');
@@ -10,12 +10,12 @@ $("body").on("click", ".dismiss-pricing-modal", function () {
         });
     }
 });
-if (!sessionStorage.getItem('plans')) {
+if (!localStorage.getItem('plans')) {
     getResumePlans();
 } else {
-    PricingTemplate(JSON.parse(atob(sessionStorage.getItem('plans'))));
+    PricingTemplate(JSON.parse(atob(localStorage.getItem('plans'))));
 }
-const userPlansInfo = sessionStorage.getItem('userData') ? JSON.parse(sessionStorage.getItem('userData')).planDetails : null;
+const userPlansInfo = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).planDetails : null;
 
 function getResumePlans() {
     doGetWithEncrypt(baseResumeApiUrl + resumeServiceUrls.get.getResumePlans).then(response => {
@@ -23,11 +23,11 @@ function getResumePlans() {
             var pId = btoa(JSON.stringify(item));
             item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
             var redirectAction = location.origin + '/app/order/cart.html?' + pId;
-            item.redirectUrl = sessionStorage.getItem('userData') ?
+            item.redirectUrl = localStorage.getItem('userData') ?
                 redirectAction :
                 location.origin + '/app/auth/login.html';
         });
-        sessionStorage.setItem('plans', btoa(JSON.stringify(response)));
+        localStorage.setItem('plans', btoa(JSON.stringify(response)));
         PricingTemplate(response);
         // console.log(response);
         // $('.pricing_template').append(pricing_template);
@@ -109,9 +109,9 @@ function PricingTemplate(item) {
             </ul>
         </div>
         <div class="form-group mt-4">
-        ${ JSON.parse(sessionStorage.getItem('userData'))?
-            JSON.parse(sessionStorage.getItem('userData')).planDetails.emailVerified ? 
-            item.planId==1 && (sessionStorage.getItem('userData') && JSON.parse(sessionStorage.getItem('userData')).planDetails.planId) ? 
+        ${ JSON.parse(localStorage.getItem('userData'))?
+            JSON.parse(localStorage.getItem('userData')).planDetails.emailVerified ? 
+            item.planId==1 && (localStorage.getItem('userData') && JSON.parse(localStorage.getItem('userData')).planDetails.planId) ? 
             `<button class="btn btn-primary btn-lg btn-block select_plan price-action-modal">BUILD RESUME</button>` 
             : `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`:`<button class="btn btn-primary btn-lg btn-block select_plan price-action-verify-modal">BUILD RESUME</button>`:
              `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`}

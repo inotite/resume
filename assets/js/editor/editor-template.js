@@ -1,6 +1,6 @@
-const userId = JSON.parse(sessionStorage.getItem('userData')).userId;
-const userStatus = sessionStorage.getItem('isPremiumUser');
-let resumeObj = JSON.parse(sessionStorage.getItem('userData'));
+const userId = JSON.parse(localStorage.getItem('userData')).userId;
+const userStatus = localStorage.getItem('isPremiumUser');
+let resumeObj = JSON.parse(localStorage.getItem('userData'));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
 const exp_total_count = 10;
 const edu_total_count = 10;
@@ -1071,7 +1071,7 @@ $(window).ready(function () {
     function bindUserDataForSave() {
         const jobfunctions = $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
             $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id'))] : []
-        postObj.pic = sessionStorage.getItem('imageStore');
+        postObj.pic = localStorage.getItem('imageStore');
         postObj.firstname = $('#resume-body [data-content="firstname"]').text();
         postObj.lastname = $('#resume-body [data-content="lastname"]').text();
         postObj.jobfunctions = jobfunctions;
@@ -1806,7 +1806,7 @@ $(window).ready(function () {
                             $('#saveResume').removeAttr('pointer-events');
                         });
                 }
-                sessionStorage.setItem('userData', JSON.stringify(response.data));
+                localStorage.setItem('userData', JSON.stringify(response.data));
                 // console.log("Ajax response");
                 // console.log(response.data);
 
@@ -1838,7 +1838,7 @@ $(window).ready(function () {
 
     function getShareNameFile() {
         var self = this;
-        var shareName = sessionStorage.getItem('shareName');
+        var shareName = localStorage.getItem('shareName');
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -1996,7 +1996,6 @@ $(window).ready(function () {
         formWatermark.append("type", "watermark");
         formWatermark.append("userId", userId);
         formWatermark.append('file', pdfOutWaterMark);
-        debugger;
         doUpload(apiUrl + "/uploadFile", formWatermark).then(response => {
             console.log(response);
         });
@@ -2065,7 +2064,7 @@ $(window).ready(function () {
             console.log(response);
             if (response.status == 'success') {
                 // console.log(response.data.httpPath);
-                sessionStorage.setItem('imageStore', response.data.httpPath);
+                localStorage.setItem('imageStore', response.data.httpPath);
                 $('#profileMenu img').attr('src', response.data.httpPath);
                 $('#profilePicEdit').attr('src', response.data.httpPath);
                 $('#pimage-preview').attr('src', response.data.httpPath);

@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#ffffff">
     <title>Workruit — My Account</title>
     <script>
-        if (!sessionStorage.getItem('sessionId')) {
+        if (!localStorage.getItem('sessionId')) {
             window.location.href = window.location.origin + "/index.html";
         }
     </script>
@@ -103,18 +103,18 @@
             $('.info_message .close').on('click', function () {
                 $('#info_message').css('display', 'none');
                 userInfo.planDetails.display = false;
-                sessionStorage.setItem('userData', JSON.stringify(userInfo))
+                localStorage.setItem('userData', JSON.stringify(userInfo))
             });
 
             $('#load-header').load('../includes/user-header.html');
             $('.account-page').paraCount();
             $(window).ready(function () {
-                JSON.parse(sessionStorage.getItem('userData')).email_verified === 0 ? $(
+                JSON.parse(localStorage.getItem('userData')).email_verified === 0 ? $(
                     '#newSuccessMessageID').css(
                     'display',
                     'none') : $('.preview_btn').css('display', 'block');
                 // console.log(localStorage.getItem('isPremiumUser'));
-                var freePlanInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
+                var freePlanInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
                 console.log(freePlanInfo);
                 // if (localStorage.getItem('isPremiumUser') === 'true') {
                 //   $('.premium-feature').removeClass('d-none');
@@ -123,7 +123,7 @@
                 // }
                 // console.log(localStorage.getItem('previewData')) newSuccessMessageID
 
-                sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display',
+                localStorage.getItem('previewData') === null ? $('.preview_btn').css('display',
                         'none') : $(
                         '.preview_btn')
                     .css('display', 'inline-block');

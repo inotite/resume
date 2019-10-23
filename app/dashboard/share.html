@@ -8,7 +8,7 @@
   <title>Workruit Instant Resume — Share</title>
 
   <script>
-    if (!sessionStorage.getItem('sessionId')) {
+    if (!localStorage.getItem('sessionId')) {
       window.location.href = window.location.origin + "/index.html";
     }
   </script>
@@ -54,12 +54,12 @@
           <div class="card w-100">
             <div class="card-body">
               <div class="form-group">
-                <div class="row">
+                <div class="row edit_name">
                   <div class="col-md-12">
                     <label>username</label>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row edit_name">
                   <div class="col-md-10">
                     <input type="text" class="form-control myprofile transition sharename-field" name="shareDomain"
                       id="shareDomain" minlength="3" value="" disabled />
@@ -69,6 +69,12 @@
                   </div>
                   <div class="col-md-2 text-center">
                     <button type="button" class="btn btn-primary btn-lg btn-save" id="shareNameBtn">Save</button>
+                  </div>
+                </div>
+                <div class="row edit_name_link d-none">
+                  <div class="col-md-12">
+                    <input type="text" class="form-control mb-2" name="shareDomain"
+                      id="shareDomain" minlength="3" value="" disabled />
                   </div>
                 </div>
                 <div class="row">
@@ -141,7 +147,12 @@
       $('.account-page').paraCount();
       $("#shareDomain").attr('value', origin + '/#')
     });
-    var userShareInfo = JSON.parse(sessionStorage.getItem('userData'));
+    var userShareInfo = JSON.parse(localStorage.getItem('userData'));
+    if (userShareInfo.edit_name) {
+      $('.edit_name').addClass('d-none');
+      $('.edit_name_link input').attr('value', location.origin + '/#' + userShareInfo.share_name);
+      $('.edit_name_link').removeClass('d-none');
+    }
     $('#resume_piblic').attr('checked', userShareInfo.hideResume);
     if (userShareInfo.planDetails.subscribedUser && userShareInfo.planDetails.validUser) {
       $('#shareName').removeAttr('disabled');

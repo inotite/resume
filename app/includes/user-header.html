@@ -206,7 +206,7 @@
 <script type="text/javascript" src="../../assets/js/app.services.js"></script>
 
 <script>
-    const userInfo = JSON.parse(sessionStorage.getItem('userData'));
+    const userInfo = JSON.parse(localStorage.getItem('userData'));
     if (userInfo) {
         if (userInfo.planDetails.subscribedUser) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
@@ -233,7 +233,7 @@
     }
     var userId = userData.userId;
     //console.log(userData);
-    var fromPage = sessionStorage.getItem('fromPage');
+    var fromPage = localStorage.getItem('fromPage');
     //console.log("fromPage ::::::"+fromPage);
     //if(fromPage == 'signin'){
     $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
@@ -255,25 +255,25 @@
     //     $('#profilePicEdit').attr('src', pic);
     // }
     $('#signOut').on('click', function () {
-        doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + sessionStorage.getItem("sessionId") +
+        doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
             "/" +
             serviceUrls.get.resUserLogout).then(response => {
-            sessionStorage.clear();
+            localStorage.clear();
             window.location.href = window.origin + '/app/auth/login.html';
         })
     });
 </script>
 <script>
-    // var userData = JSON.parse(sessionStorage.getItem('userData'));
+    // var userData = JSON.parse(localStorage.getItem('userData'));
     // var userId = userData.userId;
     //console.log(userData);
-    // var fromPage = sessionStorage.getItem('fromPage');
+    // var fromPage = localStorage.getItem('fromPage');
 
     //console.log("fromPage ::::::"+fromPage);
     //if(fromPage == 'signin'){
     // $('#userName').text(userData.firstname + " " + userData.lastname);
     // $('#UserEmail').text(userData.email);
-    // var pic = sessionStorage.getItem('imageStore');
+    // var pic = localStorage.getItem('imageStore');
     // var picpath = pic.search('1631033876795164.jpg');
 
     // if (picpath > -1 || pic == '') {

@@ -14,7 +14,7 @@ $(window).ready(function () {
         }
     }
     $('.loading-container').delay(1000).fadeOut();
-    axios.defaults.headers.common['Token'] = sessionStorage.getItem('sessionId');
+    axios.defaults.headers.common['Token'] = localStorage.getItem('sessionId');
     // Price Calculation
     var getOrderInfoUrl = baseResumeApiUrl + "user/" + paramUserId + "/order/" + orderId + resumeServiceUrls.get.getOrderInfo;
     doGetWithEncrypt(getOrderInfoUrl).then(function (response) {
@@ -26,7 +26,7 @@ $(window).ready(function () {
                 case "success":
                     $('.info_message_status_text').addClass('text-success');
                     doGetWithEncrypt(apiUrl + "/user/" + paramUserId + "/getProfileResume").then(response => {
-                        sessionStorage.setItem('userData', JSON.stringify(response.data));
+                        localStorage.setItem('userData', JSON.stringify(response.data));
                         setInfoMessage(userInfo.planDetails.msg.description);
                     });
                     break;

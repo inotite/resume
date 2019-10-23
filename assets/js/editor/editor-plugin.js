@@ -44,7 +44,7 @@
 				});
 
 
-				var sessionId = sessionStorage.getItem('sessionId');
+				var sessionId = localStorage.getItem('sessionId');
 				//console.log(userData.firstname);
 				if (!sessionId) {
 					//console.log("sessionId ::::::"+sessionId);
@@ -52,19 +52,19 @@
 				} else {
 					$('.loading-container').delay(2000).fadeOut();
 
-					var fromPage = sessionStorage.getItem('fromPage');
-					let formType = sessionStorage.getItem('formType');
+					var fromPage = localStorage.getItem('fromPage');
+					let formType = localStorage.getItem('formType');
 
 					/*
 					var userData = "";
 					if(formType == 'preview'){
-						userData = JSON.parse(sessionStorage.getItem('previewData'));
+						userData = JSON.parse(localStorage.getItem('previewData'));
 					}else{
-						userData = JSON.parse(sessionStorage.getItem('userData'));
+						userData = JSON.parse(localStorage.getItem('userData'));
 					}
 					
 					*/
-					// var userData = JSON.parse(sessionStorage.getItem('userData'));
+					// var userData = JSON.parse(localStorage.getItem('userData'));
 					// console.log(userData);
 
 					if (fromPage == 'signup') {
@@ -96,10 +96,10 @@
 					if (userData.user_github != '') $('p[name="user_github"]').text(userData.user_github);
 					if (userData.user_twitter != '') $('p[name="user_twitter"]').text(userData.user_twitter);
 
-					sessionStorage.setItem('themeStyle', 'theme-picker1');
+					localStorage.setItem('themeStyle', 'theme-picker1');
 
-					var pic = sessionStorage.getItem('imageStore');
-					var imageStoreData = sessionStorage.getItem('imageStoreData');
+					var pic = localStorage.getItem('imageStore');
+					var imageStoreData = localStorage.getItem('imageStoreData');
 					var picpath = pic.search('1631033876795164.jpg');
 
 
@@ -115,7 +115,7 @@
 						"blog_section": true,
 					}
 
-					sessionStorage.setItem('themeOptions', JSON.stringify(themeOptions));
+					localStorage.setItem('themeOptions', JSON.stringify(themeOptions));
 					//$('#image-preview2').css('background', 'url('+imageStoreData+')');
 					//console.log(pic);
 
@@ -225,10 +225,10 @@
 					});
 
 
-					let shareName = sessionStorage.getItem('shareName');
-					//let userData = JSON.parse(sessionStorage.getItem('userData'));
+					let shareName = localStorage.getItem('shareName');
+					//let userData = JSON.parse(localStorage.getItem('userData'));
 					let userId = userData.userId;
-					var sessionId = sessionStorage.getItem('sessionId');
+					var sessionId = localStorage.getItem('sessionId');
 
 					/* Logout functionality */
 					$('#guardar_btn').on('click', function () {
@@ -245,7 +245,7 @@
 						}
 						$.ajax(settings).done(function (response) {
 							//console.log(response);
-							sessionStorage.clear();
+							localStorage.clear();
 							window.location.href = "../index.html";
 						});
 					});
@@ -291,7 +291,7 @@
 						$.ajax(waterMarkImageSettings).done(function (response) {
 							//console.log(response);
 							if (response.status == 'success') {
-								//sessionStorage.setItem('imageStore', response.data.httpPath);
+								//localStorage.setItem('imageStore', response.data.httpPath);
 							}
 						});
 						//pdf without matermark
@@ -325,7 +325,7 @@
 							$.ajax(imageSettings).done(function (response) {
 								//console.log(response);
 								if (response.status == 'success') {
-									//sessionStorage.setItem('imageStore', response.data.httpPath);
+									//localStorage.setItem('imageStore', response.data.httpPath);
 								}
 							});
 						}
@@ -363,7 +363,7 @@
 
 					if (response.status == 'success') {
 						// console.log(response.data.httpPath);
-						sessionStorage.setItem('imageStore', response.data.httpPath);
+						localStorage.setItem('imageStore', response.data.httpPath);
 						$('#profileMenu img').attr('src', response.data.httpPath);
 						$('#profilePicEdit').attr('src', response.data.httpPath);
 						$('#pimage-preview').attr('src', response.data.httpPath);
@@ -377,7 +377,7 @@
 
 			getShareNameFile: function () {
 				var self = this;
-				var shareName = sessionStorage.getItem('shareName');
+				var shareName = localStorage.getItem('shareName');
 				var settings = {
 					"async": true,
 					"crossDomain": true,
@@ -410,10 +410,10 @@
 				// Get canvas contents as a data URL
 				var imgAsDataURL = imgCanvas.toDataURL("image/png");
 
-				// Save image into sessionStorage
+				// Save image into localStorage
 				try {
-					window.sessionStorage.setItem("imageStoreData", imgAsDataURL);
-					$('.localstorage-output').html(window.sessionStorage.getItem('imageStoreData'));
+					window.localStorage.setItem("imageStoreData", imgAsDataURL);
+					$('.localstorage-output').html(window.localStorage.getItem('imageStoreData'));
 					$('.cont_fotodiv').css('background', 'transparent');
 				} catch (e) {
 					console.log("Storage failed: " + e);
@@ -675,7 +675,7 @@
 					var website = true;
 					var blog = true;
 
-					var themeOptions = JSON.parse(sessionStorage.getItem('themeOptions'));
+					var themeOptions = JSON.parse(localStorage.getItem('themeOptions'));
 
 					if ($(this).is(':checked')) {
 						$('#' + option + '_section').show();
@@ -694,7 +694,7 @@
 						});
 					}
 					//console.log(themeOptions);
-					sessionStorage.setItem('themeOptions', JSON.stringify(themeOptions));
+					localStorage.setItem('themeOptions', JSON.stringify(themeOptions));
 
 				});
 				$("body").on("click", ".skills-section .estrellacircular", function () {
@@ -845,7 +845,7 @@
 					$(this).addClass('picker_activo');
 					let themeClass = 'theme-' + $(this).attr('id');
 					$('body, #contimprimir').addClass(themeClass);
-					sessionStorage.setItem('themeStyle', themeClass);
+					localStorage.setItem('themeStyle', themeClass);
 					$('#hover_submenu').css({
 						'opacity': 0.7,
 						'display': 'none',
@@ -859,31 +859,31 @@
 						$('body').css({
 							'font-family': "'Source Sans Pro', sans-serif"
 						});
-						sessionStorage.setItem('fontStyle', 'font-1');
+						localStorage.setItem('fontStyle', 'font-1');
 					}
 					if ($(this).val() == 'font-2') {
 						$('body').css({
 							'font-family': "'Merriweather', serif"
 						});
-						sessionStorage.setItem('fontStyle', 'font-2');
+						localStorage.setItem('fontStyle', 'font-2');
 					}
 					if ($(this).val() == 'font-3') {
 						$('body').css({
 							'font-family': "'Saira Semi Condensed', sans-serif"
 						});
-						sessionStorage.setItem('fontStyle', 'font-3');
+						localStorage.setItem('fontStyle', 'font-3');
 					}
 					if ($(this).val() == 'font-4') {
 						$('body').css({
 							'font-family': "'Roboto', sans-serif"
 						});
-						sessionStorage.setItem('fontStyle', 'font-4');
+						localStorage.setItem('fontStyle', 'font-4');
 					}
 					if ($(this).val() == 'font-5') {
 						$('body').css({
 							'font-family': "'Lato', sans-serif"
 						});
-						sessionStorage.setItem('fontStyle', 'font-4');
+						localStorage.setItem('fontStyle', 'font-4');
 					}
 				});
 				/*
@@ -896,7 +896,7 @@
 
 					let formType = $(this).attr('data-type');
 					console.log("formType", formType);
-					sessionStorage.setItem('formType', formType);
+					localStorage.setItem('formType', formType);
 					/*
 					$('.titulo3, .titulo2, .texto').each(function(){
 						var placeholder = $(this).attr('placeholder');
@@ -933,9 +933,9 @@
 					let certifications = ($('p[name="certifications"]').attr('placeholder') != $('p[name="certifications"]').text() ? $('p[name="certifications"]').text() : '');
 
 
-					let shareName = sessionStorage.getItem('shareName');
-					// var userData = JSON.parse(sessionStorage.getItem('userData'));
-					var sessionId = sessionStorage.getItem('sessionId');
+					let shareName = localStorage.getItem('shareName');
+					// var userData = JSON.parse(localStorage.getItem('userData'));
+					var sessionId = localStorage.getItem('sessionId');
 					var userId = userData.userId;
 					var fontStyle = $('#selectFontFamily').val();
 
@@ -1144,7 +1144,7 @@
 										.fadeOut('slow', function () {
 											$('#saveResume').removeAttr('pointer-events');
 										});
-									sessionStorage.setItem('userData', JSON.stringify(response.data));
+									localStorage.setItem('userData', JSON.stringify(response.data));
 
 									var logoImg = $('input[name="pic"]').get(0).files[0];
 									if (logoImg) {
@@ -1180,14 +1180,14 @@
 								'jobFunctionName': jobFunctionName
 							});
 							previewData.userId = userData.userId;
-							sessionStorage.setItem('previewData', JSON.stringify(previewData));
+							localStorage.setItem('previewData', JSON.stringify(previewData));
 						}
 					}
 				});
 				$("#downloadResume").click(function () {
 					if (validateFormData(applicantData)) {
 						$('.loading-container').show();
-						// var userStatus = sessionStorage.getItem('isPremiumUser');
+						// var userStatus = localStorage.getItem('isPremiumUser');
 						console.log(userStatus, 'downloadResume')
 						if (userData.paidUser) {
 							html2canvas(document.getElementById("contimprimir"), {

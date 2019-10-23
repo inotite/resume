@@ -3,8 +3,8 @@ function load() {
 	var someData_notJSON = JSON.parse(data);
 	console.log("someData_notJSON", someData_notJSON[0].red);
 }
-if (sessionStorage.getItem('plans')) {
-	sessionStorage.clear('plans');
+if (localStorage.getItem('plans')) {
+	localStorage.clear('plans');
 }
 (function ($) {
 
@@ -35,7 +35,7 @@ if (sessionStorage.getItem('plans')) {
 
 			attachEvents: function () {
 				var self = this;
-				if (sessionStorage.getItem("sessionId")) {
+				if (localStorage.getItem("sessionId")) {
 					window.location.href = location.origin + "/app/dashboard/home.html";
 				}
 				var urlArr = ['login', 'signup', 'forgotPassword', 'home', 'account', 'share'];
@@ -116,14 +116,14 @@ if (sessionStorage.getItem('plans')) {
 					doPostWithEncrypt(baseApiUrl + serviceUrls.post.loginResumeUser, signupData).then(response => {
 						console.log(response);
 						response = typeof (response) !== "object" ? JSON.parse(response) : response;
-						sessionStorage.clear();
+						localStorage.clear();
 						if (response.status == "success") {
-							sessionStorage.setItem('sessionId', response.sessionId);
-							sessionStorage.setItem("templateId", 2);
-							sessionStorage.setItem('userData', JSON.stringify(response.data));
-							sessionStorage.setItem('fromPage', 'signin');
-							sessionStorage.setItem('shareName', response.data.share_name);
-							sessionStorage.setItem('imageStore', response.data.pic);
+							localStorage.setItem('sessionId', response.sessionId);
+							localStorage.setItem("templateId", 2);
+							localStorage.setItem('userData', JSON.stringify(response.data));
+							localStorage.setItem('fromPage', 'signin');
+							localStorage.setItem('shareName', response.data.share_name);
+							localStorage.setItem('imageStore', response.data.pic);
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
 							$('.loading-container').css('display', 'none');
@@ -212,14 +212,14 @@ if (sessionStorage.getItem('plans')) {
 					// $('.loading-container').css('display', 'block');
 					// $.ajax(settings).done(function (response) {
 					// 	console.log('response new', response);
-					// 	sessionStorage.clear();
+					// 	localStorage.clear();
 					// 	if (response.status == "success") {
-					// 		// sessionStorage.setItem('userStatus', response.data.sessionId);
-					// 		sessionStorage.setItem('sessionId', response.data.sessionId);
-					// 		sessionStorage.setItem('userData', JSON.stringify(response.data));
-					// 		sessionStorage.setItem('shareName', response.shareName);
-					// 		sessionStorage.setItem('fromPage', 'signup');
-					// 		sessionStorage.setItem('imageStore', '');
+					// 		// localStorage.setItem('userStatus', response.data.sessionId);
+					// 		localStorage.setItem('sessionId', response.data.sessionId);
+					// 		localStorage.setItem('userData', JSON.stringify(response.data));
+					// 		localStorage.setItem('shareName', response.shareName);
+					// 		localStorage.setItem('fromPage', 'signup');
+					// 		localStorage.setItem('imageStore', '');
 					// 		window.location.href = window.location.origin + "/app/dashboard/home.html";
 					// 	} else {
 					// 		$('.loading-container').css('display', 'block');
@@ -235,14 +235,14 @@ if (sessionStorage.getItem('plans')) {
 					$('.loading-container').css('display', 'block');
 					doPostWithEncrypt(baseApiUrl + serviceUrls.post.signupResume, signupData).then(response => {
 						console.log('response new', response);
-						sessionStorage.clear();
+						localStorage.clear();
 						if (response.status == "success") {
-							// sessionStorage.setItem('userStatus', response.data.sessionId);
-							sessionStorage.setItem('sessionId', response.data.sessionId);
-							sessionStorage.setItem('userData', JSON.stringify(response.data));
-							sessionStorage.setItem('shareName', response.shareName);
-							sessionStorage.setItem('fromPage', 'signup');
-							sessionStorage.setItem('imageStore', '');
+							// localStorage.setItem('userStatus', response.data.sessionId);
+							localStorage.setItem('sessionId', response.data.sessionId);
+							localStorage.setItem('userData', JSON.stringify(response.data));
+							localStorage.setItem('shareName', response.shareName);
+							localStorage.setItem('fromPage', 'signup');
+							localStorage.setItem('imageStore', '');
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
 							$('.loading-container').css('display', 'none');

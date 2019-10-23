@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#ffffff">
   <title>Workruit — My Account</title>
   <script>
-    if (!sessionStorage.getItem('sessionId')) {
+    if (!localStorage.getItem('sessionId')) {
       window.location.href = window.location.origin + "/index.html";
     }
   </script>
@@ -20,7 +20,7 @@
   <div class="loading-container">
     <img src="../../assets/images/oval.svg" style="width:55px">
   </div>
-  <div id="newErrorMessageID" class="alert alert-danger">
+  <div id="newErrorMessageID" class="alert alert-danger" style="top:68px!important">
     <span class="message-text"></span>
     <!-- <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
         width="10" /></a> -->
@@ -294,7 +294,7 @@
       "url": baseResumeApiUrl + resumeServiceUrls.get.getCollegesInfo,
       "method": "GET",
       "headers": {
-        "token": JSON.parse(sessionStorage.getItem('userData')).sessionId,
+        "token": JSON.parse(localStorage.getItem('userData')).sessionId,
         "content-type": "application/json"
       },
     };
@@ -302,25 +302,25 @@
       $('#load-header').load('../includes/user-header.html');
       $('.account-page').paraCount();
       $(window).ready(function () {
-        JSON.parse(sessionStorage.getItem('userData')).email_verified === 0 ? $('#newSuccessMessageID').css(
+        JSON.parse(localStorage.getItem('userData')).email_verified === 0 ? $('#newSuccessMessageID').css(
           'display',
           'none') : $('.preview_btn').css('display', 'block');
-        // console.log(sessionStorage.getItem('isPremiumUser'));
-        if (sessionStorage.getItem('isPremiumUser') === 'true') {
+        // console.log(localStorage.getItem('isPremiumUser'));
+        if (localStorage.getItem('isPremiumUser') === 'true') {
           $('.premium-feature').removeClass('d-none');
         } else {
           $('.trail-feature').removeClass('d-none');
         }
-        var planDetails = JSON.parse(sessionStorage.getItem('userData')).planDetails;
-        if (sessionStorage.getItem('userData')) {
+        var planDetails = JSON.parse(localStorage.getItem('userData')).planDetails;
+        if (localStorage.getItem('userData')) {
           if (!planDetails.emailVerified) {
             $('.tabs-container').addClass('mt-5');
           }
         }
       })
-      // console.log(sessionStorage.getItem('previewData')) newSuccessMessageID
-      const userPlanStatus = JSON.parse(sessionStorage.getItem('userPlanStatus'));
-      sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $('.preview_btn')
+      // console.log(localStorage.getItem('previewData')) newSuccessMessageID
+      const userPlanStatus = JSON.parse(localStorage.getItem('userPlanStatus'));
+      localStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $('.preview_btn')
         .css('display', 'inline-block')
       $.ajax(getCollegesInfo).done(function (response) {
         // console.log(response);
@@ -333,7 +333,7 @@
           }));
           var option = `<option value="${clgInfo}" data-clgLogo="${element.logo}">${element.title}</option>`
           $('#collageName').append(option)
-          var userData = JSON.parse(sessionStorage.getItem('userData'));
+          var userData = JSON.parse(localStorage.getItem('userData'));
           var clgInfo2 = btoa(JSON.stringify({
             collegeName: userData.collegeName,
             collegeLogo: userData.collegeLogo
@@ -370,10 +370,10 @@
       // Get canvas contents as a data URL
       var imgAsDataURL = imgCanvas.toDataURL("image/png");
 
-      // Save image into sessionStorage
+      // Save image into localStorage
       try {
-        window.sessionStorage.setItem("imageStoreData", imgAsDataURL);
-        $('.sessionStorage-output').html(window.sessionStorage.getItem('imageStoreData'));
+        window.localStorage.setItem("imageStoreData", imgAsDataURL);
+        $('.localStorage-output').html(window.localStorage.getItem('imageStoreData'));
         $('.cont_fotodiv').css('background', 'transparent');
       } catch (e) {
         console.log("Storage failed: " + e);
@@ -393,7 +393,7 @@
       }
     }
 
-    $('#image-preview').attr('src', window.sessionStorage.getItem('imageStoreData'));
+    $('#image-preview').attr('src', window.localStorage.getItem('imageStoreData'));
 
     $('#inputfoto2').on('change', function () {
       readURL(this);

@@ -35,7 +35,7 @@
 				// 		}
 				// 	}
 				// });
-				let sessionId = sessionStorage.getItem('sessionId');
+				let sessionId = localStorage.getItem('sessionId');
 				if (!sessionId) {
 					//console.log("sessionId ::::::"+sessionId);
 					window.location.href = "../index.html";
@@ -43,7 +43,7 @@
 					getUserProfile();
 					var userId = userData.userId;
 					//console.log(userData);
-					var fromPage = sessionStorage.getItem('fromPage');
+					var fromPage = localStorage.getItem('fromPage');
 					//console.log("fromPage ::::::"+fromPage);
 					//if(fromPage == 'signin'){
 					$('#userName').text(userData.firstname + " " + userData.lastname);
@@ -53,10 +53,10 @@
 					$('input[name="email"]').val(userData.email);
 
 					//$('input[name="shareName"]').val(userData.share_name);
-					$('input[name="shareName"]').val(sessionStorage.getItem('shareName'));
-					$('#copyText').val(self.options.baseUrl + '/@' + sessionStorage.getItem('shareName'));
+					$('input[name="shareName"]').val(localStorage.getItem('shareName'));
+					$('#copyText').val(self.options.baseUrl + '/@' + localStorage.getItem('shareName'));
 
-					var pic = sessionStorage.getItem('imageStore');
+					var pic = localStorage.getItem('imageStore');
 					var picpath = pic.search('1631033876795164.jpg');
 
 					if (picpath > -1 || pic == '') {
@@ -84,7 +84,7 @@
 					$('#shareNameBtn').on('click', function () {
 
 						let shareName = $('input[name="shareName"]').val();
-						if (shareName !== JSON.parse(sessionStorage.getItem('userData')).share_name) {
+						if (shareName !== JSON.parse(localStorage.getItem('userData')).share_name) {
 							console.log(shareName, shareName.length, "shareName");
 							if (alphanumeric(shareName)) {
 								if (shareName.length >= 6 && shareName.length <= 20) {
@@ -102,7 +102,7 @@
 													"sharename": shareName
 												}
 												doPostWithEncrypt(baseApiUrl + serviceUrls.post.updateShareName, shareData).then(response => {
-													sessionStorage.setItem('shareName', shareName);
+													localStorage.setItem('shareName', shareName);
 													if (response.msg.title == "Success") {
 														getUserProfile();
 														$('#newSuccessMessageID .message-text').html(response.msg.description);
@@ -117,7 +117,7 @@
 															.delay(5000)
 															.fadeOut();
 													}
-													$('input[name="shareName"]').val(sessionStorage.getItem('shareName'));
+													$('input[name="shareName"]').val(localStorage.getItem('shareName'));
 												})
 											}
 
@@ -308,7 +308,7 @@
 						doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 							console.log(response);
 							if (response.status == "success") {
-								sessionStorage.setItem('userData', JSON.stringify(response.data));
+								localStorage.setItem('userData', JSON.stringify(response.data));
 								$('input[name="firstname"]').val(response.data.firstname);
 								$('input[name="lastname"]').val(response.data.lastname);
 								$('#newSuccessMessageID .message-text').html(response.msg);
@@ -340,7 +340,7 @@
 					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 						console.log(response);
 						if (response.status == "success") {
-							sessionStorage.setItem('userData', JSON.stringify(response.data));
+							localStorage.setItem('userData', JSON.stringify(response.data));
 							$('#newSuccessMessageID .message-text').html(response.msg);
 							$('#newSuccessMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
 								$('#updateProfile').attr('disabled', false);
@@ -364,16 +364,16 @@
 				});
 				$('#resume_piblic').change(function () {
 					var profileData = {
-						"firstname": JSON.parse(sessionStorage.getItem('userData')).firstname,
-						"lastname": JSON.parse(sessionStorage.getItem('userData')).lastname,
-						"email": JSON.parse(sessionStorage.getItem('userData')).email,
+						"firstname": JSON.parse(localStorage.getItem('userData')).firstname,
+						"lastname": JSON.parse(localStorage.getItem('userData')).lastname,
+						"email": JSON.parse(localStorage.getItem('userData')).email,
 						"hideResume": this.checked
 					};
 					// profileData.hideResume = this.checked
 					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 						//console.log(response);
 						if (response.status == "success") {
-							sessionStorage.setItem('userData', JSON.stringify(response.data));
+							localStorage.setItem('userData', JSON.stringify(response.data));
 							var statusMessage = response.data.hideResume == true ? "Now your resume is in private mode" : "Now your resume is in public mode";
 							$('#newSuccessMessageID .message-text').html(statusMessage);
 							$('#newSuccessMessageID').html(statusMessage)
@@ -395,33 +395,19 @@
 				form.append("userId", userId);
 				form.append("type", "photo");
 				form.append("file", logoImg);
-
-				var imageSettings = {
-					"async": true,
-					"crossDomain": true,
-					"url": baseApiUrl + serviceUrls.post.uploadFile,
-					"method": "POST",
-					"headers": {
-						"token": sessionId,
-						"cache-control": "no-cache",
-					},
-					"processData": false,
-					"contentType": false,
-					"mimeType": "multipart/form-data",
-					"data": form
-				}
-				$.ajax(imageSettings).done(function (responseData) {
-					var response = JSON.parse(responseData)
+				doUpload(baseApiUrl + serviceUrls.post.uploadFile, form).then(response => {
+					console.log(response);
+					// var response = JSON.parse(response)
 					//console.log(response.data.httpPath);
 					if (response.status == 'success') {
-						sessionStorage.setItem('imageStore', response.data.httpPath);
+						localStorage.setItem('imageStore', response.data.httpPath);
 						$('#profileMenu img').attr('src', response.data.httpPath);
 						$('#profilePicEdit').attr('src', response.data.httpPath);
 						$('#myModelUploadPhoto').modal('hide');
 					} else {
 						$('<div class="invalid-feedback">' + response.msg.description + '</div>').insertAfter$('#select-pic-section');
 					}
-				});
+				})
 			}
 		};
 
@@ -457,7 +443,7 @@ function getUserProfile() {
 		} else {
 			$('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
 		}
-		sessionStorage.setItem('userData', JSON.stringify(userProfileData));
+		localStorage.setItem('userData', JSON.stringify(userProfileData));
 		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);
 	});

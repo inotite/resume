@@ -8,10 +8,10 @@ var priceInfoData = false;
 $(window).ready(function () {
     $('#load-header').load('../includes/user-header.html');
     console.log("priceCalculationObj>>>>>", priceCalculationObj, priceCalculationObj.planInfo.planId == 1);
-    var userInfo = JSON.parse(sessionStorage.getItem("userData"));
+    var userInfo = JSON.parse(localStorage.getItem("userData"));
     if (userInfo.planDetails.emailVerified && priceCalculationObj, priceCalculationObj.planInfo.planId != 1) {
         $('.status').css('display', 'flex');
-        var userData = JSON.parse(sessionStorage.getItem("userData"));
+        var userData = JSON.parse(localStorage.getItem("userData"));
         // Price Calculation
         var priceCalculationUrl = baseResumeApiUrl + "user/" + userData.userId + resumeServiceUrls.post.priceCalculation;
         priceCalculationObj.planId = priceCalculationObj.planInfo.planId;
@@ -131,6 +131,7 @@ $(window).ready(function () {
         document.getElementById('planTitle').innerText = 0.00;
         document.getElementById('subtotal').innerText = 0.00;
         document.getElementById('totalprice').innerText = 0.00;
+        $('.loading-container').delay(1000).fadeOut();
         $('.price-summary-box').removeClass('d-none');
     } else {
         $('.loading-container').delay(1000).fadeOut();
