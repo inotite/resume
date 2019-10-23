@@ -2525,4 +2525,12 @@ $(window).ready(function () {
     }
 
     ratingCircle();
+    $('[contenteditable="true"]').bind('dragover drop', function(event){
+        event.preventDefault();
+        return false;
+    });
+    $('input').bind('dragover drop', function(event){
+        event.preventDefault();
+        return false;
+    });
 });

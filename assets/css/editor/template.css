@@ -542,6 +542,7 @@ aside * {
     right: 0;
     top: 16px;
     bottom: 0;
+    cursor: pointer;
 }
 
 .w-small {

@@ -888,6 +888,9 @@ $(window).ready(function () {
             });
 
             $("#skills_item_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
+            $('#skills_item_' + num + ' .skill-value').click(function(e) {
+                $(this).parent().find('.skills-bar').click();
+            });
         }
         if ($('.skills-item').length == 16) {
             $('.skills-item .add_skills').addClass('d-none');
@@ -1554,6 +1557,9 @@ $(window).ready(function () {
         });
 
         validateSkills();
+        $('.skill-value').click(function(e) {
+            $(this).parent().find('.skills-bar').click();
+        });
     }
 
     function selectRatingCircle(a, percentage) {
@@ -2440,4 +2446,12 @@ $(window).ready(function () {
     }
 
     ratingCircle();
+    $('[contenteditable="true"]').bind('dragover drop', function(event){
+        event.preventDefault();
+        return false;
+    });
+    $('input').bind('dragover drop', function(event){
+        event.preventDefault();
+        return false;
+    });
 });
