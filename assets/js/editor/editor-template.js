@@ -1044,11 +1044,13 @@ $(window).ready(function () {
     $('#downloadResume').on('click', async function () {
         // if (planInfo.subscribedUser) {
             if (!$('.editorNav').hasClass('d-none')) {
+                $('#downloadResume').addClass('inactive-link');
                 bindUserDataForSave();
                 saveUserProfile(postObj, "download");
                 showMultiplePages();
                 await savePdf();
                 hideMultiplePages();
+                $('#downloadResume').removeClass('inactive-link');
             } else {
                 console.log("hey, here!");
                 await savePdf();

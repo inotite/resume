@@ -950,6 +950,7 @@ input {
 
 .project-desc {
     width: 100%;
+    box-sizing: border-box;
 }
 
 .info-years {
@@ -968,4 +969,9 @@ input {
 .watermark-css {
     position: absolute;
     z-index: -2;
+}
+
+.inactive-link {
+    pointer-events: none;
+    cursor: default;
 }

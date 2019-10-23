@@ -48,7 +48,6 @@
     <div id="resumeTemplate"></div>
     <script src="../../assets/vendors/js/w3includes.js"></script>
     <script src="../../assets/vendors/js/jquery-3.3.1.min.js"></script>
-    <script src="../../assets/js/editor/editor-template-constant.js"></script>
     <script src="../../assets/js/editor/editor-template-handler.js"></script>
     <script>
         includeHTML();
@@ -59,30 +58,30 @@
             var templateId = localStorage.getItem('templateId');
             // console.log(templateId);
             switch (templateId) {
-                case '1':
-                    console.log("templateId", templateId)
-                    $('#resumeTemplate').load('templates/template-1.html');
-                    break;
-                case '2':
-                    $('#resumeTemplate').load('templates/template-2.html');
-                    break;
-                case '3':
-                    $('#resumeTemplate').load('templates/template-3.html');
-                    break;
-                case '4':
-                    $('#resumeTemplate').load('templates/template-4.html');
-                    break;
-                case '5':
-                    $('#resumeTemplate').load('templates/template-5.html');
-                    break;
-                case '6':
-                    $('#resumeTemplate').load('templates/template-6.html');
-                    break;
-                case '7':
-                    $('#resumeTemplate').load('templates/template-7.html');
-                    break;
+                // case '1':
+                //     console.log("templateId", templateId)
+                //     $('#resumeTemplate').load('templates/template-1.html');
+                //     break;
+                // case '2':
+                //     $('#resumeTemplate').load('templates/template-2.html');
+                //     break;
+                // case '3':
+                //     $('#resumeTemplate').load('templates/template-3.html');
+                //     break;
+                // case '4':
+                //     $('#resumeTemplate').load('templates/template-4.html');
+                //     break;
+                // case '5':
+                //     $('#resumeTemplate').load('templates/template-5.html');
+                //     break;
+                // case '6':
+                //     $('#resumeTemplate').load('templates/template-6.html');
+                //     break;
+                // case '7':
+                //     $('#resumeTemplate').load('templates/template-7.html');
+                //     break;
                 default:
-                    $('#resumeTemplate').load('templates/template-2.html');
+                    $('#resumeTemplate').load('templates/template-7.html');
                     break;
             }
             // } else {

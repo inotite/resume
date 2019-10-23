@@ -13,24 +13,23 @@
     <meta data-content="theme-color" content="#ffffff">
 
     <script>
-        var sessionId = localStorage.getItem('sessionId');
-        if (!sessionId) {
-            window.location.href = "../index.html";
+        if (!sessionStorage.getItem('sessionId')) {
+            window.location.href = "../../../index.html";
         }
     </script>
     <!--<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">-->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700,900" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,600,700" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900i&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" crossorigin="anonymous">
     <!-- <link href="plugins/datedropper/datedropper.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="css/bootstrap-datepicker3.standalone.css" />
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/nice-select.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/template-7.css" />
+    <link rel="stylesheet" type="text/css" href="../../../assets/vendors/css/bootstrap-datepicker3.standalone.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/vendors/css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/vendors/css/nice-select.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../assets/vendors/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/editor/template-7.css" />
 </head>
 
 <body>
@@ -38,13 +37,13 @@
     <div id="newErrorMessageID" class="alert alert-danger">
         <b class="message-text"></b>
         <a href='javascript:void(0)' class="close" aria-label="close" title="close">
-            <img src="../images/app/icons/close.png" width="10" />
+            <img src="../../../assets/images/app/icons/close.png" width="10" />
         </a>
     </div>
     <div id="newSuccessMessageID" class="alert alert-success">
         <b class="message-text"></b>
         <a href="javascript:void(0)" class="close" aria-label="close" title="close">
-            <img src="../images/app/icons/close.png" width="10" />
+            <img src="../../../assets/images/app/icons/close.png" width="10" />
         </a>
     </div>
     <!-- /Error Messages -->
@@ -55,7 +54,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav align-items-center">
                         <li class="nav-item" id="previousPage">
-                            <a class="nav-link" href="../../home/index.html"><img src="img/back-arrow-icon.png"
+                            <a class="nav-link" href="../../dashboard/home.html"><img src="../../../assets/images/resume/back-arrow-icon.png"
                                     height="24" /></a>
                         </li>
                         <li class="nav-item dropdown theme-picker">
@@ -75,18 +74,32 @@
                                         data-oldcolor='theme-green'></span></a>
                             </div>
                         </li>
-                        <li class="nav-item theme-picker">
-                            <a class="nav-link dropdown-toggle font selected-font" href="#" id="navbarDropdownMenuLink"
-                                role="button" data-toggle="dropdown" data-font="" aria-haspopup="true"
-                                aria-expanded="false">
-                                Merriweather </a>
-                            <div class="dropdown-menu font-items" aria-labelledby="navbarDropdownMenuLink">
-                            </div>
+                        <li class="nav-item theme-picker page-font">
+                            <span class="nav-link font">
+                                <p class="nav-hint">Page font</p>
+                                <a class="dropdown-toggle selected-font" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-toggle="dropdown" data-font="" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Merriweather </a>
+                                <div class="dropdown-menu font-items" aria-labelledby="navbarDropdownMenuLink">
+                                </div>
+                            </span>
+                        </li>
+                        <li class="nav-item theme-picker title-headers">
+                            <span class="nav-link font">
+                                <p class="nav-hint">Title font</p>
+                                <a class="dropdown-toggle selected-font" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-toggle="dropdown" data-font="" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Merriweather </a>
+                                <div class="dropdown-menu font-items" aria-labelledby="navbarDropdownMenuLink">
+                                </div>
+                            </span>
                         </li>
                         <li class="nav-item theme-picker-2 theme-picker">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="img/settings-icon.png" height="24" />
+                                <img src="../../../assets/images/resume/settings-icon.png" height="24" />
                             </a>
                             <div class="dropdown-menu actions theme-black" data-oldcolor="theme-black"
                                 aria-labelledby="navbarDropdownMenuLink">
@@ -102,36 +115,32 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav align-items-center">
                         <li class="nav-item" id="previewResume">
-                            <a class="nav-link" href="#"><img src="img/view-icon.png" height="24" /></a>
+                            <a class="nav-link" href="#"><img src="../../../assets/images/resume/view-icon.png" height="24" /></a>
                         </li>
                         <li class="nav-item d-none" id="previewBack">
-                            <a class="nav-link" href="#"><img src="img/back-arrow-icon.png" height="24" /></a>
+                            <a class="nav-link" href="#"><img src="../../../assets/images/resume/back-arrow-icon.png" height="24" /></a>
                         </li>
                         <li class="nav-item" id="saveResume">
-                            <a class="nav-link" href="#"><img src="img/save-icon.png" height="24" /></a>
+                            <a class="nav-link" href="#"><img src="../../../assets/images/resume/save-icon.png" height="24" /></a>
                         </li>
                         <li class="nav-item" id="downloadResume">
-                            <a class="nav-link" href="#"><img src="img/download-icon.png" height="24" /></a>
+                            <a class="nav-link" href="#"><img src="../../../assets/images/resume/download-icon.png" height="24" /></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
 
-
-
-
-
         <div class="container m-auto resume-container theme-black" data-oldcolor="theme-black">
             <section class="mb-3">
                 <page size="a4" id="resume-body">
-                    <div class="row">
+                    <div class="row" id="resume-title">
                         <aside class="col-3 text-break">
                             <div>
                                 <div>
                                     <label for="user-picture" class="res_picture">
-                                        <img src="https://via.placeholder.com/140" alt="..." class="rounded-circle"
-                                            id="user_pic">
+                                        <!-- <img src="https://via.placeholder.com/140" alt="..." class="rounded-circle"
+                                            id="user_pic"> -->
                                         <input type="file" data-content="picture"
                                             accept="image/x-png,image/gif,image/jpeg" id="user-picture" class="d-none">
 
@@ -140,15 +149,13 @@
                         </aside>
                         <div class="col-9">
                             <div class="row">
-                                <div class="col-9 pl-0 px-1">
+                                <div class="col-9">
                                     <div class="personal_info">
                                         <h1 class="user_title font-26pt">
                                             <span class="user_firstname color" contenteditable="true"
-                                                placeholder="Firstname" data-content="firstname"
-                                                onkeypress="return (this.innerText.length <= 18)"></span>
+                                                placeholder="Firstname" data-content="firstname"></span>
                                             <span class="user_lastname color" contenteditable="true"
-                                                placeholder="Lastname" data-content="lastname"
-                                                onkeypress="return (this.innerText.length <= 18)"></span>
+                                                placeholder="Lastname" data-content="lastname"></span>
                                         </h1>
                                         <!-- <h2 class="support_title text-uppercase font-12pt" contenteditable="true"
                                                     placeholder="Job Function" id="allDegrees" data-content="jobfunctions"
@@ -156,246 +163,76 @@
                                         <input type="text" id="allJobFunctions"
                                             class="p-0 pl-1 support_title border-0 w-100 text-uppercase font-12pt mb-2"
                                             placeholder="Job Function" data-content="jobfunctions" data-item-id="">
+                                        <ul class="list-unstyled m-0 pl-1 w-100">
+                                            <li class="d-flex justify-content-start align-items-center mb-2">
+                                                <div class="social-svg">
+                                                    <img src="../../../assets/images/resume/svg/email.svg"
+                                                        class="svg color font-14pt" />
+                                                </div>
+                                                <div class="social-container">
+                                                    <p contenteditable="true" placeholder="Email" class="m-0 ml-1 font-10pt w-100 bb" data-content="email"></p>
+                                                </div>
+                                            </li>
+                                            <li class="d-flex justify-content-start align-items-center mb-2">
+                                                <div class="social-svg">
+                                                    <img src="../../../assets/images/resume/svg/phone.svg"
+                                                        class="svg color font-14pt" />
+                                                </div>
+                                                <div class="social-container">
+                                                    <p contenteditable="true" placeholder="Phone" data-content="phone" class="social-phone m-0 ml-1 font-10pt bb"></p>
+                                                </div>
+            
+                                            </li>
+                                            <li class="d-flex justify-content-start align-items-center mb-2 mt-top">
+                                                <div class="social-svg">
+                                                    <img src="../../../assets/images/resume/svg/location-wir.svg"
+                                                        class="svg color font-14pt" />
+                                                </div>
+                                                <!-- <img src="img/maps-and-flags.svg" alt=""> -->
+                                                <div class="social-container">
+                                                    <p contenteditable="true" placeholder="Location" data-content="location" class="info-location m-0 ml-1 font-10pt bb w-100"></p>
+                                                </div>
+                                            </li>
+                                        </ul>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="professional_info">
-                                    <p class="text-uppercase  px-1 section_title title_info mb-1 pb-0">Personal Info</p> -->
-
-
 
                     <div class="row">
-                        <!--  Left side===================   -->
-                        <div class="col-9">
-                            <!--   About me ==================== -->
-                            <div class="user_info">
-                                <h4 class="section_title mt-3 text-uppercase font-10pt">About Me</h4>
-                                <p class="info title_info designation_info mb-2 font-10pt" id="aboutme"
-                                    placeholder="About me" onkeypress="return (this.innerText.length <= 149)"
+
+                        <div class="col-3" id="resume-side">
+                            <div class="user_info row px-1" id="resume-memo">
+                                <h4 class="section_title mt-3 text-uppercase font-10pt px-2 sub-header">About Me</h4>
+                                <p class="info title_info designation_info mb-2 font-10pt px-2" id="aboutme"
                                     data-content="coverLetter" contenteditable="true"></p>
                             </div>
 
-                            <div class="row mt-3 flex-column mb-1 px-2">
-                                <h4 class="section_title text-uppercase font-10pt px-2">Work experience</h4>
-                                <div class="border-dashed professional-experience px-1" id="proExp_1">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <p class="font-10pt mb-2 color">
-                                            <span class="exp-role" data-content="exp_jobTitle" contenteditable="true"
-                                                placeholder="Role"
-                                                onkeypress="return (this.innerText.length <= 39)"></span>, 
-                                                <span class="exp-company" data-content="exp_company" contenteditable="true"
-                                                placeholder="Company"
-                                                onkeypress="return (this.innerText.length <= 40)"></span></p>
-                                        <div>
-                                            <p class="font-10pt mb-2 theme-text-dark saperator">
-                                                <input
-                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0 text-right"
-                                                    data-content="exp_startDate" type="text" placeholder="Start Date">
-                                                <input
-                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0 text-right"
-                                                    data-content="exp_endDate" type="text" placeholder="End Date"></p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="font-10pt mb-2 theme-text-dark">
-                                             <span
-                                                class="exp-role" contenteditable="true" data-content="exp_location"
-                                                placeholder="Location"
-                                                onkeypress="return (this.innerText.length <= 40)"></span></p>
-                                    </div>
-                                    <div>
-                                        <p class="font-10pt mb-2" contenteditable="true" data-content="exp_description"
-                                            placeholder="Enter Details About Your Work Responsibilities Here."
-                                            onkeypress="return (this.innerText.length <= 299)"></p>
-                                    </div>
-                                    <ul class="append-section-actions list-inline bottom-50">
-                                        <li
-                                            class="list-inline-item remove_exp remove_icon color cursor-pointer mr-1 d-none">
-                                            <!-- <i class="fas fa-minus font-12pt color"></i> -->
-                                        </li>
-                                        <li class="list-inline-item add_exp add_icon color cursor-pointer m-0">
-                                            <!-- <i class="fas fa-plus font-12pt color"></i> -->
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div><!-- end of experience -->
-
-                            <div class="row flex-column mb-1 px-2">
-                                <h4 class="section_title text-uppercase font-10pt px-2">Education</h4>
-                                <div class="border-dashed education-details px-1" id="education_1">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>
-                                            <p class="font-10pt mb-2 color"><span class="exp-role"
-                                                    contenteditable="true" data-content="fieldOfStudy"
-                                                    placeholder="Field Of Study"
-                                                    onkeypress="return (this.innerText.length <= 40)"></span>, 
-                                                <span class="exp-company" data-content="degree_title" 
-                                                contenteditable="true" placeholder="Degree"
-                                                onkeypress="return (this.innerText.length <= 29)"></span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="font-10pt mb-2 theme-text-dark saperator">
-                                                <input
-                                                    class="info title_info font-10pt location text-right month-picker w-small mb-0 border-0"
-                                                    type="text" data-content="edu_startDate" placeholder="Start Date">
-                                                <input
-                                                    class="info title_info font-10pt location text-right month-picker w-small mb-0 border-0"
-                                                    type="text" data-content="edu_endDate" placeholder="End Date">
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="pl-1p8x">
-                                        <input type="text"
-                                            class="p-0 aligned_input support_title border-0 w-100 font-10pt degrees mb-2 w-100"
-                                            onkeypress="return (this.innerText.length <= 50)" placeholder="Degree"
-                                            data-content="degree_title">
-                                    </div> -->
-                                    <div>
-                                        <p class="font-10pt mb-2 theme-text color"><span class="exp-role"
-                                                data-content="edu_institution" contenteditable="true"
-                                                placeholder="School"
-                                                onkeypress="return (this.innerText.length <= 40)"></span>, 
-                                            <span class="exp-role" data-content="edu_location" contenteditable="true"
-                                                placeholder="Location"
-                                                onkeypress="return (this.innerText.length <= 40)"></span></p>
-                                    </div>
-                                    <div>
-                                        <p class="font-10pt mb-2" contenteditable="true" data-content="edu_description"
-                                            placeholder="Enter Details About Your Education Here"
-                                            onkeypress="return (this.innerText.length <= 299)"></p>
-                                    </div>
-                                    <ul class="append-section-actions list-inline bottom-50">
-                                        <li
-                                            class="list-inline-item remove_edu remove_icon color cursor-pointer d-none mr-1">
-                                            <!-- <i class="fas fa-minus font-12pt color"></i> -->
-                                        </li>
-                                        <li class="list-inline-item add_edu add_icon color cursor-pointer m-0">
-                                            <!-- <i class="fas fa-plus font-12pt color"></i> -->
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> <!--   End of Education -->
-                            <div class="row flex-column  mb-1 px-2" id="academic-section">
-                                <h4 class="section_title text-uppercase font-10pt px-2">Academic Projects
-                                </h4>
-                                <div class="border-dashed academic-project px-1" id="academic_projects_1">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <p class="font-10pt mb-2 theme-text color"><span class="exp-role"
-                                                contenteditable="true" data-content="acd_projectTitle"
-                                                placeholder="Project Title"
-                                                onkeypress="return (this.innerText.length <= 30)"></span>,
-                                            <span class="exp-company" data-content="acd_role" contenteditable="true"
-                                                placeholder="Role"
-                                                onkeypress="return (this.innerText.length <= 30)"></span></p>
-                                        <div>
-                                            <p class="font-10pt mb-2 theme-text-dark saperator">
-                                                <input
-                                                    class="info title_info text-right font-10pt location month-picker w-small mb-0 border-0"
-                                                    type="text" data-content="acd_startDate" placeholder="Start Date">
-                                                <input
-                                                    class="info title_info font-10pt text-right location month-picker w-small mb-0 border-0"
-                                                    type="text" data-content="acd_endDate" placeholder="End Date">
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="font-10pt mb-2 theme-text-dark">
-                                            <span class="exp-company" data-content="acd_institution"
-                                                contenteditable="true" placeholder="University"
-                                                onkeypress="return (this.innerText.length <= 40)"></span>, <span
-                                                class="exp-role" contenteditable="true" data-content="acd_location"
-                                                placeholder="Location"
-                                                onkeypress="return (this.innerText.length <= 40)"></span></p>
-                                    </div>
-                                    <div>
-                                        <p class="font-10pt mb-2" contenteditable="true" data-content="acd_description"
-                                            placeholder="Enter Details About Your Project Here"
-                                            onkeypress="return (this.innerText.length <= 299)"></p>
-                                    </div>
-                                    <ul class="append-section-actions list-inline bottom-50">
-                                        <li
-                                            class="list-inline-item  remove_acad remove_icon color cursor-pointer mr-1 d-none">
-                                            <!-- <i class="fas fa-minus font-12pt color"></i> -->
-                                        </li>
-                                        <li class="list-inline-item add_acad add_icon color cursor-pointer m-0">
-                                            <!-- <i class="fas fa-plus font-12pt color"></i> -->
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> <!-- End of Projects  -->
-
-                            <div class="row flex-column mb-1 px-2" id="achievements-section">
-                                <h4 class="section_title px-2 text-uppercase font-10pt ">Achievements</h4>
-                                <p class="font-10pt mb-2 px-2" contenteditable="true" placeholder="Description"
-                                    data-content="achivements" onkeypress="return (this.innerText.length <= 299)"></p>
-                            </div>
-                            <div class="row  flex-column px-2" id="certifications-section">
-                                <h4 class="section_title px-2 text-uppercase font-10pt ">Interests</h4>
-                                <p class="font-10pt mb-2 px-2" contenteditable="true" placeholder="Description"
-                                    data-content="certifications" onkeypress="return (this.innerText.length <= 299)">
-                                </p>
-                            </div>
-
-                        </div><!--  ==============  Final div class for col-9  ==============  -->
-
-
-                        <div class="col-3">
-                            <p class="text-uppercase section_title title_info mb-1 mt-3">Social</p>
-                            <ul class="list-unstyled m-0 pl-1">
-                                <li class="d-flex justify-content-start align-items-center mr-3 mb-2">
-                                    <i class="fas fa-envelope color  font-13pt"></i>
-                                    <p contenteditable="true" placeholder="Email" class="m-0 ml-1 font-10pt bb"
-                                        onkeypress="return (this.innerText.length <= 30)" data-content="email"></p>
-                                </li>
-                                <li class="d-flex justify-content-start align-items-center mb-2">
-                                    <i class="fas fa-phone-square-alt color  font-14pt"></i>
-                                    <p contenteditable="true" placeholder="Phone" class="m-0 ml-1 font-10pt bb"
-                                        onkeypress="return (this.innerText.length <= 14)" data-content="phone"></p>
-
-                                </li>
-                                <li class="d-flex justify-content-start align-items-center mb-2 mt-top">
-                                    <i class="fas fa-map-marker-alt color  font-14pt"></i>
-                                    <!-- <img src="img/maps-and-flags.svg" alt=""> -->
-                                    <p contenteditable="true" placeholder="Location" class="m-0 ml-1 font-10pt bb"
-                                        onkeypress="return (this.innerText.length <= 25)" data-content="Location"></p>
-                                </li>
-                                <li class="d-flex justify-content-start align-items-center mb-2 mr-3 mt-top">
-                                    <i class="fab fa-linkedin color font-14pt"></i>
-                                    <p contenteditable="true" placeholder="LinkedIn" class="m-0 ml-1 font-10pt bb"
-                                        onkeypress="return (this.innerText.length <= 75)" data-content="LinkedIn"></p>
-                                </li>
-                            </ul>
-
-
-
-                            <div class="row flex-column px-1 mt-3" id="skills-section">
-
-
-                                <h4 class="section_title text-uppercase font-10pt px-2 ml-2">Skills</h4>
+                            <div class="row flex-column px-1 mt-3 skill-row" id="skills-section">
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Skills</h4>
                                 <div class="skills-section">
                                     <ul class="list-unstyled w-100 skills-list mb-2">
-                                        <li class=" border-dashed m-0 mb-2 pl-7x skills-item" id="skills_item_1">
-                                            <div class="skill-box">
-                                                <input type="text"
-                                                    class=" aligned_input resume-input ml-2 skill-input-value skills w-14rem border-0 font-10pt mb-2"
-                                                    placeholder="Skill name" data-content="skillText">
-                                                <div class="rating-container line-lang">
-                                                    <ul class="list-inline px-1 skills-line">
+                                        <li class="d-flex border-dashed m-0 mb-2 skills-item" id="skills_item_1">
+                                            <div class="skill-box w-100">
+                                                <p type="text"
+                                                class="skill-name aligned_input resume-input skill-input-value skills border-0 font-10pt"
+                                                contenteditable="true"
+                                                placeholder="Skill Name" data-content="skillText"></p>
+                                                <div class="rating-container line-lang w-100">
+                                                    <ul class="list-inline px-1">
                                                         <li class="list-inline-item rating-circle m-0 rating-chosen"
-                                                            data-langpercentage=''>
+                                                            data-skillpercentage=''>
                                                         </li>
                                                         <li class="list-inline-item rating-circle m-0 line-merg rating-chosen"
-                                                            data-langpercentage=''>
+                                                            data-skillpercentage=''>
                                                         </li>
                                                         <li class="list-inline-item rating-circle m-0 line-merg"
-                                                            data-langpercentage=''>
+                                                            data-skillpercentage=''>
                                                         </li>
                                                         <li class="list-inline-item rating-circle m-0 line-merg"
-                                                            data-langpercentage=''>
+                                                            data-skillpercentage=''>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -414,225 +251,228 @@
                                 </div>
                             </div> <!-- end of skills   -->
 
-                            <h4 class="section_title text-uppercase font-10pt px-2">Language</h4>
-                            <ul class="list-unstyled">
-                                <li class="d-flex align-items-center px-1 border-dashed lang_details" id="lang_1">
-                                    <p contenteditable="true" class="lang-text font-10pt mb-2"
-                                        data-content="languageName" onkeypress="return (this.innerText.length <= 10)"
-                                        placeholder="Language"></p>
-                                    <div class="rating-container line-lang">
-                                        <ul class="list-inline px-1 line-left">
-                                            <li class="list-inline-item rating-circle m-0 rating-chosen"
-                                                data-langpercentage=''>
-                                            </li>
-                                            <li class="list-inline-item rating-circle m-0 line-merg rating-chosen"
-                                                data-langpercentage=''>
-                                            </li>
-                                            <li class="list-inline-item rating-circle m-0 line-merg"
-                                                data-langpercentage=''>
-                                            </li>
-                                            <li class="list-inline-item rating-circle m-0 line-merg"
-                                                data-langpercentage=''>
-                                            </li>
-                                        </ul>
-                                    </div>
+                            <div class="row flex-column px-1 mt-3" id="language-section">
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Language</h4>
+                                <div class="language-section">
+                                    <ul class="list-unstyled w-100 mb-2">
+                                        <li class="d-flex align-items-center border-dashed lang_details mb-2 language-item" id="lang_1">
+                                            <div class="language-box w-100">
+                                                <p contenteditable="true" class="info-language lang-text font-10pt mb-0 w-100" data-content="languageName"
+                                                    placeholder="Language"></p>
+                                                <div class="rating-container line-lang w-100">
+                                                    <ul class="list-inline px-1">
+                                                        <li class="list-inline-item rating-circle m-0 rating-chosen"
+                                                            data-langpercentage=''>
+                                                        </li>
+                                                        <li class="list-inline-item rating-circle m-0 line-merg rating-chosen"
+                                                            data-langpercentage=''>
+                                                        </li>
+                                                        <li class="list-inline-item rating-circle m-0 line-merg"
+                                                            data-langpercentage=''>
+                                                        </li>
+                                                        <li class="list-inline-item rating-circle m-0 line-merg"
+                                                            data-langpercentage=''>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+    
+                                            <ul class="append-section-actions list-inline">
+                                                <li
+                                                    class="list-inline-item cursor-pointer remove_icon small-size color mr-1 remove_lang">
+                                                    <!-- <i class="fas fa-minus font-12pt color"></i> -->
+                                                </li>
+                                                <li
+                                                    class="list-inline-item cursor-pointer add_icon small-size color m-0 add_lang">
+                                                    <!-- <i class="fas fa-plus font-12pt color"></i> -->
+                                                </li>
+                                            </ul>
+                                        </li>
+    
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
-                                    <ul class="append-section-actions list-inline">
+                        <div class="col-9">
+                            <div class="row mt-3 flex-column mb-1 px-2" id="experience-section">
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Work experience</h4>
+                                <div class="border-dashed professional-experience px-1" id="proExp_1">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <div class="font-10pt mb-2 color experience-title-container">
+                                            <div class="exp-role" data-content="exp_jobTitle" contenteditable="true"
+                                                placeholder="Role"></div>, 
+                                            <div class="exp-company" data-content="exp_company" contenteditable="true"
+                                            placeholder="Company"></div>
+                                        </div>
+                                        
+                                        <div style="flex: initial;">
+                                            <p class="font-10pt mb-2 theme-text-dark w-100" data-picker="true">
+                                                <input
+                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0 text-right"
+                                                    data-content="exp_startDate" type="text" placeholder="Start Date">
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                                                <input
+                                                    class="info title_info font-10pt location month-picker w-small mb-0 border-0 text-right"
+                                                    data-content="exp_endDate" type="text" placeholder="End Date">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="font-10pt mb-2 theme-text-dark">
+                                             <span
+                                                class="exp-location" contenteditable="true" data-content="exp_location"
+                                                placeholder="Location"></span></p>
+                                    </div>
+                                    <div>
+                                        <p class="exp-desc font-10pt mb-2" contenteditable="true" data-content="exp_description"
+                                            placeholder="Enter Details About Your Work Responsibilities Here."></p>
+                                    </div>
+                                    <ul class="append-section-actions list-inline bottom-50">
                                         <li
-                                            class="list-inline-item cursor-pointer remove_icon small-size color mr-1 remove_lang">
+                                            class="list-inline-item remove_exp remove_icon color cursor-pointer mr-1 d-none">
                                             <!-- <i class="fas fa-minus font-12pt color"></i> -->
                                         </li>
-                                        <li
-                                            class="list-inline-item cursor-pointer add_icon small-size color m-0 add_lang">
+                                        <li class="list-inline-item add_exp add_icon color cursor-pointer m-0">
                                             <!-- <i class="fas fa-plus font-12pt color"></i> -->
                                         </li>
                                     </ul>
-                                </li>
+                                </div>
+                            </div><!-- end of experience -->
 
-                            </ul>
-                        </div>
-
-                    </div> <!--  ==============  Final div class for col-3  ==============        -->
-
-
-        </div><!--   =======================     Final div for row   ======================= -->
-
-        <!-- <div class="user_info">
-                                        <p class="title_info section_title theme-text  px-1 color m-0 mt-3 pb-0">Years
-                                            of
-                                            experience
-                                        </p>
-                                        <p class="info title_info  px-1 years_of_experience mb-0" contenteditable="true"
-                                            onkeypress="return (this.innerText.length <= 10)"
-                                            placeholder="Years of experience" data-content="totalexperience"></p>
-                                    </div> -->
-
-        <!-- 
-                                    <div class="row flex-column  mb-1" id="skills-section">
-                                        <h4 class="section_title text-uppercase font-10pt px-2">Skills</h4>
-                                        <div class="skills-section">
-                                            <ul class="list-inline w-100 skills-list mb-0">
-                                                <li class=" border-dashed m-0 mb-3 skills-item" id="skills_item_1">
-                                                    <div class="skill-box">
-                                                        <input type="text"
-                                                            class=" aligned_input resume-input  skill-input-value skills border-0 font-10pt mb-2"
-                                                            placeholder="Skill name" data-content="skillText">
-                                                            <ul class="list-inline line-skill">
-                                                                <li class="list-inline-item rating-circle m-0"
-                                                                    data-langpercentage=''></li>
-                                                                <li class="list-inline-item rating-circle m-0"
-                                                                    data-langpercentage=''></li>
-                                                                <li class="list-inline-item rating-circle m-0"
-                                                                    data-langpercentage=''></li>
-                                                                <li class="list-inline-item rating-circle m-0"
-                                                                    data-langpercentage=''></li>
-                                                            </ul>
-                                                        
-                                                    </div>
-                                                    <ul class="append-section-actions list-inline bottom-50">
-                                                        <li
-                                                            class="list-inline-item remove_skills remove_icon color cursor-pointer mr-1"> -->
-        <!-- <i class="fas fa-minus font-12pt color"></i> -->
-        <!-- </li>
-                                                        <li -->
-        <!-- class="list-inline-item add_skills add_icon color cursor-pointer m-0"> -->
-        <!-- <i class="fas fa-plus font-12pt color"></i> -->
-        <!-- </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
+                            <div class="row flex-column mb-1 px-2" id="education-section">
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Education</h4>
+                                <div class="border-dashed education-details px-1" id="education_1">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <div class="font-10pt mb-2 color education-title-container">
+                                            <span class="edu-field"
+                                                contenteditable="true" data-content="fieldOfStudy"
+                                                placeholder="Field Of Study"></span>, 
+                                            <input class="p-0 aligned_input support_title border-0 font-10pt degrees edu-degree" data-content="degree_title" placeholder="Degree"></input>
                                         </div>
-                                    </div> -->
-
-
-
-
-
-        <!-- 
-
-                        <div class="user_info">
-                            <p
-                                class="title_info text-uppercase  section_title theme-text mb-2 px-1 color m-0 pb-0 mt-3">
-                                Language
-                            </p>
-                            <p class="info title_info Language mb-2 px-1" placeholder="Language" contenteditable="true"
-                                onkeypress="return (this.innerText.length <= 48)" data-content="Language1"></p>
-                            <p class="info title_info Language mb-2 px-1" placeholder="Language" contenteditable="true"
-                                onkeypress="return (this.innerText.length <= 48)" data-content="Language2"></p>
-                            <p class="info title_info Language mb-2 px-1" placeholder="Language" contenteditable="true"
-                                onkeypress="return (this.innerText.length <= 48)" data-content="Language3"></p>
-                        </div> -->
-        <!-- <div class="user_info">
-                                        <p class="title_info section_title  px-1 theme-text color m-0 pb-0 mt-3">
-                                            Birthday
-                                        </p>
-                                        <input class="info title_info location  px-1 b-datepicker mb-0 border-0"
-                                            data-content="dob" type="text" placeholder="Birthday">
-                                    </div> -->
-        <!-- <div class="user_info d-inline-block">
-                                        <p class="title_info section_title theme-text color m-0 mt-3 px-1 pb-0">Gender
-                                        </p> -->
-        <!-- <p class="info title_info gender mb-0" contenteditable="true"
-                                            placeholder="Gender" data-content="gender"></p> -->
-        <!-- <select class="gender font-10 title_info px-1" id="gender"
-                                            data-content="gender">
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="others">others</option>
-                                        </select>
-                                    </div> -->
-        <!-- <div class="user_info">
-                                        <p class="title_info section_title theme-text color px-1 mt-3 m-0">Languages
-                                        </p>
-                                        <ul class="list-unstyled">
-                                            <li class="d-flex align-items-center py-2 px-1 border-dashed lang_details"
-                                                id="lang_1">
-                                                <div class="rating-container">
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item rating-circle m-0"
-                                                            data-langpercentage=''></li>
-                                                        <li class="list-inline-item rating-circle m-0"
-                                                            data-langpercentage=''></li>
-                                                        <li class="list-inline-item rating-circle m-0"
-                                                            data-langpercentage=''></li>
-                                                        <li class="list-inline-item rating-circle m-0"
-                                                            data-langpercentage=''></li>
-                                                    </ul>
-                                                </div>
-                                                <p contenteditable="true" class="mb-0 ml-1 lang-text"
-                                                    data-content="languageName"
-                                                    onkeypress="return (this.innerText.length <= 10)"
-                                                    placeholder="Language"></p>
-                                                <ul class="append-section-actions list-inline">
-                                                    <li
-                                                        class="list-inline-item cursor-pointer remove_icon small-size color mr-1 remove_lang"> -->
-        <!-- <i class="fas fa-minus font-12pt color"></i> -->
-        <!-- </li>
-                                                    <li
-                                                        class="list-inline-item cursor-pointer add_icon small-size color m-0 add_lang"> -->
-        <!-- <i class="fas fa-plus font-12pt color"></i> -->
-        <!-- </li> -->
-        <!-- </ul>
-                                            </li>
-
-                                        </ul>
+                                        <div style="flex: initial;">
+                                            <p class="font-10pt mb-2 theme-text-dark" data-picker="true">
+                                                <input
+                                                    class="info title_info font-10pt location text-right month-picker w-small mb-0 border-0"
+                                                    type="text" data-content="edu_startDate" placeholder="Start Date">
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                                                <input
+                                                    class="info title_info font-10pt location text-right month-picker w-small mb-0 border-0"
+                                                    type="text" data-content="edu_endDate" placeholder="End Date">
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>  -->
-        <!-- <div class="social_info">
-                        <p class="text-uppercase section_title title_info mb-1 mt-3">Social</p>
-                        <ul>
-                        <li class="d-flex justify-content-start  px-1 align-items-center mb-2 github">
-                            <i class="fab fa-github color font-14pt"></i>
-                            <p contenteditable="true" placeholder="Github" class="m-0 ml-1"
-                                onkeypress="return (this.innerText.length <= 40)" data-content="github"></p>
-                        </li>
-                        <li class="d-flex justify-content-start  px-1 align-items-center mb-2 twitter">
-                            <i class="fab fa-twitter-square color font-14pt"></i>
-                            <p contenteditable="true" placeholder="Twitter" class="m-0 ml-1"
-                                onkeypress="return (this.innerText.length <= 40)" data-content="twitter"></p>
-                        </li>
-                        <li class="d-flex justify-content-start  px-1 align-items-center mb-2 website">
-                            <i class="fas fa-globe-europe color font-14pt"></i>
-                            <p contenteditable="true" placeholder="Website" class="m-0 ml-1"
-                                onkeypress="return (this.innerText.length <= 40)" data-content="website"></p>
-                        </li>
-                        <li class="d-flex justify-content-start  px-1 align-items-center mb-2 blog">
-                            <i class="fab fa-blogger color font-14pt"></i>
-                            <p contenteditable="true" placeholder="Blog" class="m-0 ml-1"
-                                onkeypress="return (this.innerText.length <= 40)" data-content="blog"></p>
-                        </li>
-                        </ul>
-                    </div>
+                                    <div>
+                                        <div class="font-10pt mb-2 theme-text color">
+                                            <div class="edu-school"
+                                                data-content="edu_institution" contenteditable="true"
+                                                placeholder="School"></div>, 
+                                            <div class="edu-location" data-content="edu_location" contenteditable="true"
+                                                placeholder="Location"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="edu-desc font-10pt mb-2" contenteditable="true" data-content="edu_description"
+                                            placeholder="Enter Details About Your Education Here"></p>
+                                    </div>
+                                    <ul class="append-section-actions list-inline bottom-50">
+                                        <li
+                                            class="list-inline-item remove_edu remove_icon color cursor-pointer d-none mr-1">
+                                            <!-- <i class="fas fa-minus font-12pt color"></i> -->
+                                        </li>
+                                        <li class="list-inline-item add_edu add_icon color cursor-pointer m-0">
+                                            <!-- <i class="fas fa-plus font-12pt color"></i> -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <!--   End of Education -->
+                            <div class="row flex-column  mb-1 px-2" id="academic-section">
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Academic Projects
+                                </h4>
+                                <div class="border-dashed academic-project px-1" id="academic_projects_1">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <div class="font-10pt mb-2 theme-text color academic-title-container">
+                                            <div class="project-title"
+                                                contenteditable="true" data-content="acd_projectTitle"
+                                                placeholder="Project Title"></div>,
+                                            <div class="project-role" data-content="acd_role" contenteditable="true"
+                                                placeholder="Role"></div>
+                                        </div>
+                                        <div style="flex: 0 0 auto;">
+                                            <p class="font-10pt mb-2 theme-text-dark" data-picker="true">
+                                                <input
+                                                    class="info title_info text-right font-10pt location month-picker w-small mb-0 border-0"
+                                                    type="text" data-content="acd_startDate" placeholder="Start Date">
+                                                <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                                                <input
+                                                    class="info title_info font-10pt text-right location month-picker w-small mb-0 border-0"
+                                                    type="text" data-content="acd_endDate" placeholder="End Date">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="font-10pt mb-2 theme-text-dark">
+                                            <div class="university"        data-content="acd_institution"
+                                                contenteditable="true" placeholder="University"></div>, <div
+                                                class="uni-location" contenteditable="true" data-content="acd_location"
+                                                placeholder="Location"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="project-desc font-10pt mb-2" contenteditable="true" data-content="acd_description"
+                                            placeholder="Enter Details About Your Project Here"></p>
+                                    </div>
+                                    <ul class="append-section-actions list-inline bottom-50">
+                                        <li
+                                            class="list-inline-item  remove_acad remove_icon color cursor-pointer mr-1 d-none">
+                                            <!-- <i class="fas fa-minus font-12pt color"></i> -->
+                                        </li>
+                                        <li class="list-inline-item add_acad add_icon color cursor-pointer m-0">
+                                            <!-- <i class="fas fa-plus font-12pt color"></i> -->
+                                        </li>
+                                    </ul>
+                                </div>  
+                            </div> <!-- End of Projects  -->
+
+                            <div class="row  flex-column px-2" id="certifications-section">
+                                <h4 class="section_title px-2 text-uppercase font-10pt sub-header">Certifications</h4>
+                                <p class="certificate font-10pt mb-2 px-2" contenteditable="true" placeholder="Description"
+                                    data-content="certifications">
+                                </p>
+                            </div>
+                            <div class="row flex-column mb-1 px-2" id="achievements-section">
+                                <h4 class="section_title px-2 text-uppercase font-10pt sub-header">Achievements</h4>
+                                <p class="achieve font-10pt mb-2 px-2" contenteditable="true" placeholder="Description"
+                                    data-content="achivements"></p>
+                            </div>
+
+                        </div>
+                    </div> 
+                </page>
+            </section>
         </div>
-        </aside> -->
-
-
-
     </div>
-    </div>
-
-
-    </div>
-    </div>
-    </page>
-    </section>
-    </div>
-    </div>
-    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui.js"></script>
-    <script src="js/jquery.nice-select.js"></script>
-    <script type="text/javascript" src="js/jquery.loadTemplate.js"></script>
-    <script type="text/javascript" src="js/resume-plugin.js"></script>
-    <script type="text/javascript" src="js/popper.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/axios.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-datepicker.min.js"> </script>
-    <script type="text/javascript" src="js/moment.min.js"> </script>
-
-    <script src="js/html2canvas.js"></script>
-    <script src="js/jspdf.debug.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
-    <script src="js/resume-template-7.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/popper.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/bootstrap.4.3.1.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/jquery.nice-select.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/jquery.loadTemplate.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/axios.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/bootstrap-datepicker.min.js"> </script>
+    <script type="text/javascript" src="../../../assets/vendors/js/moment.min.js"> </script>
+    <script type="text/javascript" src="../../../assets/vendors/js/html2canvas.js"></script>
+    <!-- <script type="text/javascript" src="../../../assets/vendors/js/html2canvas_latest.js"></script> -->
+    <script type="text/javascript" src="../../../assets/vendors/js/canvas2image.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/dom-to-image.js"></script>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script> -->
+    <script type="text/javascript" src="../../../assets/vendors/js/jspdf.debug.js"></script>
+    <script type="text/javascript" src="../../../assets/vendors/js/canvg.min.js"></script>
+    <script type="text/javascript" src="../../../assets/js/environment.js"></script>
+    <script type="text/javascript" src="../../../assets/js/editor/editor-plugin.js"></script>
+    <script src="../../../assets/js/editor/editor-template-constant-7.js"></script>
+    <script type="text/javascript" src="../../../assets/js/editor/editor-template-7.js"></script>
+    <script type="text/javascript" src="../../../assets/js/editor/editor-template-validate.js"></script>
 </body>
 
 </html>
