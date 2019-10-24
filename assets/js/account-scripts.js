@@ -142,12 +142,19 @@
 					});
 
 					$('#copyLinkBtn').on('click', function () {
-						console.log($('#shareName').val());
 						if ($('#shareName').val()) {
-							$('#copyText').val($('#shareDomain').val() + $('#shareName').val());
-							var copyText = document.getElementById("copyText");
-							copyText.select();
-							document.execCommand("copy");
+							if (JSON.parse(localStorage.getItem('userData')).edit_name) {
+								$('#copyText2').val(location.origin + '/#' + JSON.parse(localStorage.getItem('userData')).share_name);
+								var copyText = document.getElementById("copyText2");
+								copyText.select();
+								document.execCommand("copy");
+							} else {
+								console.log($('#shareDomain').val() + $('#shareName').val());
+								$('#copyText').val($('#shareDomain').val() + $('#shareName').val());
+								var copyText = document.getElementById("copyText");
+								copyText.select();
+								document.execCommand("copy");
+							}
 							var successMessage = 'Your link is copied successfully';
 							$('#newSuccessMessageID .message-text').html(successMessage)
 							$('#newSuccessMessageID').html(successMessage)
@@ -452,7 +459,7 @@ function getUserProfile() {
 
 function setInfoMessage(message, emailVerified) {
 	if (emailVerified) {
-		$('#mail_message').addClass('d-none');
+		$('#mail_message').remove();
 		if (!$('#info_message span').length) {
 			requestAnimationFrame(function () {
 				setInfoMessage(message);

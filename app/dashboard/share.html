@@ -74,7 +74,8 @@
                 <div class="row edit_name_link d-none">
                   <div class="col-md-12">
                     <input type="text" class="form-control mb-2" name="shareDomain"
-                      id="shareDomain" minlength="3" value="" disabled />
+                      id="shareDomain2" minlength="3" value="" disabled />
+                    <input type="text" id="copyText2" value="" style="opacity:0; height:0px;" />
                   </div>
                 </div>
                 <div class="row">
@@ -150,7 +151,7 @@
     var userShareInfo = JSON.parse(localStorage.getItem('userData'));
     if (userShareInfo.edit_name) {
       $('.edit_name').addClass('d-none');
-      $('.edit_name_link input').attr('value', location.origin + '/#' + userShareInfo.share_name);
+      $('#shareDomain2').val(location.origin + '/#' + userShareInfo.share_name);
       $('.edit_name_link').removeClass('d-none');
     }
     $('#resume_piblic').attr('checked', userShareInfo.hideResume);

@@ -206,13 +206,16 @@
 <script type="text/javascript" src="../../assets/js/app.services.js"></script>
 
 <script>
-    const userInfo = JSON.parse(localStorage.getItem('userData'));
+    var userInfo = JSON.parse(localStorage.getItem('userData'));
     if (userInfo) {
         if (userInfo.planDetails.subscribedUser) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
                 location.origin + '/app/dashboard/share.html');
         } else {
             $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
+        }
+        if (userInfo.planDetails.emailVerified) {
+            $('#mail_message').remove();
         }
     }
     if (location.pathname == "/app/order/cart.html") {
