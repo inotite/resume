@@ -255,25 +255,25 @@
     //     $('#profilePicEdit').attr('src', pic);
     // }
     $('#signOut').on('click', function () {
-        doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
+        doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + sessionStorage.getItem("sessionId") +
             "/" +
             serviceUrls.get.resUserLogout).then(response => {
-            localStorage.clear();
+            sessionStorage.clear();
             window.location.href = window.origin + '/app/auth/login.html';
         })
     });
 </script>
 <script>
-    // var userData = JSON.parse(localStorage.getItem('userData'));
+    // var userData = JSON.parse(sessionStorage.getItem('userData'));
     // var userId = userData.userId;
     //console.log(userData);
-    // var fromPage = localStorage.getItem('fromPage');
+    // var fromPage = sessionStorage.getItem('fromPage');
 
     //console.log("fromPage ::::::"+fromPage);
     //if(fromPage == 'signin'){
     // $('#userName').text(userData.firstname + " " + userData.lastname);
     // $('#UserEmail').text(userData.email);
-    // var pic = localStorage.getItem('imageStore');
+    // var pic = sessionStorage.getItem('imageStore');
     // var picpath = pic.search('1631033876795164.jpg');
 
     // if (picpath > -1 || pic == '') {

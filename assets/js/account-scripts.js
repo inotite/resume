@@ -446,6 +446,7 @@ function getUserProfile() {
 		localStorage.setItem('userData', JSON.stringify(userProfileData));
 		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);
+		$('#load-header').load('../includes/user-header.html');
 	});
 }
 

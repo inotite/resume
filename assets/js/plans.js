@@ -110,7 +110,7 @@ function PricingTemplate(item) {
         </div>
         <div class="form-group mt-4">
         ${ JSON.parse(localStorage.getItem('userData'))?
-            JSON.parse(localStorage.getItem('userData')).planDetails.emailVerified ? 
+            (JSON.parse(localStorage.getItem('userData')).planDetails && JSON.parse(localStorage.getItem('userData')).planDetails.emailVerified) ? 
             item.planId==1 && (localStorage.getItem('userData') && JSON.parse(localStorage.getItem('userData')).planDetails.planId) ? 
             `<button class="btn btn-primary btn-lg btn-block select_plan price-action-modal">BUILD RESUME</button>` 
             : `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`:`<button class="btn btn-primary btn-lg btn-block select_plan price-action-verify-modal">BUILD RESUME</button>`:
