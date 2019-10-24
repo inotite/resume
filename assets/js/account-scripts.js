@@ -407,7 +407,8 @@
 					// var response = JSON.parse(response)
 					//console.log(response.data.httpPath);
 					if (response.status == 'success') {
-						localStorage.setItem('imageStore', response.data.httpPath);
+						JSON.parse(localStorage.getItem('userData')).pic = response.data.httpPath;
+						// localStorage.setItem('imageStore', response.data.httpPath);
 						$('#profileMenu img').attr('src', response.data.httpPath);
 						$('#profilePicEdit').attr('src', response.data.httpPath);
 						$('#myModelUploadPhoto').modal('hide');

@@ -4,7 +4,7 @@ function load() {
 	console.log("someData_notJSON", someData_notJSON[0].red);
 }
 if (localStorage.getItem('plans')) {
-	localStorage.clear('plans');
+	localStorage.removeItem('plans');
 }
 (function ($) {
 

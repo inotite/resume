@@ -192,6 +192,7 @@ $(window).ready(function () {
     }
     var selectedFont = themeOptions ? themeOptions.font : fonts[0].fontFamily;
     var selectedTitleFont = themeOptions ? themeOptions.fontTitle : fonts[0].fontFamily;
+
     if (!selectedTitleFont)
         selectedTitleFont = fonts[0].fontFamily;
     var selectedcolor = themeOptions ? themeOptions.color : 'theme-black';
@@ -275,6 +276,17 @@ $(window).ready(function () {
         // console.log(settingId);
         settingStatus(settingId, newStatus);
     });
+    for (let index = 0; index < themeOptions.settings.length; index++) {
+        var currentStatus = $('#' + themeOptions.settings[index].dataText).attr('data-checked');
+        console.log(currentStatus);
+        var settingId = $('.action-item:nth-of-type(' + index + ')').attr("data-setting");
+        $('#' + settingId).attr('data-checked', currentStatus).attr('checked', currentStatus);
+        $('.' + settingId).addClass(currentStatus);
+        settingStatus(settingId, currentStatus);
+        // var newStatus = currentStatus == 'true' ? 'false' : 'true';
+        // $('.action-item:nth-of-type(' + index + ')');
+        // settingStatus(settingId, newStatus);
+    }
 
     function settingStatus(settingId, setStatus) {
         switch (settingId) {

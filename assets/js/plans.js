@@ -15,7 +15,7 @@ if (!localStorage.getItem('plans')) {
 } else {
     PricingTemplate(JSON.parse(atob(localStorage.getItem('plans'))));
 }
-const userPlansInfo = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).planDetails : null;
+var userPlansInfo = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).planDetails : null;
 
 function getResumePlans() {
     doGetWithEncrypt(baseResumeApiUrl + resumeServiceUrls.get.getResumePlans).then(response => {
@@ -64,7 +64,7 @@ $('.close-free-plan-modal').click(function () {
 function PricingTemplate(item) {
     console.log(item);
     item.map((item, index) => {
-        const pricing_template_view = `
+        var pricing_template_view = `
     <div class="has-3 p1 col-md-3 pricing"><div class="highlight plan">
         <div class="detail plan-1">
             <h4><span class="amount">  ${item.price}   </span></h4>
