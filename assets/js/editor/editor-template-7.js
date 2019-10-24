@@ -1025,12 +1025,16 @@ $(window).ready(function () {
         "themeOptions": null
     }
 
-    $('#saveResume').on('click', function () {
+    $('#saveResume').on('click', async function () {
         if (planInfo.subscribedUser || planInfo.planId === 1) {
+            $('#downloadResume').addClass('inactive-link');
             bindUserDataForSave();
             saveUserProfile(postObj, "save");
+            showMultiplePages();
+            await savePdf("save");
+            hideMultiplePages();
+            $('#downloadResume').removeClass('inactive-link');
         }
-
     });
 
     $('#downloadResume').on('click', async function () {
@@ -1874,7 +1878,7 @@ $(window).ready(function () {
 
     }
 
-    async function savePdf() {
+    async function savePdf(action="download") {
         // if (planInfo.planId !== 1) {
         $('.loading-container').show();
         var eles = $('page');
@@ -2013,11 +2017,13 @@ $(window).ready(function () {
                 //handle error
                 // console.log(response);
             });
-        if (planInfo.planId === 1) {
-            docWaterMark.save(userId + '_resume.pdf');
-            // doc.save(resumeObj.firstname + '_resume.pdf');
-        } else {
-            doc.save(resumeObj.firstname + '_resume.pdf');
+        if (action === "download") {
+            if (planInfo.planId === 1) {
+                docWaterMark.save(userId + '_resume.pdf');
+                // doc.save(resumeObj.firstname + '_resume.pdf');
+            } else {
+                doc.save(resumeObj.firstname + '_resume.pdf');
+            }
         }
         $('.loading-container').delay(2000).fadeOut();
         // }
