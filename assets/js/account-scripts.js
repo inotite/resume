@@ -238,38 +238,6 @@
 						}
 					})
 				});
-				$('#changePassword2').on('click', function () {
-					var url_string = window.location.href;
-					var url = new URL(url_string);
-					var UrlUserId = url.searchParams.get("userId");
-					console.log(c);
-					let newPassword = $('input[name="newPassword"]').val();
-					let reenterNewPassword = $('input[name="reenterNewPassword"]').val();
-					let newPasswordObj = {
-						"newPassword": newPassword,
-						"reenterNewPassword": reenterNewPassword
-					};
-					doPostWithEncrypt(baseApiUrl + "/user/" + UrlUserId + "/" + serviceUrls.post.resetPasswordResumeUser, newPasswordObj).then(response => {
-						console.log(response);
-						if (response.status == "success") {
-							$('#newSuccessMessageID .message-text').html(response.msg.description);
-							$('#newSuccessMessageID').html(response.msg.description)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
-							$('.signupbox').addClass('d-none');
-						} else {
-							$('#newErrorMessageID .message-text').html(response.msg.description)
-							$('#newErrorMessageID').html(response.msg.description)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
-						}
-						$('.responce_message').removeClass('d-none');
-						$('.responce-message').text(response.msg.description);
-					});
-				});
-
 				/* Update Password functionality */
 				$('#updateProfile').on('click', function () {
 
@@ -451,6 +419,11 @@ function getUserProfile() {
 			$('#profileMenu img').attr('src', userProfileData.pic)
 		} else {
 			$('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
+		}
+		if (userProfileData.edit_name) {
+			$('.edit_name').addClass('d-none');
+			$('#shareDomain2').val(location.origin + '/#' + userProfileData.share_name);
+			$('.edit_name_link').removeClass('d-none');
 		}
 		localStorage.setItem('userData', JSON.stringify(userProfileData));
 		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
