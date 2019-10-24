@@ -130,7 +130,7 @@ body {
 
 .theme-color-picker a.active span:after {
     content: "";
-    background-image: url('../img/check-solid.svg');
+    background-image: url('../../images/resume/check-solid.svg');
     position: absolute;
     left: 27%;
     top: 32%;
@@ -314,7 +314,7 @@ aside * {
 
 .rating-circle {
     height: 0;
-    width: 2rem;
+    width: 25%;
     background: #eee;
     border-radius: 1.1em;
     display: inline-block;
@@ -515,6 +515,23 @@ aside * {
     display: flex;
     align-items: center;
     align-content: center;
+}
+
+.skill-input-value {
+    background-color: #337ab7;
+    color: #fff;
+    border-radius: 5px;
+    margin: 0.5rem;
+    padding: 0.25rem;
+}
+
+.skill-input-value:focus {
+    background-color: #337ab7 !important;
+    padding: 0.25rem;
+}
+
+.skill-input-value::placeholder {
+    color: #fff;
 }
 
 .skill-value {
@@ -792,7 +809,7 @@ input {
     width: 1.5rem !important;
     height: 1.5rem;
     border-radius: 10rem;
-    background-image: url(img/icon_add.svg);
+    background-image: url(../../images/resume/icon_add.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -804,7 +821,7 @@ input {
     height: 1.5rem;
     background-color: #0b7af3;
     border-radius: 10rem;
-    background-image: url(img/icon_delete.svg);
+    background-image: url(../../images/resume/icon_delete.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -835,4 +852,149 @@ input {
     margin-top: 1rem;
     margin-left: -111px;
 }
+.exp-role {
+    display: inline-block;
+    line-height: 1.5;
+}
 
+.experience-title-container {
+    flex: auto;
+}
+
+.education-title-container {
+    flex: auto;
+}
+
+.academic-title-container {
+    flex: auto;
+}
+
+.skill-name {
+    width: 100%;
+}
+
+.nice-select .current {
+    color: grey;
+}
+
+.social-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-container {
+    width: 100%;
+    margin-right: 0.25rem;
+}
+
+.social-phone, .social-linkedin, .social-github, .social-twitter, .social-website, .social-blog {
+    width: 100%;
+}
+
+.about_me {
+    line-height: 1.5;
+}
+
+.sub-header {
+    font-weight: 600;
+    text-align: center;
+}
+
+.skill-row {
+    display: block !important;
+}
+
+.language-container {
+    flex: 1;
+}
+
+.language-item {
+    padding-top: 0.25rem;
+    padding-left: calc(0.5rem - 2px);
+    padding-right: calc(0.5rem - 2px);
+}
+
+.skill-text-container {
+    width: 100%;
+}
+
+.exp-company, .exp-location, .edu-school, .edu-location, .university, .uni-location, .project-title, .project-role {
+    display: inline-block;
+    line-height: 1.5;
+    /* width: auto !important; */
+}
+
+.month-picker {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.hyphen {
+    position: relative;
+    top: -1px;
+}
+
+/* * {
+    -webkit-font-smoothing: antialiased;
+    text-align: justify;
+} */
+
+.project-desc {
+    width: 100%;
+    flex: auto;
+}
+
+.info-years {
+    width: 100%;
+    word-break: unset !important;
+}
+
+.project-title-container {
+    flex: auto;
+}
+
+.watermark-css {
+    position: absolute;
+    z-index: -2;
+}
+
+.language-box {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    padding-left: 0rem;
+    padding-right: 0rem;
+}
+
+.skill-row {
+    display: block !important;
+}
+
+.inactive-link {
+    pointer-events: none;
+    cursor: default;
+    color: #6a6a6a;
+}
+
+.theme-black .color path, .theme-black .color polygon {
+    fill: var(--color-black);
+}
+
+.theme-blue .color path, .theme-blue .color polygon {
+    fill: var(--color-blue);
+}
+
+.theme-green .color path, .theme-green .color polygon {
+    fill: var(--color-green);
+}
+
+.resume-content-wrapper {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.resume-header-wrapper {
+    border-bottom: 2px solid var(--color-blue);
+}
