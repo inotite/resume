@@ -112,7 +112,7 @@ function PricingTemplate(item) {
         ${ JSON.parse(localStorage.getItem('userData'))?
             (JSON.parse(localStorage.getItem('userData')).planDetails && JSON.parse(localStorage.getItem('userData')).planDetails.emailVerified) ? 
             item.planId==1 && (localStorage.getItem('userData') && JSON.parse(localStorage.getItem('userData')).planDetails.planId) ? 
-            `<button class="btn btn-primary btn-lg btn-block select_plan price-action-modal">BUILD RESUME</button>` 
+            `<button class="btn btn-primary btn-lg btn-block select_plan" onclick="freePlanAction()">BUILD RESUME</button>` 
             : `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`:`<button class="btn btn-primary btn-lg btn-block select_plan price-action-verify-modal">BUILD RESUME</button>`:
              `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`}
         </div>
@@ -122,4 +122,18 @@ function PricingTemplate(item) {
     });
 
 
+}
+
+function freePlanAction() {
+    if (JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).planDetails.planId === 1 && JSON.parse(localStorage.getItem('userData')).planDetails.msg.description.indexOf(
+            "Your free plan is expired.")) {
+        $('#price-action-modal .modal-title').text("Oops, you're already in free plan.");
+        $('#price-action-modal .line-1').text('Upgrade with a paid plan')
+        $('#price-action-modal .line-2').text('to access all the features.');
+    } else {
+        $('#price-action-modal .modal-title').text("Oops, You can't choose.");
+        $('#price-action-modal .line-1').text('upgrade with a paid plan');
+        $('#price-action-modal .line-2').text('today to access all features.');
+    }
+    $('#price-action-modal').modal('show');
 }

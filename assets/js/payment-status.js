@@ -20,13 +20,13 @@ $(window).ready(function () {
     doGetWithEncrypt(getOrderInfoUrl).then(function (response) {
             console.log(response);
             $('.paymentUserName').text(response.data.userName);
-            $('.info_message_status_text').text(response.msg.title);
             // $('.info_message_text').text(response.msg.description);
             $('#order_id span').text(orderId);
             $('#txn_amount span').text(response.msg.description.split('amount')[1].split(':')[1]);
             switch (response.status) {
                 case "success":
                     $('.info_message_status_text').addClass('text-success');
+                    $('.info_message_status_text').text(response.msg.title);
                     $('.status_message').text('Congratulations,');
                     $('.check_order').text('You may check "Order History" to view more details.');
                     doGetWithEncrypt(apiUrl + "/user/" + paramUserId + "/getProfileResume").then(response => {
@@ -35,9 +35,11 @@ $(window).ready(function () {
                     });
                     break;
                 case "failed":
+                    $('.info_message_status_text').text(response.msg.title + ',');
                     $('.info_message_status_text').addClass('text-danger');
                     $('.paymentUserName').addClass('d-none');
-                    $('.status_message').text('Oops, Try Again,');
+                    $('.status_message').text('Oops, Try Again');
+                    $('#order_id').addClass('d-none');
                     break;
                 case "pending":
                     $('.info_message_status_text').addClass('text-warning');

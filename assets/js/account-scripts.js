@@ -439,6 +439,7 @@ function getUserProfile() {
 	doGetWithEncrypt(apiUrl + "/user/" + userData.userId + "/getProfileResume").then(response => {
 		console.log("doGetWithEncrypt", response);
 		var userProfileData = response.data;
+		console.log(userProfileData.planDetails);
 		$('#info_message span').html(userProfileData.planDetails.msg.description);
 		if (userProfileData.planDetails.subscribedUser) {
 			$('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',

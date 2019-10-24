@@ -276,19 +276,25 @@ $(window).ready(function () {
         // console.log(settingId);
         settingStatus(settingId, newStatus);
     });
-    for (let index = 0; index < themeOptions.settings.length; index++) {
-        var currentStatus = $('#' + themeOptions.settings[index].dataText).attr('data-checked');
-        console.log(currentStatus);
-        var settingId = $('.action-item:nth-of-type(' + index + ')').attr("data-setting");
-        $('#' + settingId).attr('data-checked', currentStatus).attr('checked', currentStatus);
-        $('.' + settingId).addClass(currentStatus);
-        settingStatus(settingId, currentStatus);
-        // var newStatus = currentStatus == 'true' ? 'false' : 'true';
-        // $('.action-item:nth-of-type(' + index + ')');
-        // settingStatus(settingId, newStatus);
+    if ($('.action-item')) {
+        requestAnimationFrame(function () {
+            for (let index = 0; index <= $('.action-item').length; index++) {
+                console.log(settings[index]);
+                var currentStatus = $('#' + settings[index].dataText).attr('data-checked');
+                console.log("$('.action-item:nth-of-type(' + index + ')').attr()", $('#actions .action-item:nth-of-type(' + index + ')').attr("data-setting"));
+                var settingId = $('#actions .action-item:nth-of-type(' + index + ')').attr("data-setting");
+                $('#' + settingId).attr('data-checked', currentStatus).attr('checked', currentStatus);
+                $('.' + settingId).addClass(currentStatus);
+                settingStatus(settingId, currentStatus);
+                // var newStatus = currentStatus == 'true' ? 'false' : 'true';
+                // $('.action-item:nth-of-type(' + index + ')');
+                // settingStatus(settingId, newStatus);
+            }
+        });
     }
 
     function settingStatus(settingId, setStatus) {
+        console.log("setStatus, settingId", setStatus, settingId);
         switch (settingId) {
             case 's-academic':
                 if (setStatus == 'true') {
@@ -326,7 +332,9 @@ $(window).ready(function () {
                 }
                 break;
             case 's-website':
+                console.log("setStatus, settingId", setStatus, settingId);
                 if (setStatus == 'true') {
+                    console.log(setStatus, settingId);
                     $('.website').addClass('d-none');
                 } else {
                     $('.website').removeClass('d-none');

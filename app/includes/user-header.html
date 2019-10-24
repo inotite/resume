@@ -153,10 +153,10 @@
                             width="auto">
                     </div>
                     <div class="col-md-7">
-                        <div class="modal-title">Oops, You can't choose.</div>
+                        <div class="modal-title"></div>
                         <div class="modal-description">
-                            upgrade with a paid plan
-                            <br /> today to access all features.</div>
+                            <span class="line-1"></span>
+                            <br /> <span class="line-2"></span></div>
                         <div class="btn btn-primary px-5 btn-lg text-center mt-3 close-free-plan-modal">
                             Upgrade Now
                         </div>
@@ -235,10 +235,7 @@
         $('.upgrade-btn').addClass('d-none')
     }
     var userId = userData.userId;
-    //console.log(userData);
     var fromPage = localStorage.getItem('fromPage');
-    //console.log("fromPage ::::::"+fromPage);
-    //if(fromPage == 'signin'){
     $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
     $('#UserEmail').text(userInfo.email);
     $('input[name="firstname"]').val(userInfo.firstname);
@@ -249,14 +246,6 @@
     } else {
         $('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
     }
-    // if (picpath > -1 || pic == '') {
-    //     $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
-    //     $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
-
-    // } else {
-    //     $('#profileMenu img').attr('src', pic);
-    //     $('#profilePicEdit').attr('src', pic);
-    // }
     $('#signOut').on('click', function () {
         doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
             "/" +
@@ -265,26 +254,4 @@
             window.location.href = window.origin + '/app/auth/login.html';
         })
     });
-</script>
-<script>
-    // var userData = JSON.parse(sessionStorage.getItem('userData'));
-    // var userId = userData.userId;
-    //console.log(userData);
-    // var fromPage = sessionStorage.getItem('fromPage');
-
-    //console.log("fromPage ::::::"+fromPage);
-    //if(fromPage == 'signin'){
-    // $('#userName').text(userData.firstname + " " + userData.lastname);
-    // $('#UserEmail').text(userData.email);
-    // var pic = sessionStorage.getItem('imageStore');
-    // var picpath = pic.search('1631033876795164.jpg');
-
-    // if (picpath > -1 || pic == '') {
-    //     $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
-    //     $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
-
-    // } else {
-    //     $('#profileMenu img').attr('src', pic);
-    //     $('#profilePicEdit').attr('src', pic);
-    // }
 </script>
