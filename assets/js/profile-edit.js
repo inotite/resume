@@ -90,3 +90,32 @@ $('#updatePassBtn').on('click', function () {
         }
     })
 });
+$('#updateProfile2').on('click', function () {
+    var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
+    var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
+    // var clgName = 
+    console.log(collegeName, collegeLogo);
+    var profileData = {
+        "firstname": userData.firstname,
+        "lastname": userData.lastname,
+        "email": userData.email,
+        "collegeName": collegeName,
+        "collegeLogo": collegeLogo
+    }
+    doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
+        console.log(response);
+        if (response.status == "success") {
+            localStorage.setItem('userData', JSON.stringify(response.data));
+            $('#newSuccessMessageID .message-text').html(response.msg);
+            $('#newSuccessMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
+                $('#updateProfile').attr('disabled', false);
+            });
+
+        } else {
+            $('#newErrorMessageID .message-text').html(response.msg)
+            $('#newErrorMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
+                $('#updateProfile').attr('disabled', false);
+            });
+        }
+    })
+});
