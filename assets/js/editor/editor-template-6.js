@@ -1025,7 +1025,7 @@ $(window).ready(function () {
         "themeOptions": null
     }
 
-    $('#saveResume').on('click', function () {
+    $('#saveResume').on('click', async function () {
         if (planInfo.subscribedUser || planInfo.planId === 1) {
             $('#downloadResume').addClass('inactive-link');
             bindUserDataForSave();
