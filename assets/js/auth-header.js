@@ -25,7 +25,7 @@ if (location.pathname === "/app/order/payment-status.html") {
 }
 var userId = userData.userId;
 //console.log(userData);
-var fromPage = sessionStorage.getItem('fromPage');
+var fromPage = localStorage.getItem('fromPage');
 //console.log("fromPage ::::::"+fromPage);
 //if(fromPage == 'signin'){
 debugger;
@@ -45,10 +45,10 @@ if (userInfo.pic) {
 //     $('#profilePicEdit').attr('src', pic);
 // }
 $('body').click('#signOut', function () {
-    doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + sessionStorage.getItem("sessionId") +
+    doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
         "/" +
         serviceUrls.get.resUserLogout).then(response => {
-        sessionStorage.clear();
+        localStorage.clear();
         window.location.href = window.origin + '/app/auth/login.html';
     })
 });

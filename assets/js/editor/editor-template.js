@@ -911,6 +911,9 @@ $(window).ready(function () {
             });
 
             $("#skills_item_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
+            $('#skills_item_' + num + ' .skill-value').click(function(e) {
+                $(this).parent().find('.skills-bar').click();
+            });
         }
         if ($('.skills-item').length == 16) {
             $('.skills-item .add_skills').addClass('d-none');
@@ -1074,14 +1077,16 @@ $(window).ready(function () {
     $('#downloadResume').on('click', async function () {
         if (planInfo.subscribedUser && planInfo.planId) {
             if (!$('.editorNav').hasClass('d-none')) {
+                $('#downloadResume').addClass('inactive-link');
                 bindUserDataForSave();
                 saveUserProfile(postObj, "download");
                 showMultiplePages();
-                await savePdf('fromDownload');
+                await savePdf();
                 hideMultiplePages();
+                $('#downloadResume').removeClass('inactive-link');
             } else {
                 console.log("hey, here!");
-                await savePdf('fromDownload');
+                await savePdf();
             }
         } else {
             $('#upgrade-popup').modal('show')
@@ -1581,6 +1586,9 @@ $(window).ready(function () {
         });
 
         validateSkills();
+        $('.skill-value').click(function(e) {
+            $(this).parent().find('.skills-bar').click();
+        });
     }
 
     function selectRatingCircle(a, percentage) {
@@ -1876,7 +1884,7 @@ $(window).ready(function () {
 
     }
 
-    async function savePdf(type) {
+    async function savePdf(action="download") {
         // if (planInfo.planId !== 1) {
         $('.loading-container').show();
         var eles = $('page');
@@ -2038,7 +2046,7 @@ $(window).ready(function () {
         //         //handle error
         //         // console.log(response);
         //     });
-        if (type == 'fromDownload') {
+        if (action === "download") {
             if (planInfo.planId === 1) {
                 docWaterMark.save(userId + '_resume.pdf');
                 // doc.save(resumeObj.firstname + '_resume.pdf');
@@ -2483,8 +2491,8 @@ $(window).ready(function () {
      */
 
 
-    function addWaterMarkImage(selectorElements, css) {
-        $(selectorElements).css(css)
+    function addWaterMarkImage(selectorElements) {
+        $(selectorElements).css(waterMarkCss)
         // $(selectorElements).css('background-image', 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '")');
         // $(selectorElements).css('background-repeat', 'repeat-y');
         // $(selectorElements).css('background-size', '40%');
@@ -2492,4 +2500,12 @@ $(window).ready(function () {
     }
 
     ratingCircle();
+    $('[contenteditable="true"]').bind('dragover drop', function(event){
+        event.preventDefault();
+        return false;
+    });
+    $('input').bind('dragover drop', function(event){
+        event.preventDefault();
+        return false;
+    });
 });

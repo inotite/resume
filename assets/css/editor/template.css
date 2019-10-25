@@ -544,6 +544,7 @@ aside * {
     right: 0;
     top: 16px;
     bottom: 0;
+    cursor: pointer;
 }
 
 .w-small {
@@ -952,6 +953,7 @@ input {
 
 .project-desc {
     width: 100%;
+    box-sizing: border-box;
 }
 
 .info-years {
@@ -966,9 +968,15 @@ input {
 .project-title-container {
     flex: auto;
 }
+
 .watermark-css {
     position: absolute;
     z-index: -2;
+}
+
+.inactive-link {
+    pointer-events: none;
+    cursor: default;
 }
 #upgrade-popup {
     font-family: 'Source Sans Pro', sans-serif;
@@ -987,7 +995,6 @@ input {
     border: 0;
     cursor: pointer;
 }
-
 #upgrade-popup .modal-title {
     font-size: 24px;
     font-weight: 700;
