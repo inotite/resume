@@ -1,3 +1,4 @@
+var shareSourceUrl = "https://www.workruit.com/#";
 // plug it in, plug it in
 (function ($) {
 
@@ -144,7 +145,7 @@
 					$('#copyLinkBtn').on('click', function () {
 						if ($('#shareName').val()) {
 							if (JSON.parse(localStorage.getItem('userData')).edit_name) {
-								$('#copyText2').val(location.origin + '/#' + JSON.parse(localStorage.getItem('userData')).share_name);
+								$('#copyText2').val(shareSourceUrl + JSON.parse(localStorage.getItem('userData')).share_name);
 								var copyText = document.getElementById("copyText2");
 								copyText.select();
 								document.execCommand("copy");
@@ -422,7 +423,7 @@ function getUserProfile() {
 		}
 		if (userProfileData.edit_name) {
 			$('.edit_name').addClass('d-none');
-			$('#shareDomain2').val(location.origin + '/#' + userProfileData.share_name);
+			$('#shareDomain2').val(shareSourceUrl + userProfileData.share_name);
 			$('.edit_name_link').removeClass('d-none');
 		}
 		localStorage.setItem('userData', JSON.stringify(userProfileData));

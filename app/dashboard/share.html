@@ -73,8 +73,8 @@
                 </div>
                 <div class="row edit_name_link d-none">
                   <div class="col-md-12">
-                    <input type="text" class="form-control mb-2" name="shareDomain"
-                      id="shareDomain2" minlength="3" value="" disabled />
+                    <input type="text" class="form-control mb-2" name="shareDomain" id="shareDomain2" minlength="3"
+                      value="" disabled />
                     <input type="text" id="copyText2" value="" style="opacity:0; height:0px;" />
                   </div>
                 </div>
@@ -143,15 +143,16 @@
     $('#load-header').load('../includes/user-header.html');
 
     var origin = window.location.origin;
+    var sourceUrl = 'https://www.workruit.com/#';
     // var sharePath = origin + '/#';
     $(function () {
       $('.account-page').paraCount();
-      $("#shareDomain").attr('value', origin + '/#')
+      $("#shareDomain").attr('value', sourceUrl)
     });
     var userShareInfo = JSON.parse(localStorage.getItem('userData'));
     if (userShareInfo.edit_name) {
       $('.edit_name').addClass('d-none');
-      $('#shareDomain2').val(location.origin + '/#' + userShareInfo.share_name);
+      $('#shareDomain2').val(sourceUrl + userShareInfo.share_name);
       $('.edit_name_link').removeClass('d-none');
     }
     $('#resume_piblic').attr('checked', userShareInfo.hideResume);

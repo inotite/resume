@@ -10,6 +10,9 @@ $(function () {
         if ((planDetails.subscribedUser && planDetails.planId === 1) || !planDetails.paidUser) {
             $('.upgrade-panel').removeClass('d-none');
         }
+        if (!planDetails.subscribedUser) {
+            $('.no-orders-panel').removeClass('d-none');
+        }
     }
     doGetWithEncrypt(baseResumeApiUrl + "user/" + JSON.parse(localStorage.getItem('userData')).userId +
         "/getTxnHistory").then(response => {
