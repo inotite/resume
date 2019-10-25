@@ -291,6 +291,7 @@ var shareSourceUrl = "https://www.workruit.com/#";
 					if (response.status == 'success') {
 						JSON.parse(localStorage.getItem('userData')).pic = response.data.httpPath;
 						localStorage.setItem('imageStore', response.data.httpPath);
+						getUserProfile();
 						$('#profileMenu img').attr('src', response.data.httpPath);
 						console.log('response.data.httpPath', response.data.httpPath);
 						$('#profilePicEdit').attr('src', response.data.httpPath);

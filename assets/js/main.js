@@ -35,7 +35,7 @@ $(window).scroll(function () {
 $(function () {
   setTimeout(function () {
     var redirectLinks = ['about.html', 'contact.html', 'careers.html', 'faq.html', 'privacy.html', 'terms.html'];
-    var locationOrgin = location.origin === 'https://devresume.workruit.com/' ? 'https://dev.workruit.com/' :
+    var locationOrgin = location.origin === 'https://devresume.workruit.com' ? 'https://dev.workruit.com/' :
       'https://www.workruit.com/';
     for (let index = 1; index <= redirectLinks.length; index++) {
       // const element = array[index];
