@@ -33,6 +33,16 @@ $(window).scroll(function () {
 
 // footer link active
 $(function () {
+  setTimeout(function () {
+    var redirectLinks = ['about.html', 'contact.html', 'careers.html', 'faq.html', 'privacy.html', 'terms.html'];
+    var locationOrgin = location.origin === 'https://devresume.workruit.com/' ? 'https://dev.workruit.com/' :
+      'https://www.workruit.com/';
+    for (let index = 1; index <= redirectLinks.length; index++) {
+      // const element = array[index];
+      $('.footer-nav li:nth-child(' + index + ') a').attr('href', locationOrgin + redirectLinks[index-1]);
+
+    }
+  }, 1000)
   $('.footer-nav li a[href^="/' + window.location.pathname.split("/")[1] + '"]').addClass('footer__active');
 });
 // autoplay vide on anroid devices

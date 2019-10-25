@@ -47,7 +47,7 @@ function orderTableRow(item) {
         </td>
         <td>${item.startDate}</td>
         <td data-content="expDate">${moment(item.expDate).format("DD MMM YYYY")}</td>
-        <td><a data-href="invoice.html">Invoice</a></td>
+        <td>${item.planId === 1 ? 'NA' : '<a data-href="invoice.html">Invoice</a>'}</td>
     </tr>`;
         $('#order_history_template').append(orderRow);
     });

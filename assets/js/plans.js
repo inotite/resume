@@ -70,9 +70,11 @@ function PricingTemplate(item) {
             <h4><span class="amount">  ${item.price}   </span></h4>
             <h3>
                 <span class="title" style="color: #6a6a6a; font-display: normal"> ${item.timePeriod}
-                    </span>
-                <span class="interval" style="color: #337ab7" data-content="planTitle"> ${item.planTitle} </span>
+                    </span>   
             </h3>
+        </div>
+        <div class="plan_title">
+        <span class="interval" style="color: #337ab7" data-content="planTitle"> ${item.planTitle} </span>
         </div>
         <div class="features">
             <ul>
@@ -136,4 +138,8 @@ function freePlanAction() {
         $('#price-action-modal .line-2').text('today to access all features.');
     }
     $('#price-action-modal').modal('show');
+    if ($('.modal-backdrop.fade.in').length > 1) {
+        $('body .modal-backdrop.fade.in:nth-of-type(1)').remove();
+
+    }
 }

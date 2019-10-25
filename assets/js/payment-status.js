@@ -31,11 +31,11 @@ $(window).ready(function () {
                     $('.check_order').text('You may check "Order History" to view more details.');
                     doGetWithEncrypt(apiUrl + "/user/" + paramUserId + "/getProfileResume").then(response => {
                         localStorage.setItem('userData', JSON.stringify(response.data));
-                        setInfoMessage(userInfo.planDetails.msg.description);
+                        setInfoMessage(userInfo.planDetails.msg.description + '.');
                     });
                     break;
                 case "failed":
-                    $('.info_message_status_text').text(response.msg.title + ',');
+                    $('.info_message_status_text').text(response.msg.title + '.');
                     $('.info_message_status_text').addClass('text-danger');
                     $('.paymentUserName').addClass('d-none');
                     $('.status_message').text('Oops, Try Again');

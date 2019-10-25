@@ -99,7 +99,29 @@
     width: 70%;
     margin-left: 14%;
 }
-.pricing .highlight .detail:after {
+.pricing .plan_title{
+    position: relative;
+}
+.pricing .plan_title:before {
+    content: '';
+    width: 161px;
+    height: 20px;
+    background: #fdfdfd;
+    display: block;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 0px;
+    position: absolute;
+    z-index: 3;
+    -webkit-border-radius: 0 0 30px 30px;
+    -moz-border-radius: 0 0 30px 30px;
+    border-radius: 0 0 30px 30px;
+    border: 1px solid #e7e7e7;
+    border-top: 0;
+    transform:rotate(180deg);
+}
+.pricing .plan_title:after {
     content: '';
     width: 161px;
     height: 20px;
@@ -116,6 +138,17 @@
     border-radius: 0 0 30px 30px;
     border: 1px solid #e7e7e7;
     border-top: 0;
+}
+.pricing .plan_title .interval {
+    position: relative;
+    top: 10px;
+    z-index: 999999;
+    font-size: 14px;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 .pricing .features {
     padding-top: 40px;
