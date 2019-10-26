@@ -261,7 +261,7 @@ $(window).ready(function () {
                             <label for="${settingItem.dataText}"><input type="checkbox" id="${settingItem.dataText}" checked="${settingItem.status}" data-checked="${settingItem.status}" class="switch ml-3"><label class="switch-label ${settingItem.dataText}"></label> 
                             ${settingItem.text} </label>
                         </a>`;
-        $('.actions').append(settingLink)
+        $('.actions .actions-menu').append(settingLink)
     }
 
     $('.action-item').on('click', function () {
@@ -273,22 +273,17 @@ $(window).ready(function () {
         settings[actionItemIndex].status = newStatus;
         $('#' + settingId).attr('data-checked', newStatus).attr('checked', newStatus);
         $('.' + settingId).addClass(newStatus).removeClass(currentStatus);
-        // console.log(settingId);
+        console.log("settings[actionItemIndex]", settings[actionItemIndex]);
         settingStatus(settingId, newStatus);
     });
     if ($('.action-item')) {
         requestAnimationFrame(function () {
-            for (let index = 0; index <= $('.action-item').length; index++) {
-                console.log(settings[index]);
-                var currentStatus = $('#' + settings[index].dataText).attr('data-checked');
-                console.log("$('.action-item:nth-of-type(' + index + ')').attr()", $('#actions .action-item:nth-of-type(' + index + ')').attr("data-setting"));
-                var settingId = $('#actions .action-item:nth-of-type(' + index + ')').attr("data-setting");
-                $('#' + settingId).attr('data-checked', currentStatus).attr('checked', currentStatus);
-                $('.' + settingId).addClass(currentStatus);
-                settingStatus(settingId, currentStatus);
-                // var newStatus = currentStatus == 'true' ? 'false' : 'true';
-                // $('.action-item:nth-of-type(' + index + ')');
-                // settingStatus(settingId, newStatus);
+            for (let index = 0; index <= $('.actions-menu .action-item').length; index++) {
+                var settingId = $('.actions-menu .action-item').eq(index).attr("data-setting");
+                console.log(settingId, settings[index].status,settings.dataText);
+                $('#' + settingId).attr('data-checked', settings[index].status).attr('checked', settings[index].status);
+                $('.' + settingId).addClass(settings[index].status);
+                settingStatus(settingId, settings[index].status);
             }
         });
     }
@@ -911,7 +906,7 @@ $(window).ready(function () {
             });
 
             $("#skills_item_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
-            $('#skills_item_' + num + ' .skill-value').click(function(e) {
+            $('#skills_item_' + num + ' .skill-value').click(function (e) {
                 $(this).parent().find('.skills-bar').click();
             });
         }
@@ -1586,7 +1581,7 @@ $(window).ready(function () {
         });
 
         validateSkills();
-        $('.skill-value').click(function(e) {
+        $('.skill-value').click(function (e) {
             $(this).parent().find('.skills-bar').click();
         });
     }
@@ -1884,7 +1879,7 @@ $(window).ready(function () {
 
     }
 
-    async function savePdf(action="download") {
+    async function savePdf(action = "download") {
         // if (planInfo.planId !== 1) {
         $('.loading-container').show();
         var eles = $('page');
@@ -2500,11 +2495,11 @@ $(window).ready(function () {
     }
 
     ratingCircle();
-    $('[contenteditable="true"]').bind('dragover drop', function(event){
+    $('[contenteditable="true"]').bind('dragover drop', function (event) {
         event.preventDefault();
         return false;
     });
-    $('input').bind('dragover drop', function(event){
+    $('input').bind('dragover drop', function (event) {
         event.preventDefault();
         return false;
     });

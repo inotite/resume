@@ -48,7 +48,7 @@ var shareSourceUrl = "https://www.workruit.com/#";
 					//console.log("fromPage ::::::"+fromPage);
 					//if(fromPage == 'signin'){
 					$('#userName').text(userData.firstname + " " + userData.lastname);
-					$('#UserEmail').text(userData.email);
+					$('#UserEmail').text(text_truncate(userData.email,30));
 					$('input[name="firstname"]').val(userData.firstname);
 					$('input[name="lastname"]').val(userData.lastname);
 					$('input[name="email"]').val(userData.email);
@@ -213,8 +213,8 @@ var shareSourceUrl = "https://www.workruit.com/#";
 				});
 
 
-				
-				
+
+
 				/*$('input').on('keypress', function (e) {
 					if (e.which == 32)
 						return false;
@@ -368,5 +368,19 @@ function alphanumeric(inputtxt) {
 	} else {
 		return false;
 
+	}
+}
+
+function text_truncate(str, length, ending) {
+	if (length == null) {
+		length = 100;
+	}
+	if (ending == null) {
+		ending = '...';
+	}
+	if (str.length > length) {
+		return str.substring(0, length - ending.length) + ending;
+	} else {
+		return str;
 	}
 }

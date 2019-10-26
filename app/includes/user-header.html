@@ -237,7 +237,8 @@
     var userId = userData.userId;
     var fromPage = localStorage.getItem('fromPage');
     $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
-    $('#UserEmail').text(userInfo.email);
+    // $('#UserEmail').text(userInfo.email);
+    $('#UserEmail').text(text_truncate(userData.email,30));
     $('input[name="firstname"]').val(userInfo.firstname);
     $('input[name="lastname"]').val(userInfo.lastname);
     $('input[name="email"]').val(userInfo.email);
@@ -254,4 +255,18 @@
             window.location.href = window.origin + '/app/auth/login.html';
         })
     });
+
+function text_truncate(str, length, ending) {
+	if (length == null) {
+		length = 100;
+	}
+	if (ending == null) {
+		ending = '...';
+	}
+	if (str.length > length) {
+		return str.substring(0, length - ending.length) + ending;
+	} else {
+		return str;
+	}
+}
 </script>
