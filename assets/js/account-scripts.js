@@ -48,7 +48,7 @@ var shareSourceUrl = "https://www.workruit.com/#";
 					//console.log("fromPage ::::::"+fromPage);
 					//if(fromPage == 'signin'){
 					$('#userName').text(userData.firstname + " " + userData.lastname);
-					$('#UserEmail').text(text_truncate(userData.email,30));
+					$('#UserEmail').text(text_truncate(userData.email, 30));
 					$('input[name="firstname"]').val(userData.firstname);
 					$('input[name="lastname"]').val(userData.lastname);
 					$('input[name="email"]').val(userData.email);
@@ -333,7 +333,7 @@ function setInfoMessage(message, emailVerified) {
 		console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today", numberOfDays);
 		if (numberOfDays && numberOfDays <= 3) {
 			$('#info_message').addClass('alert-danger');
-		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired") || !message.indexOf('Your free plan is expiring today')) {
+		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired") || !message.indexOf('Your free plan is expiring today.')) {
 			$('#info_message').addClass('alert-danger');
 		} else {
 			$('#info_message').addClass('alert-success');
