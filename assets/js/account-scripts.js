@@ -330,10 +330,10 @@ function setInfoMessage(message, emailVerified) {
 			return;
 		}
 		const numberOfDays = JSON.parse(message.match(/\d+/)) ? JSON.parse(message.match(/\d+/)[0]) : null;
-		console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today", numberOfDays);
-		if (numberOfDays && numberOfDays <= 3) {
+		console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), message.indexOf("today"), "today", numberOfDays);
+		if ((numberOfDays && numberOfDays <= 3) || message.indexOf('today') !== -1) {
 			$('#info_message').addClass('alert-danger');
-		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired") || !message.indexOf('Your free plan is expiring today.')) {
+		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired")) {
 			$('#info_message').addClass('alert-danger');
 		} else {
 			$('#info_message').addClass('alert-success');
