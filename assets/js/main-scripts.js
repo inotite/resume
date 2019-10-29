@@ -113,7 +113,7 @@ if (localStorage.getItem('plans')) {
 					};
 
 					// console.log(signupData);
-					doPostWithEncrypt(baseApiUrl + serviceUrls.post.loginResumeUser, signupData).then(response => {
+					doPostWithOutAuth(baseApiUrl + serviceUrls.post.loginResumeUser, signupData).then(response => {
 						console.log(response);
 						response = typeof (response) !== "object" ? JSON.parse(response) : response;
 						localStorage.clear();
@@ -233,7 +233,7 @@ if (localStorage.getItem('plans')) {
 
 					// });
 					$('.loading-container').css('display', 'block');
-					doPostWithEncrypt(baseApiUrl + serviceUrls.post.signupResume, signupData).then(response => {
+					doPostWithOutAuth(baseApiUrl + serviceUrls.post.signupResume, signupData).then(response => {
 						console.log('response new', response);
 						localStorage.clear();
 						if (response.status == "success") {
@@ -296,7 +296,7 @@ if (localStorage.getItem('plans')) {
 					// $.ajax(settings).done(function (response) {
 
 					// });
-					doPostWithEncrypt(baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume, userData).then(response => {
+					doPostWithOutAuth(baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume, userData).then(response => {
 						console.log(response);
 						if (response.status == "success") {
 							$('#newSuccessMessageID .message-text').html(response.msg.description);

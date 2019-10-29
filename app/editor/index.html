@@ -38,9 +38,11 @@
             left: 50%;
             top: 50%;
         }
-        .modal-backdrop.fade{
-            opacity: .5!important;
+
+        .modal-backdrop.fade {
+            opacity: .5 !important;
         }
+
         #upgrade-popup {
             z-index: 4000;
         }
@@ -52,38 +54,39 @@
         <img src="../../assets/images/oval.svg" style="width:55px">
     </div>
     <div id="resumeTemplate"></div>
-        <!-- upgrade popup -->
-     <div class="modal fade bd-example-modal-lg" id="upgrade-popup" tabindex="-1" role="dialog"
-    aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-5 text-center">
-                        <img src="../../assets/images/Icon3.svg" class="img1" alt="phone" height="320px"
-                            width="auto">
-                    </div>
-                    <div class="col-md-7 pt-5">
-                        <div class="modal-title">Upgrade Today</div>
-                        <div class="modal-description">
-                            Get access to your custom resume URL and share it instantly with hiring managers,
-                            companies,
-                            friends & family.</div>
-                        <a href="../../pricing.html"><button type="button"
-                                class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+    <!-- upgrade popup -->
+    <div class="modal fade bd-example-modal-lg" id="upgrade-popup" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <img src="../../assets/images/Icon3.svg" class="img1" alt="phone" height="320px"
+                                width="auto">
+                        </div>
+                        <div class="col-md-7 pt-5">
+                            <div class="modal-title">Upgrade Today</div>
+                            <div class="modal-description">
+                                Get access to your custom resume URL and share it instantly with hiring managers,
+                                companies,
+                                friends & family.</div>
+                            <a href="../../pricing.html"><button type="button"
+                                    class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <!-- /upgrade popup -->
     <script src="../../assets/vendors/js/w3includes.js"></script>
     <script src="../../assets/vendors/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendors/js/cryptojs.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/aes.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/sha256.js"></script>
     <script type="text/javascript" src="../../assets/js/environment.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
     <script src="../../assets/js/editor/editor-template-constant.js"></script>

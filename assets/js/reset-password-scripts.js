@@ -7,7 +7,7 @@ $('#changePassword2').on('click', function () {
         "newPassword": newPassword,
         "reenterNewPassword": reenterNewPassword
     };
-    doPostWithEncrypt(baseApiUrl + "/user/" + UrlUserId + "/" + serviceUrls.post.resetPasswordResumeUser,
+    doPostWithOutAuth(baseApiUrl + "/user/" + UrlUserId + "/" + serviceUrls.post.resetPasswordResumeUser,
         newPasswordObj).then(response => {
         console.log(response);
         if (response.status == "success") {

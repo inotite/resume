@@ -4,7 +4,7 @@ var emailVerificationId = parameters[0].substring(1);
 var companyName = 'workruit';
 var userId = parameters[2];
 console.log(emailVerificationId, companyName, userId)
-doGetWithEncrypt(baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser +
+doGetWithOutAuth(baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser +
     emailVerificationId +
     "/" + companyName + '/123', ).then(response => {
     if (response.status == "success") {
@@ -17,7 +17,7 @@ doGetWithEncrypt(baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser 
     }
 })
 $('.resendEmail').click(function () {
-    doGetWithEncrypt(baseResumeApiUrl + 'user/' + userId + resumeServiceUrls.get.resendEmail).then(response => {
+    doGetWithOutAuth(baseResumeApiUrl + 'user/' + userId + resumeServiceUrls.get.resendEmail).then(response => {
         console.log(response, 'response');
         $('.failed-email').removeClass('d-none');
         $('.failed-email h1').text(response.msg.description);

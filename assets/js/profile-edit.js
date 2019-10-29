@@ -40,7 +40,7 @@ $('#updateProfile').on('click', function () {
             "collegeName": collegeName,
             "collegeLogo": collegeLogo
         }
-        debugger;
+        // debugger;
         doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
             console.log(response);
             if (response.status == "success") {
@@ -119,3 +119,101 @@ $('#updateProfile2').on('click', function () {
         }
     })
 });
+// getCollegesInfo
+$(function () {
+    $('#load-header').load('../includes/user-header.html');
+    $('.account-page').paraCount();
+    $(window).ready(function () {
+      JSON.parse(localStorage.getItem('userData')).email_verified === 0 ? $('#newSuccessMessageID').css(
+        'display',
+        'none') : $('.preview_btn').css('display', 'block');
+      // console.log(localStorage.getItem('isPremiumUser'));
+      if (localStorage.getItem('isPremiumUser') === 'true') {
+        $('.premium-feature').removeClass('d-none');
+      } else {
+        $('.trail-feature').removeClass('d-none');
+      }
+      var planDetails = JSON.parse(localStorage.getItem('userData')).planDetails;
+      if (localStorage.getItem('userData')) {
+        if (!planDetails.emailVerified) {
+          $('.tabs-container').addClass('mt-5');
+        }
+      }
+    })
+    // console.log(localStorage.getItem('previewData')) newSuccessMessageID
+    const userPlanStatus = JSON.parse(localStorage.getItem('userPlanStatus'));
+    localStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $('.preview_btn')
+      .css('display', 'inline-block')
+    doGetWithEncrypt(baseResumeApiUrl + resumeServiceUrls.get.getCollegesInfo).then(response => {
+      console.log(response);
+      for (let index = 0; index < response.collegesInfo.length; index++) {
+        const element = response.collegesInfo[index];
+        // console.log(element);
+        var clgInfo = btoa(JSON.stringify({
+          collegeName: element.title,
+          collegeLogo: element.logo
+        }));
+        var option = `<option value="${clgInfo}" data-clgLogo="${element.logo}">${element.title}</option>`
+        $('#collageName').append(option)
+        var userData = JSON.parse(localStorage.getItem('userData'));
+        var clgInfo2 = btoa(JSON.stringify({
+          collegeName: userData.collegeName,
+          collegeLogo: userData.collegeLogo
+        }));
+        console.log("clgInfo2", clgInfo2);
+        $('#collageName').val(clgInfo2);
+      }
+      var option = `<option value="" data-clgLogo="">NA</option>`
+      $('#collageName').append(option)
+    });
+
+    $('.loading-container').delay(1000).fadeOut();
+
+  });
+  $(function () {
+    $('.account-page').paraCount();
+  });
+
+  function storeTheImage() {
+    var imgCanvas = document.getElementById('canvas-element'),
+      imgContext = imgCanvas.getContext("2d");
+
+    var img = document.getElementById('image-preview');
+    // Make sure canvas is as big as the picture BUT make it half size to the file size is small enough
+    imgCanvas.width = (img.width / 4);
+    imgCanvas.height = (img.height / 4);
+
+    // Draw image into canvas element
+    imgContext.drawImage(img, 0, 0, (img.width / 4), (img.height / 4));
+
+    // Get canvas contents as a data URL
+    var imgAsDataURL = imgCanvas.toDataURL("image/png");
+
+    // Save image into localStorage
+    try {
+      window.localStorage.setItem("imageStoreData", imgAsDataURL);
+      $('.localStorage-output').html(window.localStorage.getItem('imageStoreData'));
+      $('.cont_fotodiv').css('background', 'transparent');
+    } catch (e) {
+      console.log("Storage failed: " + e);
+    }
+  }
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#image-preview').show();
+        $('#image-preview').attr('src', e.target.result);
+        storeTheImage();
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  // $('#image-preview').attr('src', window.localStorage.getItem('imageStoreData'));
+
+  $('#inputfoto2').on('change', function () {
+    readURL(this);
+  });

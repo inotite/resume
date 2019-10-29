@@ -18,7 +18,7 @@ if (!localStorage.getItem('plans')) {
 var userPlansInfo = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).planDetails : null;
 
 function getResumePlans() {
-    doGetWithEncrypt(baseResumeApiUrl + resumeServiceUrls.get.getResumePlans).then(response => {
+    doGetWithOutAuth(baseResumeApiUrl + resumeServiceUrls.get.getResumePlans).then(response => {
         response.map((item, index) => {
             var pId = btoa(JSON.stringify(item));
             item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;

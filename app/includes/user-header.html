@@ -247,6 +247,9 @@
     } else {
         $('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
     }
+    console.log((baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
+            "/" +
+            serviceUrls.get.resUserLogout));
     $('#signOut').on('click', function () {
         doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
             "/" +

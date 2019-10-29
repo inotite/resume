@@ -86,18 +86,9 @@ var defaultSettings = [{
 }];
 let degreesAll = [];
 /* Job Functions Autocomplete */
-var jobFunctionsSettings = {
-    "async": true,
-    "crossDomain": true,
-    "url": apiAdminUrl + "/allJobFunctions",
-    "method": "GET",
-    "headers": {
-        "token": "911ca088ab824095b82d3c98b32332e7",
-    }
-}
 // console.log(apiAdminUrl + "/allJobFunctions");
 var jobFunctionsAll = new Array();
-$.ajax(jobFunctionsSettings).done(function (response) {
+doGetWithEncrypt(apiAdminUrl + "/allJobFunctions").then(function (response) {
 
     $.each(response.categoryArray, function (i1, object) {
         $.each(object.categoryValues, function (i3, region) {
@@ -128,16 +119,7 @@ $.ajax(jobFunctionsSettings).done(function (response) {
 
 });
 /* Degrees Autocomplete */
-var degreesSettings = {
-    "async": true,
-    "crossDomain": true,
-    "url": apiAdminUrl + "/allDegrees",
-    "method": "GET",
-    "headers": {
-        "token": "911ca088ab824095b82d3c98b32332e7",
-    }
-}
-$.ajax(degreesSettings).done(function (response) {
+doGetWithEncrypt(apiAdminUrl + "/allDegrees").then(function (response) {
     //console.log(response.degrees[0].title);
 
     $(response.degrees).each(function (k, object) {
@@ -280,7 +262,7 @@ $(window).ready(function () {
         requestAnimationFrame(function () {
             for (let index = 0; index <= $('.actions-menu .action-item').length; index++) {
                 var settingId = $('.actions-menu .action-item').eq(index).attr("data-setting");
-                console.log(settingId, settings[index].status,settings.dataText);
+                console.log(settingId, settings[index].status, settings.dataText);
                 $('#' + settingId).attr('data-checked', settings[index].status).attr('checked', settings[index].status);
                 $('.' + settingId).addClass(settings[index].status);
                 settingStatus(settingId, settings[index].status);
@@ -918,18 +900,9 @@ $(window).ready(function () {
         }
         $('.skills').on('keydown', function () {
             var fieldVal = $(this).text();
-            var skillsSettings = {
-                "async": true,
-                "crossDomain": true,
-                "url": apiAdminUrl + "/skills?skillName=" + fieldVal,
-                "method": "GET",
-                "headers": {
-                    "token": "911ca088ab824095b82d3c98b32332e7",
-                }
-            }
             var skillsAll = new Array();
             var dom = $(this);
-            $.ajax(skillsSettings).done(function (response) {
+            doGetWithEncrypt(apiAdminUrl + "/skills?skillName=" + fieldVal).then(function (response) {
                 // console.log(fieldVal, response)
                 if (response !== null)
                     $(response.content).each(function (k, v) {
@@ -1066,7 +1039,7 @@ $(window).ready(function () {
             bindUserDataForSave();
             saveUserProfile(postObj, "save");
         }
-
+        $('#downloadResume').addClass('inactive-link');
     });
 
     $('#downloadResume').on('click', async function () {
@@ -1076,12 +1049,12 @@ $(window).ready(function () {
                 bindUserDataForSave();
                 saveUserProfile(postObj, "download");
                 showMultiplePages();
-                await savePdf();
+                await savePdf('download');
                 hideMultiplePages();
                 $('#downloadResume').removeClass('inactive-link');
             } else {
                 console.log("hey, here!");
-                await savePdf();
+                await savePdf('download');
             }
         } else {
             $('#upgrade-popup').modal('show')
@@ -1650,18 +1623,9 @@ $(window).ready(function () {
 
     $('.skills').on('keydown', function () {
         var fieldVal = $(this).text();
-        var skillsSettings = {
-            "async": true,
-            "crossDomain": true,
-            "url": apiAdminUrl + "/skills?skillName=" + fieldVal,
-            "method": "GET",
-            "headers": {
-                "token": "911ca088ab824095b82d3c98b32332e7",
-            }
-        }
         var skillsAll = new Array();
         var dom = $(this);
-        $.ajax(skillsSettings).done(function (response) {
+        doGetWithEncrypt(apiAdminUrl + "/skills?skillName=" + fieldVal).then(function (response) {
             // console.log(fieldVal, response)
             if (response !== null)
                 $(response.content).each(function (k, v) {
@@ -1800,26 +1764,9 @@ $(window).ready(function () {
             }
         }
         // console.log("Application Data", JSON.stringify(applicantData));
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": apiUrl + "/user/" + userId + "/updateProfileResume",
-            "type": "POST",
-            "headers": {
-                "token": sessionId,
-                "content-type": "application/json"
-            },
-            "processData": false,
-            "data": JSON.stringify(applicantData),
-            error: function (e) {
-                console.log(e);
-            },
-            dataType: "json",
-            contentType: "application/json"
-        }
         // console.log("settings", settings.data);
         // downloadResume
-        $.ajax(settings).done(function (response) {
+        doPostWithEncrypt(apiUrl + "/user/" + userId + "/updateProfileResume", applicantData).then(response => {
             if (response.status == 'success') {
                 $('#newSuccessMessageID .message-text').html(response.msg);
                 $('.loading-container').fadeOut();
@@ -1839,7 +1786,7 @@ $(window).ready(function () {
                     saveUserPic();
                 }
                 if (action === 'save') {
-                    savePdf('fromSave');
+                    savePdf('save');
                 }
                 getShareNameFile();
 
@@ -1855,7 +1802,6 @@ $(window).ready(function () {
                     window.history.back();
                 }
             }
-
         });
     }
 
@@ -1879,7 +1825,7 @@ $(window).ready(function () {
 
     }
 
-    async function savePdf(action = "download") {
+    async function savePdf(action) {
         // if (planInfo.planId !== 1) {
         $('.loading-container').show();
         var eles = $('page');
@@ -2065,23 +2011,8 @@ $(window).ready(function () {
         form.append("userId", userId);
         form.append("type", "photo");
         form.append("file", logoImg);
-
-        var imageSettings = {
-            "async": true,
-            "crossDomain": true,
-            "url": apiUrl + "/uploadFile",
-            "method": "POST",
-            "headers": {
-                "token": sessionId,
-                "cache-control": "no-cache",
-            },
-            "processData": false,
-            "contentType": false,
-            "mimeType": "multipart/form-data",
-            "data": form
-        }
-        console.log("imageSettings", imageSettings);
-        $.ajax(imageSettings).done(function (responseData) {
+        console.log(apiUrl + "/uploadFile", form);
+        doUpload(apiUrl + "/uploadFile", form).then(function (responseData) {
             var response = JSON.parse(responseData);
             //console.log(response.data.httpPath);
             console.log(response);

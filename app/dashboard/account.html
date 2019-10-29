@@ -280,126 +280,13 @@
   <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../../assets/vendors/js/cryptojs.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/aes.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/sha256.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
   <script type="text/javascript" src="../../assets/js/environment.js"></script>
   <script type="text/javascript" src="../../assets/js/app.services.js"></script>
   <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
-  <script src="../../assets/js/profile-edit.js"></script>
-  <script>
-    // getCollegesInfo
-
-    var getCollegesInfo = {
-      "async": true,
-      "crossDomain": true,
-      "url": baseResumeApiUrl + resumeServiceUrls.get.getCollegesInfo,
-      "method": "GET",
-      "headers": {
-        "token": JSON.parse(localStorage.getItem('userData')).sessionId,
-        "content-type": "application/json"
-      },
-    };
-    $(function () {
-      $('#load-header').load('../includes/user-header.html');
-      $('.account-page').paraCount();
-      $(window).ready(function () {
-        JSON.parse(localStorage.getItem('userData')).email_verified === 0 ? $('#newSuccessMessageID').css(
-          'display',
-          'none') : $('.preview_btn').css('display', 'block');
-        // console.log(localStorage.getItem('isPremiumUser'));
-        if (localStorage.getItem('isPremiumUser') === 'true') {
-          $('.premium-feature').removeClass('d-none');
-        } else {
-          $('.trail-feature').removeClass('d-none');
-        }
-        var planDetails = JSON.parse(localStorage.getItem('userData')).planDetails;
-        if (localStorage.getItem('userData')) {
-          if (!planDetails.emailVerified) {
-            $('.tabs-container').addClass('mt-5');
-          }
-        }
-      })
-      // console.log(localStorage.getItem('previewData')) newSuccessMessageID
-      const userPlanStatus = JSON.parse(localStorage.getItem('userPlanStatus'));
-      localStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $('.preview_btn')
-        .css('display', 'inline-block')
-      $.ajax(getCollegesInfo).done(function (response) {
-        // console.log(response);
-        for (let index = 0; index < response.collegesInfo.length; index++) {
-          const element = response.collegesInfo[index];
-          // console.log(element);
-          var clgInfo = btoa(JSON.stringify({
-            collegeName: element.title,
-            collegeLogo: element.logo
-          }));
-          var option = `<option value="${clgInfo}" data-clgLogo="${element.logo}">${element.title}</option>`
-          $('#collageName').append(option)
-          var userData = JSON.parse(localStorage.getItem('userData'));
-          var clgInfo2 = btoa(JSON.stringify({
-            collegeName: userData.collegeName,
-            collegeLogo: userData.collegeLogo
-          }));
-          console.log("clgInfo2", clgInfo2);
-          $('#collageName').val(clgInfo2);
-        }
-        var option = `<option value="" data-clgLogo="">NA</option>`
-        $('#collageName').append(option)
-      });
-
-
-      $('.loading-container').delay(1000).fadeOut();
-
-    });
-  </script>
-  <script>
-    $(function () {
-      $('.account-page').paraCount();
-    });
-
-    function storeTheImage() {
-      var imgCanvas = document.getElementById('canvas-element'),
-        imgContext = imgCanvas.getContext("2d");
-
-      var img = document.getElementById('image-preview');
-      // Make sure canvas is as big as the picture BUT make it half size to the file size is small enough
-      imgCanvas.width = (img.width / 4);
-      imgCanvas.height = (img.height / 4);
-
-      // Draw image into canvas element
-      imgContext.drawImage(img, 0, 0, (img.width / 4), (img.height / 4));
-
-      // Get canvas contents as a data URL
-      var imgAsDataURL = imgCanvas.toDataURL("image/png");
-
-      // Save image into localStorage
-      try {
-        window.localStorage.setItem("imageStoreData", imgAsDataURL);
-        $('.localStorage-output').html(window.localStorage.getItem('imageStoreData'));
-        $('.cont_fotodiv').css('background', 'transparent');
-      } catch (e) {
-        console.log("Storage failed: " + e);
-      }
-    }
-
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-          $('#image-preview').show();
-          $('#image-preview').attr('src', e.target.result);
-          storeTheImage();
-        }
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    // $('#image-preview').attr('src', window.localStorage.getItem('imageStoreData'));
-
-    $('#inputfoto2').on('change', function () {
-      readURL(this);
-    });
-  </script>
+  <script type="text/javascript" src="../../assets/js/profile-edit.js"></script>
 
 </body>
 
