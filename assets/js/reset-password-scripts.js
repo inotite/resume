@@ -17,6 +17,8 @@ $('#changePassword2').on('click', function () {
                 .delay(5000)
                 .fadeOut();
             $('#signupbox').addClass('d-none');
+            $('.responce_message').removeClass('d-none');
+            $('.responce-message').text(response.msg.description);
         } else {
             $('#newErrorMessageID .message-text').html(response.msg.description)
             $('#newErrorMessageID').html(response.msg.description)
@@ -24,7 +26,6 @@ $('#changePassword2').on('click', function () {
                 .delay(5000)
                 .fadeOut();
         }
-        $('.responce_message').removeClass('d-none');
-        $('.responce-message').text(response.msg.description);
+
     });
 });

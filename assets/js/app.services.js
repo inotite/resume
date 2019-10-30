@@ -93,6 +93,48 @@ function doPostWithOutAuth(url, payload) {
             return JSON.parse(decrypt(error.data, authToken));
         });
 };
+// services with password
+var withOutAuthHeaders = setHeaders();
+
+function doGetWithAuthKey(url) {
+    console.log(url);
+    return axios.get(url, withOutAuthHeaders)
+        .then(function (response) {
+            console.log(response);
+            if (response.status == 200) {
+                // handle success
+                return JSON.parse(decrypt(response.data, 'password'));
+            };
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            return JSON.parse(decrypt(error.data, authToken));
+        });
+};
+
+function doPostWithAuthKey(url, payload) {
+    console.log(payload);
+    payload = encrypt(JSON.stringify(payload), 'password');
+    console.log(payload, withOutAuthHeaders);
+    return axios.post(url, payload, {
+            headers: {
+                "Content-Type": 'application/json',
+                "Token": authToken
+            }
+        })
+        .then(function (response) {
+            console.log("response", response);
+            // handle success
+            // console.log(decrypt(response, token));
+            return JSON.parse(decrypt(response.data, authToken));
+        })
+        .catch(function (error) {
+            // handle error
+            // console.log(decrypt(error, sessionId));
+            return JSON.parse(decrypt(error.data, authToken));
+        });
+};
 var iv = CryptoJS.enc.Hex.parse(0x00);
 
 function encrypt(message, key) {
@@ -105,11 +147,13 @@ function encrypt(message, key) {
 
 function decrypt(message, key) {
     console.log(message, key);
-    var decryptString = CryptoJS.AES.decrypt(message, CryptoJS.enc.Latin1.parse(CryptoJS.enc.Latin1.stringify(CryptoJS.SHA256(key))), {
-        iv: iv
-    }).toString(CryptoJS.enc.Utf8);
-    console.log(decryptString);
-    return decryptString;
+    if (message && key) {
+        var decryptString = CryptoJS.AES.decrypt(message, CryptoJS.enc.Latin1.parse(CryptoJS.enc.Latin1.stringify(CryptoJS.SHA256(key))), {
+            iv: iv
+        }).toString(CryptoJS.enc.Utf8);
+        console.log(decryptString);
+        return decryptString;
+    }
 }
 
 //auth headers 

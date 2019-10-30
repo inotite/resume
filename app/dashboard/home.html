@@ -101,15 +101,15 @@
             $('.info_message .close').on('click', function () {
                 $('#info_message').css('display', 'none');
                 userInfo.planDetails.display = false;
+                localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(
+                    JSON.stringify(
+                        userInfo), localStorage.getItem('sessionId')));
                 localStorage.setItem('userData', JSON.stringify(userInfo))
             });
 
             $('.account-page').paraCount();
             $(window).ready(function () {
-                JSON.parse(localStorage.getItem('userData')).emailVerified === 0 ? $(
-                    '#newSuccessMessageID').css(
-                    'display',
-                    'none') : $('.preview_btn').css('display', 'block');
+
                 // console.log(localStorage.getItem('isPremiumUser'));
                 var freePlanInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
                 console.log(freePlanInfo);

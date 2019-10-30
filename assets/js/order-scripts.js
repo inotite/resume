@@ -2,8 +2,9 @@ $(function () {
     $('#load-header').load('../includes/user-header.html');
     const userPlanStatus = JSON.parse(localStorage.getItem('userPlanStatus'));
     $('.loading-container').delay(1000).fadeOut();
-    var planDetails = JSON.parse(localStorage.getItem('userData')).planDetails;
-    if (localStorage.getItem('userData')) {
+    var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+    var planDetails = localUserData.planDetails;
+    if (localUserData) {
         if (!planDetails.emailVerified) {
             $('.tabs-container').addClass('mt-5');
         }
@@ -14,7 +15,7 @@ $(function () {
             $('.no-orders-panel').removeClass('d-none');
         }
     }
-    doGetWithEncrypt(baseResumeApiUrl + "user/" + JSON.parse(localStorage.getItem('userData')).userId +
+    doGetWithEncrypt(baseResumeApiUrl + "user/" + localUserData.userId +
         "/getTxnHistory").then(response => {
         console.log(response);
         if (response.status == "success") {

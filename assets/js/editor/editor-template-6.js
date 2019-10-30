@@ -1,6 +1,6 @@
-const userId = JSON.parse(localStorage.getItem('userData')).userId;
+const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))).userId;
 const userStatus = localStorage.getItem('isPremiumUser');
-let resumeObj = JSON.parse(localStorage.getItem('userData'));
+let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
 const exp_total_count = 10;
 const edu_total_count = 10;

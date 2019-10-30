@@ -1,4 +1,6 @@
 var shareSourceUrl = "https://www.workruit.com/#";
+var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+// console.log("localUserData",localUserData)
 // plug it in, plug it in
 (function ($) {
 
@@ -42,18 +44,18 @@ var shareSourceUrl = "https://www.workruit.com/#";
 					window.location.href = "../index.html";
 				} else {
 					getUserProfile();
-					var userId = userData.userId;
-					//console.log(userData);
-					var fromPage = localStorage.getItem('fromPage');
+					var userId = localUserData.userId;
+					//console.log(localUserData);
+					// var fromPage = localStorage.getItem('fromPage');
 					//console.log("fromPage ::::::"+fromPage);
 					//if(fromPage == 'signin'){
-					$('#userName').text(userData.firstname + " " + userData.lastname);
-					$('#UserEmail').text(text_truncate(userData.email, 30));
-					$('input[name="firstname"]').val(userData.firstname);
-					$('input[name="lastname"]').val(userData.lastname);
-					$('input[name="email"]').val(userData.email);
+					$('#userName').text(localUserData.firstname + " " + localUserData.lastname);
+					$('#UserEmail').text(text_truncate(localUserData.email, 30));
+					$('input[name="firstname"]').val(localUserData.firstname);
+					$('input[name="lastname"]').val(localUserData.lastname);
+					$('input[name="email"]').val(localUserData.email);
 
-					//$('input[name="shareName"]').val(userData.share_name);
+					//$('input[name="shareName"]').val(localUserData.share_name);
 					$('input[name="shareName"]').val(localStorage.getItem('shareName'));
 					$('#copyText').val(self.options.baseUrl + '/@' + localStorage.getItem('shareName'));
 
@@ -72,8 +74,8 @@ var shareSourceUrl = "https://www.workruit.com/#";
 					}
 
 
-					if (userData.lastUpdatedDate) {
-						$('#lastUpdated').text(userData.lastUpdatedDate);
+					if (localUserData.lastUpdatedDate) {
+						$('#lastUpdated').text(localUserData.lastUpdatedDate);
 						$('#createResumeContainer').hide();
 						$('#updateResumeContainer').show();
 					} else {
@@ -87,7 +89,7 @@ var shareSourceUrl = "https://www.workruit.com/#";
 					$('#shareNameBtn').on('click', function () {
 
 						let shareName = $('input[name="shareName"]').val();
-						if (shareName !== JSON.parse(localStorage.getItem('userData')).share_name) {
+						if (shareName !== localUserData.share_name) {
 							console.log(shareName, shareName.length, "shareName");
 							if (alphanumeric(shareName)) {
 								if (shareName.length >= 6 && shareName.length <= 20) {
@@ -101,7 +103,7 @@ var shareSourceUrl = "https://www.workruit.com/#";
 										.then((willDelete) => {
 											if (willDelete) {
 												var shareData = {
-													"username": userData.email,
+													"username": localUserData.email,
 													"sharename": shareName
 												}
 												doPostWithEncrypt(baseApiUrl + serviceUrls.post.updateShareName, shareData).then(response => {
@@ -146,8 +148,8 @@ var shareSourceUrl = "https://www.workruit.com/#";
 
 					$('#copyLinkBtn').on('click', function () {
 						if ($('#shareName').val()) {
-							if (JSON.parse(localStorage.getItem('userData')).edit_name) {
-								$('#copyText2').val(shareSourceUrl + JSON.parse(localStorage.getItem('userData')).share_name);
+							if (localUserData.edit_name) {
+								$('#copyText2').val(shareSourceUrl + localUserData.share_name);
 								var copyText = document.getElementById("copyText2");
 								copyText.select();
 								document.execCommand("copy");
@@ -225,16 +227,16 @@ var shareSourceUrl = "https://www.workruit.com/#";
 				});
 				$('#resume_piblic').change(function () {
 					var profileData = {
-						"firstname": JSON.parse(localStorage.getItem('userData')).firstname,
-						"lastname": JSON.parse(localStorage.getItem('userData')).lastname,
-						"email": JSON.parse(localStorage.getItem('userData')).email,
+						"firstname": localUserData.firstname,
+						"lastname": localUserData.lastname,
+						"email": localUserData.email,
 						"hideResume": this.checked
 					};
 					// profileData.hideResume = this.checked
 					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 						//console.log(response);
 						if (response.status == "success") {
-							localStorage.setItem('userData', JSON.stringify(response.data));
+							localStorage.setItem('localUserData', JSON.stringify(response.data));
 							var statusMessage = response.data.hideResume == true ? "Now your resume is in private mode" : "Now your resume is in public mode";
 							$('#newSuccessMessageID .message-text').html(statusMessage);
 							$('#newSuccessMessageID').html(statusMessage)
@@ -251,7 +253,7 @@ var shareSourceUrl = "https://www.workruit.com/#";
 				var form = new FormData();
 				var logoImg = $('input[name="pic"]').get(0).files[0];
 
-				var userId = userData.userId;
+				var userId = localUserData.userId;
 
 				form.append("userId", userId);
 				form.append("type", "photo");
@@ -261,10 +263,11 @@ var shareSourceUrl = "https://www.workruit.com/#";
 					// var response = JSON.parse(response)
 					//console.log(response.data.httpPath);
 					if (response.status == 'success') {
-						JSON.parse(localStorage.getItem('userData')).pic = response.data.httpPath;
+						localUserData.pic = response.data.httpPath;
 						localStorage.setItem('imageStore', response.data.httpPath);
 						getUserProfile();
 						$('#profileMenu img').attr('src', response.data.httpPath);
+						localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(localUserData), sessionId));
 						console.log('response.data.httpPath', response.data.httpPath);
 						$('#profilePicEdit').attr('src', response.data.httpPath);
 						$('#myModelUploadPhoto').modal('hide');
@@ -292,7 +295,7 @@ var shareSourceUrl = "https://www.workruit.com/#";
 })(jQuery);
 
 function getUserProfile() {
-	doGetWithEncrypt(apiUrl + "/user/" + userData.userId + "/getProfileResume").then(response => {
+	doGetWithEncrypt(apiUrl + "/user/" + localUserData.userId + "/getProfileResume").then(response => {
 		console.log("doGetWithEncrypt", response);
 		var userProfileData = response.data;
 		console.log(userProfileData.planDetails);
@@ -313,7 +316,7 @@ function getUserProfile() {
 			$('#shareDomain2').val(shareSourceUrl + userProfileData.share_name);
 			$('.edit_name_link').removeClass('d-none');
 		}
-		localStorage.setItem('userData', JSON.stringify(userProfileData));
+		localStorage.setItem(encrypt('localUserData', response.sessionId), encrypt(JSON.stringify(response.data), response.sessionId));
 		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);
 		$('#load-header').load('../includes/user-header.html');
@@ -331,7 +334,7 @@ function setInfoMessage(message, emailVerified) {
 		}
 		const numberOfDays = JSON.parse(message.match(/\d+/)) ? JSON.parse(message.match(/\d+/)[0]) : null;
 		console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), message.indexOf("today"), "today", numberOfDays);
-		if ((numberOfDays && numberOfDays <= 3) || message.indexOf('today') !== -1) {
+		if ((numberOfDays && numberOfDays <= 3) || message.split('.')[0].indexOf('today') !== -1) {
 			$('#info_message').addClass('alert-danger');
 		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired")) {
 			$('#info_message').addClass('alert-danger');
@@ -384,3 +387,8 @@ function text_truncate(str, length, ending) {
 		return str;
 	}
 }
+var emailVerifiedStatus = localUserData.emailVerified
+emailVerifiedStatus === 0 ? $(
+	'#newSuccessMessageID').css(
+	'display',
+	'none') : $('.preview_btn').css('display', 'block');

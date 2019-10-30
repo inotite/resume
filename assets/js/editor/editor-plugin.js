@@ -1144,7 +1144,10 @@
 										.fadeOut('slow', function () {
 											$('#saveResume').removeAttr('pointer-events');
 										});
-									localStorage.setItem('userData', JSON.stringify(response.data));
+									localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(response.data), sessionId));
+									// localStorage.setItem('userData', JSON.stringify(response.data));
+									localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(JSON.stringify(response.data), localStorage.getItem('sessionId')));
+
 
 									var logoImg = $('input[name="pic"]').get(0).files[0];
 									if (logoImg) {

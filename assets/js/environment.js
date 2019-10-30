@@ -7,7 +7,7 @@ const baseResumeApiUrl = "https://stageapi.workruit.com/resume/";
 const appDate = new Date();
 const authToken = "94b51cc4-0c99-11e7-93ae-92361f002671";
 const sessionId = localStorage.getItem('sessionId');
-const userData = JSON.parse(localStorage.getItem('userData'));
+// const userData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
 const locationPaths = {
     homePage: "/app/dashboard/home.html"
 }

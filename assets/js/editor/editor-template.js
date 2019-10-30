@@ -1,6 +1,6 @@
-const userId = JSON.parse(localStorage.getItem('userData')).userId;
+const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))).userId;
 const userStatus = localStorage.getItem('isPremiumUser');
-let resumeObj = JSON.parse(localStorage.getItem('userData'));
+let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
 const exp_total_count = 10;
 const edu_total_count = 10;
@@ -88,7 +88,7 @@ let degreesAll = [];
 /* Job Functions Autocomplete */
 // console.log(apiAdminUrl + "/allJobFunctions");
 var jobFunctionsAll = new Array();
-doGetWithEncrypt(apiAdminUrl + "/allJobFunctions").then(function (response) {
+doGetWithAuthKey(apiAdminUrl + "/allJobFunctions").then(function (response) {
 
     $.each(response.categoryArray, function (i1, object) {
         $.each(object.categoryValues, function (i3, region) {
@@ -119,7 +119,7 @@ doGetWithEncrypt(apiAdminUrl + "/allJobFunctions").then(function (response) {
 
 });
 /* Degrees Autocomplete */
-doGetWithEncrypt(apiAdminUrl + "/allDegrees").then(function (response) {
+doGetWithAuthKey(apiAdminUrl + "/allDegrees").then(function (response) {
     //console.log(response.degrees[0].title);
 
     $(response.degrees).each(function (k, object) {
@@ -226,16 +226,17 @@ $(window).ready(function () {
             };
         });
     });
-    $('.b-datepicker').datepicker({
-        format: "dd-mm-yyyy",
-        endDate: moment(appDate).subtract(14, 'years').format('DD-MM-YYYY')
-    });
     $('.month-picker').datepicker({
         format: "M yyyy",
         endDate: moment(appDate).format('MMM YYYY'),
         startView: "months",
         minViewMode: "months"
     });
+    $('.b-datepicker').datepicker({
+        format: "dd-mm-yyyy",
+        endDate: moment(appDate).subtract(14, 'years').format('DD-MM-YYYY')
+    });
+
 
     for (let index = 0; index < settings.length; index++) {
         const settingItem = settings[index];
@@ -902,7 +903,7 @@ $(window).ready(function () {
             var fieldVal = $(this).text();
             var skillsAll = new Array();
             var dom = $(this);
-            doGetWithEncrypt(apiAdminUrl + "/skills?skillName=" + fieldVal).then(function (response) {
+            doGetWithAuthKey(apiAdminUrl + "/skills?skillName=" + fieldVal).then(function (response) {
                 // console.log(fieldVal, response)
                 if (response !== null)
                     $(response.content).each(function (k, v) {
@@ -1033,7 +1034,7 @@ $(window).ready(function () {
             saveUserProfile(postObj, "save");
         } else if (!planInfo.validUser && !!planInfo.subscribedUser) {
             // bindUserDataForSave();
-            saveUserProfile(postObj, "save");
+            // saveUserProfile(postObj, "save");
             $('#upgrade-popup').modal('show')
         } else if (!planInfo.subscribedUser && !planInfo.planId) {
             bindUserDataForSave();
@@ -1625,7 +1626,7 @@ $(window).ready(function () {
         var fieldVal = $(this).text();
         var skillsAll = new Array();
         var dom = $(this);
-        doGetWithEncrypt(apiAdminUrl + "/skills?skillName=" + fieldVal).then(function (response) {
+        doGetWithAuthKey(apiAdminUrl + "/skills?skillName=" + fieldVal).then(function (response) {
             // console.log(fieldVal, response)
             if (response !== null)
                 $(response.content).each(function (k, v) {
@@ -1776,7 +1777,8 @@ $(window).ready(function () {
                             $('#saveResume').removeAttr('pointer-events');
                         });
                 }
-                localStorage.setItem('userData', JSON.stringify(response.data));
+                localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(JSON.stringify(response.data), localStorage.getItem('sessionId')));
+                // localStorage.setItem('userData', JSON.stringify(response.data));
                 // console.log("Ajax response");
                 // console.log(response.data);
 
@@ -1807,7 +1809,7 @@ $(window).ready(function () {
 
     function getShareNameFile() {
         var self = this;
-        var shareName = localStorage.getItem('shareName');
+        var shareName = resumeObj.share_name;
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -2012,13 +2014,16 @@ $(window).ready(function () {
         form.append("type", "photo");
         form.append("file", logoImg);
         console.log(apiUrl + "/uploadFile", form);
-        doUpload(apiUrl + "/uploadFile", form).then(function (responseData) {
-            var response = JSON.parse(responseData);
+        doUpload(apiUrl + "/uploadFile", form).then(function (response) {
+            // var response = JSON.parse(responseData);
             //console.log(response.data.httpPath);
             console.log(response);
             if (response.status == 'success') {
                 // console.log(response.data.httpPath);
                 localStorage.setItem('imageStore', response.data.httpPath);
+                resumeObj.pic = response.data.httpPath;
+                localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(resumeObj), sessionId));
+                console.log(response.data.httpPath);
                 $('#profileMenu img').attr('src', response.data.httpPath);
                 $('#profilePicEdit').attr('src', response.data.httpPath);
                 $('#pimage-preview').attr('src', response.data.httpPath);

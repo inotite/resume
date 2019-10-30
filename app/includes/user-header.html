@@ -206,7 +206,8 @@
 <script type="text/javascript" src="../../assets/js/app.services.js"></script>
 
 <script>
-    var userInfo = JSON.parse(localStorage.getItem('userData'));
+    var userInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))),
+        localStorage.getItem('sessionId')));
     if (userInfo) {
         if (userInfo.planDetails.subscribedUser) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
@@ -234,11 +235,11 @@
     if (location.pathname === "/app/order/payment-status.html") {
         $('.upgrade-btn').addClass('d-none')
     }
-    var userId = userData.userId;
-    var fromPage = localStorage.getItem('fromPage');
+    var userId = userInfo.userId;
+    // var fromPage = localStorage.getItem('fromPage');
     $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
     // $('#UserEmail').text(userInfo.email);
-    $('#UserEmail').text(text_truncate(userData.email,30));
+    $('#UserEmail').text(text_truncate(userInfo.email, 30));
     $('input[name="firstname"]').val(userInfo.firstname);
     $('input[name="lastname"]').val(userInfo.lastname);
     $('input[name="email"]').val(userInfo.email);
@@ -248,8 +249,8 @@
         $('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
     }
     console.log((baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
-            "/" +
-            serviceUrls.get.resUserLogout));
+        "/" +
+        serviceUrls.get.resUserLogout));
     $('#signOut').on('click', function () {
         doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
             "/" +
@@ -259,17 +260,17 @@
         })
     });
 
-function text_truncate(str, length, ending) {
-	if (length == null) {
-		length = 100;
-	}
-	if (ending == null) {
-		ending = '...';
-	}
-	if (str.length > length) {
-		return str.substring(0, length - ending.length) + ending;
-	} else {
-		return str;
-	}
-}
+    function text_truncate(str, length, ending) {
+        if (length == null) {
+            length = 100;
+        }
+        if (ending == null) {
+            ending = '...';
+        }
+        if (str.length > length) {
+            return str.substring(0, length - ending.length) + ending;
+        } else {
+            return str;
+        }
+    }
 </script>

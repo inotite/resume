@@ -1,4 +1,8 @@
-if (localStorage.getItem('userData')) {
+var localUserData = localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))) ? JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))) : false;
+var localPlansEncrypt = encrypt('plans', authToken);
+var localPlansDecrypt = decrypt('plans', authToken);
+
+if (localUserData) {
     $('#load-auth-header').load('app/includes/user-auth-header.html');
     $(".auth-header").removeClass('d-none');
     $(".header").addClass('d-none');
@@ -10,12 +14,12 @@ $("body").on("click", ".dismiss-pricing-modal", function () {
         });
     }
 });
-if (!localStorage.getItem('plans')) {
+if (!localStorage.getItem(localPlansDecrypt)) {
     getResumePlans();
 } else {
-    PricingTemplate(JSON.parse(atob(localStorage.getItem('plans'))));
+    PricingTemplate(JSON.parse(atob(localStorage.getItem(localPlansDecrypt))));
 }
-var userPlansInfo = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).planDetails : null;
+var userPlansInfo = localUserData ? localUserData.planDetails : null;
 
 function getResumePlans() {
     doGetWithOutAuth(baseResumeApiUrl + resumeServiceUrls.get.getResumePlans).then(response => {
@@ -23,11 +27,11 @@ function getResumePlans() {
             var pId = btoa(JSON.stringify(item));
             item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
             var redirectAction = location.origin + '/app/order/cart.html?' + pId;
-            item.redirectUrl = localStorage.getItem('userData') ?
+            item.redirectUrl = localUserData ?
                 redirectAction :
                 location.origin + '/app/auth/login.html';
         });
-        localStorage.setItem('plans', btoa(JSON.stringify(response)));
+        localStorage.setItem(localPlansEncrypt, btoa(JSON.stringify(response)));
         PricingTemplate(response);
         // console.log(response);
         // $('.pricing_template').append(pricing_template);
@@ -111,9 +115,9 @@ function PricingTemplate(item) {
             </ul>
         </div>
         <div class="form-group mt-4">
-        ${ JSON.parse(localStorage.getItem('userData'))?
-            (JSON.parse(localStorage.getItem('userData')).planDetails && JSON.parse(localStorage.getItem('userData')).planDetails.emailVerified) ? 
-            item.planId==1 && (localStorage.getItem('userData') && JSON.parse(localStorage.getItem('userData')).planDetails.planId) ? 
+        ${ localUserData ?
+            (localUserData.planDetails && localUserData.planDetails.emailVerified) ? 
+            item.planId==1 && (localUserData && localUserData.planDetails.planId) ? 
             `<button class="btn btn-primary btn-lg btn-block select_plan" onclick="freePlanAction()">BUILD RESUME</button>` 
             : `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`:`<button class="btn btn-primary btn-lg btn-block select_plan price-action-verify-modal">BUILD RESUME</button>`:
              `<a href="${item.redirectUrl}" target="_blank" class="btn btn-primary btn-lg btn-block select_plan">BUILD RESUME</a>`}
@@ -127,7 +131,7 @@ function PricingTemplate(item) {
 }
 
 function freePlanAction() {
-    if (JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).planDetails.planId === 1 && JSON.parse(localStorage.getItem('userData')).planDetails.msg.description.indexOf(
+    if (localUserData && localUserData.planDetails.planId === 1 && localUserData.planDetails.msg.description.indexOf(
             "Your free plan is expired.")) {
         $('#price-action-modal .modal-title').text("Oops, you're already in free plan.");
         $('#price-action-modal .line-1').text('Upgrade with a paid plan')

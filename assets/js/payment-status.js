@@ -30,7 +30,8 @@ $(window).ready(function () {
                     $('.status_message').text('Congratulations,');
                     $('.check_order').text('You may check "Order History" to view more details.');
                     doGetWithEncrypt(apiUrl + "/user/" + paramUserId + "/getProfileResume").then(response => {
-                        localStorage.setItem('userData', JSON.stringify(response.data));
+                        // localStorage.setItem('userData', JSON.stringify(response.data));
+                        localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(response.data), sessionId));
                         setInfoMessage(userInfo.planDetails.msg.description + '.');
                     });
                     break;

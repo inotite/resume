@@ -1,4 +1,4 @@
-const userInfo = JSON.parse(localStorage.getItem('userData'));
+const userInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
 if (userInfo) {
     if (userInfo.planDetails.subscribedUser) {
         $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
@@ -25,10 +25,10 @@ if (location.pathname === "/app/order/payment-status.html") {
 }
 var userId = userData.userId;
 //console.log(userData);
-var fromPage = localStorage.getItem('fromPage');
+// var fromPage = localStorage.getItem('fromPage');
 //console.log("fromPage ::::::"+fromPage);
 //if(fromPage == 'signin'){
-debugger;
+// debugger;
 $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
 $('#UserEmail').text(userInfo.email);
 if (userInfo.pic) {

@@ -150,7 +150,7 @@
       $('.account-page').paraCount();
       $("#shareDomain").attr('value', sourceUrl)
     });
-    var userShareInfo = JSON.parse(localStorage.getItem('userData'));
+    var userShareInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
     if (userShareInfo.edit_name) {
       $('.edit_name').addClass('d-none');
       $('#shareDomain2').val(sourceUrl + userShareInfo.share_name);

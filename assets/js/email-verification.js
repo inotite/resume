@@ -4,7 +4,7 @@ var emailVerificationId = parameters[0].substring(1);
 var companyName = 'workruit';
 var userId = parameters[2];
 console.log(emailVerificationId, companyName, userId)
-doGetWithOutAuth(baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser +
+doGetWithAuthKey(baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser +
     emailVerificationId +
     "/" + companyName + '/123', ).then(response => {
     if (response.status == "success") {

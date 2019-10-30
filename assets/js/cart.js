@@ -8,13 +8,12 @@ var priceInfoData = false;
 $(window).ready(function () {
     $('#load-header').load('../includes/user-header.html');
     console.log("priceCalculationObj>>>>>", priceCalculationObj, priceCalculationObj.planInfo.planId == 1);
-    var userInfo = JSON.parse(localStorage.getItem("userData"));
-    var userData = JSON.parse(localStorage.getItem("userData"));
+    var userData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
     // Price Calculation
     var priceCalculationUrl = baseResumeApiUrl + "user/" + userData.userId + resumeServiceUrls.post.priceCalculation;
     priceCalculationObj.planId = priceCalculationObj.planInfo.planId;
     console.log(priceCalculationObj);
-    if ((userInfo.planDetails.emailVerified && priceCalculationObj) && priceCalculationObj.planInfo.planId != 1) {
+    if ((userData.planDetails.emailVerified && priceCalculationObj) && priceCalculationObj.planInfo.planId != 1) {
         $('.status').css('display', 'flex');
         doPostWithEncrypt(priceCalculationUrl, priceCalculationObj).then(response => {
             if (response) {
@@ -69,7 +68,7 @@ $(window).ready(function () {
         $('.error-resend-link').click(function () {
             alert("hello");
             $('.error-description').html(messages.emailVerifiedAtCart);
-            $('.error-email').text(userInfo.email);
+            $('.error-email').text(userData.email);
         });
     }
     $("#proceed_btn").on('click', function (e) {
