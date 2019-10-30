@@ -10,35 +10,11 @@
 
 	<link rel='shortcut icon' type='image/x-icon' href='favicon.png' />
 	<link rel='stylesheet' type='text/css' href='assets/vendors/css/font-awesome.min.css' />
-	<link rel='stylesheet' type='text/css' href='assets/vendors/css/fontawesome.min.css' />
-	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-reboot.css" />
-	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-grid.css" />
-	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-reboot.css" /> -->
+	<!-- <link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap-grid.css" /> -->
 	<link rel="stylesheet" type="text/css" href="assets/vendors/css/aos.css" />
+	<link rel="stylesheet" type="text/css" href="assets/vendors/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="assets/vendors/css/main.css" />
-
-	<!--<style>
-	.first-quto{
-		padding-top: 50%;
-	}
-	</style>-->
-	<!-- Hotjar Tracking Code for www.workruit.com -->
-	<script>
-		(function (h, o, t, j, a, r) {
-			h.hj = h.hj || function () {
-				(h.hj.q = h.hj.q || []).push(arguments)
-			};
-			h._hjSettings = {
-				hjid: 737967,
-				hjsv: 6
-			};
-			a = o.getElementsByTagName('head')[0];
-			r = o.createElement('script');
-			r.async = 1;
-			r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-			a.appendChild(r);
-		})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-	</script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-94088165-1"></script>
 	<script>
@@ -59,7 +35,7 @@
 	</div>
 	<div class="auth-header d-none">
 		<div id="load-auth-header"></div>
-		<div w3-include-html="app/includes/user-auth-header.html"></div>
+		<!-- <div w3-include-html="app/includes/user-auth-header.html"></div> -->
 	</div>
 	<div class="container-fluid layout-hero layout-hero__inner">
 		<div class="container">
@@ -72,46 +48,87 @@
 			</div>
 		</div>
 	</div>
-
-
 	<div class="container-fluid px-5 center">
 		<div class="row">
 			<div class="col">
-				<h2 class="h1" data-aos="fade-up">Pick your plan</h2>
+				<h2 class="h1">Pick your plan</h2>
 			</div>
 		</div>
-		<div class="row pricing_template px-5 my-5" data-aos="fade-up">
+		<div class="row pricing_template px-5 my-5">
 		</div>
 		<!-- <div w3-include-html="includes/plans.html"></div> -->
 	</div>
-
+	<!-- Modal -->
+	<div class="modal fade action-modal" id="price-action-modal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close close-free-plan-modal"></button>
+				</div>
+				<div class="modal-body py-0 mb-4">
+					<div class="row align-items-center">
+						<div class="col-md-5 text-center">
+							<img src="assets/images/Icon3.svg" class="img_download m-0" alt="phone" height="320px"
+								width="auto">
+						</div>
+						<div class="col-md-7">
+							<div class="modal-title">Oops, You can't choose.</div>
+							<div class="modal-description">
+								upgrade with a paid plan
+								<br /> today to access all features.</div>
+							<div class="btn btn-primary px-5 btn-lg text-center mt-3 close-free-plan-modal">
+								Upgrade Now
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade action-modal" id="price-action-verify-modal" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header pb-0">
+					<button type="button" class="close close-free-plan-modal"></button>
+				</div>
+				<div class="modal-body py-0 mb-4">
+					<div class="row align-items-center">
+						<div class="col-md-5 text-center">
+							<img src="../../assets/images/Icon3.svg" class="img_download m-0" alt="phone" height="320px"
+								width="auto">
+						</div>
+						<div class="col-md-7">
+							<div class="modal-title">Oops, Please verify your email.</div>
+							<div class="modal-description">
+								You need to verify your email to make purchase,
+								<br /> Please check your registered email to verify.</div>
+							<!-- <div class="btn btn-primary px-5 btn-lg text-center mt-3 close-free-plan-modal">
+								Upgrade Now
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div w3-include-html="app/includes/footer.html"></div>
-
-
 	<!-- Scripts -->
 	<script type="text/javascript" src="assets/vendors/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="assets/vendors/js/a6a57723a3.js"></script>
-	<script type="text/javascript" src="assets/vendors/js/sweetalert.min.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/aos.js"></script>
+	<script type="text/javascript" src="assets/vendors/js/aes.js"></script>
+    <script type="text/javascript" src="assets/vendors/js/sha256.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/w3includes.js"></script>
 	<script type="text/javascript" src="assets/vendors/js/jquery.loadTemplate.js"></script>
 	<script type="text/javascript" src="assets/js/environment.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
+	<script type="text/javascript" src="assets/js/app.services.js"></script>
+	<script type="text/javascript" src="assets/js/plans.js"></script>
 
 	<script>
 		includeHTML();
-		if (sessionStorage.getItem('userData')) {
-			$('#load-auth-header').load('../includes/user-auth-header.html');
-			$(".auth-header").removeClass('d-none');
-			$(".header").addClass('d-none');
-		}
-		$("body").on("click", ".dismiss-pricing-modal", function () {
-			if (window.parent) {
-				window.parent.postMessage({
-					type: "CLOSE__MODAL"
-				});
-			}
-		});
 		AOS.init({
 			offset: 100,
 			duration: 800,
@@ -119,110 +136,6 @@
 			//easing: 'ease-in',
 			//delay: 100,
 		});
-	</script>
-	<script class="data-pricing-template" type="text/html">
-		<div class="has-3 p1 col-md-3 pricing">
-			<div class="highlight plan">
-				<div class="detail plan-1">
-					<h4><span class="amount" data-content="price"> ₹ 149 </span></h4>
-					<h3>
-						<span class="title" style="color: #6a6a6a; font-display: normal" data-content="timePeriod">7
-							days</span>
-						<span class="interval" style="color: #337ab7" data-content="planTitle">Starter </span>
-					</h3>
-				</div>
-				<div class="features">
-					<ul>
-						<li class="item-row">
-							<span class="item-mobile">
-								<i class="fa fa-check" aria-hidden="true"></i> <span
-									data-content="description.template"></span>
-							</span>
-						</li>
-						<li class="item-row">
-							<span class="item-mobile">
-								<i class="fa fa-check" aria-hidden="true"></i> <span
-									data-content="description.download"></span>
-							</span>
-						</li>
-						<li class="item-row">
-							<span class="item-mobile">
-								<i class="fa fa-check" aria-hidden="true"></i> <span
-									data-content="description.branding"></span>
-							</span>
-						</li>
-						<li class="item-row">
-							<span class="item-mobile">
-								<i class="fa fa-check" aria-hidden="true"></i> <span data-content="description.styles"></span>
-							</span>
-						</li>
-						<li class="item-row">
-							<span class="item-mobile">
-								<i class="fa fa-check" aria-hidden="true"></i> <span
-									data-content="description.sharing"></span>
-							</span>
-						</li>
-						<li class="item-row">
-							<span class="item-mobile">
-								<i class="fa fa-check" aria-hidden="true"></i> <span data-content="description.url"></span>
-							</span>
-						</li>
-					</ul>
-				</div>
-				<div class="form-group mt-4">
-					<a data-href="redirectUrl" class="btn btn-primary btn-lg btn-block select_plan"><span>BUILD
-							RESUME</span></a>
-				</div>
-				<!--
-							<div class="select" >
-								<a href="#" class="pt-button" style="background-color: #3be664"><span>GET STARTED</span><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-							</div>-->
-			</div>
-		</div>
-	</script>
-	<script>
-		$(window).ready(function () {
-			console.log('hello');
-			var settings = {
-				"async": true,
-				"crossDomain": true,
-				"url": baseUrl + "/resume/getResumePlans",
-				"method": "GET",
-				"headers": {
-					"token": "911ca088ab824095b82d3c98b32332e7",
-					"content-type": "application/json"
-				},
-				"processData": false,
-				// "data": JSON.stringify(signupData)
-			}
-			$.ajax(settings).done(function (response) {
-				response.map((item, index) => {
-					var pId = btoa(JSON.stringify(item));
-					item.redirectUrl = sessionStorage.getItem('userData') ?
-						'app/order/cart.html?' +
-						pId :
-						'app/auth/login.html';
-					item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
-				});
-				// console.log(response);
-				const userD = JSON.parse(sessionStorage.getItem('userData'));
-				console.log("userD>>>>>", userD);
-				$('.pricing_template').loadTemplate(
-					//Specify the template container (or file name of external template)
-					$('.data-pricing-template'),
-					response, {
-						append: true,
-						elemPerPage: 20
-					}
-					// console.log(response.resumeplans[index]),
-					//Specify the data to render
-					// response.resumeplans[index]
-				);
-			});
-			$('.select_plan').on('click', function () {
-				console.log($(this).html);
-			})
-		})
 	</script>
 </body>
 

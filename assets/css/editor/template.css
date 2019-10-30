@@ -627,18 +627,15 @@ input.switch {
     background: var(--color-green);
 }
 
-.theme-black .color path,
-.theme-black .color polygon {
+.theme-black .color path, .theme-black .color polygon {
     fill: var(--color-black);
 }
 
-.theme-blue .color path,
-.theme-blue .color polygon {
+.theme-blue .color path, .theme-blue .color polygon {
     fill: var(--color-blue);
 }
 
-.theme-green .color path,
-.theme-green .color polygon {
+.theme-green .color path, .theme-green .color polygon {
     fill: var(--color-green);
 }
 
@@ -904,13 +901,12 @@ input {
     vertical-align: middle;
 }
 
-.social-container,
-.social-phone,
-.social-linkedin,
-.social-github,
-.social-twitter,
-.social-website,
-.social-blog {
+
+.social-container {
+    width: 100%;
+}
+
+.social-phone, .social-linkedin, .social-github, .social-twitter, .social-website, .social-blog {
     width: 100%;
 }
 
@@ -982,6 +978,9 @@ input {
     pointer-events: none;
     cursor: default;
 }
+#upgrade-popup {
+    font-family: 'Source Sans Pro', sans-serif;
+}
 
 #upgrade-popup .modal-header {
     justify-content: flex-end;
@@ -995,4 +994,23 @@ input {
     height: 30px;
     border: 0;
     cursor: pointer;
+}
+#upgrade-popup .modal-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#upgrade-popup .img1 {
+    margin-top: -49px;
+}
+
+#upgrade-popup .btn-lg {
+    padding: 0.7rem 1rem;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+}
+.text-break{
+    word-break: break-word!important;
+    overflow-wrap: break-word!important;
 }

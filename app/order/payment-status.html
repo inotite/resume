@@ -28,22 +28,27 @@
     <div class="content">
         <div class="container success">
             <div class="row">
-                <div class="col-7">
+                <div class="col-12 my-4">
                     <div class="text-xs-center">
-                        <h3 class="display-4"> HI! <span class="paymentUserName"></span></h3>
-                        <p class="lead text-capitalize"><strong class="info_message_status_text"></strong>
-                            <br> 
-                            <span class="info_message_text"></span>
+                        <h4 class="display-4 medium"> <span class="status_message"></span> <span
+                                class="paymentUserName"></span></h4>
+                        <h4 class="display-4 small my-4">
+                            <strong><span class="info_message_status_text"></span></strong>
+                        </h4>
+                        <ul class="list-unstyled">
+                            <li id="order_id">Order ID: <span></span></li>
+                            <li id="txn_amount">Amount: INR <span></span></li>
+                        </ul>
+                        <p class="mb-5">
+                            <div class="check_order mb-4"></div>
                         </p>
                         <hr>
                         <p>
-                            Having trouble? <a href="mailto:info@workruit.com">Contact us</a>
+                            Any queries? <a href="mailto:info@workruit.com">Contact us</a>
                         </p>
                         <p>
-                            <a class="btn btn-outline-primary btn-sm" href="../dashboard/home.html"
-                                role="button">Continue
-                                to
-                                homepage</a>
+                            <a class="btn btn-outline-primary" href="../dashboard/home.html" role="button">Go
+                                to homepage</a>
                         </p>
                     </div>
                 </div>
@@ -62,7 +67,10 @@
     <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/aes.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/sha256.js"></script>
     <script type="text/javascript" src="../../assets/js/environment.js"></script>
+    <script type="text/javascript" src="../../assets/js/app.services.js"></script>
     <script type="text/javascript" src="../../assets/js/payment-status.js"></script>
     <script>
     </script>

@@ -919,7 +919,7 @@
         });
     </script>
     <script type="text/javascript">
-        var userData = JSON.parse(localStorage.getItem('userData'));
+        var userData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
         var sessionId = localStorage.getItem('sessionId');
         var userId = userData.userId;
     </script>

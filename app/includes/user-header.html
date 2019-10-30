@@ -45,7 +45,7 @@
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item transition" href="../dashboard/account.html">Account</a>
-                            <a class="dropdown-item transition" href="../dashboard/notifications.html">Notifications</a>
+                            <!-- <a class="dropdown-item transition" href="../dashboard/notifications.html">Notifications</a> -->
                             <a class="dropdown-item transition" href="../dashboard/o-history.html">Orders</a>
                             <a class="dropdown-item transition" href="javascript:void(0)" data-toggle="modal"
                                 data-target="#downloadApp">Download App</a>
@@ -126,19 +126,88 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <iframe src="../../pricing-modal.html" frameborder="0" width="100%" height="100vh"></iframe>
+            <div class="row">
+                <div class="col">
+                    <h2 class="h1" data-aos="fade-up">Pick your plan</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="row pricing_template">
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<!-- user plan info -->
-<div id="info_message" class="alert info_message">
+<div class="modal fade bd-example-modal-lg" id="price-action-modal" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <button type="button" class="close close-free-plan-modal"></button>
+            </div>
+            <div class="modal-body py-0 mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-5 text-center">
+                        <img src="../../assets/images/Icon3.svg" class="img_download m-0" alt="phone" height="320px"
+                            width="auto">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="modal-title"></div>
+                        <div class="modal-description">
+                            <span class="line-1"></span>
+                            <br /> <span class="line-2"></span></div>
+                        <div class="btn btn-primary px-5 btn-lg text-center mt-3 close-free-plan-modal">
+                            Upgrade Now
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" id="price-action-verify-modal" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <button type="button" class="close close-free-plan-modal"></button>
+            </div>
+            <div class="modal-body py-0 mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-5 text-center">
+                        <img src="../../assets/images/Icon3.svg" class="img_download m-0" alt="phone" height="320px"
+                            width="auto">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="modal-title">Oops, Please verify your email.</div>
+                        <div class="modal-description">
+                            You need to verify your email to make purchase,
+                            <br /> Please check your registered email to verify.</div>
+                        <!-- <div class="btn btn-primary px-5 btn-lg text-center mt-3 close-free-plan-modal">
+                            Upgrade Now
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="mail_message" class="alert mail_message">
     <span></span>
     <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img
             src="../../assets/images/app/icons/close.png" width="10" /></a>
 </div>
+<!-- user plan info -->
+<script type="text/javascript" src="../../assets/vendors/js/cryptojs.js"></script>
+<script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
 <script type="text/javascript" src="../../assets/js/environment.js"></script>
+<script type="text/javascript" src="../../assets/js/plans.js"></script>
+<script type="text/javascript" src="../../assets/js/app.services.js"></script>
+
 <script>
-    const userInfo = JSON.parse(sessionStorage.getItem('userData'));
+    var userInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))),
+        localStorage.getItem('sessionId')));
     if (userInfo) {
         if (userInfo.planDetails.subscribedUser) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
@@ -146,18 +215,31 @@
         } else {
             $('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
         }
-        if (location.href === location.origin + locationPaths.homePage && userInfo
-            .planDetails.display) {
-            $('#info_message').css('display', 'block');
+        if (userInfo.planDetails.emailVerified) {
+            $('#mail_message').remove();
         }
     }
-    var userId = userData.userId;
-    //console.log(userData);
-    var fromPage = sessionStorage.getItem('fromPage');
-    //console.log("fromPage ::::::"+fromPage);
-    //if(fromPage == 'signin'){
+    if (location.pathname == "/app/order/cart.html") {
+        var priceCalculationObj = {
+            "planInfo": JSON.parse(atob(window.location.search.split('?')[1])),
+            "promoId": '',
+            "user_planId": ""
+        }
+        if (priceCalculationObj.planInfo.planId === 4) {
+            console.log('i am here before plane id;');
+            console.log('i am here before frame;');
+            $('.upgrade-btn').css('display', 'none');
+            console.log('i am here after frame;');
+        }
+    }
+    if (location.pathname === "/app/order/payment-status.html") {
+        $('.upgrade-btn').addClass('d-none')
+    }
+    var userId = userInfo.userId;
+    // var fromPage = localStorage.getItem('fromPage');
     $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
-    $('#UserEmail').text(userInfo.email);
+    // $('#UserEmail').text(userInfo.email);
+    $('#UserEmail').text(text_truncate(userInfo.email, 30));
     $('input[name="firstname"]').val(userInfo.firstname);
     $('input[name="lastname"]').val(userInfo.lastname);
     $('input[name="email"]').val(userInfo.email);
@@ -166,58 +248,29 @@
     } else {
         $('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
     }
-    $('.info_message .close').on('click', function () {
-        $('#info_message').css('display', 'none');
-        userInfo.planDetails.display = false;
-        sessionStorage.setItem('userData', JSON.stringify(userInfo))
-    });
-    // if (picpath > -1 || pic == '') {
-    //     $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
-    //     $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
-
-    // } else {
-    //     $('#profileMenu img').attr('src', pic);
-    //     $('#profilePicEdit').attr('src', pic);
-    // }
+    console.log((baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
+        "/" +
+        serviceUrls.get.resUserLogout));
     $('#signOut').on('click', function () {
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": baseApiUrl + "/user/" + userInfo.userId + "/" + sessionStorage.getItem(sessionId) + "/" +
-                serviceUrls.get.resUserLogout,
-            "method": "GET",
-            "headers": {
-                "token": sessionId,
-                "content-type": "application/json"
-            },
-            "processData": false
-        }
-        $.ajax(settings).done(function (response) {
-            //console.log(response);
-            sessionStorage.clear();
+        doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
+            "/" +
+            serviceUrls.get.resUserLogout).then(response => {
+            localStorage.clear();
             window.location.href = window.origin + '/app/auth/login.html';
-        });
+        })
     });
-</script>
-<script>
-    // var userData = JSON.parse(sessionStorage.getItem('userData'));
-    // var userId = userData.userId;
-    //console.log(userData);
-    // var fromPage = sessionStorage.getItem('fromPage');
 
-    //console.log("fromPage ::::::"+fromPage);
-    //if(fromPage == 'signin'){
-    // $('#userName').text(userData.firstname + " " + userData.lastname);
-    // $('#UserEmail').text(userData.email);
-    // var pic = sessionStorage.getItem('imageStore');
-    // var picpath = pic.search('1631033876795164.jpg');
-
-    // if (picpath > -1 || pic == '') {
-    //     $('#profileMenu img').attr('src', '../../assets/images/avatar.png');
-    //     $('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
-
-    // } else {
-    //     $('#profileMenu img').attr('src', pic);
-    //     $('#profilePicEdit').attr('src', pic);
-    // }
+    function text_truncate(str, length, ending) {
+        if (length == null) {
+            length = 100;
+        }
+        if (ending == null) {
+            ending = '...';
+        }
+        if (str.length > length) {
+            return str.substring(0, length - ending.length) + ending;
+        } else {
+            return str;
+        }
+    }
 </script>

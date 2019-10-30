@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#ffffff">
     <title>Workruit — My Account</title>
     <script>
-        if (!sessionStorage.getItem('sessionId')) {
+        if (!localStorage.getItem('sessionId')) {
             window.location.href = window.location.origin + "/index.html";
         }
     </script>
@@ -20,6 +20,11 @@
     <div id="load-header"></div>
     <div class="loading-container">
         <img src="../../assets/images/oval.svg" style="width:55px">
+    </div>
+    <div id="info_message" class="alert info_message">
+        <span></span>
+        <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img
+                src="../../assets/images/app/icons/close.png" width="10" /></a>
     </div>
     <div id="newSuccessMessageID" class="alert alert-success">
         <span>You are still required to verify your email address within 48 hours to use all the features.</span>
@@ -82,34 +87,31 @@
     <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendors/js/cryptojs.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/aes.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/sha256.js"></script>
     <script type="text/javascript" src="../../assets/js/environment.js"></script>
+    <script type="text/javascript" src="../../assets/js/app.services.js"></script>
     <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
     <script>
         $('.loading-container').delay(1000).fadeOut();
     </script>
     <script>
         $(function () {
-            requestAnimationFrame(function () {
+            $('.info_message .close').on('click', function () {
+                $('#info_message').css('display', 'none');
+                userInfo.planDetails.display = false;
+                localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(
+                    JSON.stringify(
+                        userInfo), localStorage.getItem('sessionId')));
+                localStorage.setItem('userData', JSON.stringify(userInfo))
+            });
 
-                $('.dismiss-pricing-modal').on('click', function () {
-                    $('#pricing-modal').css({
-                        "display": 'none',
-                    }).removeClass('in');
-                    $('.modal-backdrop.fade.in').remove();
-                    $('body').removeClass('modal-open');
-                });
-            })
-
-            $('#load-header').load('../includes/user-header.html');
             $('.account-page').paraCount();
             $(window).ready(function () {
-                JSON.parse(sessionStorage.getItem('userData')).email_verified === 0 ? $(
-                    '#newSuccessMessageID').css(
-                    'display',
-                    'none') : $('.preview_btn').css('display', 'block');
+
                 // console.log(localStorage.getItem('isPremiumUser'));
-                var freePlanInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
+                var freePlanInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
                 console.log(freePlanInfo);
                 // if (localStorage.getItem('isPremiumUser') === 'true') {
                 //   $('.premium-feature').removeClass('d-none');
@@ -118,7 +120,7 @@
                 // }
                 // console.log(localStorage.getItem('previewData')) newSuccessMessageID
 
-                sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display',
+                localStorage.getItem('previewData') === null ? $('.preview_btn').css('display',
                         'none') : $(
                         '.preview_btn')
                     .css('display', 'inline-block');

@@ -3,6 +3,9 @@ function load() {
 	var someData_notJSON = JSON.parse(data);
 	console.log("someData_notJSON", someData_notJSON[0].red);
 }
+if (localStorage.getItem('plans')) {
+	localStorage.removeItem('plans');
+}
 (function ($) {
 
 	var paraCount = function () {
@@ -32,7 +35,9 @@ function load() {
 
 			attachEvents: function () {
 				var self = this;
-
+				if (localStorage.getItem("sessionId")) {
+					window.location.href = location.origin + "/app/dashboard/home.html";
+				}
 				var urlArr = ['login', 'signup', 'forgotPassword', 'home', 'account', 'share'];
 				// $.each(urlArr, function (index, value) {
 				// 	if (window.location.href.indexOf(urlArr + '.html') <= -1) {
@@ -69,10 +74,9 @@ function load() {
 
 				$('body').on('keydown', function (e) {
 					var key = e.which;
-					if (key == 13) {
-
+					if (key === 13) {
 						if ($(this).attr('id') == 'login') self.loginResumeUser();
-						if ($(this).attr('id') == 'signupResume') self.singnupResumeUser();
+						if ($(this).attr('id') == 'signup') self.singnupResumeUser();
 						if ($(this).attr('id') == 'forgotPassword') self.resetPassword();
 					}
 				});
@@ -108,33 +112,22 @@ function load() {
 						"password": password
 					};
 
-					console.log(signupData);
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + serviceUrls.post.loginResumeUser,
-						"method": "POST",
-						"headers": {
-							'Access-Control-Allow-Origin': baseApiUrl,
-							"token": authToken,
-							"content-type": "application/json"
-						},
-						"processData": false,
-						"data": JSON.stringify(signupData)
-					}
-					$.ajax(settings).done(function (response) {
+					// console.log(signupData);
+					doPostWithOutAuth(baseApiUrl + serviceUrls.post.loginResumeUser, signupData).then(response => {
 						console.log(response);
 						response = typeof (response) !== "object" ? JSON.parse(response) : response;
-						sessionStorage.clear();
+						localStorage.clear();
 						if (response.status == "success") {
-							sessionStorage.setItem('sessionId', response.sessionId);
-							sessionStorage.setItem("templateId", 2);
-							sessionStorage.setItem('userData', JSON.stringify(response.data));
-							sessionStorage.setItem('fromPage', 'signin');
-							sessionStorage.setItem('shareName', response.data.share_name);
-							sessionStorage.setItem('imageStore', response.data.pic);
+							localStorage.setItem('sessionId', response.sessionId);
+							localStorage.setItem("templateId", 2);
+							// localStorage.setItem('userData', JSON.stringify(response.data));
+							localStorage.setItem(encrypt('userData', response.sessionId), encrypt(JSON.stringify(response.data), response.sessionId));
+							// localStorage.setItem('fromPage', 'signin');
+							// localStorage.setItem('shareName', response.data.share_name);
+							localStorage.setItem('imageStore', response.data.pic);
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
+							$('.loading-container').css('display', 'none');
 							$('#newErrorMessageID').html(response.msg.description)
 								.fadeIn()
 								.delay(3000)
@@ -205,31 +198,56 @@ function load() {
 					};
 
 					//console.log(signupData);
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + serviceUrls.post.signupResume,
-						"method": "POST",
-						"headers": {
-							"token": authToken,
-							"content-type": "application/json"
-						},
-						"processData": false,
-						"data": JSON.stringify(signupData)
-					}
+					// var settings = {
+					// 	"async": true,
+					// 	"crossDomain": true,
+					// 	"url": baseApiUrl + serviceUrls.post.signupResume,
+					// 	"method": "POST",
+					// 	"headers": {
+					// 		"token": authToken,
+					// 		"content-type": "application/json"
+					// 	},
+					// 	"processData": false,
+					// 	"data": JSON.stringify(signupData)
+					// }
+					// $('.loading-container').css('display', 'block');
+					// $.ajax(settings).done(function (response) {
+					// 	console.log('response new', response);
+					// 	localStorage.clear();
+					// 	if (response.status == "success") {
+					// 		// localStorage.setItem('userStatus', response.data.sessionId);
+					// 		localStorage.setItem('sessionId', response.data.sessionId);
+					// 		localStorage.setItem('userData', JSON.stringify(response.data));
+					// 		localStorage.setItem('shareName', response.shareName);
+					// 		localStorage.setItem('fromPage', 'signup');
+					// 		localStorage.setItem('imageStore', '');
+					// 		window.location.href = window.location.origin + "/app/dashboard/home.html";
+					// 	} else {
+					// 		$('.loading-container').css('display', 'block');
+					// 		$('#newErrorMessageID').html(response.msg.description)
+					// 			.fadeIn()
+					// 			.delay(3000)
+					// 			.fadeOut('slow', function () {
+					// 				$('#signupResume').attr('disabled', false);
+					// 			});
+					// 	}
 
-					$.ajax(settings).done(function (response) {
+					// });
+					$('.loading-container').css('display', 'block');
+					doPostWithOutAuth(baseApiUrl + serviceUrls.post.signupResume, signupData).then(response => {
 						console.log('response new', response);
-						sessionStorage.clear();
+						localStorage.clear();
 						if (response.status == "success") {
-							// sessionStorage.setItem('userStatus', response.data.sessionId);
-							sessionStorage.setItem('sessionId', response.data.sessionId);
-							sessionStorage.setItem('userData', JSON.stringify(response.data));
-							sessionStorage.setItem('shareName', response.shareName);
-							sessionStorage.setItem('fromPage', 'signup');
-							sessionStorage.setItem('imageStore', '');
+							// localStorage.setItem('userStatus', response.data.sessionId);
+							localStorage.setItem('sessionId', response.data.sessionId);
+							// localStorage.setItem('userData', JSON.stringify(response.data));
+							localStorage.setItem(encrypt('userData', response.data.sessionId), encrypt(JSON.stringify(response.data), response.data.sessionId));
+							// localStorage.setItem('shareName', response.shareName);
+							// localStorage.setItem('fromPage', 'signup');
+							localStorage.setItem('imageStore', '');
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
+							$('.loading-container').css('display', 'none');
 							$('#newErrorMessageID').html(response.msg.description)
 								.fadeIn()
 								.delay(3000)
@@ -237,7 +255,6 @@ function load() {
 									$('#signupResume').attr('disabled', false);
 								});
 						}
-
 					});
 				}
 			},
@@ -261,24 +278,27 @@ function load() {
 
 				if (validate) {
 					$('#resetPassBtn').attr('disabled', true);
-					let userData = JSON.stringify({
+					let userData = {
 						'username': email
-					});
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume,
-						"method": "POST",
-						"headers": {
-							"token": authToken,
-							"content-type": "application/json",
-							"cache-control": "no-cache",
-						},
-						"processData": false,
-						"data": userData
-					}
+					};
+					// var settings = {
+					// 	"async": true,
+					// 	"crossDomain": true,
+					// 	"url": baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume,
+					// 	"method": "POST",
+					// 	"headers": {
+					// 		"token": authToken,
+					// 		"content-type": "application/json",
+					// 		"cache-control": "no-cache",
+					// 	},
+					// 	"processData": false,
+					// 	"data": userData
+					// }
 
-					$.ajax(settings).done(function (response) {
+					// $.ajax(settings).done(function (response) {
+
+					// });
+					doPostWithOutAuth(baseApiUrl + serviceUrls.post.resetPasswordLinkToEmailResume, userData).then(response => {
 						console.log(response);
 						if (response.status == "success") {
 							$('#newSuccessMessageID .message-text').html(response.msg.description);
@@ -295,7 +315,8 @@ function load() {
 									$('#resetPassBtn').attr('disabled', false);
 								});
 						}
-					});
+					})
+
 				}
 			},
 
@@ -307,12 +328,12 @@ function load() {
 
 	$.fn.paraCount = function (options) {
 		// create an instance for each element in the set
-		console.log(options);
+		// console.log(options);
 		// return;
 		return this.each(function () {
 			var myParaCount = new paraCount();
 			myParaCount.init(options, this);
-			console.log(this);
+			// console.log(this);
 			// this lets us call methods on the selector
 			$(this).data("paraCount", myParaCount);
 		});

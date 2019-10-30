@@ -644,11 +644,11 @@
         const appDate = new Date();
         const apiAdminUrl = "https://stageapi.workruit.com/admin";
         const apiUrl = "https://stageapi.workruit.com/api";
-        const userId = JSON.parse(localStorage.getItem('userData')).userId;
+        const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))).userId;
         const sessionId = localStorage.getItem('sessionId');
         const userStatus = localStorage.getItem('isPremiumUser');
         const planInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
-        let resumeObj = JSON.parse(localStorage.getItem('userData'));
+        let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
         console.log(resumeObj);
         // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
         const fonts = [{

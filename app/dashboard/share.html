@@ -8,7 +8,7 @@
   <title>Workruit Instant Resume — Share</title>
 
   <script>
-    if (!sessionStorage.getItem('sessionId')) {
+    if (!localStorage.getItem('sessionId')) {
       window.location.href = window.location.origin + "/index.html";
     }
   </script>
@@ -22,7 +22,7 @@
   <div class="loading-container">
     <img src="../../assets/images/oval.svg" style="width:55px">
   </div>
-  <div id="newErrorMessageID" class="alert alert-danger">
+  <div id="newErrorMessageID" class="alert alert-danger shareMessage">
     <span class="message-text"></span>
     <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img
         src="../../assets/images/app/icons/close.png" width="10" /></a>
@@ -50,25 +50,32 @@
         </div>-->
 
       <div class="row mt-5 justify-content-center">
-        <div class="tab-pane fade col-md-5 show active">
+        <div class="tab-pane fade col-md-8 show active">
           <div class="card w-100">
             <div class="card-body">
               <div class="form-group">
-                <div class="row">
+                <div class="row edit_name">
                   <div class="col-md-12">
-                    <label>Share</label>
+                    <label>username</label>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-9">
+                <div class="row edit_name">
+                  <div class="col-md-10">
                     <input type="text" class="form-control myprofile transition sharename-field" name="shareDomain"
                       id="shareDomain" minlength="3" value="" disabled />
                     <input type="text" class="form-control myprofile transition sharename-field" placeholder="Share url"
                       minlength="3" name="shareName" id="shareName">
                     <input type="text" id="copyText" value="" style="opacity:0; height:0px;" />
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-2 text-center">
                     <button type="button" class="btn btn-primary btn-lg btn-save" id="shareNameBtn">Save</button>
+                  </div>
+                </div>
+                <div class="row edit_name_link d-none">
+                  <div class="col-md-12">
+                    <input type="text" class="form-control mb-2" name="shareDomain" id="shareDomain2" minlength="3"
+                      value="" disabled />
+                    <input type="text" id="copyText2" value="" style="opacity:0; height:0px;" />
                   </div>
                 </div>
                 <div class="row">
@@ -77,7 +84,7 @@
                   </div>
                 </div>
                 <div class="row plubic-url">
-                  <div class="col-md-6 resume-public">Make my resume public</div>
+                  <div class="col-md-6 resume-public">Share Resume URL</div>
                   <div class="col-md-6">
                     <!-- <label class="switch">
                     <input type="checkbox" checked>
@@ -90,7 +97,13 @@
                   </div>
                 </div>
                 <div class="row plubic-url">
-                  <div class="col-md-12">Note: Share the link to anyone, anytime without any hassle</div>
+                  <div class="col-md-12">Note: <ul>
+                      <li class="text-danger">Username can edit only once</li>
+                      <li class="text-danger">Username should be in alphabets and numerics only</li>
+                      <li>Share the link to anyone, anytime without any hassle</li>
+                    </ul>
+                  </div>
+                  <!-- <div class="col-md-12">Note: </div> -->
                 </div>
               </div>
             </div>
@@ -118,21 +131,39 @@
   </div>
 
   <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/sweetalert.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/aes.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/sha256.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
   <script type="text/javascript" src="../../assets/js/environment.js"></script>
+  <script type="text/javascript" src="../../assets/js/app.services.js"></script>
   <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
   <script>
     $('#load-header').load('../includes/user-header.html');
 
     var origin = window.location.origin;
+    var sourceUrl = 'https://www.workruit.com/#';
     // var sharePath = origin + '/#';
     $(function () {
       $('.account-page').paraCount();
-      $("#shareDomain").attr('value', origin + '/#')
+      $("#shareDomain").attr('value', sourceUrl)
     });
-    var resumePublicStatus = JSON.parse(sessionStorage.getItem('userData')).hideResume;
-    $('#resume_piblic').attr('checked', resumePublicStatus);
+    var userShareInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+    if (userShareInfo.edit_name) {
+      $('.edit_name').addClass('d-none');
+      $('#shareDomain2').val(sourceUrl + userShareInfo.share_name);
+      $('.edit_name_link').removeClass('d-none');
+    }
+    $('#resume_piblic').attr('checked', userShareInfo.hideResume);
+    if (userShareInfo.planDetails.subscribedUser && userShareInfo.planDetails.validUser) {
+      $('#shareName').removeAttr('disabled');
+      $('#shareNameBtn').removeAttr('disabled');
+    } else if (!userShareInfo.planDetails.validUser && !!userShareInfo.planDetails.subscribedUser) {
+      $('#shareName').attr('disabled', 'true');
+      $('#shareNameBtn').attr('disabled', 'true');
+    }
     // var resume_piblic = $('input[type=checkbox]').prop('checked');
     // console.log(resume_piblic);
     $('.loading-container').delay(1000).fadeOut();

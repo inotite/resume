@@ -1,4 +1,6 @@
-
+var shareSourceUrl = "https://www.workruit.com/#";
+var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+// console.log("localUserData",localUserData)
 // plug it in, plug it in
 (function ($) {
 
@@ -36,42 +38,44 @@
 				// 		}
 				// 	}
 				// });
-				let sessionId = sessionStorage.getItem('sessionId');
+				let sessionId = localStorage.getItem('sessionId');
 				if (!sessionId) {
 					//console.log("sessionId ::::::"+sessionId);
 					window.location.href = "../index.html";
 				} else {
 					getUserProfile();
-					var userId = userData.userId;
-					//console.log(userData);
-					var fromPage = sessionStorage.getItem('fromPage');
+					var userId = localUserData.userId;
+					//console.log(localUserData);
+					// var fromPage = localStorage.getItem('fromPage');
 					//console.log("fromPage ::::::"+fromPage);
 					//if(fromPage == 'signin'){
-					$('#userName').text(userData.firstname + " " + userData.lastname);
-					$('#UserEmail').text(userData.email);
-					$('input[name="firstname"]').val(userData.firstname);
-					$('input[name="lastname"]').val(userData.lastname);
-					$('input[name="email"]').val(userData.email);
+					$('#userName').text(localUserData.firstname + " " + localUserData.lastname);
+					$('#UserEmail').text(text_truncate(localUserData.email, 30));
+					$('input[name="firstname"]').val(localUserData.firstname);
+					$('input[name="lastname"]').val(localUserData.lastname);
+					$('input[name="email"]').val(localUserData.email);
 
-					//$('input[name="shareName"]').val(userData.share_name);
-					$('input[name="shareName"]').val(sessionStorage.getItem('shareName'));
-					$('#copyText').val(self.options.baseUrl + '/@' + sessionStorage.getItem('shareName'));
+					//$('input[name="shareName"]').val(localUserData.share_name);
+					$('input[name="shareName"]').val(localStorage.getItem('shareName'));
+					$('#copyText').val(self.options.baseUrl + '/@' + localStorage.getItem('shareName'));
 
-					var pic = sessionStorage.getItem('imageStore');
-					var picpath = pic.search('1631033876795164.jpg');
+					var pic = localStorage.getItem('imageStore');
+					// var picpath = pic.search('1631033876795164.jpg');
 
-					if (picpath > -1 || pic == '') {
+					if (!pic) {
 						$('#profileMenu img').attr('src', '../../assets/images/avatar.png');
 						$('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
 
 					} else {
+						console.log("pic>>>>>>>>>>>>>>>>>", pic);
 						$('#profileMenu img').attr('src', pic);
+						$('#profilePicEdit').attr('src', '');
 						$('#profilePicEdit').attr('src', pic);
 					}
 
 
-					if (userData.lastUpdatedDate) {
-						$('#lastUpdated').text(userData.lastUpdatedDate);
+					if (localUserData.lastUpdatedDate) {
+						$('#lastUpdated').text(localUserData.lastUpdatedDate);
 						$('#createResumeContainer').hide();
 						$('#updateResumeContainer').show();
 					} else {
@@ -85,60 +89,77 @@
 					$('#shareNameBtn').on('click', function () {
 
 						let shareName = $('input[name="shareName"]').val();
-						console.log(shareName, shareName.length, "shareName");
-						if (shareName.length == 8) {
-							var shareData = {
-								"username": userData.email,
-								"sharename": shareName
-							}
+						if (shareName !== localUserData.share_name) {
+							console.log(shareName, shareName.length, "shareName");
+							if (alphanumeric(shareName)) {
+								if (shareName.length >= 6 && shareName.length <= 20) {
+									swal({
+											title: "Are you sure?",
+											text: messages.shareUrlEditInfo,
+											icon: "warning",
+											buttons: true,
+											dangerMode: true,
+										})
+										.then((willDelete) => {
+											if (willDelete) {
+												var shareData = {
+													"username": localUserData.email,
+													"sharename": shareName
+												}
+												doPostWithEncrypt(baseApiUrl + serviceUrls.post.updateShareName, shareData).then(response => {
+													localStorage.setItem('shareName', shareName);
+													if (response.msg.title == "Success") {
+														getUserProfile();
+														$('#newSuccessMessageID .message-text').html(response.msg.description);
+														$('#newSuccessMessageID').html(response.msg.description)
+															.fadeIn()
+															.delay(5000)
+															.fadeOut();
+													} else {
+														$('#newErrorMessageID .message-text').html(response.msg.description)
+														$('#newErrorMessageID').html(response.msg.description)
+															.fadeIn()
+															.delay(5000)
+															.fadeOut();
+													}
+													$('input[name="shareName"]').val(localStorage.getItem('shareName'));
+												})
+											}
 
-							var settings = {
-								"async": true,
-								"crossDomain": true,
-								"url": baseApiUrl + serviceUrls.post.updateShareName,
-								"method": "POST",
-								"headers": {
-									"content-type": "application/json",
-									"token": sessionId,
-									"cache-control": "no-cache",
-								},
-								"processData": false,
-								"data": JSON.stringify(shareData)
-							}
-
-							$.ajax(settings).done(function (response) {
-								// console.log(response);
-								sessionStorage.setItem('shareName', shareName);
-								if (response.msg.title == "Success") {
-									$('#newSuccessMessageID .message-text').html(response.msg.description)
-									$('#newSuccessMessageID').html(response.msg.description)
+										});
+								} else {
+									// var errorMessage = shareUrlLengthError;
+									$('#newErrorMessageID .message-text').html(messages.shareUrlLengthError)
+									$('#newErrorMessageID').html(messages.shareUrlLengthError)
 										.fadeIn()
 										.delay(5000)
 										.fadeOut();
-									// $('#shareUpdatedSuccessfully').css('visibility', 'visible').slideDown();
-									// setTimeout(function () {
-									// 	$('#shareUpdatedSuccessfully').css('visibility', 'hidden').slideUp();
-									// }, 2000);
 								}
-								$('input[name="shareName"]').val(sessionStorage.getItem('shareName'));
-							});
-						} else {
-							var errorMessage = 'Share Url Length should be 8.';
-							$('#newErrorMessageID .message-text').html(errorMessage)
-							$('#newErrorMessageID').html(errorMessage)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
+							} else {
+								// var errorMessage = shareUrlLengthError;
+								$('#newErrorMessageID .message-text').html(messages.shareUrlFormatError)
+								$('#newErrorMessageID').html(messages.shareUrlFormatError)
+									.fadeIn()
+									.delay(5000)
+									.fadeOut();
+							}
 						}
 					});
 
 					$('#copyLinkBtn').on('click', function () {
-						console.log($('#shareName').val());
 						if ($('#shareName').val()) {
-							$('#copyText').val($('#shareDomain').val() + $('#shareName').val());
-							var copyText = document.getElementById("copyText");
-							copyText.select();
-							document.execCommand("copy");
+							if (localUserData.edit_name) {
+								$('#copyText2').val(shareSourceUrl + localUserData.share_name);
+								var copyText = document.getElementById("copyText2");
+								copyText.select();
+								document.execCommand("copy");
+							} else {
+								console.log($('#shareDomain').val() + $('#shareName').val());
+								$('#copyText').val($('#shareDomain').val() + $('#shareName').val());
+								var copyText = document.getElementById("copyText");
+								copyText.select();
+								document.execCommand("copy");
+							}
 							var successMessage = 'Your link is copied successfully';
 							$('#newSuccessMessageID .message-text').html(successMessage)
 							$('#newSuccessMessageID').html(successMessage)
@@ -193,170 +214,9 @@
 					// console.log(e);
 				});
 
-				/* Update Password functionality */
-				$('#updatePassBtn').on('click', function () {
 
-					let oldPassword = $('input[name="oldPassword"]').val();
-					let newPassword = $('input[name="newPassword"]').val();
-					let reenterNewPassword = $('input[name="reenterNewPassword"]').val();
 
-					let userData = {
-						"oldPassword": oldPassword,
-						"newPassword": newPassword,
-						"reenterNewPassword": reenterNewPassword
-					}
 
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateResumeUserPassword,
-						"method": "POST",
-						"headers": {
-							"token": sessionId,
-							"content-type": "application/json",
-							"cache-control": "no-cache",
-						},
-						"processData": false,
-						"data": JSON.stringify(userData)
-					}
-
-					$.ajax(settings).done(function (response) {
-						console.log(response);
-						if (response.status == "success") {
-							$('#newSuccessMessageID .message-text').html(response.msg.description);
-							$('#newSuccessMessageID').html(response.msg.description)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
-						} else {
-							$('#newErrorMessageID .message-text').html(response.msg.description)
-							$('#newErrorMessageID').html(response.msg.description)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
-						}
-					});
-				});
-
-				/* Update Password functionality */
-				$('#updateProfile').on('click', function () {
-
-					var firstname = $.trim($('input[name="firstname"]').val());
-					var lastname = $.trim($('input[name="lastname"]').val());
-					var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
-					var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
-					// var clgName = 
-					var email = userData.email;
-
-					$('.invalid-feedback').remove();
-
-					var validate = true;
-					if ($.trim(firstname).length <= 0) {
-						validate = false;
-						$('<div class="invalid-feedback">First Name is required.</div>').insertAfter('input[name="firstname"]');
-					} else {
-						if ($.trim(firstname).length < 3) {
-							validate = false;
-							$('<div class="invalid-feedback">Minimum 3 characters are required.</div>').insertAfter('input[name="firstname"]');
-						}
-					}
-
-					if ($.trim(lastname).length <= 0) {
-						validate = false;
-						$('<div class="invalid-feedback">Last Name is required.</div>').insertAfter('input[name="lastname"]');
-					} else {
-						if ($.trim(lastname).length < 3) {
-							validate = false;
-							$('<div class="invalid-feedback">Minimum 3 characters are required.</div>').insertAfter('input[name="lastname"]');
-						}
-					}
-					if (validate) {
-						console.log(collegeName, collegeLogo);
-						$('#updateProfile').attr('disabled', true);
-						var profileData = {
-							"firstname": firstname,
-							"lastname": lastname,
-							"email": email,
-							"collegeName": collegeName,
-							"collegeLogo": collegeLogo
-						}
-
-						var settings = {
-							"async": true,
-							"crossDomain": true,
-							"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
-							"method": "POST",
-							"headers": {
-								"token": sessionId,
-								"content-type": "application/json"
-							},
-							"processData": false,
-							"data": JSON.stringify(profileData)
-						}
-
-						$.ajax(settings).done(function (response) {
-							console.log(response);
-							if (response.status == "success") {
-								sessionStorage.setItem('userData', JSON.stringify(response.data));
-								$('input[name="firstname"]').val(response.data.firstname);
-								$('input[name="lastname"]').val(response.data.lastname);
-								$('#newSuccessMessageID .message-text').html(response.msg);
-								$('#newSuccessMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
-									$('#updateProfile').attr('disabled', false);
-								});
-
-							} else {
-								$('#newErrorMessageID .message-text').html(response.msg)
-								$('#newErrorMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
-									$('#updateProfile').attr('disabled', false);
-								});
-							}
-						});
-					}
-				});
-				$('#updateProfile2').on('click', function () {
-					var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
-					var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
-					// var clgName = 
-					console.log(collegeName, collegeLogo);
-					var profileData = {
-						"firstname": userData.firstname,
-						"lastname": userData.lastname,
-						"email": userData.email,
-						"collegeName": collegeName,
-						"collegeLogo": collegeLogo
-					}
-
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
-						"method": "POST",
-						"headers": {
-							"token": sessionId,
-							"content-type": "application/json"
-						},
-						"processData": false,
-						"data": JSON.stringify(profileData)
-					}
-
-					$.ajax(settings).done(function (response) {
-						console.log(response);
-						if (response.status == "success") {
-							sessionStorage.setItem('userData', JSON.stringify(response.data));
-							$('#newSuccessMessageID .message-text').html(response.msg);
-							$('#newSuccessMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
-								$('#updateProfile').attr('disabled', false);
-							});
-
-						} else {
-							$('#newErrorMessageID .message-text').html(response.msg)
-							$('#newErrorMessageID').fadeIn().delay(5000).fadeOut('slow', function () {
-								$('#updateProfile').attr('disabled', false);
-							});
-						}
-					});
-				});
 				/*$('input').on('keypress', function (e) {
 					if (e.which == 32)
 						return false;
@@ -367,28 +227,16 @@
 				});
 				$('#resume_piblic').change(function () {
 					var profileData = {
-						"firstname": JSON.parse(sessionStorage.getItem('userData')).firstname,
-						"lastname": JSON.parse(sessionStorage.getItem('userData')).lastname,
-						"email": JSON.parse(sessionStorage.getItem('userData')).email,
+						"firstname": localUserData.firstname,
+						"lastname": localUserData.lastname,
+						"email": localUserData.email,
 						"hideResume": this.checked
 					};
 					// profileData.hideResume = this.checked
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume,
-						"method": "POST",
-						"headers": {
-							"token": sessionId,
-							"content-type": "application/json"
-						},
-						"processData": false,
-						"data": JSON.stringify(profileData)
-					}
-					$.ajax(settings).done(function (response) {
+					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 						//console.log(response);
 						if (response.status == "success") {
-							sessionStorage.setItem('userData', JSON.stringify(response.data));
+							localStorage.setItem('localUserData', JSON.stringify(response.data));
 							var statusMessage = response.data.hideResume == true ? "Now your resume is in private mode" : "Now your resume is in public mode";
 							$('#newSuccessMessageID .message-text').html(statusMessage);
 							$('#newSuccessMessageID').html(statusMessage)
@@ -396,7 +244,7 @@
 								.delay(5000)
 								.fadeOut();
 						}
-					});
+					})
 				})
 
 			},
@@ -405,38 +253,28 @@
 				var form = new FormData();
 				var logoImg = $('input[name="pic"]').get(0).files[0];
 
-				var userId = userData.userId;
+				var userId = localUserData.userId;
 
 				form.append("userId", userId);
 				form.append("type", "photo");
 				form.append("file", logoImg);
-
-				var imageSettings = {
-					"async": true,
-					"crossDomain": true,
-					"url": baseApiUrl + serviceUrls.post.uploadFile,
-					"method": "POST",
-					"headers": {
-						"token": sessionId,
-						"cache-control": "no-cache",
-					},
-					"processData": false,
-					"contentType": false,
-					"mimeType": "multipart/form-data",
-					"data": form
-				}
-				$.ajax(imageSettings).done(function (responseData) {
-					var response = JSON.parse(responseData)
+				doUpload(baseApiUrl + serviceUrls.post.uploadFile, form).then(response => {
+					console.log(response);
+					// var response = JSON.parse(response)
 					//console.log(response.data.httpPath);
 					if (response.status == 'success') {
-						sessionStorage.setItem('imageStore', response.data.httpPath);
+						localUserData.pic = response.data.httpPath;
+						localStorage.setItem('imageStore', response.data.httpPath);
+						getUserProfile();
 						$('#profileMenu img').attr('src', response.data.httpPath);
+						localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(localUserData), sessionId));
+						console.log('response.data.httpPath', response.data.httpPath);
 						$('#profilePicEdit').attr('src', response.data.httpPath);
 						$('#myModelUploadPhoto').modal('hide');
 					} else {
 						$('<div class="invalid-feedback">' + response.msg.description + '</div>').insertAfter$('#select-pic-section');
 					}
-				});
+				})
 			}
 		};
 
@@ -457,48 +295,66 @@
 })(jQuery);
 
 function getUserProfile() {
-	var settings = {
-		"async": true,
-		"crossDomain": true,
-		"url": apiUrl + "/user/" + userData.userId + "/getProfileResume",
-		"type": "GET",
-		"headers": {
-			"token": sessionId,
-			"content-type": "application/json"
-		},
-		"processData": false,
-		// "data": JSON.stringify(userData),
-		error: function (e) {
-			console.log(e);
-		},
-		// dataType: "json",
-		contentType: "application/json"
-	}
-	// downloadResume
-	$.ajax(settings).done(function (response) {
-		sessionStorage.setItem('userData', JSON.stringify(response.data));
-
-		setInfoMessage(userInfo.planDetails.msg.description);
+	doGetWithEncrypt(apiUrl + "/user/" + localUserData.userId + "/getProfileResume").then(response => {
+		console.log("doGetWithEncrypt", response);
+		var userProfileData = response.data;
+		console.log(userProfileData.planDetails);
+		$('#info_message span').html(userProfileData.planDetails.msg.description);
+		if (userProfileData.planDetails.subscribedUser) {
+			$('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
+				location.origin + '/app/dashboard/share.html');
+		} else {
+			$('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
+		}
+		if (userProfileData.pic) {
+			$('#profileMenu img').attr('src', userProfileData.pic)
+		} else {
+			$('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
+		}
+		if (userProfileData.edit_name) {
+			$('.edit_name').addClass('d-none');
+			$('#shareDomain2').val(shareSourceUrl + userProfileData.share_name);
+			$('.edit_name_link').removeClass('d-none');
+		}
+		localStorage.setItem(encrypt('localUserData', response.sessionId), encrypt(JSON.stringify(response.data), response.sessionId));
+		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);
-		// window.location.reload();
+		$('#load-header').load('../includes/user-header.html');
 	});
 }
 
-function setInfoMessage(message) {
-	if (!$('#info_message span').length) {
-		requestAnimationFrame(function () {
-			setInfoMessage(message);
-		});
-		return;
-	}
-	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today");
-	if (!message.indexOf("2 days") || !message.indexOf("1 day") || !message.indexOf("today") || !message.indexOf('Please subscribe')) {
-		$('#info_message').addClass('alert-danger');
+function setInfoMessage(message, emailVerified) {
+	if (emailVerified) {
+		$('#mail_message').remove();
+		if (!$('#info_message span').length) {
+			requestAnimationFrame(function () {
+				setInfoMessage(message);
+			});
+			return;
+		}
+		const numberOfDays = JSON.parse(message.match(/\d+/)) ? JSON.parse(message.match(/\d+/)[0]) : null;
+		console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), message.indexOf("today"), "today", numberOfDays);
+		if ((numberOfDays && numberOfDays <= 3) || message.split('.')[0].indexOf('today') !== -1) {
+			$('#info_message').addClass('alert-danger');
+		} else if (!message.indexOf("Your free plan is expired.") || !message.indexOf("Please subscribe") || !message.indexOf("Your plan expired")) {
+			$('#info_message').addClass('alert-danger');
+		} else {
+			$('#info_message').addClass('alert-success');
+		}
+		$('#info_message span').html(message);
 	} else {
-		$('#info_message').addClass('alert-success');
+		if (!$('#mail_message span').length) {
+			requestAnimationFrame(function () {
+				setInfoMessage(message);
+			});
+			return;
+		}
+		$('#info_message').addClass('d-none');
+		$('#mail_message span').html(messages.emailVerified);
+		$('#mail_message').addClass('alert-danger');
+		$('#mail_message .close').remove();
 	}
 
-	$('#info_message span').html(message);
 }
 window.addEventListener("message", function (event) {
 	console.log(":: PARENT MESSAGE", event.data)
@@ -507,3 +363,32 @@ window.addEventListener("message", function (event) {
 		$(".modal").modal("hide");
 	}
 });
+
+function alphanumeric(inputtxt) {
+	var letterNumber = /^[0-9a-zA-Z]+$/;
+	if ((inputtxt.match(letterNumber))) {
+		return true;
+	} else {
+		return false;
+
+	}
+}
+
+function text_truncate(str, length, ending) {
+	if (length == null) {
+		length = 100;
+	}
+	if (ending == null) {
+		ending = '...';
+	}
+	if (str.length > length) {
+		return str.substring(0, length - ending.length) + ending;
+	} else {
+		return str;
+	}
+}
+var emailVerifiedStatus = localUserData.emailVerified
+emailVerifiedStatus === 0 ? $(
+	'#newSuccessMessageID').css(
+	'display',
+	'none') : $('.preview_btn').css('display', 'block');

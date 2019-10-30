@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#ffffff">
     <title>Workruit — My Account</title>
     <script>
-        if (!sessionStorage.getItem('sessionId')) {
+        if (!localStorage.getItem('sessionId')) {
             window.location.href = window.location.origin + "/index.html";
         }
     </script>
@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="../../assets/css/custom.css" />
 </head>
 
-<body class="account-page">
+<body>
     <div class="loading-container">
         <img src="../../assets/images/oval.svg" style="width:55px">
     </div>
@@ -32,7 +32,7 @@
     </div>
     <div id="load-header"></div>
     <div class="content w-100">
-        <div class="container">
+        <div class="container tabs-container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <ul class="nav nav-pills nav-fill" role="tablist" id="tabs">
@@ -40,10 +40,10 @@
                             <a class="nav-link  tab-item" href="./account.html" data-item="account">Account</a>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link tab-item" href="./notifications.html"
                                 data-item="notifications">Notifications</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link active tab-item" href="./history.html" data-item="notifications">Order
                                 History</a>
@@ -51,7 +51,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-8 m-auto d-none upgrade-panel d-none">
+            <div class="col-md-8 m-auto d-none upgrade-panel">
                 <!-- Upgrade Section -->
                 <div class="card w-100 mt-5">
                     <div class="card-body">
@@ -61,11 +61,16 @@
                                 <p>Upgrade your account to get access to all the premium features.</p>
                             </div>
                             <div class="col-md-3">
-                                <a href="../../pricing.html" target="_blank" class="btn btn-primary upgrade-btn"
-                                    id="change_password_button">Upgrade</a>
+                                <a href="#price-modal" data-toggle="modal" data-target="#pricing-modal"
+                                    class="btn btn-primary upgrade-btn" id="change_password_button">Upgrade</a>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-8 m-auto no-orders-panel d-none">
+                <div class="my-5 text-center">
+                    <h4>No Orders Found</h4>
                 </div>
             </div>
             <div class="row mt-5 justify-content-center upgrade-table d-none">
@@ -100,109 +105,14 @@
     <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/aes.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/sha256.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/jquery.loadTemplate.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/moment.min.js"></script>
     <script type="text/javascript" src="../../assets/js/environment.js"></script>
-    <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
-    <script class="data-history-template" type="text/html">
-        <tr>
-            <td>
-                Order Id: <span data-content="orderId"></span>
-                <br>
-                Order on : <span data-content="createDate"></span>
-            </td>
-            <td>
-                <span data-content="price"></span>
-                <br>
-                <span data-content="promoCode"></span>
-            </td>
-            <td data-content="createDate"></td>
-            <td data-content="expDate">Aug 20 2019</td>
-            <td><a data-href="invoiceLink">Invoice</a></td>
-        </tr>
-    </script>
-    <script>
-        $(function () {
-            $('#load-header').load('../includes/user-header.html');
-            $('.account-page').paraCount();
-            $(window).ready(function () {
-                JSON.parse(sessionStorage.getItem('userData')).email_verified === 0 ? $(
-                    '#newSuccessMessageID').css(
-                    'display',
-                    'none') : $('.preview_btn').css('display', 'block');
-                // console.log(sessionStorage.getItem('isPremiumUser'));
-                if (sessionStorage.getItem('isPremiumUser') === 'true') {
-                    $('.premium-feature').removeClass('d-none');
-                } else {
-                    $('.trail-feature').removeClass('d-none');
-                }
-            })
-            // console.log(sessionStorage.getItem('previewData')) newSuccessMessageID
-            const userPlanStatus = JSON.parse(sessionStorage.getItem('userPlanStatus'));
-            sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $(
-                    '.preview_btn')
-                .css('display', 'inline-block')
-            $('.loading-container').delay(1000).fadeOut();
-
-        });
-    </script>
-    <script>
-        $(function () {
-            $('.account-page').paraCount();
-        });
-        if (sessionStorage.getItem('userData')) {
-            if (!JSON.parse(sessionStorage.getItem('userData')).planDetails.subscribedUser || JSON.parse(sessionStorage
-                    .getItem('userData')).planDetails.planId === 1) {
-                $('.upgrade-panel').removeClass('d-none');
-            } else {
-                $('.upgrade-table').removeClass('d-none');
-            }
-        }
-        // const userPlanInfo = JSON.parse(sessionStorage.getItem('userPlanStatus'));
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": baseResumeApiUrl + "user/" + JSON.parse(sessionStorage.getItem('userData')).userId +
-                "/getTxnHistory",
-            "method": "GET",
-            "headers": {
-                "token": "911ca088ab824095b82d3c98b32332e7",
-                "content-type": "application/json"
-            },
-            "processData": false,
-            // "data": JSON.stringify(signupData)
-        }
-        $.ajax(settings).done(function (response) {
-            console.log(response);
-            if (response.status == "success") {
-                response.data.sort(function (a, b) {
-                    return b.userPlanId - a.userPlanId
-                });
-                response.data.map(item => {
-                    item.createDate = moment(item.createDate).format("DD MMM YYYY");
-                    item.expDate = moment(item.expDate).format("DD MMM YYYY");
-                    item.invoiceLink = "invoice.html";
-                    item.planId === 1 ? item.price = 'Free' : item.price = '&#8377; ' + item.price;
-                    item.promoCode = item.promoCode ? 'Promo: ' + item.promoCode : ''
-                });
-                $('#order_history_template').loadTemplate(
-                    //Specify the template container (or file name of external template)
-                    $('.data-history-template'),
-                    response.data, {
-                        append: true,
-                        elemPerPage: 20
-                    }
-                    // console.log(response.resumeplans[index]),
-                    //Specify the data to render
-                    // response.resumeplans[index]
-                );
-            } else {
-                $("#order_history_table").remove();
-                $("#txn-history").text(response.msg.description);
-            }
-        });
-    </script>
-
+    <script type="text/javascript" src="../../assets/js/app.services.js"></script>
+    <script type="text/javascript" src="../../assets/js/order-scripts.js"></script>
 </body>
 
 </html>

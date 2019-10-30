@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#ffffff">
   <title>Workruit — My Account</title>
   <script>
-    if (!sessionStorage.getItem('sessionId')) {
+    if (!localStorage.getItem('sessionId')) {
       window.location.href = window.location.origin + "/index.html";
     }
   </script>
@@ -20,19 +20,19 @@
   <div class="loading-container">
     <img src="../../assets/images/oval.svg" style="width:55px">
   </div>
-  <div id="newErrorMessageID" class="alert alert-danger">
+  <div id="newErrorMessageID" class="alert alert-danger" style="top:68px!important">
     <span class="message-text"></span>
     <!-- <a href='javascript:void(0)' class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
         width="10" /></a> -->
   </div>
-  <div id="newSuccessMessageID" class="alert alert-success">
+  <div id="newSuccessMessageID" class="alert alert-success" style="top:68px!important">
     <span class="message-text"></span>
     <!-- <a href="javascript:void(0)" class="close" aria-label="close" title="close"><img src="../images/app/icons/close.png"
         width="10" /></a> -->
   </div>
   <div id="load-header"></div>
   <div class="content w-100">
-    <div class="container">
+    <div class="container tabs-container">
       <div class="row justify-content-center">
         <div class="col-md-8">
           <ul class="nav nav-pills nav-fill" role="tablist" id="tabs">
@@ -40,9 +40,9 @@
               <a class="nav-link active tab-item" href="./account.html" data-item="account">Account</a>
             </li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link tab-item" href="./notifications.html" data-item="notifications">Notifications</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link tab-item" href="./o-history.html" data-item="notifications">Order History</a>
             </li>
@@ -165,8 +165,8 @@
                   <p>Upgrade your account to get access to all the premium features.</p>
                 </div>
                 <div class="col-md-3">
-                  <a href="../../pricing.html" target="_blank" class="btn btn-primary upgrade-btn margin_center"
-                    id="change_password_button">Upgrade</a>
+                  <a href="#price-modal" data-toggle="modal" data-target="#pricing-modal"
+                    class="btn btn-primary upgrade-btn margin_center" id="change_password_button">Upgrade</a>
                 </div>
               </div>
             </div>
@@ -268,7 +268,7 @@
               <div class="modal-description">
                 Get access to your custom resume URL and share it instantly with hiring managers, companies, friends &
                 family.</div>
-              <a href="../../pricing.html" style="margin-left: 5rem;">
+              <a href="#price-modal" data-toggle="modal" data-target="#pricing-modal" style="margin-left: 5rem;">
                 <button type="button" class="btn btn-success btn-lg px-5 mt-3">Upgrade</button></a>
             </div>
           </div>
@@ -280,116 +280,13 @@
   <script type="text/javascript" src="../../assets/vendors/js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
   <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/aes.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/sha256.js"></script>
+  <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
   <script type="text/javascript" src="../../assets/js/environment.js"></script>
+  <script type="text/javascript" src="../../assets/js/app.services.js"></script>
   <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
-  <script>
-    // getCollegesInfo
-
-    var getCollegesInfo = {
-      "async": true,
-      "crossDomain": true,
-      "url": baseResumeApiUrl + resumeServiceUrls.get.getCollegesInfo,
-      "method": "GET",
-      "headers": {
-        "token": JSON.parse(sessionStorage.getItem('userData')).sessionId,
-        "content-type": "application/json"
-      },
-    };
-    $(function () {
-      $('#load-header').load('../includes/user-header.html');
-      $('.account-page').paraCount();
-      $(window).ready(function () {
-        JSON.parse(sessionStorage.getItem('userData')).email_verified === 0 ? $('#newSuccessMessageID').css(
-          'display',
-          'none') : $('.preview_btn').css('display', 'block');
-        // console.log(sessionStorage.getItem('isPremiumUser'));
-        if (sessionStorage.getItem('isPremiumUser') === 'true') {
-          $('.premium-feature').removeClass('d-none');
-        } else {
-          $('.trail-feature').removeClass('d-none');
-        }
-      })
-      // console.log(sessionStorage.getItem('previewData')) newSuccessMessageID
-      const userPlanStatus = JSON.parse(sessionStorage.getItem('userPlanStatus'));
-      sessionStorage.getItem('previewData') === null ? $('.preview_btn').css('display', 'none') : $('.preview_btn')
-        .css('display', 'inline-block')
-      $.ajax(getCollegesInfo).done(function (response) {
-        // console.log(response);
-        for (let index = 0; index < response.collegesInfo.length; index++) {
-          const element = response.collegesInfo[index];
-          // console.log(element);
-          var clgInfo = btoa(JSON.stringify({
-            collegeName: element.title,
-            collegeLogo: element.logo
-          }));
-          var option = `<option value="${clgInfo}" data-clgLogo="${element.logo}">${element.title}</option>`
-          $('#collageName').append(option)
-          var userData = JSON.parse(sessionStorage.getItem('userData'));
-          var clgInfo2 = btoa(JSON.stringify({
-            collegeName: userData.collegeName,
-            collegeLogo: userData.collegeLogo
-          }));
-          console.log("clgInfo2", clgInfo2);
-          $('#collageName').val(clgInfo2);
-        }
-        var option = `<option value="" data-clgLogo="">NA</option>`
-        $('#collageName').append(option)
-      });
-
-
-      $('.loading-container').delay(1000).fadeOut();
-
-    });
-  </script>
-  <script>
-    $(function () {
-      $('.account-page').paraCount();
-    });
-
-    function storeTheImage() {
-      var imgCanvas = document.getElementById('canvas-element'),
-        imgContext = imgCanvas.getContext("2d");
-
-      var img = document.getElementById('image-preview');
-      // Make sure canvas is as big as the picture BUT make it half size to the file size is small enough
-      imgCanvas.width = (img.width / 4);
-      imgCanvas.height = (img.height / 4);
-
-      // Draw image into canvas element
-      imgContext.drawImage(img, 0, 0, (img.width / 4), (img.height / 4));
-
-      // Get canvas contents as a data URL
-      var imgAsDataURL = imgCanvas.toDataURL("image/png");
-
-      // Save image into sessionStorage
-      try {
-        window.sessionStorage.setItem("imageStoreData", imgAsDataURL);
-        $('.sessionStorage-output').html(window.sessionStorage.getItem('imageStoreData'));
-        $('.cont_fotodiv').css('background', 'transparent');
-      } catch (e) {
-        console.log("Storage failed: " + e);
-      }
-    }
-
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-          $('#image-preview').show();
-          $('#image-preview').attr('src', e.target.result);
-          storeTheImage();
-        }
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    $('#image-preview').attr('src', window.sessionStorage.getItem('imageStoreData'));
-
-    $('#inputfoto2').on('change', function () {
-      readURL(this);
-    });
-  </script>
+  <script type="text/javascript" src="../../assets/js/profile-edit.js"></script>
 
 </body>
 

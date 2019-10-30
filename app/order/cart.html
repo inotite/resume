@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#ffffff">
     <title>My Cart — Workruit resume</title>
     <script>
-        if (!sessionStorage.getItem('sessionId')) {
+        if (!localStorage.getItem('sessionId')) {
             window.location.href = window.location.origin + "/index.html";
         }
     </script>
@@ -21,7 +21,6 @@
         <img src="../../assets/images/oval.svg" style="width:55px">
     </div>
     <div id="load-header"></div>
-
     <div class="content price-summary-box d-none">
         <div class="container">
             <div class="row">
@@ -76,8 +75,8 @@
                                         </select> -->
                                         <p class="text-muted mb-1"><span id="timePeriod">0 Days</span> at ₹ <span
                                                 id="netprice">000.00</span></p>
-                                        <small><a href="" class="text-muted" data-toggle="modal"
-                                                data-target="#termsandprivacy">Terms and Privacy</a></small>
+                                        <!-- <small><a href="" class="text-muted" data-toggle="modal"
+                                                data-target="#termsandprivacy">Terms and Privacy</a></small> -->
                                     </div>
                                     <div class="col-4 text-right">
                                         <p class="text-bold m-0">₹<span id="finalPrice">000.00</span></p>
@@ -118,14 +117,35 @@
         </div>
     </div>
     <div class="content error-box d-none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p class="error-description"></p>
-                    <a href="../../pricing.html">Upgrade</a>
+        <!-- downloadApp popup -->
+        <div class="modal fade bd-example-modal-lg in" id="price-action-modal" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header pb-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-0 mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-5 text-center">
+                                <img src="../../assets/images/Icon3.svg" class="img_download m-0" alt="phone"
+                                    height="320px" width="auto">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="modal-title">Oops, free plan is expired.</div>
+                                <div class="modal-description">
+                                    You need to upgrade to a paid plan
+                                    <br /> to get access to all the features.</div>
+                                <div class="btn btn-primary px-5 btn-lg text-center mt-3">
+                                    <a href="../../pricing.html" class="text-white">Upgrade Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- /downloadApp popup -->
     </div>
     <!-- Modal -->
     <div class="modal fade" id="promoCodeModal" tabindex="-1" role="dialog" aria-labelledby="promoCodeModal"
@@ -138,14 +158,14 @@
                     </button>
                 </div>
                 <div class="modal-body mb-3" style="height: auto">
-                    <form>
+                    <form method="POST" action="">
                         <div class="form-group mb-3">
                             <label for="PromoCode">Promo Code</label>
                             <input type="text" class="form-control" id="PromoCode" aria-describedby="emailHelp"
                                 placeholder="Enter Promo Code" autocomplete="off" value="" maxlength="8">
                             <span id="promo-validation" class="text-capitalize text-danger"></span>
                         </div>
-                        <span class="btn btn-primary applyPromo">Apply</span>
+                        <button class="btn btn-primary applyPromo">Apply</button>
                     </form>
                 </div>
             </div>
@@ -240,6 +260,43 @@
             </div>
         </div>
     </div>
+    <!-- downloadApp popup -->
+    <div class="modal fade bd-example-modal-lg" id="downloadApp" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <img src="../../assets/images/app/phone.png" class="img_download" alt="phone" height="320px"
+                                width="auto">
+                        </div>
+                        <div class="col-md-7 pt-5">
+                            <div class="modal-title">Find the right job on the go.</div>
+                            <div class="modal-description">
+                                Apply for jobs, chat with employers, get interview alerts.
+                                <br /> All features in your pocket.</div>
+                            <div class="getapp px-4 text-center mt-3">
+                                <span class="pr-3">Get the app</span>
+                                <a href="https://itunes.apple.com/in/app/workruit/id1189752813?mt=8"
+                                    class="pr-2 transition">
+                                    <img src="../../assets/images/app/icons/ios-white.svg" alt="ios">
+                                </a>
+                                <a class="transition"
+                                    href="https://play.google.com/store/apps/details?id=com.workruit&amp;hl=en">
+                                    <img src="../../assets/images/app/icons/android-white.svg" alt="android">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /downloadApp popup -->
     <div id="paytm-checkout"></div>
 
     <!-- Bootstrap core JavaScript
@@ -253,7 +310,11 @@
     <script type="text/javascript" src="../../assets/vendors/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/popper.min.js"></script>
     <script type="text/javascript" src="../../assets/vendors/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/aes.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/sha256.js"></script>
+    <script type="text/javascript" src="../../assets/vendors/js/axios.min.js"></script>
     <script type="text/javascript" src="../../assets/js/environment.js"></script>
+    <script type="text/javascript" src="../../assets/js/app.services.js"></script>
     <script type="text/javascript" src="../../assets/js/cart.js"></script>
     <script>
 

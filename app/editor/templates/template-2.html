@@ -13,7 +13,7 @@
     <meta data-content="theme-color" content="#ffffff">
 
     <script>
-        if (!sessionStorage.getItem('sessionId')) {
+        if (!localStorage.getItem('sessionId')) {
             window.location.href = "../../../index.html";
         }
     </script>
@@ -106,7 +106,7 @@
                                 aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="#">Resume settings</a>
                                 <div class="dropdown-divider"></div>
-
+                                <div class="actions-menu"></div>
                             </div>
                         </li>
                     </ul>
@@ -148,7 +148,7 @@
                             <div>
                                 <div>
                                     <label for="user-picture" class="res_picture">
-                                        <!-- <img alt="..." class="rounded-circle" id="user_pic"/> -->
+                                        <img alt="..." class="rounded-circle" id="user_pic"/>
                                         <input type="file" data-content="picture"
                                             accept="image/x-png,image/gif,image/jpeg" id="user-picture" class="d-none">
                                     </label>
@@ -245,7 +245,7 @@
                                                     class="svg color font-14pt" />
                                             </div>
                                             <div class="social-container">
-                                                <p class="m-0 ml-2" data-content="email" contenteditable="true"></p>
+                                                <p class="m-0 ml-2 text-break" data-content="email"></p>
                                             </div>
                                         </li>
                                         <li class="d-flex justify-content-start  px-1 align-items-center mb-3">

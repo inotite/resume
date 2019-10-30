@@ -99,7 +99,29 @@
     width: 70%;
     margin-left: 14%;
 }
-.pricing .highlight .detail:after {
+.pricing .plan_title{
+    position: relative;
+}
+.pricing .plan_title:before {
+    content: '';
+    width: 161px;
+    height: 20px;
+    background: #fdfdfd;
+    display: block;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 0px;
+    position: absolute;
+    z-index: 3;
+    -webkit-border-radius: 0 0 30px 30px;
+    -moz-border-radius: 0 0 30px 30px;
+    border-radius: 0 0 30px 30px;
+    border: 1px solid #e7e7e7;
+    border-top: 0;
+    transform:rotate(180deg);
+}
+.pricing .plan_title:after {
     content: '';
     width: 161px;
     height: 20px;
@@ -110,12 +132,23 @@
     margin: auto;
     bottom: -20px;
     position: absolute;
-    z-index: 9999;
+    z-index: 3;
     -webkit-border-radius: 0 0 30px 30px;
     -moz-border-radius: 0 0 30px 30px;
     border-radius: 0 0 30px 30px;
     border: 1px solid #e7e7e7;
     border-top: 0;
+}
+.pricing .plan_title .interval {
+    position: relative;
+    top: 10px;
+    z-index: 999999;
+    font-size: 14px;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 .pricing .features {
     padding-top: 40px;
@@ -128,7 +161,7 @@
 .pricing .features ul li {
     border-bottom: 1px solid #e7e7e7;
     border-top: 0;
-    font-size: 16px;
+    font-size: 15px!important;
     color: #202121;
     list-style: none;
     line-height: 50px;
@@ -295,4 +328,71 @@
 }
 .font-18{
     font-size: 18px;
+}
+#pdfViewer {
+    min-height: 100vh;
+}
+.modal-backdrop.fade {
+    opacity: .5;
+    transition: opacity 0.15s linear;
+}
+.action-modal.modal.fade .modal-dialog {
+    transform: translate(0, 0);
+    transition: all .1s;
+}
+
+.action-modal .modal-header {
+    justify-content: flex-end;
+    border: unset;
+    padding-bottom: 0;
+}
+
+.action-modal.fade.in {
+    z-index: 4000;
+    opacity: 1;
+    top: 0;
+    margin: 0px auto;
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
+    /* transform: translateY(20%); */
+}
+
+.action-modal button.close {
+    background: url(../../../assets/images/app/icons/close.svg) no-repeat;
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    cursor: pointer;
+}
+.action-modal .modal-dialog{
+    position: relative;
+    width: 760px;
+    pointer-events: none;
+    max-width: 760px;
+    margin: 0;
+}
+.action-modal .modal-title {
+    font-size: 24px;
+    color: #000000;
+    font-weight: 700;
+}
+.action-modal .modal-description {
+    font-size: 16px;
+    color: #000000;
+    font-weight: 400;
+    transform: translateZ(0);
+}
+.action-modal .btn{
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    padding: 0.7rem 1rem;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+}
+.pdf-error{
+    height: 100vh;
 }

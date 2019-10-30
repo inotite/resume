@@ -1,6 +1,6 @@
-const userId = JSON.parse(sessionStorage.getItem('userData')).userId;
-const userStatus = sessionStorage.getItem('isPremiumUser');
-let resumeObj = JSON.parse(sessionStorage.getItem('userData'));
+const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))).userId;
+const userStatus = localStorage.getItem('isPremiumUser');
+let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
 const exp_total_count = 10;
 const edu_total_count = 10;
@@ -91,18 +91,9 @@ var defaultSettings = [{
 }];
 let degreesAll = [];
 /* Job Functions Autocomplete */
-var jobFunctionsSettings = {
-    "async": true,
-    "crossDomain": true,
-    "url": apiAdminUrl + "/allJobFunctions",
-    "method": "GET",
-    "headers": {
-        "token": "911ca088ab824095b82d3c98b32332e7",
-    }
-}
 // console.log(apiAdminUrl + "/allJobFunctions");
 var jobFunctionsAll = new Array();
-$.ajax(jobFunctionsSettings).done(function (response) {
+doGetWithAuthKey(apiAdminUrl + "/allJobFunctions").then(function (response) {
 
     $.each(response.categoryArray, function (i1, object) {
         $.each(object.categoryValues, function (i3, region) {
@@ -133,16 +124,7 @@ $.ajax(jobFunctionsSettings).done(function (response) {
 
 });
 /* Degrees Autocomplete */
-var degreesSettings = {
-    "async": true,
-    "crossDomain": true,
-    "url": apiAdminUrl + "/allDegrees",
-    "method": "GET",
-    "headers": {
-        "token": "911ca088ab824095b82d3c98b32332e7",
-    }
-}
-$.ajax(degreesSettings).done(function (response) {
+doGetWithAuthKey(apiAdminUrl + "/allDegrees").then(function (response) {
     //console.log(response.degrees[0].title);
 
     $(response.degrees).each(function (k, object) {
@@ -193,15 +175,19 @@ $(window).ready(function () {
         //     'background-repeat': 'no-repeat',
         //     'background-size': 'contain'
         // });
-        addWaterMarkImage('#resume-body, .watermark')
+        addWaterMarkImage('#resume-body, .watermark', waterMarkCss)
     }
     var selectedFont = themeOptions ? themeOptions.font : fonts[0].fontFamily;
     var selectedTitleFont = themeOptions ? themeOptions.fontTitle : fonts[0].fontFamily;
+
     if (!selectedTitleFont)
         selectedTitleFont = fonts[0].fontFamily;
     var selectedcolor = themeOptions ? themeOptions.color : 'theme-black';
     if (!planInfo.validUser && !!planInfo.subscribedUser) {
-        $('.theme-picker > a,.theme-picker .selected-font').attr("data-toggle", "modal").attr('data-target', '#upgrade-popup');
+        $('.theme-picker > a , .selected-font').attr("data-toggle", "modal").attr('data-target', '#upgrade-popup');
+        $('.dropdown-menu').remove();
+        $('.resume-preview').removeClass('d-none');
+        $('.navbar').css('z-index', '2');
     }
     $('.selected-font').text(selectedFont).attr('data-font', selectedFont);
     $('.title-headers .selected-font').text(selectedTitleFont).attr('data-font', selectedTitleFont);
@@ -209,7 +195,7 @@ $(window).ready(function () {
     $('.dropdown-menu.actions').removeClass('theme-black').removeClass('theme-blue').removeClass('theme-green').addClass(selectedcolor);
     $('.resume-container').attr('data-oldcolor', selectedcolor).removeClass('theme-black').addClass(selectedcolor);
     $('.theme-color-picker a').removeClass('active');
-    $('.theme-color-picker span.'+selectedcolor).parent().addClass('active');
+    $('.theme-color-picker span.' + selectedcolor).parent().addClass('active');
     $('body').css('font-family', selectedFont);
     $('.sub-header').css('font-family', selectedTitleFont);
     $('.title-headers').css('font-family', selectedTitleFont);
@@ -245,16 +231,17 @@ $(window).ready(function () {
             };
         });
     });
-    $('.b-datepicker').datepicker({
-        format: "dd-mm-yyyy",
-        endDate: moment(appDate).subtract(14, 'years').format('DD-MM-YYYY')
-    });
     $('.month-picker').datepicker({
         format: "M yyyy",
         endDate: moment(appDate).format('MMM YYYY'),
         startView: "months",
         minViewMode: "months"
     });
+    $('.b-datepicker').datepicker({
+        format: "dd-mm-yyyy",
+        endDate: moment(appDate).subtract(14, 'years').format('DD-MM-YYYY')
+    });
+
 
     for (let index = 0; index < settings.length; index++) {
         const settingItem = settings[index];
@@ -262,7 +249,7 @@ $(window).ready(function () {
                             <label for="${settingItem.dataText}"><input type="checkbox" id="${settingItem.dataText}" checked="${settingItem.status}" data-checked="${settingItem.status}" class="switch ml-3"><label class="switch-label ${settingItem.dataText}"></label> 
                             ${settingItem.text} </label>
                         </a>`;
-        $('.actions').append(settingLink)
+        $('.actions .actions-menu').append(settingLink)
     }
 
     $('.action-item').on('click', function () {
@@ -274,11 +261,23 @@ $(window).ready(function () {
         settings[actionItemIndex].status = newStatus;
         $('#' + settingId).attr('data-checked', newStatus).attr('checked', newStatus);
         $('.' + settingId).addClass(newStatus).removeClass(currentStatus);
-        // console.log(settingId);
+        console.log("settings[actionItemIndex]", settings[actionItemIndex]);
         settingStatus(settingId, newStatus);
     });
+    if ($('.action-item')) {
+        requestAnimationFrame(function () {
+            for (let index = 0; index <= $('.actions-menu .action-item').length; index++) {
+                var settingId = $('.actions-menu .action-item').eq(index).attr("data-setting");
+                console.log(settingId, settings[index].status, settings.dataText);
+                $('#' + settingId).attr('data-checked', settings[index].status).attr('checked', settings[index].status);
+                $('.' + settingId).addClass(settings[index].status);
+                settingStatus(settingId, settings[index].status);
+            }
+        });
+    }
 
     function settingStatus(settingId, setStatus) {
+        console.log("setStatus, settingId", setStatus, settingId);
         switch (settingId) {
             case 's-academic':
                 if (setStatus == 'true') {
@@ -316,7 +315,9 @@ $(window).ready(function () {
                 }
                 break;
             case 's-website':
+                console.log("setStatus, settingId", setStatus, settingId);
                 if (setStatus == 'true') {
+                    console.log(setStatus, settingId);
                     $('.website').addClass('d-none');
                 } else {
                     $('.website').removeClass('d-none');
@@ -381,8 +382,8 @@ $(window).ready(function () {
     });
     // bind userData to Resume
 
-    var addPdfWaterMark = function() {
-        $('page').css( pdfWaterMarkCss );
+    var addPdfWaterMark = function () {
+        $('page').css(pdfWaterMarkCss);
     }
 
     var showMultiplePages = function () {
@@ -407,7 +408,7 @@ $(window).ready(function () {
 
         $('#resume-body').show();
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
-            addWaterMarkImage('page')
+            addWaterMarkImage('page'.waterMarkCss)
         }
     }
 
@@ -418,6 +419,10 @@ $(window).ready(function () {
         $('.editorNav').addClass('d-none');
         $('.previewNav').css('z-index', '2');
         $('#saveResume').addClass('d-none');
+        if (!planInfo.subscribedUser || planInfo.planId === 1) {
+            $('.watermark').css('display', 'block!important');
+        }
+
         bindUserDataForSave();
         saveUserProfile(postObj, 'preview');
 
@@ -581,8 +586,8 @@ $(window).ready(function () {
 
             $("#proExp_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function() {
-                $('#proExp_' + num + ' .month-picker').on('change', function() {
+            setTimeout(function () {
+                $('#proExp_' + num + ' .month-picker').on('change', function () {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -704,8 +709,8 @@ $(window).ready(function () {
 
             $("#education_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function() {
-                $('#education_' + num + ' .month-picker').on('change', function() {
+            setTimeout(function () {
+                $('#education_' + num + ' .month-picker').on('change', function () {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -812,8 +817,8 @@ $(window).ready(function () {
 
             $("#academic_projects_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function() {
-                $('#academic_projects_' + num + ' .month-picker').on('change', function() {
+            setTimeout(function () {
+                $('#academic_projects_' + num + ' .month-picker').on('change', function () {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -889,7 +894,7 @@ $(window).ready(function () {
             });
 
             $("#skills_item_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
-            $('#skills_item_' + num + ' .skill-value').click(function(e) {
+            $('#skills_item_' + num + ' .skill-value').click(function (e) {
                 $(this).parent().find('.skills-bar').click();
             });
         }
@@ -901,18 +906,9 @@ $(window).ready(function () {
         }
         $('.skills').on('keydown', function () {
             var fieldVal = $(this).text();
-            var skillsSettings = {
-                "async": true,
-                "crossDomain": true,
-                "url": apiAdminUrl + "/skills?skillName=" + fieldVal,
-                "method": "GET",
-                "headers": {
-                    "token": "911ca088ab824095b82d3c98b32332e7",
-                }
-            }
             var skillsAll = new Array();
             var dom = $(this);
-            $.ajax(skillsSettings).done(function (response) {
+            doGetWithAuthKey(apiAdminUrl + "/skills?skillName=" + fieldVal).then(function (response) {
                 // console.log(fieldVal, response)
                 if (response !== null)
                     $(response.content).each(function (k, v) {
@@ -1037,8 +1033,8 @@ $(window).ready(function () {
         "themeOptions": null
     }
 
-    $('#saveResume').on('click', async function () {
-        if (planInfo.validUser || planInfo.planId === 1 || !planInfo.subscribedUser) {
+    $('#saveResume').on('click', function () {
+        if (planInfo.subscribedUser && planInfo.validUser) {
             $('#downloadResume').addClass('inactive-link');
             bindUserDataForSave();
             saveUserProfile(postObj, "save");
@@ -1046,25 +1042,34 @@ $(window).ready(function () {
             await savePdf("save");
             hideMultiplePages();
             $('#downloadResume').removeClass('inactive-link');
-        } else {
+        } else if (!planInfo.validUser && !!planInfo.subscribedUser) {
+            // bindUserDataForSave();
+            // saveUserProfile(postObj, "save");
             $('#upgrade-popup').modal('show')
+        } else if (!planInfo.subscribedUser && !planInfo.planId) {
+            $('#downloadResume').addClass('inactive-link');
+            bindUserDataForSave();
+            saveUserProfile(postObj, "save");
+            showMultiplePages();
+            await savePdf("save");
+            hideMultiplePages();
+            $('#downloadResume').removeClass('inactive-link');
         }
-
     });
 
     $('#downloadResume').on('click', async function () {
-        if (planInfo.subscribedUser) {
+        if (planInfo.subscribedUser && planInfo.planId) {
             if (!$('.editorNav').hasClass('d-none')) {
                 $('#downloadResume').addClass('inactive-link');
                 bindUserDataForSave();
                 saveUserProfile(postObj, "download");
                 showMultiplePages();
-                await savePdf();
+                await savePdf('download');
                 hideMultiplePages();
                 $('#downloadResume').removeClass('inactive-link');
             } else {
                 console.log("hey, here!");
-                await savePdf();
+                await savePdf('download');
             }
         } else {
             $('#upgrade-popup').modal('show')
@@ -1074,7 +1079,7 @@ $(window).ready(function () {
     function bindUserDataForSave() {
         const jobfunctions = $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
             $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id'))] : []
-        postObj.pic = sessionStorage.getItem('imageStore');
+        postObj.pic = localStorage.getItem('imageStore');
         postObj.firstname = $('#resume-body [data-content="firstname"]').text();
         postObj.lastname = $('#resume-body [data-content="lastname"]').text();
         postObj.jobfunctions = jobfunctions;
@@ -1338,8 +1343,7 @@ $(window).ready(function () {
         if (!resumeObj.pic) {
             resumeObj.pic = 'data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUCAYAAAAcaxDBAAAFYUlEQVR4nO2d7W3bMBCGr0EHUCeoM0HUCWpP0HSC2BM0naDOBHEmsDtB3QniThB1groTRD/6vwWNlwYtyhJF3lFUqgcwEsgfol7d8eN4pF49P/+hRJjgNUVx3rcU6wf+7ohoj1fv9CloTkTXEE79n1mf6EZJRAWE3uL/6MQWVFnfDYQMFbCNEsJ+hRVHIYagSrg5EX2CS/eBqg4eiGgDocWQFFQJeQshpa3RlRLCrqSElRJ0mZiQVbSwS+udQLgFVXXkukfX7oqqChacdeyFdcQPZYn3RPQ4IDEJZX1E2Vm8icNCVZfn28CErENZ68fQ7laoharW++kFiEm4hidckzchgt6jvnxprHFtXvgKukaX6KVy62ssPoKuQ91iIMx9RO0qaCwxVQNxR0Qz1XBWXjO8FyMY0lnULq38fQQ3Vy3s5w79winKlVvv8LJCuVpxtdB5BDFVod917GTv8J2V9Q4vt66e6WKhOboTkiwQuAjBq87ryLu2fmqbhWbotEtyxyAm4TfurKO8fGsbUbUJ+kW4075jDlAshWOfE2hyliaXn2KcK8mlQGutLvqXdZSX2bkb12Sh0vXRRqjrs2eqQpo4q805QZcRxuffrSPD+G2CNrVVVZ3LZ3CZxsqXgVfCv//XOsJLiSrrJPJfZ6G3EcSsrX8Gdo6srm9eFTTD1MWIG9Y0T1XQecLzQCmSVUdQVUFH6+zOiWamoNOIkfcYXhDL08z0oRNBb6yPysGRetNEFiECZXLUzhT02vqYLJLn6+1atKDSFlOHpEfEbguOHqEFjX1HCfWOxHmvI7u7ed6joG25mFKsmT0jaxpnC3PQ0HT5PuCOt7bGKwU5uvyk5878lEEIfWOm1jvxUGWYXCSS9XGN2KuPp+T4bh/tQJWDoH3eVRM9d+WavTfBZ596rLKqTF9bh/pnjleBiNFvY2JMCfcWRpCKiCcoQa+so2mQpypaA1cXY3SJlawuwDwSwCgoM6OgzIyCMjMKyswoKC/layw2TWG0tEMH/ieyP4qG1W46/jhBPzpP5Bp+9jlSKpA9svOYQy/PfGeK14e+BgUqcyRGUpimwOrgbYSU7gkCJjcRxZ0pQWNkq22wtrIxWVWQHNMi0usDLnVu07PQEHQTcYGBCzq/U0JYVQ290a08t+XskUO5SEhMMhbLzgTKddBQC/rDetufrcfig9joxQ5bxvMeNNSCcv3wBgtQz3V3UqJEWbmScw8amvmhofWouusz6+gweAzsxx7qT6qMlEKsVN/toRLqVUftTEG/Wh9zR3xzFGHKQNc/amcKugto+aRz2mPgew17swGuBkcerI+78RKmUXyv4USz6qIF3wULBRqkobp95pkXYC1cqFpo6WmlecguCAngu6L5oWpE3MtqOBbBxsZ30a1lnVRjoRRgpYqh7fYQsoLZsk46Y6GaXwF5T0Ow1BAx97BOizoL1SysI+6kbqmha+vPatMk6C5wp4S1QEJtKJlRLl9WTYGfJpcnFCB0o6sCd7Sv4LImh5Ah0fs9olRW3alpslBiGqPrNMVlT9aa4dwcaY+tY36XaeSiqc7owBeOrdA6oreSa9yFwREnL+trm6E9AgoSG6PqVcI3jNnZztsMdd2dUaL13hrTyb7BmYkxfcydGr7p4qE+211Kdon2RrJDNdGhNOpgnehwZSQ8SNBJTArYP/R/2P+us5gUkNu0iLCbV5+sfBvikGSxz0ytf2osXBugOkKz7zbo6KY09+6L7rQHxSA40hmLSBv6SbJy2dfOhXHb9US3XdfsENa6S3w6pEQZL7kzXMZHVzAzPlyFmfHxP8yMD6hiJuVHqKlxepPI6T1CjYj+Af7+dGpiAOSrAAAAAElFTkSuQmCC';
             $('#user_pic').attr('src', resumeObj.pic);
-        }
-        else {
+        } else {
             // var xhr = new XMLHttpRequest();
             // xhr.onload = function () {
             //     var reader = new FileReader();
@@ -1355,7 +1359,7 @@ $(window).ready(function () {
             // xhr.withCredentials = true;
             // xhr.responseType = 'blob';
             // xhr.send();
-            
+
             // function makeImage(uri) {
             //     return new Promise(function (resolve, reject) {
             //         var image = new Image();
@@ -1387,7 +1391,7 @@ $(window).ready(function () {
             $('#user_pic').attr('src', resumeObj.pic);
         }
         // console.log(resumeObj.pic);
-        
+
         if (!resumeObj.collegeLogo)
             resumeObj.collegeLogo = 'img/university_logo.svg';
         $('.clg_picture img').attr('src', resumeObj.collegeLogo)
@@ -1425,8 +1429,8 @@ $(window).ready(function () {
         bindLanguagesData();
 
         validateStyleCopy();
-        $('[contenteditable="true"]').on('focus', function() {
-            $(this).keyup(function(e) {
+        $('[contenteditable="true"]').on('focus', function () {
+            $(this).keyup(function (e) {
                 var code = e.keyCode ? e.keyCode : e.which;
                 if (code == 9) {
                     moveCaretToEnd($(this)[0]);
@@ -1434,14 +1438,14 @@ $(window).ready(function () {
             });
         });
 
-        $('.month-picker').on('change', function() {
+        $('.month-picker').on('change', function () {
             var inputWidth = $(this).textWidth();
             $(this).css({
                 width: inputWidth
             })
         });
-    
-        setTimeout(function() {
+
+        setTimeout(function () {
             $('.month-picker').trigger('change');
         }, 2000);
     }
@@ -1565,7 +1569,7 @@ $(window).ready(function () {
         });
 
         validateSkills();
-        $('.skill-value').click(function(e) {
+        $('.skill-value').click(function (e) {
             $(this).parent().find('.skills-bar').click();
         });
     }
@@ -1634,18 +1638,9 @@ $(window).ready(function () {
 
     $('.skills').on('keydown', function () {
         var fieldVal = $(this).text();
-        var skillsSettings = {
-            "async": true,
-            "crossDomain": true,
-            "url": apiAdminUrl + "/skills?skillName=" + fieldVal,
-            "method": "GET",
-            "headers": {
-                "token": "911ca088ab824095b82d3c98b32332e7",
-            }
-        }
         var skillsAll = new Array();
         var dom = $(this);
-        $.ajax(skillsSettings).done(function (response) {
+        doGetWithAuthKey(apiAdminUrl + "/skills?skillName=" + fieldVal).then(function (response) {
             // console.log(fieldVal, response)
             if (response !== null)
                 $(response.content).each(function (k, v) {
@@ -1784,26 +1779,9 @@ $(window).ready(function () {
             }
         }
         // console.log("Application Data", JSON.stringify(applicantData));
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": apiUrl + "/user/" + userId + "/updateProfileResume",
-            "type": "POST",
-            "headers": {
-                "token": sessionId,
-                "content-type": "application/json"
-            },
-            "processData": false,
-            "data": JSON.stringify(applicantData),
-            error: function (e) {
-                console.log(e);
-            },
-            dataType: "json",
-            contentType: "application/json"
-        }
         // console.log("settings", settings.data);
         // downloadResume
-        $.ajax(settings).done(function (response) {
+        doPostWithEncrypt(apiUrl + "/user/" + userId + "/updateProfileResume", applicantData).then(response => {
             if (response.status == 'success') {
                 $('#newSuccessMessageID .message-text').html(response.msg);
                 $('.loading-container').fadeOut();
@@ -1813,7 +1791,8 @@ $(window).ready(function () {
                             $('#saveResume').removeAttr('pointer-events');
                         });
                 }
-                sessionStorage.setItem('userData', JSON.stringify(response.data));
+                localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(JSON.stringify(response.data), localStorage.getItem('sessionId')));
+                // localStorage.setItem('userData', JSON.stringify(response.data));
                 // console.log("Ajax response");
                 // console.log(response.data);
 
@@ -1822,7 +1801,9 @@ $(window).ready(function () {
                 if (logoImg) {
                     saveUserPic();
                 }
-                // savePdf();
+                if (action === 'save') {
+                    savePdf('save');
+                }
                 getShareNameFile();
 
             } else {
@@ -1837,13 +1818,12 @@ $(window).ready(function () {
                     window.history.back();
                 }
             }
-
         });
     }
 
     function getShareNameFile() {
         var self = this;
-        var shareName = sessionStorage.getItem('shareName');
+        var shareName = resumeObj.share_name;
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -1894,7 +1874,7 @@ $(window).ready(function () {
             $(ele).css('background-position', '');
 
             console.log(ele);
-            
+
             if (i > 1) {
                 doc.addPage();
                 docWaterMark.addPage();
@@ -1905,13 +1885,17 @@ $(window).ready(function () {
             var w = parseFloat($(ele).css('width'));
             var h = parseFloat($(ele).css('height'));
 
+            // var canvas = document.createElement('canvas');
+            // canvas.width = w*3;
+            // canvas.height = h*3;
+            // canvas.style.width = w + 'px';
+            // canvas.style.height = h + 'px';
+            // var context = canvas.getContext('2d');
+            // context.scale(3, 3);
+
+            /* ele.css({'height': ''});
+            ele.css({'max-height': ''});*/
             ele.style.boxShadow = "none";
-            var image = new Image();
-            image.src = data;
-            doc.addImage(image, 'JPEG', -0.3, 0.5, 0, 0);
-            if (!!planInfo.subscribedUser && planInfo.planId !== 1) {
-                addWaterMarkImage2(ele)
-            }
 
             await domtoimage.toJpeg(ele, {
                 style: {
@@ -1927,12 +1911,12 @@ $(window).ready(function () {
                 // console.log(data)
                 doc.addImage(img, 'jpeg', 0, 0.5, 0, 0);
             });
-            
+
             // $(ele).css(pdfWaterMarkCss);
             $(ele).css("background", 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '") #fff no-repeat');
             $(ele).css("background-position", 'center');
             $(ele).css("background-size", '40%');
-            $(ele).append("<img src='../../assets/images/resume/watermarkworkruit.png' width='"+ w * 0.4 +"' height='" + w * 0.4+ "' class='watermark-css'>");
+            $(ele).append("<img src='../../assets/images/resume/watermarkworkruit.png' width='" + w * 0.4 + "' height='" + w * 0.4 + "' class='watermark-css'>");
             $(ele).find('.watermark-css').css({
                 'left': w * 0.3 + 'px',
                 'top': (h * 0.5 - w * 0.2) + 'px'
@@ -1953,6 +1937,9 @@ $(window).ready(function () {
 
                 docWaterMark.addImage(img, 'jpeg', 0, 0.5, 0, 0);
             });
+            // console.log("Raw", data);
+
+            $(ele).find('.watermark-css').remove();
 
             $(ele).find('.watermark-css').remove();
 
@@ -1963,50 +1950,56 @@ $(window).ready(function () {
         var form2 = new FormData();
         form2.append("type", "resume");
         form2.append("userId", userId);
-        form2.append('file', pdfOut, userId + '_resume.pdf');
-        axios({
-                method: 'post',
-                url: apiUrl + "/uploadFile",
-                data: form2,
-                config: {
-                    headers: {
-                        "token": sessionId,
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            })
-            .then(function (response) {
-                //handle success
-                // console.log(response);
-            })
-            .catch(function (response) {
-                //handle error
-                // console.log(response);
-            });
+        form2.append('file', pdfOut);
+        doUpload(apiUrl + "/uploadFile", form2).then(response => {
+            console.log(response);
+        });
+        // axios({
+        //         method: 'post',
+        //         url: apiUrl + "/uploadFile",
+        //         data: form2,
+        //         config: {
+        //             headers: {
+        //                 "token": sessionId,
+        //                 'Content-Type': 'multipart/form-data'
+        //             }
+        //         }
+        //     })
+        //     .then(function (response) {
+        //         //handle success
+        //         // console.log(response);
+        //     })
+        //     .catch(function (response) {
+        //         //handle error
+        //         // console.log(response);
+        //     });
         var pdfOutWaterMark = docWaterMark.output('blob');
         var formWatermark = new FormData();
         formWatermark.append("type", "watermark");
         formWatermark.append("userId", userId);
-        formWatermark.append('file', pdfOutWaterMark, userId + 'with_watermark_resume.pdf');
-        axios({
-                method: 'post',
-                url: apiUrl + "/uploadFile",
-                data: formWatermark,
-                config: {
-                    headers: {
-                        "token": sessionId,
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            })
-            .then(function (response) {
-                //handle success
-                // console.log(response);
-            })
-            .catch(function (response) {
-                //handle error
-                // console.log(response);
-            });
+        formWatermark.append('file', pdfOutWaterMark);
+        doUpload(apiUrl + "/uploadFile", formWatermark).then(response => {
+            console.log(response);
+        });
+        // axios({
+        //         method: 'post',
+        //         url: apiUrl + "/uploadFile",
+        //         data: formWatermark,
+        //         config: {
+        //             headers: {
+        //                 "token": sessionId,
+        //                 'Content-Type': 'multipart/form-data'
+        //             }
+        //         }
+        //     })
+        //     .then(function (response) {
+        //         //handle success
+        //         // console.log(response);
+        //     })
+        //     .catch(function (response) {
+        //         //handle error
+        //         // console.log(response);
+        //     });
         if (action === "download") {
             if (planInfo.planId === 1) {
                 docWaterMark.save(userId + '_resume.pdf');
@@ -2031,29 +2024,17 @@ $(window).ready(function () {
         form.append("userId", userId);
         form.append("type", "photo");
         form.append("file", logoImg);
-
-        var imageSettings = {
-            "async": true,
-            "crossDomain": true,
-            "url": apiUrl + "/uploadFile",
-            "method": "POST",
-            "headers": {
-                "token": sessionId,
-                "cache-control": "no-cache",
-            },
-            "processData": false,
-            "contentType": false,
-            "mimeType": "multipart/form-data",
-            "data": form
-        }
-        console.log("imageSettings", imageSettings);
-        $.ajax(imageSettings).done(function (responseData) {
-            var response = JSON.parse(responseData);
+        console.log(apiUrl + "/uploadFile", form);
+        doUpload(apiUrl + "/uploadFile", form).then(function (response) {
+            // var response = JSON.parse(responseData);
             //console.log(response.data.httpPath);
             console.log(response);
             if (response.status == 'success') {
                 // console.log(response.data.httpPath);
-                sessionStorage.setItem('imageStore', response.data.httpPath);
+                localStorage.setItem('imageStore', response.data.httpPath);
+                resumeObj.pic = response.data.httpPath;
+                localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(resumeObj), sessionId));
+                console.log(response.data.httpPath);
                 $('#profileMenu img').attr('src', response.data.httpPath);
                 $('#profilePicEdit').attr('src', response.data.httpPath);
                 $('#pimage-preview').attr('src', response.data.httpPath);
@@ -2310,12 +2291,11 @@ $(window).ready(function () {
         if (stackedHeight + academicHeight + academicMarginBottom < standardA4Height) {
             stackedHeight += academicHeight + academicMarginBottom;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#academic-section')));
-        }
-        else if(stackedHeight + academicHeight < standardA4Height) {
+        } else if (stackedHeight + academicHeight < standardA4Height) {
             stackedHeight = 0;
             resume.find('.col-9 .row').last().after(getOuterHTML($('#academic-section')));
         } else {
-            
+
             var domHtml = '';
             stackedHeight += parseFloat($('#academic-section h4').css('height'));
             var acaCount = $('#academic-section .academic-project').length;
@@ -2439,11 +2419,11 @@ $(window).ready(function () {
             resume.after(emptyDom + getOuterHTML($('#certifications-section')) + emptyDomClose);
             stackedHeight = 0;
         }
-        if (!planInfo.subscribedUser || planInfo.planId === 1) {
-            setTimeout(function () {
-                addWaterMarkImage2('#resume-body, .watermark')
-            }, 0)
-        }
+        // if (!planInfo.subscribedUser || planInfo.planId === 1) {
+        //     setTimeout(function () {
+        //         addWaterMarkImage('#resume-body, .watermark')
+        //     }, 0)
+        // }
     }
 
 
