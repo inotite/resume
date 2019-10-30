@@ -491,7 +491,7 @@ function setInfoMessage(message) {
 		});
 		return;
 	}
-	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today")
+	console.log(!message.indexOf("2 days"), !message.indexOf("1 day"), !message.indexOf("today"), "today");
 	if (!message.indexOf("2 days") || !message.indexOf("1 day") || !message.indexOf("today") || !message.indexOf('Please subscribe')) {
 		$('#info_message').addClass('alert-danger');
 	} else {
