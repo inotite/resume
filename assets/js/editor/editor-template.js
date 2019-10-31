@@ -403,7 +403,7 @@ $(window).ready(function () {
 
         $('#resume-body').show();
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
-            addWaterMarkImage('page'.waterMarkCss)
+            addWaterMarkImage('page', waterMarkCss)
         }
     }
 

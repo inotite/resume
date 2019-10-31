@@ -209,6 +209,7 @@
     var userInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))),
         localStorage.getItem('sessionId')));
     if (userInfo) {
+        console.log("userInfo.planDetails.subscribedUser", userInfo.planDetails, userInfo.planDetails.subscribedUser);
         if (userInfo.planDetails.subscribedUser) {
             $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
                 location.origin + '/app/dashboard/share.html');

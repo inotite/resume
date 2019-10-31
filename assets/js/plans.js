@@ -143,7 +143,21 @@ function freePlanAction() {
     }
     $('#price-action-modal').modal('show');
     if ($('.modal-backdrop.fade.in').length > 1) {
-        $('body .modal-backdrop.fade.in:nth-of-type(1)').remove();
-
+        $('body .modal-backdrop.fade.in:eq(1)').css('opacity', '0');
     }
 }
+$(document).click(function (e) {
+    setTimeout(function () {
+        if ($('#pricing-modal').hasClass('in')) {
+            if (!$('body').hasClass('modal-open')) {
+                $("#price-action-modal").hasClass('in');
+                if (!$("#price-action-modal").hasClass('in')) {
+                    $("body").addClass('modal-open')
+                }
+                console.log(
+                    $("#price-action-modal").hasClass('in')
+                );
+            }
+        }
+    }, 500);
+});

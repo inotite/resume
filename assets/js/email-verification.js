@@ -13,7 +13,7 @@ doGetWithAuthKey(baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser 
         if (sessionId) {
             window.location.href = location.origin + '/app/dashboard/home.html';
         } else {
-            window.location.href = location.origin + '/app/auth/index.html';
+            window.location.href = location.origin + '/app/auth/login.html';
         }
     } else {
         $('.failed-email').removeClass('d-none');
