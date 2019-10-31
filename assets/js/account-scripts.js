@@ -56,8 +56,8 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 					$('input[name="email"]').val(localUserData.email);
 
 					//$('input[name="shareName"]').val(localUserData.share_name);
-					$('input[name="shareName"]').val(localStorage.getItem('shareName'));
-					$('#copyText').val(self.options.baseUrl + '/@' + localStorage.getItem('shareName'));
+					$('input[name="shareName"]').val(localUserData.share_name);
+					$('#copyText').val(self.options.baseUrl + '/#' + localUserData.share_name);
 
 					var pic = localStorage.getItem('imageStore');
 					// var picpath = pic.search('1631033876795164.jpg');
@@ -147,17 +147,35 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 					});
 
 					$('#copyLinkBtn').on('click', function () {
+						// console.log("$('#shareName').val()", $('#shareName').val());
 						if ($('#shareName').val()) {
 							if (localUserData.edit_name) {
-								$('#copyText2').val(shareSourceUrl + localUserData.share_name);
+								$('#copyText2').attr('value', shareSourceUrl + localUserData.share_name);
 								var copyText = document.getElementById("copyText2");
+								// console.log('copyText', copyText, shareSourceUrl + localUserData.share_name);
 								copyText.select();
+								// console.log(copyText.select());
 								document.execCommand("copy");
 							} else {
 								console.log($('#shareDomain').val() + $('#shareName').val());
 								$('#copyText').val($('#shareDomain').val() + $('#shareName').val());
 								var copyText = document.getElementById("copyText");
 								copyText.select();
+								// console.log('copyText.select()', copyText.select());
+								document.execCommand("copy");
+							}
+							var successMessage = 'Your link is copied successfully';
+							$('#newSuccessMessageID .message-text').html(successMessage)
+							$('#newSuccessMessageID').html(successMessage)
+								.fadeIn()
+								.delay(5000)
+								.fadeOut();
+						} else if (!$('#shareName').val() && localUserData.edit_name) {
+							if (localUserData.edit_name) {
+								$('#copyText2').val(shareSourceUrl + localUserData.share_name);
+								var copyText = document.getElementById("copyText2");
+								copyText.select();
+								// console.log(copyText.select());
 								document.execCommand("copy");
 							}
 							var successMessage = 'Your link is copied successfully';

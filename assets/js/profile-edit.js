@@ -8,7 +8,7 @@ $('#updateProfile').on('click', function () {
   var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
   var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
   // var clgName = 
-  var email = userData.email;
+  var email = localUserData.email;
 
   $('.invalid-feedback').remove();
 
@@ -65,8 +65,8 @@ $('#updateProfile').on('click', function () {
   }
 });
 /* Update Password functionality */
-$('#updatePassBtn').on('click', function () {
-
+$('#resetPasswordForm').submit(function (e) {
+  e.preventDefault();
   let oldPassword = $('input[name="oldPassword"]').val();
   let newPassword = $('input[name="newPassword"]').val();
   let reenterNewPassword = $('input[name="reenterNewPassword"]').val();
@@ -99,9 +99,9 @@ $('#updateProfile2').on('click', function () {
   // var clgName = 
   console.log(collegeName, collegeLogo);
   var profileData = {
-    "firstname": userData.firstname,
-    "lastname": userData.lastname,
-    "email": userData.email,
+    "firstname": localUserData.firstname,
+    "lastname": localUserData.lastname,
+    "email": localUserData.email,
     "collegeName": collegeName,
     "collegeLogo": collegeLogo
   }

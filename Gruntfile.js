@@ -5,9 +5,14 @@ module.exports = function (grunt) {
             main: {
                 files: [{
                     expand: true,
-                    cwd: 'assets',
-                    src: ['**', 'images/**/',],
-                    dest: 'dist/assets/images/', // Destination folder
+                    cwd: 'assets/images/',
+                    src: ['**', '**', ],
+                    dest: 'dist/assets/images', // Destination folder
+                }, {
+                    expand: true,
+                    cwd: 'assets/vendors/js',
+                    src: ['**', '**', ],
+                    dest: 'dist/assets/vendors/js', // Destination folder
                 }],
             }
         },

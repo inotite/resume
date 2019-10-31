@@ -3501,9 +3501,9 @@ button span {
 }
 
 #pricing-modal .modal-dialog {
-    margin: 10% auto 0px auto;
-    max-width: 89%;
-    height: 60%;
+    margin: 3% auto 0px auto;
+    max-width: 88%;
+    height: 0%;
 }
 
 #pricing-modal .h1 {
