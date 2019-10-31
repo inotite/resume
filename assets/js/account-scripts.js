@@ -334,7 +334,9 @@ function getUserProfile() {
 			$('#shareDomain2').val(shareSourceUrl + userProfileData.share_name);
 			$('.edit_name_link').removeClass('d-none');
 		}
-		localStorage.setItem(encrypt('localUserData', response.sessionId), encrypt(JSON.stringify(response.data), response.sessionId));
+		// console.log(encrypt('userData', localStorage.getItem('sessionId')));
+		// localStorage.removeItem(encrypt('userData', localStorage.getItem('sessionId')));
+		localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(response.data), sessionId));
 		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);
 		$('#load-header').load('../includes/user-header.html');
@@ -372,7 +374,18 @@ function setInfoMessage(message, emailVerified) {
 		$('#mail_message').addClass('alert-danger');
 		$('#mail_message .close').remove();
 	}
-
+	if (localUserData) {
+		console.log("userInfo.planDetails.subscribedUser", localUserData.planDetails, localUserData.planDetails.subscribedUser);
+		if (localUserData.planDetails.subscribedUser) {
+			$('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
+				location.origin + '/app/dashboard/share.html');
+		} else {
+			$('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
+		}
+		if (localUserData.planDetails.emailVerified) {
+			$('#mail_message').remove();
+		}
+	}
 }
 window.addEventListener("message", function (event) {
 	console.log(":: PARENT MESSAGE", event.data)

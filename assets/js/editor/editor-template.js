@@ -1040,7 +1040,7 @@ $(window).ready(function () {
             bindUserDataForSave();
             saveUserProfile(postObj, "save");
         }
-        $('#downloadResume').addClass('inactive-link');
+        // $('#downloadResume').addClass('inactive-link');
     });
 
     $('#downloadResume').on('click', async function () {
