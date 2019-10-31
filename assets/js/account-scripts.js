@@ -1,4 +1,4 @@
-var shareSourceUrl = "https://www.workruit.com/#";
+var shareSourceUrl = "https://dev.workruit.com/#";
 var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
 // console.log("localUserData",localUserData)
 // plug it in, plug it in

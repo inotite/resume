@@ -1028,7 +1028,7 @@ $(window).ready(function () {
         "themeOptions": null
     }
 
-    $('#saveResume').on('click', function () {
+    $('#saveResume').on('click', async function () {
         if (planInfo.subscribedUser && planInfo.validUser) {
             bindUserDataForSave();
             saveUserProfile(postObj, "save");
@@ -1040,6 +1040,9 @@ $(window).ready(function () {
             bindUserDataForSave();
             saveUserProfile(postObj, "save");
         }
+        showMultiplePages();
+        await savePdf('save');
+        hideMultiplePages();
         // $('#downloadResume').addClass('inactive-link');
     });
 
@@ -1386,7 +1389,7 @@ $(window).ready(function () {
         if (resumeObj.jobFunctions && resumeObj.jobFunctions.length) {
             $('input[data-content="jobfunctions"]').val(resumeObj.jobFunctions[0].jobFunctionName);
             $('input[data-content="jobfunctions"]').attr('data-item-id', resumeObj.jobFunctions[0]
-                .categoryId);
+                .jobFunctionId);
         }
         $('[data-content="coverLetter"]').text(resumeObj.coverLetter);
         $('[data-content="userJobTitle"]').text(resumeObj.userJobTitle);
@@ -1772,6 +1775,7 @@ $(window).ready(function () {
                 $('#newSuccessMessageID .message-text').html(response.msg);
                 $('.loading-container').fadeOut();
                 if (action === 'save') {
+                    savePdf('save');
                     $('#newSuccessMessageID').fadeIn().delay(2000)
                         .fadeOut('slow', function () {
                             $('#saveResume').removeAttr('pointer-events');
@@ -1786,9 +1790,6 @@ $(window).ready(function () {
                 var logoImg = $('input[data-content="picture"]').get(0).files[0];
                 if (logoImg) {
                     saveUserPic();
-                }
-                if (action === 'save') {
-                    savePdf('save');
                 }
                 getShareNameFile();
 
@@ -1939,56 +1940,18 @@ $(window).ready(function () {
         var form2 = new FormData();
         form2.append("type", "resume");
         form2.append("userId", userId);
-        form2.append('file', pdfOut);
+        form2.append('file', pdfOut, '_resume.pdf');
         doUpload(apiUrl + "/uploadFile", form2).then(response => {
             console.log(response);
         });
-        // axios({
-        //         method: 'post',
-        //         url: apiUrl + "/uploadFile",
-        //         data: form2,
-        //         config: {
-        //             headers: {
-        //                 "token": sessionId,
-        //                 'Content-Type': 'multipart/form-data'
-        //             }
-        //         }
-        //     })
-        //     .then(function (response) {
-        //         //handle success
-        //         // console.log(response);
-        //     })
-        //     .catch(function (response) {
-        //         //handle error
-        //         // console.log(response);
-        //     });
         var pdfOutWaterMark = docWaterMark.output('blob');
         var formWatermark = new FormData();
         formWatermark.append("type", "watermark");
         formWatermark.append("userId", userId);
-        formWatermark.append('file', pdfOutWaterMark);
+        formWatermark.append('file', pdfOutWaterMark, '_resume.pdf');
         doUpload(apiUrl + "/uploadFile", formWatermark).then(response => {
             console.log(response);
         });
-        // axios({
-        //         method: 'post',
-        //         url: apiUrl + "/uploadFile",
-        //         data: formWatermark,
-        //         config: {
-        //             headers: {
-        //                 "token": sessionId,
-        //                 'Content-Type': 'multipart/form-data'
-        //             }
-        //         }
-        //     })
-        //     .then(function (response) {
-        //         //handle success
-        //         // console.log(response);
-        //     })
-        //     .catch(function (response) {
-        //         //handle error
-        //         // console.log(response);
-        //     });
         if (action === "download") {
             if (planInfo.planId === 1) {
                 docWaterMark.save(userId + '_resume.pdf');
@@ -2201,7 +2164,9 @@ $(window).ready(function () {
         // Clone values from original one
 
         $($('[data-content="jobfunctions"]')[1]).val($($('[data-content="jobfunctions"]')[0]).val());
-
+        console.log(
+            $($('[data-content="jobfunctions"]')[1]).val($($('[data-content="jobfunctions"]')[0]).val())
+        );
         var originExpCount = $('#resume-body #experience-section .professional-experience').length;
         for (var i = 1; i <= originExpCount; ++i) {
             var origin = $($('[data-content="exp_startDate"]')[i - 1]);
