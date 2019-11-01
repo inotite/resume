@@ -1033,7 +1033,7 @@ $(window).ready(function () {
         "themeOptions": null
     }
 
-    $('#saveResume').on('click', function () {
+    $('#saveResume').on('click', async function () {
         if (planInfo.subscribedUser && planInfo.validUser) {
             $('#downloadResume').addClass('inactive-link');
             bindUserDataForSave();
@@ -1458,6 +1458,7 @@ $(window).ready(function () {
                 var $klon = $div.clone().prop('id', 'proExp_' + num);
                 $div.after($klon);
             }
+            $('.professional-experience .remove_exp').removeClass('d-none');
         }
         $(resumeObj.userExperienceResSet).each(function (i, v) {
             var id = 'proExp_' + (i + 1);
@@ -1491,6 +1492,7 @@ $(window).ready(function () {
                 var $klon = $div.clone().prop('id', 'education_' + num);
                 $div.after($klon);
             }
+            $('.education-details .remove_edu').removeClass('d-none');
         }
         $(resumeObj.userEducationResSet).each(function (i, v) {
             var id = 'education_' + (i + 1);
@@ -1524,6 +1526,7 @@ $(window).ready(function () {
                 var $klon = $div.clone().prop('id', 'academic_projects_' + num);
                 $div.after($klon);
             }
+            $('.academic-project .remove_acad').removeClass('d-none');
         }
         $(resumeObj.userAcademicResSet).each(function (i, v) {
             const ap = resumeObj.userAcademicResSet[i];
@@ -1625,6 +1628,10 @@ $(window).ready(function () {
 
         if (resumeObj.userLngSet.length <= 1) {
             $('.remove_lang').addClass('d-none');
+        }
+
+        if (resumeObj.userLngSet.length >= 3) {
+            $('.add_lang').addClass('d-none');
         }
 
         if (resumeObj.userLngSet.length == 0) {
@@ -2373,11 +2380,20 @@ $(window).ready(function () {
                     </div>\
                 </div>';
 
-            resume.find('.col-9 .row').last().after(domHtml + emptyDomClose);
+            if (it > 0) {
+                resume.find('.col-9 .row').last().after(domHtml + emptyDomClose);
 
-            domHtml = '<div class="row flex-column mb-1 skill-row">\
-                            <div class="skills-section">\
-                                <ul class="list-unstyled w-100 skills-list mb-0">';
+                domHtml = '<div class="row flex-column mb-1 skill-row">\
+                                <div class="skills-section">\
+                                    <ul class="list-unstyled w-100 skills-list mb-0">';
+            } else {
+                resume.find('.col-9 row').last().after(emptyDomClose);
+
+                domHtml = '<div class="row flex-column  mb-1 skill-row" id="skills-section">\
+                                <h4 class="section_title text-uppercase font-10pt px-2">Skills</h4>\
+                                <div class="skills-section">\
+                                    <ul class="list-unstyled w-100 skills-list mb-0">';
+            }
             stackedHeight = skillsMarginBottom;
 
             for (; it < skillCount; it += 2) {
