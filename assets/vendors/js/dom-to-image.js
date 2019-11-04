@@ -62,6 +62,7 @@
             .then(inlineImages)
             .then(applyOptions)
             .then(function (clone) {
+                console.log(clone);
                 return makeSvgDataUri(clone,
                     options.width || util.width(node),
                     options.height || util.height(node)
@@ -236,7 +237,7 @@
                     if (source.cssText) target.cssText = source.cssText;
                     else copyProperties(source, target);
                     
-                    if (original.getAttribute("contenteditable")) {
+                    if (original.getAttribute("contenteditable") || original.getAttribute("data-picker")) {
                         var styles = source.cssText.split("; ");
                         var length = styles.length;
                         for (var i = 0 ; i < length ; ++i) {
@@ -282,6 +283,19 @@
                     function formatPseudoElementStyle(className, element, style) {
                         var selector = '.' + className + ':' + element;
                         var cssText = style.cssText ? formatCssText(style) : formatCssProperties(style);
+                        if (original.getAttribute("contenteditable")) {
+                            var styles = cssText.split("; ");
+                            var length = styles.length;
+                            for (var i = 0 ; i < length ; ++i) {
+                                var ar = styles[i].split(":");
+                                if (ar[0] == "width") {
+                                    var newWidth = parseFloat(ar[1]) + 0.5;
+                                    // console.log(ar[1], newWidth);
+                                    cssText = cssText.replace(styles[i], "width: " + newWidth + "px");
+                                    break;
+                                }
+                            }
+                        }
                         return document.createTextNode(selector + '{' + cssText + '}');
 
                         function formatCssText(style) {

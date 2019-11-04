@@ -434,7 +434,6 @@ $(window).ready(function () {
     function ratingSkillCircle() {
 
         console.log("I am called!");
-
         var index = -1;
         // 1.  Capture the hover event over the div (circle)
 
@@ -454,11 +453,11 @@ $(window).ready(function () {
 
                 var itr = $(this).parent().children().first();
 
-                for (var i = 0; i < index; ++i) {
+                for ( var i = 0 ; i < index ; ++i ) {
                     itr.addClass("rating-chosen");
                     itr = itr.next();
                 }
-
+                
             }
         );
 
@@ -494,11 +493,11 @@ $(window).ready(function () {
 
                 var itr = $(this).parent().children().first();
 
-                for (var i = 0; i < index; ++i) {
+                for ( var i = 0 ; i < index ; ++i ) {
                     itr.addClass("rating-chosen");
                     itr = itr.next();
                 }
-
+                
             }
         );
 
@@ -575,8 +574,8 @@ $(window).ready(function () {
 
             $("#proExp_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function () {
-                $('#proExp_' + num + ' .month-picker').on('change', function () {
+            setTimeout(function() {
+                $('#proExp_' + num + ' .month-picker').on('change', function() {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -698,8 +697,8 @@ $(window).ready(function () {
 
             $("#education_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function () {
-                $('#education_' + num + ' .month-picker').on('change', function () {
+            setTimeout(function() {
+                $('#education_' + num + ' .month-picker').on('change', function() {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -806,8 +805,8 @@ $(window).ready(function () {
 
             $("#academic_projects_" + num + ' [contenteditable="true"]').on('paste', preventStyleCopyPate);
 
-            setTimeout(function () {
-                $('#academic_projects_' + num + ' .month-picker').on('change', function () {
+            setTimeout(function() {
+                $('#academic_projects_' + num + ' .month-picker').on('change', function() {
                     var inputWidth = $(this).textWidth();
                     $(this).css({
                         width: inputWidth
@@ -1039,17 +1038,17 @@ $(window).ready(function () {
 
     $('#downloadResume').on('click', async function () {
         // if (planInfo.subscribedUser) {
-        if (!$('.editorNav').hasClass('d-none')) {
-            $('#downloadResume').addClass('inactive-link');
-            bindUserDataForSave();
-            saveUserProfile(postObj, "download");
-            showMultiplePages();
-            await savePdf();
-            hideMultiplePages();
-            $('#downloadResume').removeClass('inactive-link');
-        } else {
-            await savePdf();
-        }
+            if (!$('.editorNav').hasClass('d-none')) {
+                $('#downloadResume').addClass('inactive-link');
+                bindUserDataForSave();
+                saveUserProfile(postObj, "download");
+                showMultiplePages();
+                await savePdf();
+                hideMultiplePages();
+                $('#downloadResume').removeClass('inactive-link');
+            } else {
+                await savePdf();
+            }
         // } else {
         //     $('#downloadResume a').attr('href', location.origin + '/pricing.html');
         // }
@@ -1339,7 +1338,7 @@ $(window).ready(function () {
             // xhr.withCredentials = true;
             // xhr.responseType = 'blob';
             // xhr.send();
-
+            
             // function makeImage(uri) {
             //     return new Promise(function (resolve, reject) {
             //         var image = new Image();
@@ -1371,7 +1370,7 @@ $(window).ready(function () {
             $('#user_pic').attr('src', resumeObj.pic);
         }
         // console.log(resumeObj.pic);
-
+        
         if (!resumeObj.collegeLogo)
             resumeObj.collegeLogo = 'img/university_logo.svg';
         $('.clg_picture img').attr('src', resumeObj.collegeLogo)
@@ -1910,7 +1909,6 @@ $(window).ready(function () {
             $(ele).css('background-position', '');
 
             console.log(ele);
-
             if (i > 1) {
                 doc.addPage();
                 docWaterMark.addPage();
@@ -1936,7 +1934,6 @@ $(window).ready(function () {
                 img.src = dataUrl;
                 doc.addImage(img, 'jpeg', 0, 0.5, 0, 0);
             });
-
             // $(ele).css(pdfWaterMarkCss);
             $(ele).css("background", 'url("' + window.location.origin + '/assets/images/resume/watermarkworkruit.png' + '") #fff no-repeat');
             $(ele).css("background-position", 'center');
@@ -2483,7 +2480,6 @@ $(window).ready(function () {
         // Skills Check
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // resume = $('page').last();
-
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Check achievements
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
