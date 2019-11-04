@@ -114,6 +114,10 @@ body {
     padding-bottom: 0.35rem;
 }
 
+.navbar-light .navbar-nav .nav-link.font a.selected-font {
+    display: block;
+}
+
 .dropdown-toggle::after {
     display: none;
 }

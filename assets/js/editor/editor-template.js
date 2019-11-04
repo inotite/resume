@@ -200,6 +200,7 @@ $(window).ready(function () {
     $('.sub-header').css('font-family', selectedTitleFont);
     $('.title-headers').css('font-family', selectedTitleFont);
     // Declare some global variables for later use:
+    console.log(fonts);
     for (let index = 0; index < fonts.length; index++) {
         const fontItem = fonts[index];
         const fontLink = '<a class="dropdown-item cursor-pointer font-item" data-font=' + fontItem
