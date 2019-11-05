@@ -99,8 +99,8 @@ $('#updateProfile2').on('click', function () {
   // var clgName = 
   console.log(collegeName, collegeLogo);
   var profileData = {
-    "firstname": localUserData.firstname,
-    "lastname": localUserData.lastname,
+    "firstname": $.trim($('input[name="firstname"]').val()),
+    "lastname": $.trim($('input[name="lastname"]').val()),
     "email": localUserData.email,
     "collegeName": collegeName,
     "collegeLogo": collegeLogo
