@@ -388,7 +388,7 @@ $(window).ready(function () {
 
     var showMultiplePages = function () {
         renderPages();
-
+        $('.loading-container').show();
         $('#resume-body').hide();
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
             console.log("Watermark");
@@ -410,6 +410,7 @@ $(window).ready(function () {
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
             addWaterMarkImage('page', waterMarkCss)
         }
+        $('.loading-container').hide();
     }
 
     $('#previewResume').on('click', function () {
@@ -1791,7 +1792,7 @@ $(window).ready(function () {
         doPostWithEncrypt(apiUrl + "/user/" + userId + "/updateProfileResume", applicantData).then(response => {
             if (response.status == 'success') {
                 $('#newSuccessMessageID .message-text').html(response.msg);
-                $('.loading-container').fadeOut();
+                // $('.loading-container').fadeOut();
                 if (action === 'save') {
                     savePdf('save');
                     $('#newSuccessMessageID').fadeIn().delay(2000)
@@ -1973,7 +1974,6 @@ $(window).ready(function () {
                 doc.save(resumeObj.firstname + '_resume.pdf');
             }
         }
-        $('.loading-container').delay(2000).fadeOut();
         // }
     }
 
@@ -2441,11 +2441,11 @@ $(window).ready(function () {
     }, 2000);
 
     ratingCircle();
-    $('[contenteditable="true"]').bind('dragover drop', function(event){
+    $('[contenteditable="true"]').bind('dragover drop', function (event) {
         event.preventDefault();
         return false;
     });
-    $('input').bind('dragover drop', function(event){
+    $('input').bind('dragover drop', function (event) {
         event.preventDefault();
         return false;
     });
