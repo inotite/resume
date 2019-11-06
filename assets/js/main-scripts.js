@@ -153,9 +153,9 @@ if (localStorage.getItem('plans')) {
 					validate = false;
 					$('<div class="invalid-feedback">First Name is required.</div>').insertAfter('input[name="firstname"]');
 				} else {
-					if ($.trim(firstname).length < 3) {
+					if ($.trim(firstname).length < 1) {
 						validate = false;
-						$('<div class="invalid-feedback">Minimum 3 characters are required.</div>').insertAfter('input[name="firstname"]');
+						$('<div class="invalid-feedback">Minimum 1 character is required.</div>').insertAfter('input[name="firstname"]');
 					}
 				}
 
@@ -163,9 +163,9 @@ if (localStorage.getItem('plans')) {
 					validate = false;
 					$('<div class="invalid-feedback">Last Name is required.</div>').insertAfter('input[name="lastname"]');
 				} else {
-					if ($.trim(lastname).length < 3) {
+					if ($.trim(lastname).length < 1) {
 						validate = false;
-						$('<div class="invalid-feedback">Minimum 3 characters are required.</div>').insertAfter('input[name="lastname"]');
+						$('<div class="invalid-feedback">Minimum 1 character is required.</div>').insertAfter('input[name="lastname"]');
 					}
 				}
 				if ($.trim(email).length <= 0) {

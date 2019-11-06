@@ -1,10 +1,10 @@
 /* stageapi api's */
-const baseUrl = "https://stageapi.workruit.com";
+const baseUrl = "https://devapi.workruit.com";
 const appUrl = "";
-const baseApiUrl = "https://stageapi.workruit.com/api/";
-const apiAdminUrl = "https://stageapi.workruit.com/admin";
-const apiUrl = "https://stageapi.workruit.com/api";
-const baseResumeApiUrl = "https://stageapi.workruit.com/resume/";
+const baseApiUrl = "https://devapi.workruit.com/api/";
+const apiAdminUrl = "https://devapi.workruit.com/admin";
+const apiUrl = "https://devapi.workruit.com/api";
+const baseResumeApiUrl = "https://devapi.workruit.com/resume/";
 /* dev api's
 const baseUrl = "https://devapi.workruit.com";
 const appUrl = "";
@@ -12,7 +12,7 @@ const baseApiUrl = "https://devapi.workruit.com/api/";
 const apiAdminUrl = "https://devapi.workruit.com/admin";
 const apiUrl = "https://devapi.workruit.com/api";
 const baseResumeApiUrl = "https://devapi.workruit.com/resume/"; */
-document.addEventListener('contextmenu', event => event.preventDefault());
+// document.addEventListener('contextmenu', event => event.preventDefault());
 $(document).keydown(function(e){
     if(e.which === 123){
        return false;
