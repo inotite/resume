@@ -1,4 +1,4 @@
-const userInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+const userInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
 if (userInfo) {
     if (userInfo.planDetails.subscribedUser) {
         $('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',

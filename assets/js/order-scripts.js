@@ -2,7 +2,7 @@ $(function () {
     $('#load-header').load('../includes/user-header.html');
     const userPlanStatus = JSON.parse(localStorage.getItem('userPlanStatus'));
     $('.loading-container').delay(1000).fadeOut();
-    var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+    var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
     var planDetails = localUserData.planDetails;
     if (localUserData) {
         if (!planDetails.emailVerified) {

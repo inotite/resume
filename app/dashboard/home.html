@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workruit - My Account</title>
     <script>
-        if (!localStorage.getItem('sessionId')) {
+        if (!localStorage.getItem(btoa('sessionId_' + window.location.origin))) {
             window.location.href = window.location.origin + "/index.html";
         }
     </script>
@@ -108,9 +108,9 @@
             $('.info_message .close').on('click', function () {
                 $('#info_message').css('display', 'none');
                 userInfo.planDetails.display = false;
-                localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(
+                localStorage.setItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin))), encrypt(
                     JSON.stringify(
-                        userInfo), localStorage.getItem('sessionId')));
+                        userInfo), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
                 localStorage.setItem('userData', JSON.stringify(userInfo))
             });
 

@@ -1,6 +1,6 @@
 var shareSourceUrl = "https://dev.workruit.com/#";
-var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
-// console.log("localUserData",localUserData)
+var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
+console.log("localUserData", localUserData);
 // plug it in, plug it in
 (function ($) {
 
@@ -38,11 +38,12 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 				// 		}
 				// 	}
 				// });
-				let sessionId = localStorage.getItem('sessionId');
+				let sessionId = atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)));
 				if (!sessionId) {
 					//console.log("sessionId ::::::"+sessionId);
 					window.location.href = "../index.html";
 				} else {
+					var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 					getUserProfile();
 					var userId = localUserData.userId;
 					//console.log(localUserData);
@@ -59,7 +60,7 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 					$('input[name="shareName"]').val(localUserData.share_name);
 					$('#copyText').val(self.options.baseUrl + '/#' + localUserData.share_name);
 
-					var pic = localStorage.getItem('imageStore');
+					var pic = atob(localStorage.getItem(btoa('imageStore')));
 					// var picpath = pic.search('1631033876795164.jpg');
 
 					if (!pic) {
@@ -67,7 +68,7 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 						$('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
 
 					} else {
-						console.log("pic>>>>>>>>>>>>>>>>>", pic);
+						console.log("picpicpicpicpic", pic)
 						$('#profileMenu img').attr('src', pic);
 						$('#profilePicEdit').attr('src', '');
 						$('#profilePicEdit').attr('src', pic);
@@ -267,12 +268,13 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 
 			},
 			saveUserPic: function () {
+				var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 				var self = this;
 				var form = new FormData();
 				var logoImg = $('input[name="pic"]').get(0).files[0];
 
 				var userId = localUserData.userId;
-
+				console.log('saveUserPic', localUserData)
 				form.append("userId", userId);
 				form.append("type", "photo");
 				form.append("file", logoImg);
@@ -282,7 +284,7 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 					//console.log(response.data.httpPath);
 					if (response.status == 'success') {
 						localUserData.pic = response.data.httpPath;
-						localStorage.setItem('imageStore', response.data.httpPath);
+						localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
 						getUserProfile();
 						$('#profileMenu img').attr('src', response.data.httpPath);
 						localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(localUserData), sessionId));
@@ -334,8 +336,8 @@ function getUserProfile() {
 			$('#shareDomain2').val(shareSourceUrl + userProfileData.share_name);
 			$('.edit_name_link').removeClass('d-none');
 		}
-		// console.log(encrypt('userData', localStorage.getItem('sessionId')));
-		// localStorage.removeItem(encrypt('userData', localStorage.getItem('sessionId')));
+		// console.log(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
+		// localStorage.removeItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 		localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(response.data), sessionId));
 		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);

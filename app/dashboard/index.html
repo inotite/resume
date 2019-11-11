@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workruit - My Account</title>
     <script>
-        let sessionId = localStorage.getItem('sessionId');
+        let sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
         if (!sessionId) {
             window.location.href = window.location.origin + "/index.html";
         }

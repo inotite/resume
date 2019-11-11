@@ -2,7 +2,18 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#ffffff">
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <meta http-equiv="EXPIRES" content="0">
     <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Workruit - Instant Resume</title>
     <meta name="description"
@@ -13,7 +24,7 @@
     <meta data-content="theme-color" content="#ffffff">
 
     <script>
-        if (!localStorage.getItem('sessionId')) {
+        if (!localStorage.getItem(btoa('sessionId_' + window.location.origin))) {
             window.location.href = "../../../index.html";
         }
     </script>
@@ -81,8 +92,8 @@
                             </div>
                         </li>
                         <li class="nav-item theme-picker page-font">
-                            <span class="nav-link font dropdown-toggle cursor-pointer" role="button" data-toggle="dropdown" data-font=""
-                                aria-haspopup="true" aria-expanded="false">
+                            <span class="nav-link font dropdown-toggle cursor-pointer" role="button"
+                                data-toggle="dropdown" data-font="" aria-haspopup="true" aria-expanded="false">
                                 <p class="nav-hint">Page font</p>
                                 <a class="dropdown-toggle selected-font" href="#" id="navbarDropdownMenuLink"
                                     role="button" data-toggle="dropdown" data-font="" aria-haspopup="true"
@@ -156,8 +167,8 @@
                                 <div>
                                     <label for="user-picture" class="res_picture">
                                         <img alt="..." class="rounded-circle" id="user_pic" />
-                                        <input type="file" data-content="picture"
-                                            accept="image/x-png,image/gif,image/jpeg" id="user-picture" class="d-none">
+                                        <input type="file" data-content="picture" accept="image/x-png,image/jpeg"
+                                            id="user-picture" class="d-none">
                                     </label>
                                 </div>
                                 <div class="professional_info">

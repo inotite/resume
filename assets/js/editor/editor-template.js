@@ -1,6 +1,6 @@
-const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))).userId;
+const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))).userId;
 const userStatus = localStorage.getItem('isPremiumUser');
-let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
 const exp_total_count = 10;
 const edu_total_count = 10;
@@ -1080,7 +1080,7 @@ $(window).ready(function () {
     function bindUserDataForSave() {
         const jobfunctions = $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
             $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id'))] : []
-        postObj.pic = localStorage.getItem('imageStore');
+        postObj.pic = atob(localStorage.getItem(btoa('imageStore')));
         postObj.firstname = $('#resume-body [data-content="firstname"]').text();
         postObj.lastname = $('#resume-body [data-content="lastname"]').text();
         postObj.jobfunctions = jobfunctions;
@@ -1800,10 +1800,10 @@ $(window).ready(function () {
                             $('#saveResume').removeAttr('pointer-events');
                         });
                 }
-                localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(JSON.stringify(response.data), localStorage.getItem('sessionId')));
+                localStorage.setItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin))), encrypt(JSON.stringify(response.data), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
                 // localStorage.setItem('userData', JSON.stringify(response.data));
                 // console.log("Ajax response");
-                // console.log(response.data);
+                console.log("response.data", response.data);
 
                 // console.log("Settings Done");
                 var logoImg = $('input[data-content="picture"]').get(0).files[0];
@@ -1996,7 +1996,7 @@ $(window).ready(function () {
             console.log(response);
             if (response.status == 'success') {
                 // console.log(response.data.httpPath);
-                localStorage.setItem('imageStore', response.data.httpPath);
+                localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
                 resumeObj.pic = response.data.httpPath;
                 localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(resumeObj), sessionId));
                 console.log(response.data.httpPath);

@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workruit - My Account</title>
     <script>
-        if (!localStorage.getItem('sessionId')) {
+        if (!localStorage.getItem(btoa('sessionId_' + window.location.origin))) {
             window.location.href = window.location.origin + "/index.html";
         }
     </script>
@@ -52,7 +52,7 @@
                                 data-item="notifications">Notifications</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link active tab-item" href="./history.html" data-item="notifications">Order
+                            <a class="nav-link active tab-item" href="./o-history.html" data-item="notifications">Order
                                 History</a>
                         </li>
                     </ul>

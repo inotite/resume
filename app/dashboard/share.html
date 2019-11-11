@@ -15,7 +15,7 @@
   <title>Workruit - My Account</title>
 
   <script>
-    if (!localStorage.getItem('sessionId')) {
+    if (!localStorage.getItem(btoa('sessionId_' + window.location.origin))) {
       window.location.href = window.location.origin + "/index.html";
     }
   </script>
@@ -157,7 +157,7 @@
       $('.account-page').paraCount();
       $("#shareDomain").attr('value', sourceUrl)
     });
-    var userShareInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+    var userShareInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
     if (userShareInfo.edit_name) {
       $('.edit_name').addClass('d-none');
       $('#shareDomain2').val(sourceUrl + userShareInfo.share_name);

@@ -206,8 +206,8 @@
 <script type="text/javascript" src="../../assets/js/app.services.js"></script>
 
 <script>
-    var userInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))),
-        localStorage.getItem('sessionId')));
+    var userInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
+    console.log("userInfo>>>>>>>>>>>>>>>", userInfo)
     if (userInfo) {
         console.log("userInfo.planDetails.subscribedUser", userInfo.planDetails, userInfo.planDetails.subscribedUser);
         if (userInfo.planDetails.subscribedUser) {
@@ -219,47 +219,50 @@
         if (userInfo.planDetails.emailVerified) {
             $('#mail_message').remove();
         }
-    }
-    if (location.pathname == "/app/order/cart.html") {
-        var priceCalculationObj = {
-            "planInfo": JSON.parse(atob(window.location.search.split('?')[1])),
-            "promoId": '',
-            "user_planId": ""
+        if (location.pathname == "/app/order/cart.html") {
+            var priceCalculationObj = {
+                "planInfo": JSON.parse(atob(window.location.search.split('?')[1])),
+                "promoId": '',
+                "user_planId": ""
+            }
+            if (priceCalculationObj.planInfo.planId === 4) {
+                console.log('i am here before plane id;');
+                console.log('i am here before frame;');
+                $('.upgrade-btn').css('display', 'none');
+                console.log('i am here after frame;');
+            }
         }
-        if (priceCalculationObj.planInfo.planId === 4) {
-            console.log('i am here before plane id;');
-            console.log('i am here before frame;');
-            $('.upgrade-btn').css('display', 'none');
-            console.log('i am here after frame;');
+        if (location.pathname === "/app/order/payment-status.html") {
+            $('.upgrade-btn').addClass('d-none')
         }
+        var userId = userInfo.userId;
+        // var fromPage = localStorage.getItem('fromPage');
+        $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
+        // $('#UserEmail').text(userInfo.email);
+        $('#UserEmail').text(text_truncate(userInfo.email, 30));
+        $('input[name="firstname"]').val(userInfo.firstname);
+        $('input[name="lastname"]').val(userInfo.lastname);
+        $('input[name="email"]').val(userInfo.email);
+        console.log('userInfo.pic', userInfo.pic)
+        if (userInfo.pic) {
+            $('#profileMenu img').attr('src', userInfo.pic)
+        } else {
+            $('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
+        }
+        $('#signOut').on('click', function () {
+            console.log((baseApiUrl + "user/" + userInfo.userId + "/" + atob(localStorage.getItem(btoa(
+                    'sessionId_' + window.location.origin))) +
+                "/" +
+                serviceUrls.get.resUserLogout));
+            doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + atob(localStorage.getItem(btoa(
+                    'sessionId_' + window.location.origin))) +
+                "/" +
+                serviceUrls.get.resUserLogout).then(response => {
+                localStorage.clear();
+                window.location.href = window.origin + '/app/auth/login.html';
+            })
+        });
     }
-    if (location.pathname === "/app/order/payment-status.html") {
-        $('.upgrade-btn').addClass('d-none')
-    }
-    var userId = userInfo.userId;
-    // var fromPage = localStorage.getItem('fromPage');
-    $('#userName').text(userInfo.firstname + " " + userInfo.lastname);
-    // $('#UserEmail').text(userInfo.email);
-    $('#UserEmail').text(text_truncate(userInfo.email, 30));
-    $('input[name="firstname"]').val(userInfo.firstname);
-    $('input[name="lastname"]').val(userInfo.lastname);
-    $('input[name="email"]').val(userInfo.email);
-    if (userInfo.pic) {
-        $('#profileMenu img').attr('src', userInfo.pic)
-    } else {
-        $('#profileMenu img').attr('src', location.origin + '/assets/images/avatar.png');
-    }
-    console.log((baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
-        "/" +
-        serviceUrls.get.resUserLogout));
-    $('#signOut').on('click', function () {
-        doGetWithEncrypt(baseApiUrl + "user/" + userInfo.userId + "/" + localStorage.getItem("sessionId") +
-            "/" +
-            serviceUrls.get.resUserLogout).then(response => {
-            localStorage.clear();
-            window.location.href = window.origin + '/app/auth/login.html';
-        })
-    });
 
     function text_truncate(str, length, ending) {
         if (length == null) {

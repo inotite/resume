@@ -1,4 +1,4 @@
-var localUserData = localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))) ? JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))) : false;
+var localUserData = localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))) ? JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))), localStorage.getItem(btoa('sessionId_' + window.location.origin)))) : false;
 var localPlansEncrypt = encrypt('plans', authToken);
 var localPlansDecrypt = decrypt('plans', authToken);
 

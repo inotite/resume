@@ -15,7 +15,7 @@ if (localStorage.getItem('plans')) {
 			options: {
 				itemClass: 'awesome',
 				appPath: window.location.origin,
-				baseUrl2: baseUrl,
+				// baseUrl2: baseUrl,
 				navPath: "",
 				apiUrl: baseApiUrl,
 				callMe: function () {
@@ -118,13 +118,14 @@ if (localStorage.getItem('plans')) {
 						response = typeof (response) !== "object" ? JSON.parse(response) : response;
 						localStorage.clear();
 						if (response.status == "success") {
-							localStorage.setItem('sessionId', response.sessionId);
+							// localStorage.setItem('sessionId', response.sessionId);
+							localStorage.setItem(btoa('sessionId_' + window.location.origin), btoa(response.sessionId));
 							localStorage.setItem("templateId", 2);
 							// localStorage.setItem('userData', JSON.stringify(response.data));
 							localStorage.setItem(encrypt('userData', response.sessionId), encrypt(JSON.stringify(response.data), response.sessionId));
 							// localStorage.setItem('fromPage', 'signin');
 							// localStorage.setItem('shareName', response.data.share_name);
-							localStorage.setItem('imageStore', response.data.pic);
+							localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
 							$('.loading-container').css('display', 'none');
@@ -239,12 +240,12 @@ if (localStorage.getItem('plans')) {
 						localStorage.clear();
 						if (response.status == "success") {
 							// localStorage.setItem('userStatus', response.data.sessionId);
-							localStorage.setItem('sessionId', response.data.sessionId);
+							localStorage.setItem(btoa('sessionId_' + window.location.origin), btoa(response.data.sessionId));
 							// localStorage.setItem('userData', JSON.stringify(response.data));
 							localStorage.setItem(encrypt('userData', response.data.sessionId), encrypt(JSON.stringify(response.data), response.data.sessionId));
 							// localStorage.setItem('shareName', response.shareName);
 							// localStorage.setItem('fromPage', 'signup');
-							localStorage.setItem('imageStore', '');
+							localStorage.setItem(btoa('imageStore'), '');
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
 							$('.loading-container').css('display', 'none');

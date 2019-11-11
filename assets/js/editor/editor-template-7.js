@@ -1,6 +1,6 @@
-const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))).userId;
+const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))), localStorage.getItem(btoa('sessionId_' + window.location.origin)))).userId;
 const userStatus = localStorage.getItem('isPremiumUser');
-let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
 const exp_total_count = 10;
 const edu_total_count = 10;
@@ -1057,7 +1057,7 @@ $(window).ready(function () {
     function bindUserDataForSave() {
         const jobfunctions = $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
             $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id'))] : []
-        postObj.pic = localStorage.getItem('imageStore');
+        postObj.pic = atob(localStorage.getItem(btoa('imageStore')));
         postObj.firstname = $('#resume-body [data-content="firstname"]').text();
         postObj.lastname = $('#resume-body [data-content="lastname"]').text();
         postObj.jobfunctions = jobfunctions;
@@ -2059,7 +2059,7 @@ $(window).ready(function () {
             console.log(response);
             if (response.status == 'success') {
                 // console.log(response.data.httpPath);
-                localStorage.setItem('imageStore', response.data.httpPath);
+                localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
                 $('#profileMenu img').attr('src', response.data.httpPath);
                 $('#profilePicEdit').attr('src', response.data.httpPath);
                 $('#pimage-preview').attr('src', response.data.httpPath);

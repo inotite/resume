@@ -14,7 +14,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Workruit - My Account</title>
   <script>
-    if (!localStorage.getItem('sessionId')) {
+    if (!localStorage.getItem(btoa('sessionId_' + window.location.origin))) {
       window.location.href = window.location.origin + "/index.html";
     }
   </script>
@@ -238,7 +238,7 @@
                   </div>
                 </label>
                 <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
-                  <input type='file' id="inputfoto2" name="pic" style="display:none" accept="image/*" />
+                  <input type='file' id="inputfoto2" name="pic" style="display:none" accept="image/x-png,image/jpeg"/>
                 </form>
                 <img src="" id="image-preview" />
                 <canvas id="canvas-element"></canvas>

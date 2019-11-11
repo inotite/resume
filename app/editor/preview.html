@@ -16,7 +16,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 
     <script>
-        var sessionId = localStorage.getItem('sessionId');
+        var sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
         if (!sessionId) {
             window.location.href = "../index.html";
         }         
