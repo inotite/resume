@@ -255,7 +255,7 @@ console.log("localUserData", localUserData);
 					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
 						//console.log(response);
 						if (response.status == "success") {
-							localStorage.setItem('localUserData', JSON.stringify(response.data));
+							// localStorage.setItem('localUserData', JSON.stringify(response.data));
 							var statusMessage = response.data.hideResume == true ? "Now your resume is in private mode" : "Now your resume is in public mode";
 							$('#newSuccessMessageID .message-text').html(statusMessage);
 							$('#newSuccessMessageID').html(statusMessage)
