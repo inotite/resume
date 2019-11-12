@@ -60,18 +60,18 @@ console.log("localUserData", localUserData);
 					$('input[name="shareName"]').val(localUserData.share_name);
 					$('#copyText').val(self.options.baseUrl + '/#' + localUserData.share_name);
 
-					var pic = atob(localStorage.getItem(btoa('imageStore')));
+					// var pic = atob(localStorage.getItem(btoa('imageStore')));
 					// var picpath = pic.search('1631033876795164.jpg');
 
-					if (!pic) {
+					if (!localUserData.pic) {
 						$('#profileMenu img').attr('src', '../../assets/images/avatar.png');
 						$('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
 
 					} else {
-						console.log("picpicpicpicpic", pic)
-						$('#profileMenu img').attr('src', pic);
+						// console.log("picpicpicpicpic", pic)
+						$('#profileMenu img').attr('src', localUserData.pic);
 						$('#profilePicEdit').attr('src', '');
-						$('#profilePicEdit').attr('src', pic);
+						$('#profilePicEdit').attr('src', localUserData.pic);
 					}
 
 

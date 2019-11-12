@@ -207,7 +207,9 @@ body {
 .theme-picker .dropdown-menu.actions {
     padding: 1rem;
 }
-
+.theme-picker .dropdown-menu.actions .dropdown-item.active, .theme-picker .dropdown-menu.actions .dropdown-item:active{
+    color: var(--color-black);
+}
 .theme-picker-2 .dropdown-menu {
     transform: translateX(-4.1rem) translateY(3rem);
 

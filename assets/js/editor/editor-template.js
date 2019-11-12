@@ -1786,7 +1786,7 @@ $(window).ready(function () {
                 });
             }
         }
-        // console.log("Application Data", JSON.stringify(applicantData));
+        console.log("Application Data", JSON.stringify(applicantData));
         // console.log("settings", settings.data);
         // downloadResume
         doPostWithEncrypt(apiUrl + "/user/" + userId + "/updateProfileResume", applicantData).then(response => {
