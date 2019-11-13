@@ -35,7 +35,7 @@ if (localStorage.getItem('plans')) {
 
 			attachEvents: function () {
 				var self = this;
-				if (localStorage.getItem("sessionId")) {
+				if (localStorage.getItem(btoa('sessionId_' + window.location.origin))) {
 					window.location.href = location.origin + "/app/dashboard/home.html";
 				}
 				var urlArr = ['login', 'signup', 'forgotPassword', 'home', 'account', 'share'];

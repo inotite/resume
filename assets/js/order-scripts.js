@@ -34,6 +34,7 @@ $(function () {
 });
 
 function orderTableRow(item) {
+    console.log(item);
     item.map(item => {
         const orderRow = `<tr>
         <td>
@@ -44,11 +45,12 @@ function orderTableRow(item) {
         <td>
             ${item.planId === 1 ? item.price = 'Free' : item.price = '&#8377; ' + item.price}
             <br>
+            ${item.transactionStatus === 2 ? 'Status: Failed' : ''}
             ${item.promoCode ? 'Promo: ' + item.promoCode : ''}
         </td>
-        <td>${item.startDate}</td>
-        <td data-content="expDate">${moment(item.expDate).format("DD MMM YYYY")}</td>
-        <td>${item.planId === 1 ? 'NA' : '<a data-href="invoice.html">Invoice</a>'}</td>
+        <td>${item.transactionStatus !== 2 ? item.startDate : 'NA'}</td>
+        <td data-content="expDate">${item.transactionStatus !== 2 ? moment(item.expDate).format("DD MMM YYYY"): 'NA'}</td>
+        <td>${item.planId === 1 || item.transactionStatus === 2 ? 'NA' : '<a data-href="invoice.html">Invoice</a>'}</td>
     </tr>`;
         $('#order_history_template').append(orderRow);
     });
