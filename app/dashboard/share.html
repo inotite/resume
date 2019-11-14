@@ -147,35 +147,7 @@
   <script type="text/javascript" src="../../assets/js/environment.js"></script>
   <script type="text/javascript" src="../../assets/js/app.services.js"></script>
   <script type="text/javascript" src="../../assets/js/account-scripts.js"></script>
-  <script>
-    $('#load-header').load('../includes/user-header.html');
-
-    var origin = window.location.origin;
-    var sourceUrl = 'https://dev.workruit.com/#';
-    // var sharePath = origin + '/#';
-    $(function () {
-      $('.account-page').paraCount();
-      $("#shareDomain").attr('value', sourceUrl)
-    });
-    var userShareInfo = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
-    if (userShareInfo.edit_name) {
-      $('.edit_name').addClass('d-none');
-      $('#shareDomain2').val(sourceUrl + userShareInfo.share_name);
-      $('.edit_name_link').removeClass('d-none');
-    }
-    $('#resume_piblic').attr('checked', userShareInfo.hideResume);
-    if (userShareInfo.planDetails.subscribedUser && userShareInfo.planDetails.validUser) {
-      $('#shareName').removeAttr('disabled');
-      $('#shareNameBtn').removeAttr('disabled');
-    } else if (!userShareInfo.planDetails.validUser && !!userShareInfo.planDetails.subscribedUser) {
-      $('#shareName').attr('disabled', 'true');
-      $('#shareNameBtn').attr('disabled', 'true');
-    }
-    // var resume_piblic = $('input[type=checkbox]').prop('checked');
-    // console.log(resume_piblic);
-    $('.loading-container').delay(1000).fadeOut();
-  </script>
-
+  <script type="text/javascript" src="../../assets/js/share.js"></script>
 </body>
 
 </html>

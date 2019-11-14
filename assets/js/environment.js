@@ -12,7 +12,7 @@ const baseApiUrl = "https://devapi.workruit.com/api/";
 const apiAdminUrl = "https://devapi.workruit.com/admin";
 const apiUrl = "https://devapi.workruit.com/api";
 const baseResumeApiUrl = "https://devapi.workruit.com/resume/"; */
-// document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('contextmenu', event => event.preventDefault());
 $(document).keydown(function (e) {
     if (e.which === 123) {
         return false;
@@ -64,6 +64,6 @@ const messages = {
     "shareUrlFormatError": "Username contains only alphabets and numerics.",
     "shareUrlEditInfo": "Username can edit only once"
 }
-// console.log = function () {};
+console.log = function () {};
 alert = function () {};
 prompt = function () {};

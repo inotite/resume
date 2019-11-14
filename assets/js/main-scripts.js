@@ -124,7 +124,7 @@ if (localStorage.getItem('plans')) {
 							// localStorage.setItem('userData', JSON.stringify(response.data));
 							localStorage.setItem(encrypt('userData', response.sessionId), encrypt(JSON.stringify(response.data), response.sessionId));
 							// localStorage.setItem('fromPage', 'signin');
-							// localStorage.setItem('shareName', response.data.share_name);
+							localStorage.setItem(btoa('shareName_' + location.origin), encrypt(JSON.stringify(response.data.share_name), response.sessionId));
 							localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
@@ -244,6 +244,7 @@ if (localStorage.getItem('plans')) {
 							// localStorage.setItem('userData', JSON.stringify(response.data));
 							localStorage.setItem(encrypt('userData', response.data.sessionId), encrypt(JSON.stringify(response.data), response.data.sessionId));
 							// localStorage.setItem('shareName', response.shareName);
+							localStorage.setItem(btoa('shareName_' + location.origin), encrypt(JSON.stringify(response.share_name), response.sessionId));
 							// localStorage.setItem('fromPage', 'signup');
 							localStorage.setItem(btoa('imageStore'), '');
 							window.location.href = window.location.origin + "/app/dashboard/home.html";

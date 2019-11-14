@@ -1786,6 +1786,7 @@ $(window).ready(function () {
                 });
             }
         }
+        applicantData.pic = resumeObj.pic;
         console.log("Application Data", JSON.stringify(applicantData));
         // console.log("settings", settings.data);
         // downloadResume
