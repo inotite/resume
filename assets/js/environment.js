@@ -1,13 +1,28 @@
-const baseUrl = "https://stageapi.workruit.com";
+/* stageapi api's */
+const baseUrl = "https://devapi.workruit.com";
 const appUrl = "";
-const baseApiUrl = "https://stageapi.workruit.com/api/";
-const apiAdminUrl = "https://stageapi.workruit.com/admin";
-const apiUrl = "https://stageapi.workruit.com/api";
-const baseResumeApiUrl = "https://stageapi.workruit.com/resume/";
+const baseApiUrl = "https://devapi.workruit.com/api/";
+const apiAdminUrl = "https://devapi.workruit.com/admin";
+const apiUrl = "https://devapi.workruit.com/api";
+const baseResumeApiUrl = "https://devapi.workruit.com/resume/";
+/* dev api's
+const baseUrl = "https://devapi.workruit.com";
+const appUrl = "";
+const baseApiUrl = "https://devapi.workruit.com/api/";
+const apiAdminUrl = "https://devapi.workruit.com/admin";
+const apiUrl = "https://devapi.workruit.com/api";
+const baseResumeApiUrl = "https://devapi.workruit.com/resume/"; */
+document.addEventListener('contextmenu', event => event.preventDefault());
+$(document).keydown(function (e) {
+    if (e.which === 123) {
+        return false;
+    }
+});
 const appDate = new Date();
 const authToken = "94b51cc4-0c99-11e7-93ae-92361f002671";
-const sessionId = localStorage.getItem('sessionId');
-// const userData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+const sessionId = atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)));
+// const userData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
+
 const locationPaths = {
     homePage: "/app/dashboard/home.html"
 }
@@ -49,3 +64,6 @@ const messages = {
     "shareUrlFormatError": "Username contains only alphabets and numerics.",
     "shareUrlEditInfo": "Username can edit only once"
 }
+console.log = function () {};
+alert = function () {};
+prompt = function () {};

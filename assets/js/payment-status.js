@@ -14,7 +14,7 @@ $(window).ready(function () {
         }
     }
     $('.loading-container').delay(1000).fadeOut();
-    axios.defaults.headers.common['Token'] = localStorage.getItem('sessionId');
+    axios.defaults.headers.common['Token'] = localStorage.getItem(btoa('sessionId_' + window.location.origin));
     // Price Calculation
     var getOrderInfoUrl = baseResumeApiUrl + "user/" + paramUserId + "/order/" + orderId + resumeServiceUrls.get.getOrderInfo;
     doGetWithEncrypt(getOrderInfoUrl).then(function (response) {

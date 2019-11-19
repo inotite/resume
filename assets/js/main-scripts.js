@@ -15,7 +15,7 @@ if (localStorage.getItem('plans')) {
 			options: {
 				itemClass: 'awesome',
 				appPath: window.location.origin,
-				baseUrl2: baseUrl,
+				// baseUrl2: baseUrl,
 				navPath: "",
 				apiUrl: baseApiUrl,
 				callMe: function () {
@@ -35,7 +35,7 @@ if (localStorage.getItem('plans')) {
 
 			attachEvents: function () {
 				var self = this;
-				if (localStorage.getItem("sessionId")) {
+				if (localStorage.getItem(btoa('sessionId_' + window.location.origin))) {
 					window.location.href = location.origin + "/app/dashboard/home.html";
 				}
 				var urlArr = ['login', 'signup', 'forgotPassword', 'home', 'account', 'share'];
@@ -118,13 +118,14 @@ if (localStorage.getItem('plans')) {
 						response = typeof (response) !== "object" ? JSON.parse(response) : response;
 						localStorage.clear();
 						if (response.status == "success") {
-							localStorage.setItem('sessionId', response.sessionId);
+							// localStorage.setItem('sessionId', response.sessionId);
+							localStorage.setItem(btoa('sessionId_' + window.location.origin), btoa(response.sessionId));
 							localStorage.setItem("templateId", 2);
 							// localStorage.setItem('userData', JSON.stringify(response.data));
 							localStorage.setItem(encrypt('userData', response.sessionId), encrypt(JSON.stringify(response.data), response.sessionId));
 							// localStorage.setItem('fromPage', 'signin');
-							// localStorage.setItem('shareName', response.data.share_name);
-							localStorage.setItem('imageStore', response.data.pic);
+							localStorage.setItem(btoa('shareName_' + location.origin), encrypt(JSON.stringify(response.data.share_name), response.sessionId));
+							localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
 							$('.loading-container').css('display', 'none');
@@ -153,9 +154,9 @@ if (localStorage.getItem('plans')) {
 					validate = false;
 					$('<div class="invalid-feedback">First Name is required.</div>').insertAfter('input[name="firstname"]');
 				} else {
-					if ($.trim(firstname).length < 3) {
+					if ($.trim(firstname).length < 1) {
 						validate = false;
-						$('<div class="invalid-feedback">Minimum 3 characters are required.</div>').insertAfter('input[name="firstname"]');
+						$('<div class="invalid-feedback">Minimum 1 character is required.</div>').insertAfter('input[name="firstname"]');
 					}
 				}
 
@@ -163,9 +164,9 @@ if (localStorage.getItem('plans')) {
 					validate = false;
 					$('<div class="invalid-feedback">Last Name is required.</div>').insertAfter('input[name="lastname"]');
 				} else {
-					if ($.trim(lastname).length < 3) {
+					if ($.trim(lastname).length < 1) {
 						validate = false;
-						$('<div class="invalid-feedback">Minimum 3 characters are required.</div>').insertAfter('input[name="lastname"]');
+						$('<div class="invalid-feedback">Minimum 1 character is required.</div>').insertAfter('input[name="lastname"]');
 					}
 				}
 				if ($.trim(email).length <= 0) {
@@ -239,12 +240,13 @@ if (localStorage.getItem('plans')) {
 						localStorage.clear();
 						if (response.status == "success") {
 							// localStorage.setItem('userStatus', response.data.sessionId);
-							localStorage.setItem('sessionId', response.data.sessionId);
+							localStorage.setItem(btoa('sessionId_' + window.location.origin), btoa(response.data.sessionId));
 							// localStorage.setItem('userData', JSON.stringify(response.data));
 							localStorage.setItem(encrypt('userData', response.data.sessionId), encrypt(JSON.stringify(response.data), response.data.sessionId));
 							// localStorage.setItem('shareName', response.shareName);
+							localStorage.setItem(btoa('shareName_' + location.origin), encrypt(JSON.stringify(response.share_name), response.sessionId));
 							// localStorage.setItem('fromPage', 'signup');
-							localStorage.setItem('imageStore', '');
+							localStorage.setItem(btoa('imageStore'), '');
 							window.location.href = window.location.origin + "/app/dashboard/home.html";
 						} else {
 							$('.loading-container').css('display', 'none');

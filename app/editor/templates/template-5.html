@@ -13,7 +13,7 @@
     <meta data-content="theme-color" content="#ffffff">
 
     <script>
-        var sessionId = localStorage.getItem('sessionId');
+        var sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
         if (!sessionId) {
             window.location.href = "../index.html";
         }
@@ -644,11 +644,11 @@
         const appDate = new Date();
         const apiAdminUrl = "https://stageapi.workruit.com/admin";
         const apiUrl = "https://stageapi.workruit.com/api";
-        const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))).userId;
-        const sessionId = localStorage.getItem('sessionId');
+        const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))), localStorage.getItem(btoa('sessionId_' + window.location.origin)))).userId;
+        const sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
         const userStatus = localStorage.getItem('isPremiumUser');
         const planInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
-        let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+        let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
         console.log(resumeObj);
         // 'Source_Sans_Pro', 'Merriweather', 'Roboto', 'Saira Semi Condensed'
         const fonts = [{
@@ -1264,7 +1264,7 @@
             function bindUserDataForSave() {
                 const jobfunctions = $('input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
                     $('input[data-content="jobfunctions"]').attr('data-item-id'))] : []
-                postObj.pic = localStorage.getItem('imageStore');
+                postObj.pic = atob(localStorage.getItem(btoa('imageStore')));
                 postObj.firstname = $('[data-content="firstname"]').text();
                 postObj.lastname = $('[data-content="lastname"]').text();
                 postObj.jobfunctions = jobfunctions;
@@ -1507,7 +1507,7 @@
             bindUserData();
 
             function bindUserData() {
-                $('#user_pic').attr('src', localStorage.getItem('imageStore'));
+                $('#user_pic').attr('src', atob(localStorage.getItem(btoa('imageStore'))));
                 $('[data-content="firstname"]').text(resumeObj.firstname);
                 $('[data-content="lastname"]').text(resumeObj.lastname);
                 if (resumeObj.jobFunctions.length) {
@@ -2043,7 +2043,7 @@
 
                     if (response.status == 'success') {
                         // console.log(response.data.httpPath);
-                        localStorage.setItem('imageStore', response.data.httpPath);
+						localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
                         $('#profileMenu img').attr('src', response.data.httpPath);
                         $('#profilePicEdit').attr('src', response.data.httpPath);
                         $('#pimage-preview').attr('src', response.data.httpPath);

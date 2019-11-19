@@ -44,7 +44,7 @@
 				});
 
 
-				var sessionId = localStorage.getItem('sessionId');
+				var sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
 				//console.log(userData.firstname);
 				if (!sessionId) {
 					//console.log("sessionId ::::::"+sessionId);
@@ -98,7 +98,7 @@
 
 					localStorage.setItem('themeStyle', 'theme-picker1');
 
-					var pic = localStorage.getItem('imageStore');
+					var pic = atob(localStorage.getItem(btoa('imageStore')));
 					var imageStoreData = localStorage.getItem('imageStoreData');
 					var picpath = pic.search('1631033876795164.jpg');
 
@@ -228,7 +228,7 @@
 					let shareName = localStorage.getItem('shareName');
 					//let userData = JSON.parse(localStorage.getItem('userData'));
 					let userId = userData.userId;
-					var sessionId = localStorage.getItem('sessionId');
+					var sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
 
 					/* Logout functionality */
 					$('#guardar_btn').on('click', function () {
@@ -363,7 +363,7 @@
 
 					if (response.status == 'success') {
 						// console.log(response.data.httpPath);
-						localStorage.setItem('imageStore', response.data.httpPath);
+						localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
 						$('#profileMenu img').attr('src', response.data.httpPath);
 						$('#profilePicEdit').attr('src', response.data.httpPath);
 						$('#pimage-preview').attr('src', response.data.httpPath);
@@ -935,7 +935,7 @@
 
 					let shareName = localStorage.getItem('shareName');
 					// var userData = JSON.parse(localStorage.getItem('userData'));
-					var sessionId = localStorage.getItem('sessionId');
+					var sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
 					var userId = userData.userId;
 					var fontStyle = $('#selectFontFamily').val();
 
@@ -1146,7 +1146,7 @@
 										});
 									localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(response.data), sessionId));
 									// localStorage.setItem('userData', JSON.stringify(response.data));
-									localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(JSON.stringify(response.data), localStorage.getItem('sessionId')));
+									localStorage.setItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin))), encrypt(JSON.stringify(response.data), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
 
 
 									var logoImg = $('input[name="pic"]').get(0).files[0];

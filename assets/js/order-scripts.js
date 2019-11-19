@@ -2,7 +2,7 @@ $(function () {
     $('#load-header').load('../includes/user-header.html');
     const userPlanStatus = JSON.parse(localStorage.getItem('userPlanStatus'));
     $('.loading-container').delay(1000).fadeOut();
-    var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+    var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
     var planDetails = localUserData.planDetails;
     if (localUserData) {
         if (!planDetails.emailVerified) {
@@ -34,6 +34,7 @@ $(function () {
 });
 
 function orderTableRow(item) {
+    console.log(item);
     item.map(item => {
         const orderRow = `<tr>
         <td>
@@ -44,11 +45,12 @@ function orderTableRow(item) {
         <td>
             ${item.planId === 1 ? item.price = 'Free' : item.price = '&#8377; ' + item.price}
             <br>
+            ${item.transactionStatus === 2 ? 'Status: Failed' : ''}
             ${item.promoCode ? 'Promo: ' + item.promoCode : ''}
         </td>
-        <td>${item.startDate}</td>
-        <td data-content="expDate">${moment(item.expDate).format("DD MMM YYYY")}</td>
-        <td>${item.planId === 1 ? 'NA' : '<a data-href="invoice.html">Invoice</a>'}</td>
+        <td>${item.transactionStatus !== 2 ? item.startDate : 'NA'}</td>
+        <td data-content="expDate">${item.transactionStatus !== 2 ? moment(item.expDate).format("DD MMM YYYY"): 'NA'}</td>
+        <td>${item.planId === 1 || item.transactionStatus === 2 ? 'NA' : '<a data-href="invoice.html">Invoice</a>'}</td>
     </tr>`;
         $('#order_history_template').append(orderRow);
     });

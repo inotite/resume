@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#ffffff">
 
     <script>
-        if (!sessionStorage.getItem('sessionId')) {
+        if (!localStorage.getItem(btoa('sessionId_' + window.location.origin))) {
             window.location.href = "../../../index.html";
         }         
     </script>
@@ -1520,8 +1520,8 @@
 
     <script type="text/javascript">
 
-        var userData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
-        var sessionId = localStorage.getItem('sessionId');
+        var userData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin)))), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
+        var sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
         var userId = userData.userId;
     </script>
 

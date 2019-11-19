@@ -1,6 +1,6 @@
-var shareSourceUrl = "https://www.workruit.com/#";
-var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
-// console.log("localUserData",localUserData)
+var shareSourceUrl = "https://dev.workruit.com/#";
+var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
+console.log("localUserData", localUserData);
 // plug it in, plug it in
 (function ($) {
 
@@ -38,11 +38,12 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 				// 		}
 				// 	}
 				// });
-				let sessionId = localStorage.getItem('sessionId');
+				let sessionId = atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)));
 				if (!sessionId) {
 					//console.log("sessionId ::::::"+sessionId);
 					window.location.href = "../index.html";
 				} else {
+					var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 					getUserProfile();
 					var userId = localUserData.userId;
 					//console.log(localUserData);
@@ -56,21 +57,21 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 					$('input[name="email"]').val(localUserData.email);
 
 					//$('input[name="shareName"]').val(localUserData.share_name);
-					$('input[name="shareName"]').val(localStorage.getItem('shareName'));
-					$('#copyText').val(self.options.baseUrl + '/@' + localStorage.getItem('shareName'));
+					$('input[name="shareName"]').val(localUserData.share_name);
+					$('#copyText').val(self.options.baseUrl + '/#' + localUserData.share_name);
 
-					var pic = localStorage.getItem('imageStore');
+					// var pic = atob(localStorage.getItem(btoa('imageStore')));
 					// var picpath = pic.search('1631033876795164.jpg');
 
-					if (!pic) {
+					if (!localUserData.pic) {
 						$('#profileMenu img').attr('src', '../../assets/images/avatar.png');
 						$('#profilePicEdit').attr('src', '../../assets/images/avatar.png');
 
 					} else {
-						console.log("pic>>>>>>>>>>>>>>>>>", pic);
-						$('#profileMenu img').attr('src', pic);
+						// console.log("picpicpicpicpic", pic)
+						$('#profileMenu img').attr('src', localUserData.pic);
 						$('#profilePicEdit').attr('src', '');
-						$('#profilePicEdit').attr('src', pic);
+						$('#profilePicEdit').attr('src', localUserData.pic);
 					}
 
 
@@ -85,98 +86,6 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 					}
 
 					//}
-
-					$('#shareNameBtn').on('click', function () {
-
-						let shareName = $('input[name="shareName"]').val();
-						if (shareName !== localUserData.share_name) {
-							console.log(shareName, shareName.length, "shareName");
-							if (alphanumeric(shareName)) {
-								if (shareName.length >= 6 && shareName.length <= 20) {
-									swal({
-											title: "Are you sure?",
-											text: messages.shareUrlEditInfo,
-											icon: "warning",
-											buttons: true,
-											dangerMode: true,
-										})
-										.then((willDelete) => {
-											if (willDelete) {
-												var shareData = {
-													"username": localUserData.email,
-													"sharename": shareName
-												}
-												doPostWithEncrypt(baseApiUrl + serviceUrls.post.updateShareName, shareData).then(response => {
-													localStorage.setItem('shareName', shareName);
-													if (response.msg.title == "Success") {
-														getUserProfile();
-														$('#newSuccessMessageID .message-text').html(response.msg.description);
-														$('#newSuccessMessageID').html(response.msg.description)
-															.fadeIn()
-															.delay(5000)
-															.fadeOut();
-													} else {
-														$('#newErrorMessageID .message-text').html(response.msg.description)
-														$('#newErrorMessageID').html(response.msg.description)
-															.fadeIn()
-															.delay(5000)
-															.fadeOut();
-													}
-													$('input[name="shareName"]').val(localStorage.getItem('shareName'));
-												})
-											}
-
-										});
-								} else {
-									// var errorMessage = shareUrlLengthError;
-									$('#newErrorMessageID .message-text').html(messages.shareUrlLengthError)
-									$('#newErrorMessageID').html(messages.shareUrlLengthError)
-										.fadeIn()
-										.delay(5000)
-										.fadeOut();
-								}
-							} else {
-								// var errorMessage = shareUrlLengthError;
-								$('#newErrorMessageID .message-text').html(messages.shareUrlFormatError)
-								$('#newErrorMessageID').html(messages.shareUrlFormatError)
-									.fadeIn()
-									.delay(5000)
-									.fadeOut();
-							}
-						}
-					});
-
-					$('#copyLinkBtn').on('click', function () {
-						if ($('#shareName').val()) {
-							if (localUserData.edit_name) {
-								$('#copyText2').val(shareSourceUrl + localUserData.share_name);
-								var copyText = document.getElementById("copyText2");
-								copyText.select();
-								document.execCommand("copy");
-							} else {
-								console.log($('#shareDomain').val() + $('#shareName').val());
-								$('#copyText').val($('#shareDomain').val() + $('#shareName').val());
-								var copyText = document.getElementById("copyText");
-								copyText.select();
-								document.execCommand("copy");
-							}
-							var successMessage = 'Your link is copied successfully';
-							$('#newSuccessMessageID .message-text').html(successMessage)
-							$('#newSuccessMessageID').html(successMessage)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
-						} else {
-							var errorMessage = 'Please enter valid share url and save';
-							$('#newErrorMessageID .message-text').html(errorMessage)
-							$('#newErrorMessageID').html(errorMessage)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
-						}
-						//alert("Copied the text: " + copyText.value);
-					});
-
 
 				}
 				$("#changePassBtn").on('click', function () {
@@ -225,36 +134,16 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 				$('#saveProfilePic').on('click', function () {
 					self.saveUserPic();
 				});
-				$('#resume_piblic').change(function () {
-					var profileData = {
-						"firstname": localUserData.firstname,
-						"lastname": localUserData.lastname,
-						"email": localUserData.email,
-						"hideResume": this.checked
-					};
-					// profileData.hideResume = this.checked
-					doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
-						//console.log(response);
-						if (response.status == "success") {
-							localStorage.setItem('localUserData', JSON.stringify(response.data));
-							var statusMessage = response.data.hideResume == true ? "Now your resume is in private mode" : "Now your resume is in public mode";
-							$('#newSuccessMessageID .message-text').html(statusMessage);
-							$('#newSuccessMessageID').html(statusMessage)
-								.fadeIn()
-								.delay(5000)
-								.fadeOut();
-						}
-					})
-				})
 
 			},
 			saveUserPic: function () {
+				var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 				var self = this;
 				var form = new FormData();
 				var logoImg = $('input[name="pic"]').get(0).files[0];
 
 				var userId = localUserData.userId;
-
+				console.log('saveUserPic', localUserData)
 				form.append("userId", userId);
 				form.append("type", "photo");
 				form.append("file", logoImg);
@@ -264,7 +153,7 @@ var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', 
 					//console.log(response.data.httpPath);
 					if (response.status == 'success') {
 						localUserData.pic = response.data.httpPath;
-						localStorage.setItem('imageStore', response.data.httpPath);
+						localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
 						getUserProfile();
 						$('#profileMenu img').attr('src', response.data.httpPath);
 						localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(localUserData), sessionId));
@@ -316,7 +205,10 @@ function getUserProfile() {
 			$('#shareDomain2').val(shareSourceUrl + userProfileData.share_name);
 			$('.edit_name_link').removeClass('d-none');
 		}
-		localStorage.setItem(encrypt('localUserData', response.sessionId), encrypt(JSON.stringify(response.data), response.sessionId));
+		// console.log(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
+		// localStorage.removeItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
+		localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(response.data), sessionId));
+		localStorage.setItem(btoa('shareName_' + location.origin), encrypt(JSON.stringify(response.data.share_name), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 		setInfoMessage(response.data.planDetails.msg.description, response.data.planDetails.emailVerified);
 		console.log(window.location.href);
 		$('#load-header').load('../includes/user-header.html');
@@ -354,7 +246,18 @@ function setInfoMessage(message, emailVerified) {
 		$('#mail_message').addClass('alert-danger');
 		$('#mail_message .close').remove();
 	}
-
+	if (localUserData) {
+		console.log("userInfo.planDetails.subscribedUser", localUserData.planDetails, localUserData.planDetails.subscribedUser);
+		if (localUserData.planDetails.subscribedUser) {
+			$('#shareNavItem a').attr("data-toggle", "").attr('data-target', '').attr('href',
+				location.origin + '/app/dashboard/share.html');
+		} else {
+			$('#shareNavItem a').attr("data-toggle", "modal").attr('data-target', '#upgrade');
+		}
+		if (localUserData.planDetails.emailVerified) {
+			$('#mail_message').remove();
+		}
+	}
 }
 window.addEventListener("message", function (event) {
 	console.log(":: PARENT MESSAGE", event.data)
