@@ -13,7 +13,7 @@
     <meta data-content="theme-color" content="#ffffff">
 
     <script>
-        var sessionId = localStorage.getItem('sessionId');
+        var sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
         if (!sessionId) {
             window.location.href = "../index.html";
         }
@@ -588,7 +588,7 @@
         const apiAdminUrl = "https://devapi.workruit.com/admin";
         const apiUrl = "https://devapi.workruit.com/api";
         const userId = JSON.parse(localStorage.getItem('userData')).userId;
-        const sessionId = localStorage.getItem('sessionId');
+        const sessionId = localStorage.getItem(btoa('sessionId_' + window.location.origin));
         const userStatus = localStorage.getItem('isPremiumUser');
         const planInfo = JSON.parse(localStorage.getItem('userPlanStatus'));
         let resumeObj = JSON.parse(localStorage.getItem('userData'));
@@ -1207,7 +1207,7 @@
             function bindUserDataForSave() {
                 const jobfunctions = $('input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
                     $('input[data-content="jobfunctions"]').attr('data-item-id'))] : []
-                postObj.pic = localStorage.getItem('imageStore');
+                postObj.pic = atob(localStorage.getItem(btoa('imageStore')));
                 postObj.firstname = $('[data-content="firstname"]').text();
                 postObj.lastname = $('[data-content="lastname"]').text();
                 postObj.jobfunctions = jobfunctions;
@@ -1450,7 +1450,7 @@
             bindUserData();
 
             function bindUserData() {
-                $('#user_pic').attr('src', localStorage.getItem('imageStore'));
+                $('#user_pic').attr('src', atob(localStorage.getItem(btoa('imageStore'))));
                 $('[data-content="firstname"]').text(resumeObj.firstname);
                 $('[data-content="lastname"]').text(resumeObj.lastname);
                 if (resumeObj.jobFunctions.length) {

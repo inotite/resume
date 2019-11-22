@@ -83,8 +83,10 @@ body {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    border-left: 1px solid #8080803b;
+    border-left: 1px solid rgba(128, 128, 128, 0.23);
     padding: 1rem;
+    line-height: 1.8;
+    height: 60px;
 }
 
 .navbar-light .navbar-nav .nav-link .dropdown-toggle {
@@ -209,7 +211,9 @@ body {
 .theme-picker .dropdown-menu.actions {
     padding: 1rem;
 }
-
+.theme-picker .dropdown-menu.actions .dropdown-item.active, .theme-picker .dropdown-menu.actions .dropdown-item:active{
+    color: var(--color-black);
+}
 .theme-picker-2 .dropdown-menu {
     transform: translateX(-4.1rem) translateY(3rem);
 

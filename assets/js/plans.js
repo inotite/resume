@@ -1,5 +1,6 @@
-var localUserData = localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))) ? JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))) : false;
+var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 var localPlansEncrypt = encrypt('plans', authToken);
+console.log('localPlansEncrypt', localPlansEncrypt)
 var localPlansDecrypt = decrypt('plans', authToken);
 
 if (localUserData) {
@@ -14,29 +15,19 @@ $("body").on("click", ".dismiss-pricing-modal", function () {
         });
     }
 });
-if (!localStorage.getItem(localPlansDecrypt)) {
+if (!localStorage.getItem(encrypt('plans', authToken))) {
     getResumePlans();
 } else {
-    PricingTemplate(JSON.parse(atob(localStorage.getItem(localPlansDecrypt))));
+    console.log('JSON.parse(atob(localStorage.getItem(localPlansDecrypt)))', atob(localStorage.getItem(encrypt('plans', authToken))));
+    PricingTemplate(JSON.parse(atob(localStorage.getItem(encrypt('plans', authToken)))));
 }
 var userPlansInfo = localUserData ? localUserData.planDetails : null;
 
 function getResumePlans() {
     doGetWithOutAuth(baseResumeApiUrl + resumeServiceUrls.get.getResumePlans).then(response => {
-        response.map((item, index) => {
-            var pId = btoa(JSON.stringify(item));
-            item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
-            var redirectAction = location.origin + '/app/order/cart.html?' + pId;
-            item.redirectUrl = localUserData ?
-                redirectAction :
-                location.origin + '/app/auth/login.html';
-        });
         localStorage.setItem(localPlansEncrypt, btoa(JSON.stringify(response)));
         PricingTemplate(response);
-        // console.log(response);
-        // $('.pricing_template').append(pricing_template);
-        // console.log("pricing_template", pricing_template);
-    })
+    });
 }
 $("body").on("click", ".price-action-modal", function (e) {
     console.log("clickced ds");
@@ -66,8 +57,13 @@ $('.close-free-plan-modal').click(function () {
 });
 
 function PricingTemplate(item) {
-    console.log(item);
     item.map((item, index) => {
+        var pId = btoa(JSON.stringify(item));
+        item.price = item.price == 0 ? 'Free' : '&#8377; ' + item.price;
+        var redirectAction = location.origin + '/app/order/cart.html?' + pId;
+        item.redirectUrl = localUserData ?
+            redirectAction :
+            location.origin + '/app/auth/login.html';
         var pricing_template_view = `
     <div class="has-3 p1 col-md-3 pricing"><div class="highlight plan">
         <div class="detail plan-1">
@@ -143,7 +139,21 @@ function freePlanAction() {
     }
     $('#price-action-modal').modal('show');
     if ($('.modal-backdrop.fade.in').length > 1) {
-        $('body .modal-backdrop.fade.in:nth-of-type(1)').remove();
-
+        $('body .modal-backdrop.fade.in:eq(1)').css('opacity', '0');
     }
 }
+$(document).click(function (e) {
+    setTimeout(function () {
+        if ($('#pricing-modal').hasClass('in')) {
+            if (!$('body').hasClass('modal-open')) {
+                $("#price-action-modal").hasClass('in');
+                if (!$("#price-action-modal").hasClass('in')) {
+                    $("body").addClass('modal-open')
+                }
+                console.log(
+                    $("#price-action-modal").hasClass('in')
+                );
+            }
+        }
+    }, 500);
+});

@@ -1,6 +1,6 @@
-const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId'))).userId;
+const userId = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))).userId;
 const userStatus = localStorage.getItem('isPremiumUser');
-let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+let resumeObj = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
 let themeOptions = typeof (resumeObj.themeOptions) == "string" ? JSON.parse(resumeObj.themeOptions) : resumeObj.themeOptions;
 const exp_total_count = 10;
 const edu_total_count = 10;
@@ -389,7 +389,7 @@ $(window).ready(function () {
 
     var showMultiplePages = function () {
         renderPages();
-
+        // $('.loading-container').show();
         $('#resume-body').hide();
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
             console.log("Watermark");
@@ -409,8 +409,9 @@ $(window).ready(function () {
 
         $('#resume-body').show();
         if (!planInfo.subscribedUser || planInfo.planId === 1) {
-            addWaterMarkImage('page'.waterMarkCss)
+            addWaterMarkImage('page', waterMarkCss)
         }
+        $('.loading-container').hide();
     }
 
     $('#previewResume').on('click', function () {
@@ -1080,7 +1081,7 @@ $(window).ready(function () {
     function bindUserDataForSave() {
         const jobfunctions = $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id') ? [JSON.parse(
             $('#resume-body input[data-content="jobfunctions"]').attr('data-item-id'))] : []
-        postObj.pic = localStorage.getItem('imageStore');
+        postObj.pic = atob(localStorage.getItem(btoa('imageStore')));
         postObj.firstname = $('#resume-body [data-content="firstname"]').text();
         postObj.lastname = $('#resume-body [data-content="lastname"]').text();
         postObj.jobfunctions = jobfunctions;
@@ -1401,7 +1402,7 @@ $(window).ready(function () {
         if (resumeObj.jobFunctions && resumeObj.jobFunctions.length) {
             $('input[data-content="jobfunctions"]').val(resumeObj.jobFunctions[0].jobFunctionName);
             $('input[data-content="jobfunctions"]').attr('data-item-id', resumeObj.jobFunctions[0]
-                .categoryId);
+                .jobFunctionId);
         }
         $('[data-content="coverLetter"]').text(resumeObj.coverLetter);
         $('[data-content="userJobTitle"]').text(resumeObj.userJobTitle);
@@ -1786,7 +1787,8 @@ $(window).ready(function () {
                 });
             }
         }
-        // console.log("Application Data", JSON.stringify(applicantData));
+        applicantData.pic = resumeObj.pic;
+        console.log("Application Data", JSON.stringify(applicantData));
         // console.log("settings", settings.data);
         // downloadResume
         doPostWithEncrypt(apiUrl + "/user/" + userId + "/updateProfileResume", applicantData).then(response => {
@@ -1794,23 +1796,21 @@ $(window).ready(function () {
                 $('#newSuccessMessageID .message-text').html(response.msg);
                 $('.loading-container').fadeOut();
                 if (action === 'save') {
+                    savePdf('save');
                     $('#newSuccessMessageID').fadeIn().delay(2000)
                         .fadeOut('slow', function () {
                             $('#saveResume').removeAttr('pointer-events');
                         });
                 }
-                localStorage.setItem(encrypt('userData', localStorage.getItem('sessionId')), encrypt(JSON.stringify(response.data), localStorage.getItem('sessionId')));
+                localStorage.setItem(encrypt('userData', localStorage.getItem(btoa('sessionId_' + window.location.origin))), encrypt(JSON.stringify(response.data), localStorage.getItem(btoa('sessionId_' + window.location.origin))));
                 // localStorage.setItem('userData', JSON.stringify(response.data));
                 // console.log("Ajax response");
-                // console.log(response.data);
+                console.log("response.data", response.data);
 
                 // console.log("Settings Done");
                 var logoImg = $('input[data-content="picture"]').get(0).files[0];
                 if (logoImg) {
                     saveUserPic();
-                }
-                if (action === 'save') {
-                    savePdf('save');
                 }
                 getShareNameFile();
 
@@ -1958,29 +1958,10 @@ $(window).ready(function () {
         var form2 = new FormData();
         form2.append("type", "resume");
         form2.append("userId", userId);
-        form2.append('file', pdfOut);
+        form2.append('file', pdfOut, '_resume.pdf');
         doUpload(apiUrl + "/uploadFile", form2).then(response => {
             console.log(response);
         });
-        // axios({
-        //         method: 'post',
-        //         url: apiUrl + "/uploadFile",
-        //         data: form2,
-        //         config: {
-        //             headers: {
-        //                 "token": sessionId,
-        //                 'Content-Type': 'multipart/form-data'
-        //             }
-        //         }
-        //     })
-        //     .then(function (response) {
-        //         //handle success
-        //         // console.log(response);
-        //     })
-        //     .catch(function (response) {
-        //         //handle error
-        //         // console.log(response);
-        //     });
         var pdfOutWaterMark = docWaterMark.output('blob');
         var formWatermark = new FormData();
         formWatermark.append("type", "watermark");
@@ -1989,25 +1970,6 @@ $(window).ready(function () {
         doUpload(apiUrl + "/uploadFile", formWatermark).then(response => {
             console.log(response);
         });
-        // axios({
-        //         method: 'post',
-        //         url: apiUrl + "/uploadFile",
-        //         data: formWatermark,
-        //         config: {
-        //             headers: {
-        //                 "token": sessionId,
-        //                 'Content-Type': 'multipart/form-data'
-        //             }
-        //         }
-        //     })
-        //     .then(function (response) {
-        //         //handle success
-        //         // console.log(response);
-        //     })
-        //     .catch(function (response) {
-        //         //handle error
-        //         // console.log(response);
-        //     });
         if (action === "download") {
             if (planInfo.planId === 1) {
                 docWaterMark.save(userId + '_resume.pdf');
@@ -2016,7 +1978,6 @@ $(window).ready(function () {
                 doc.save(resumeObj.firstname + '_resume.pdf');
             }
         }
-        $('.loading-container').delay(2000).fadeOut();
         // }
     }
 
@@ -2039,7 +2000,7 @@ $(window).ready(function () {
             console.log(response);
             if (response.status == 'success') {
                 // console.log(response.data.httpPath);
-                localStorage.setItem('imageStore', response.data.httpPath);
+                localStorage.setItem(btoa('imageStore'), btoa(response.data.pic));
                 resumeObj.pic = response.data.httpPath;
                 localStorage.setItem(encrypt('userData', sessionId), encrypt(JSON.stringify(resumeObj), sessionId));
                 console.log(response.data.httpPath);
@@ -2221,7 +2182,6 @@ $(window).ready(function () {
         // Clone values from original one
 
         $($('[data-content="jobfunctions"]')[1]).val($($('[data-content="jobfunctions"]')[0]).val());
-
         var originExpCount = $('#resume-body #experience-section .professional-experience').length;
         for (var i = 1; i <= originExpCount; ++i) {
             var origin = $($('[data-content="exp_startDate"]')[i - 1]);
@@ -2442,11 +2402,8 @@ $(window).ready(function () {
         //         addWaterMarkImage('#resume-body, .watermark')
         //     }, 0)
         // }
-
-        console.log($('.title-headers').css('font-family'));
-        // setTimeout(() => {
-            $('.sub-header').css('font-family', $('.title-headers').css('font-family'));
-        // })
+        
+        $('.sub-header').css('font-family', $('.title-headers').css('font-family'));
         
     }
 

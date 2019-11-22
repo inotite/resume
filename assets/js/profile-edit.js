@@ -1,15 +1,33 @@
 /* Update Password functionality */
-var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', localStorage.getItem('sessionId'))), localStorage.getItem('sessionId')));
+var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
+setTimeout(function () {
+  var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
+  var selectedCollage = btoa(JSON.stringify({
+    collegeName: localUserData.collegeName,
+    collegeLogo: localUserData.collegeLogo
+  }));
+  var planDetails = localUserData.planDetails;
+  if (localUserData) {
+    if (!localUserData.planDetails.emailVerified) {
+      $('.tabs-container').addClass('mt-5');
+    }
+    if ((planDetails.subscribedUser && planDetails.planId === 1) || !planDetails.paidUser) {
+      $('.upgrade-panel').removeClass('d-none');
+    }
+    if (!planDetails.subscribedUser) {
+      $('.no-orders-panel').removeClass('d-none');
+    }
+  }
+  $(`#collageName [value="${selectedCollage}" ]`).attr("selected", true);
+}, 1000)
 
 $('#updateProfile').on('click', function () {
-
+  var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
   var firstname = $.trim($('input[name="firstname"]').val());
   var lastname = $.trim($('input[name="lastname"]').val());
-  var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
-  var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
-  // var clgName = 
-  var email = userData.email;
-
+  var email = localUserData.email;
+  console.log("localUserData", localUserData);
+  console.log('localUserData.email', localUserData.email)
   $('.invalid-feedback').remove();
 
   var validate = true;
@@ -17,9 +35,9 @@ $('#updateProfile').on('click', function () {
     validate = false;
     $('<div class="invalid-feedback">First Name is required.</div>').insertAfter('input[name="firstname"]');
   } else {
-    if ($.trim(firstname).length < 3) {
+    if ($.trim(firstname).length < 1) {
       validate = false;
-      $('<div class="invalid-feedback">Minimum 3 characters are required.</div>').insertAfter('input[name="firstname"]');
+      $('<div class="invalid-feedback">Minimum 1 character is required.</div>').insertAfter('input[name="firstname"]');
     }
   }
 
@@ -27,21 +45,19 @@ $('#updateProfile').on('click', function () {
     validate = false;
     $('<div class="invalid-feedback">Last Name is required.</div>').insertAfter('input[name="lastname"]');
   } else {
-    if ($.trim(lastname).length < 3) {
+    if ($.trim(lastname).length < 1) {
       validate = false;
-      $('<div class="invalid-feedback">Minimum 3 characters are required.</div>').insertAfter('input[name="lastname"]');
+      $('<div class="invalid-feedback">Minimum 1 character is required.</div>').insertAfter('input[name="lastname"]');
     }
   }
   if (validate) {
-    console.log(collegeName, collegeLogo);
     $('#updateProfile').attr('disabled', true);
     var profileData = {
       "firstname": firstname,
       "lastname": lastname,
-      "email": email,
-      "collegeName": collegeName,
-      "collegeLogo": collegeLogo
+      "email": email
     }
+    console.log(profileData);
     // debugger;
     doPostWithEncrypt(baseApiUrl + "/user/" + userId + "/" + serviceUrls.post.updateProfileResume, profileData).then(response => {
       console.log(response);
@@ -65,8 +81,8 @@ $('#updateProfile').on('click', function () {
   }
 });
 /* Update Password functionality */
-$('#updatePassBtn').on('click', function () {
-
+$('#resetPasswordForm').submit(function (e) {
+  e.preventDefault();
   let oldPassword = $('input[name="oldPassword"]').val();
   let newPassword = $('input[name="newPassword"]').val();
   let reenterNewPassword = $('input[name="reenterNewPassword"]').val();
@@ -94,14 +110,15 @@ $('#updatePassBtn').on('click', function () {
   })
 });
 $('#updateProfile2').on('click', function () {
+  var localUserData = JSON.parse(decrypt(localStorage.getItem(encrypt('userData', atob(localStorage.getItem(btoa('sessionId_' + window.location.origin))))), atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)))));
   var collegeName = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeName : '';
   var collegeLogo = $('#collageName').val() ? JSON.parse(atob($('#collageName').val())).collegeLogo : '';
   // var clgName = 
   console.log(collegeName, collegeLogo);
   var profileData = {
-    "firstname": userData.firstname,
-    "lastname": userData.lastname,
-    "email": userData.email,
+    "firstname": localUserData.firstname,
+    "lastname": localUserData.lastname,
+    "email": localUserData.email,
     "collegeName": collegeName,
     "collegeLogo": collegeLogo
   }

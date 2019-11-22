@@ -10,7 +10,11 @@ doGetWithAuthKey(baseUrl + '/' + serviceUrls.get.emailVerificationForResumeUser 
     if (response.status == "success") {
         // localStorage.clear();
         $('.success-email').removeClass('d-none');
-        // window.location.href = location.origin + '/index.html';
+        if (sessionId) {
+            window.location.href = location.origin + '/app/dashboard/home.html';
+        } else {
+            window.location.href = location.origin + '/app/auth/login.html';
+        }
     } else {
         $('.failed-email').removeClass('d-none');
         $('.failed-email h1').text(response.msg.description);
