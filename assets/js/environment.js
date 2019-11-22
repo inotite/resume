@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-=======
 /* devapi api's */
->>>>>>> 9e5a0f32b1a939369c0423d0700421c228324e18
 const baseUrl = "https://devapi.workruit.com";
 const appUrl = "";
 const baseApiUrl = "https://devapi.workruit.com/api/";
 const apiAdminUrl = "https://devapi.workruit.com/admin";
 const apiUrl = "https://devapi.workruit.com/api";
 const baseResumeApiUrl = "https://devapi.workruit.com/resume/";
-<<<<<<< HEAD
-=======
 /* dev api's
 const baseUrl = "https://devapi.workruit.com";
 const appUrl = "";
@@ -23,7 +18,6 @@ $(document).keydown(function (e) {
         return false;
     }
 });
->>>>>>> 9e5a0f32b1a939369c0423d0700421c228324e18
 const appDate = new Date();
 const authToken = "94b51cc4-0c99-11e7-93ae-92361f002671";
 const sessionId = atob(localStorage.getItem(btoa('sessionId_' + window.location.origin)));
