@@ -2112,6 +2112,7 @@ $(window).ready(function () {
         var inch = 2.54;
         var standardA4Height = standardHeightAsCm * dpi / inch;
         var totalHeight = parseFloat(resume.css('height'));
+        var headerFont = $('.title-headers').css('font-family');
 
         console.log("Document Size: ", resume.css('width'), resume.css('height'));
         console.log("Standard Height: ", standardA4Height);
@@ -2189,7 +2190,7 @@ $(window).ready(function () {
             var exps = $('#experience-section .professional-experience');
             var it;
             var domHtml = '<div class="row mt-3 flex-column">\
-                                <h4 class="section_title text-uppercase font-10pt px-2">Work experience</h4>';
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Work experience</h4>';
             for (it = 0; it < expCount && stackedHeight + parseFloat($(exps[it]).css('height')) <= standardA4Height; ++it) {
                 console.log("Experience ", it, "th Height: ", parseFloat($(exps[it]).css('height')));
                 stackedHeight += parseFloat($(exps[it]).css('height'));
@@ -2249,7 +2250,7 @@ $(window).ready(function () {
             var it;
             console.log("Education Count: ", eduCount);
             domHtml += '<div class="row flex-column mb-1" id="education-section">\
-                            <h4 class="section_title text-uppercase font-10pt px-2">Education</h4>';
+                            <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Education</h4>';
             for (it = 0; it < eduCount && stackedHeight + parseFloat($(edus[it]).css('height')) <= standardA4Height; ++it) {
                 console.log("Education ", it, "th Height: ", parseFloat($(edus[it]).css('height')));
                 stackedHeight += parseFloat($(edus[it]).css('height'));
@@ -2311,7 +2312,7 @@ $(window).ready(function () {
             var it;
             console.log("Academic Count: ", acaCount);
             domHtml += '<div class="row flex-column  mb-1" id="academic-section">\
-                            <h4 class="section_title text-uppercase font-10pt px-2">Academic Projects</h4>';
+                            <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Academic Projects</h4>';
             for (it = 0; it < acaCount && stackedHeight + parseFloat($(acas[it]).css('height')) <= standardA4Height; ++it) {
                 console.log("Academic ", it, "th Height: ", parseFloat($(acas[it]).css('height')));
                 console.log("Stacked Height", stackedHeight);
@@ -2366,7 +2367,7 @@ $(window).ready(function () {
             var it;
             console.log("Skills Count: ", skillCount);
             domHtml += '<div class="row flex-column  mb-1 skill-row" id="skills-section">\
-                            <h4 class="section_title text-uppercase font-10pt px-2">Skills</h4>\
+                            <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Skills</h4>\
                             <div class="skills-section">\
                                 <ul class="list-unstyled w-100 skills-list mb-0">';
             for (it = 0; it < skillCount && stackedHeight + parseFloat($(skills[it]).css('height')) <= standardA4Height; it += 2) {
@@ -2391,7 +2392,7 @@ $(window).ready(function () {
                 resume.find('.col-9 row').last().after(emptyDomClose);
 
                 domHtml = '<div class="row flex-column  mb-1 skill-row" id="skills-section">\
-                                <h4 class="section_title text-uppercase font-10pt px-2">Skills</h4>\
+                                <h4 class="section_title text-uppercase font-10pt px-2 sub-header">Skills</h4>\
                                 <div class="skills-section">\
                                     <ul class="list-unstyled w-100 skills-list mb-0">';
             }
@@ -2441,6 +2442,12 @@ $(window).ready(function () {
         //         addWaterMarkImage('#resume-body, .watermark')
         //     }, 0)
         // }
+
+        console.log($('.title-headers').css('font-family'));
+        // setTimeout(() => {
+            $('.sub-header').css('font-family', $('.title-headers').css('font-family'));
+        // })
+        
     }
 
 

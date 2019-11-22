@@ -1,9 +1,9 @@
-const baseUrl = "https://stageapi.workruit.com";
+const baseUrl = "https://devapi.workruit.com";
 const appUrl = "";
-const baseApiUrl = "https://stageapi.workruit.com/api/";
-const apiAdminUrl = "https://stageapi.workruit.com/admin";
-const apiUrl = "https://stageapi.workruit.com/api";
-const baseResumeApiUrl = "https://stageapi.workruit.com/resume/";
+const baseApiUrl = "https://devapi.workruit.com/api/";
+const apiAdminUrl = "https://devapi.workruit.com/admin";
+const apiUrl = "https://devapi.workruit.com/api";
+const baseResumeApiUrl = "https://devapi.workruit.com/resume/";
 const appDate = new Date();
 const authToken = "94b51cc4-0c99-11e7-93ae-92361f002671";
 const sessionId = localStorage.getItem('sessionId');

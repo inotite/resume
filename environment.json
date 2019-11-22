@@ -1,8 +1,8 @@
 {
-    "baseUrl": "https://stageapi.workruit.com",
+    "baseUrl": "https://devapi.workruit.com",
     "appUrl": "",
-    "baseApiUrl": "https://stageapi.workruit.com/api/",
-    "baseResumeApiUrl": "https://stageapi.workruit.com/resume/",
+    "baseApiUrl": "https://devapi.workruit.com/api/",
+    "baseResumeApiUrl": "https://devapi.workruit.com/resume/",
     "authToken": "911ca088ab824095b82d3c98b32332e7",
     "serviceUrls": {
         "post": {
